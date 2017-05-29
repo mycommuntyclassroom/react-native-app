@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
 class Welcome extends Component {
@@ -29,6 +30,7 @@ class Welcome extends Component {
         <Text style={style.title}>
           Welcome
         </Text>
+        <Image source={require('../../images/welcome-family-page.jpg')} style={{width: '100%', height: 230}}/>
       </View>
     );
   };
