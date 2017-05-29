@@ -1,0 +1,8 @@
+.back-button {
+  padding-top: 5px;
+  display: inline-block;
+  float: left;
+  position: relative;
+  left: 20px;
+  font-size: 30px;
+  color: white; }

@@ -1,0 +1,77 @@
+.button {
+  background-color: rgba(255, 255, 255, 0.6);
+  box-sizing: border-box;
+  text-decoration: none;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+  padding: 15px;
+  color: white;
+  border: 0; }
+
+.add-item-button {
+  background-image: linear-gradient(0deg, #74bcf7 0%, #ad6bff 100%);
+  text-align: center;
+  color: white;
+  display: block;
+  font-size: 36px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3), 0px 10px 10px rgba(0, 0, 0, 0.1); }
+  .add-item-button .icon {
+    height: 100%; }
+  .add-item-button svg {
+    vertical-align: text-bottom;
+    position: relative;
+    top: -1px;
+    height: 100%; }
+
+section.circles-teaser {
+  padding: 20px 0 0 0;
+  position: relative;
+  background-color: white; }
+  section.circles-teaser .title {
+    color: #4d606f;
+    text-align: left;
+    margin: 0 0 10px 12px; }
+  section.circles-teaser .circle-group {
+    position: relative;
+    padding: 0 45px 0 0; }
+  section.circles-teaser .no-child-registered {
+    height: 40px;
+    width: 40px; }
+  section.circles-teaser .circle-element {
+    height: 105px;
+    width: 105px !important;
+    background-color: #b0b9c2;
+    border-radius: 50%;
+    margin-right: 9px;
+    overflow: hidden;
+    border: 1px solid #d7dce0; }
+    section.circles-teaser .circle-element:first-child {
+      margin-left: 13px; }
+    section.circles-teaser .circle-element img {
+      width: 100%;
+      height: auto;
+      max-width: none; }
+    section.circles-teaser .circle-element.null-circle {
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      section.circles-teaser .circle-element.null-circle span {
+        height: 100%;
+        width: 100%; }
+  section.circles-teaser .add-circle {
+    position: absolute;
+    right: 13px;
+    transform: translateY(-50%);
+    top: 50%; }
+    section.circles-teaser .add-circle .icon {
+      height: 100%; }
+    section.circles-teaser .add-circle svg {
+      vertical-align: text-bottom;
+      position: relative;
+      top: -1px;
+      height: 100%; }
