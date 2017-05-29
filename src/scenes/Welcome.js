@@ -3,7 +3,8 @@ import {
   View,
   TouchableHighlight,
   Text,
-  Image
+  Image,
+  Button
 } from 'react-native';
 
 class Welcome extends Component {
@@ -27,10 +28,19 @@ class Welcome extends Component {
     const { style, app } = this.props;
     return (
       <View style={[style.container, { backgroundColor: 'orange' }]}>
+        <Image source={require('../../images/logo.png')} style={{flex:1, width: 100, height: 100}}/>
         <Text style={style.title}>
           Welcome
         </Text>
-        <Image source={require('../../images/welcome-family-page.jpg')} style={{width: '100%', height: 230}}/>
+        <Image source={require('../../images/welcome-family-page.jpg')} style={{flex:1, width: '100%', height: 230}}/>
+        <TouchableHighlight
+          onPress={() => {
+            app.goToScene('Settings', {});
+          }}>
+          <Text style={style.navText}>
+            button here
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   };
