@@ -54,3 +54,7 @@ fb.githubLoginWithToken = (token, success, error) => {
 }
 
 export default FirebaseHelper;
+
+export function createUserWithEmailAndPassword(email, password) {
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+}
