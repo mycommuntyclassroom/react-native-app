@@ -12,10 +12,16 @@
     "firebase": "^3.9.0",
     "firebase-admin": "^4.2.1",
     "firebase-tools": "^3.6.1",
+    "moment": "^2.18.1",
+    "rc-time-picker": "^2.4.1",
     "react": "16.0.0-alpha.6",
+    "react-datepicker": "^0.46.0",
+    "react-icons": "^2.2.5",
     "react-native": "^0.43.4",
     "react-redux": "^5.0.4",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "slick-carousel": "^1.6.0"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

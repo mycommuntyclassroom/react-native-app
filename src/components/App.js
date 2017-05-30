@@ -3,7 +3,8 @@ import {
   Navigator,
   View,
   TouchableHighlight,
-  Text
+  Text,
+  AsyncStorage
 } from 'react-native';
 
 import random from '../helpers/random';
@@ -60,10 +61,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const dataIsReady = this.props.dataReady;
-    const dataWasReady = prevProps.dataReady;
-    const justLoaded = dataIsReady && !dataWasReady;
-    if (justLoaded) {
+    // const dataIsReady = this.props.dataReady;
+    // const dataWasReady = prevProps.dataReady;
+    // const justLoaded = dataIsReady && !dataWasReady;
+    // if (justLoaded) {
 
       // If first time starting app, show welcome scene
       this.goToScene('Welcome');
@@ -71,7 +72,11 @@ class App extends Component {
       // Else If not logged in, go to login
 
       // If already logged in, go to last visited page (use local data)
-    }
+    // }
+  }
+
+  componentDidMount() {
+    this.goToScene('Welcome');
   }
 
   render() {
@@ -80,6 +85,7 @@ class App extends Component {
       bottom: 50,
       zIndex: 10
     };
+
 
     return (
       <View style={style.fullscreen}>
@@ -92,12 +98,10 @@ class App extends Component {
 
         <Nav ref='navMenu' app={this} style={style} />
 
-        {this.props.dataReady ?
-          <Button
-            text='open'
-            onPress={() => this.refs.navMenu.open()}
-            extraStyle={buttonStyle} />
-          : null}
+        <Button
+          text='open'
+          onPress={() => this.refs.navMenu.open()}
+          extraStyle={buttonStyle} />
 
       </View>
     );

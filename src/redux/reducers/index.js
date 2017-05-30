@@ -1,8 +1,15 @@
 import { combineReducers } from 'redux';
-import * as dataReducers from './data';
+import authReducer from './auth';
+import notificationsReducer from './notifications';
+import userReducer from './user';
+import eventsReducer from './events';
+
 
 const rootReducer = combineReducers({
-  ...dataReducers,
+  auth: authReducer,
+  notifications: notificationsReducer,
+  user: userReducer,
+  events: eventsReducer
 });
 
 export default rootReducer;
