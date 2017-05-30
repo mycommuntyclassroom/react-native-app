@@ -28,11 +28,14 @@ class Welcome extends Component {
     const { style, app } = this.props;
     return (
       <View style={[style.container, { backgroundColor: 'orange' }]}>
-        <Image source={require('../../images/logo.png')} style={{flex:1, width: 100, height: 100}}/>
-        <Text style={style.title}>
-          Welcome
-        </Text>
-        <Image source={require('../../images/welcome-family-page.jpg')} style={{flex:1, width: '100%', height: 230}}/>
+        <View style={{flex: 2, alignItems: 'center'}}>
+          <Image source={require('../../images/logo.png')} resizeMode='contain' style={{width: 80}}/>
+          <Text style={style.title}> Welcome </Text>
+          <Text>
+            Easily connect with like minded families & manage everything homeschool in one place!
+          </Text>
+        </View>
+        <Image source={require('../../images/welcome-family-page.jpg')} resizeMode='contain' style={{flex: 2, width: '90%', height: 100}}/>
         <TouchableHighlight
           onPress={() => {
             app.goToScene('Settings', {});
