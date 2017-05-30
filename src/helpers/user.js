@@ -35,10 +35,11 @@ export function signInHandler (provider, type) {
 // 
 // validate the user against the DB
 // 
-export function authenticateUser (user) {
+export function authenticateUser (user, navigator) {
   console.log('authenticateUser CALLED')
+  console.log('THIS IS THE navigator PASSED: ', navigator)
   // get the URL path
-  let path = window.location.pathname;
+  let path = '';
   const { uid } = user;
   database
   .ref(`guardians/${uid}`)

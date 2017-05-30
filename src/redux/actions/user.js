@@ -59,7 +59,7 @@ export function acceptFriendRequest(friendObj) {
 
 // 
 // 
-export const startListeningForUsers = () => {
+export const startListeningForUsers = (navigator) => {
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
 

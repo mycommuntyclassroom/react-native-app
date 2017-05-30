@@ -50,7 +50,7 @@ export const signedOut = () => {
   };
 };
 
-export const startListeningToAuthChanges = () => {
+export const startListeningToAuthChanges = (navigator) => {
   console.log('startListeningToAuthChanges PROPS: ')
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
@@ -72,7 +72,7 @@ export const startListeningToAuthChanges = () => {
       else if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
         console.log('met the condition, is a valid login user')
 
-        authenticateUser(user);
+        authenticateUser(user, navigator);
 
       }
       // else {

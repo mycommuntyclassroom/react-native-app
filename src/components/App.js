@@ -13,6 +13,12 @@ import scenes from '../scenes';
 import style from '../style';
 import Nav from './Nav';
 import Button from './Button';
+import store from '../redux/store';
+
+import { startListeningForUsers } from '../redux/actions/user';
+import { startListeningToAuthChanges } from '../redux/actions/auth';
+import { startListeningForNotifications } from '../redux/actions/notifications';
+
 
 const ROUTES = Object.keys(scenes).map((scene, i) => ({ scene }));
 
@@ -77,6 +83,10 @@ class App extends Component {
 
   componentDidMount() {
     this.goToScene('Welcome');
+    console.log('this.refs.navigator: ', this.refs.navigator)
+    store.dispatch(startListeningForUsers(this.refs.navigator));
+    store.dispatch(startListeningToAuthChanges(this.refs.navigator));
+    store.dispatch(startListeningForNotifications(this.refs.navigator));
   }
 
   render() {
@@ -86,6 +96,7 @@ class App extends Component {
       zIndex: 10
     };
 
+    
 
     return (
       <View style={style.fullscreen}>
@@ -105,7 +116,9 @@ class App extends Component {
 
       </View>
     );
+    
   }
 }
+
 
 export default App;

@@ -5,10 +5,6 @@ import Data from './helpers/data';
 import App from './components/App';
 import thunk from 'redux-thunk';
 
-import { startListeningForUsers } from './redux/actions/user';
-import { startListeningToAuthChanges } from './redux/actions/auth';
-import { startListeningForNotifications } from './redux/actions/notifications';
-
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({});
@@ -25,7 +21,3 @@ export default () => (
     <AppContainer />
   </Provider>
 );
-
-store.dispatch(startListeningForUsers());
-store.dispatch(startListeningToAuthChanges());
-store.dispatch(startListeningForNotifications());
