@@ -44,6 +44,14 @@ class Welcome extends Component {
             Search your area
           </Text>
         </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => {
+            app.goToScene('Login', {app});
+          }}>
+          <Text style={style.navText}>
+            Login
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   };
