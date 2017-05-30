@@ -38,10 +38,10 @@ class Welcome extends Component {
         <Image source={require('../../images/welcome-family-page.jpg')} resizeMode='contain' style={{flex: 2, width: '90%', height: 100}}/>
         <TouchableHighlight
           onPress={() => {
-            app.goToScene('Settings', {});
+            app.goToScene('WelcomeSearch', {app});
           }}>
           <Text style={style.navText}>
-            button here
+            Search your area
           </Text>
         </TouchableHighlight>
       </View>
