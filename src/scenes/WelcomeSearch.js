@@ -13,22 +13,20 @@ class WelcomeSearch extends Component {
     super();
 
     this.state = {
-      email: '',
-      password: ''
+      email: 'vklm',
+      password: 'vlmk'
     }
   }
 
-  submitForm(e) {
+  submitForm(state) {
     console.log('submitForm CALLED')
-    e.preventDefault();
-    const data = {...this.state};
-    const { email, password } = data;
-    console.log('data: ', data);
+    const { email, password } = state;
     createUserWithEmailAndPassword(email, password);
   }
 
   render() {
 
+    console.log('this.state in RENDER: ', this.state);
     // view for the sign up with your ('X') account
     const signUpView = (
       <View className="register-form">
@@ -42,7 +40,7 @@ class WelcomeSearch extends Component {
           placeholder="Password"
           onChangeText={(password) => this.setState({password})}
         />
-        <TouchableHighlight onPress={ this.submitForm }>
+        <TouchableHighlight onPress={ () => this.submitForm(this.state) }>
           <Text>
             Submit
           </Text>
