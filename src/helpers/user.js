@@ -38,6 +38,8 @@ export function signInHandler (provider, type) {
 export function authenticateUser (user, navigator) {
   console.log('authenticateUser CALLED')
   console.log('THIS IS THE navigator PASSED: ', navigator)
+  let currentRoute = navigator.getCurrentRoutes().pop();
+  console.log('HERE** is the currentRoute: ', currentRoute)
   // get the URL path
   let path = '';
   const { uid } = user;
