@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import random from '../helpers/random';
+import { goToScene } from '../helpers/navigation';
 import scenes from '../scenes';
 import style from '../style';
 import Nav from './Nav';

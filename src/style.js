@@ -17,7 +17,7 @@ STYLE.loader = {
 STYLE.container = {
   flex: 1,
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-between',
   backgroundColor: '#eee'
 };
 

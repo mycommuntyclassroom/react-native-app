@@ -8,6 +8,7 @@ import Login from './Login';
 import Map from './Map';
 import Settings from './Settings';
 import Welcome from './Welcome';
+import WelcomeSearch from './WelcomeSearch';
 
 export default {
   Loading,
@@ -20,4 +21,5 @@ export default {
   Map,
   Settings,
   Welcome,
+  WelcomeSearch,
 };

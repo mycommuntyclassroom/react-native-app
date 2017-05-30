@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image,
+  Button
 } from 'react-native';
 
 class Welcome extends Component {
@@ -26,9 +28,22 @@ class Welcome extends Component {
     const { style, app } = this.props;
     return (
       <View style={[style.container, { backgroundColor: 'orange' }]}>
-        <Text style={style.title}>
-          Welcome
-        </Text>
+        <View style={{flex: 2, alignItems: 'center'}}>
+          <Image source={require('../../images/logo.png')} resizeMode='contain' style={{width: 80}}/>
+          <Text style={style.title}> Welcome </Text>
+          <Text>
+            Easily connect with like minded families & manage everything homeschool in one place!
+          </Text>
+        </View>
+        <Image source={require('../../images/welcome-family-page.jpg')} resizeMode='contain' style={{flex: 2, width: '90%', height: 100}}/>
+        <TouchableHighlight
+          onPress={() => {
+            app.goToScene('WelcomeSearch', {app});
+          }}>
+          <Text style={style.navText}>
+            Search your area
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   };
