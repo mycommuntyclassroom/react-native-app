@@ -4,6 +4,14 @@ import { database } from '../helpers/firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
 
+import {
+  View,
+  Text,
+  TouchableHighlight,
+  TextInput,
+  AsyncStorage
+} from 'react-native';
+
 import CheckBox from 'react-native-checkbox';
 import Button from '../components/Button';
 
@@ -14,6 +22,7 @@ class CreateGuardianAccount extends Component {
   constructor(props) {
     super();
 
+    console.log('CreateGuardianAccount REndered')
     // 
     // STATE OBJECT
     // 
@@ -22,6 +31,8 @@ class CreateGuardianAccount extends Component {
     // clear the old formData
     AsyncStorage.removeItem('formData');
 
+    const { auth } = props.app.props;
+
     // pull the formData tree from the DB and grab all of the checkboxes for the guardians
     database
     .ref('formData/guardians')
@@ -29,10 +40,10 @@ class CreateGuardianAccount extends Component {
     .then((snapshot) => {
       // setup the state properties
       let categories = {
-        uid: props.auth.uid,
-        displayName: props.auth.displayName,
-        photoURL: props.auth.photoURL,
-        email: props.auth.email,
+        uid: auth.uid,
+        displayName: auth.displayName,
+        photoURL: auth.photoURL,
+        email: auth.email,
         street: '',
         city: '',
         zipCode: '',
@@ -129,16 +140,31 @@ class CreateGuardianAccount extends Component {
     // TODO:::: NAV for native
     // browserHistory.push('/tutorial');
   }
+  
+  async getCache(key){
+    try{
+        let value = await AsyncStorage.getItem('formData');
+        return value.json();
+    }
+    catch(e){
+        console.log('caught error', e);
+        // Handle exceptions
+    }
+  }
 
   /**
    *
    * @returns {XML}
    */
   render() {
-    console.log('Here are the props passed: ', this.props)
+    console.log('Here are the props passed in CREAT G-acct: ', this.props)
+    console.log('This is the AsyncStorage.getItem(formData): ', AsyncStorage.getItem('formData'));
+
+    jsonFormData =  getCache();
+    console.log('jsonFormData: ', jsonFormData);
     let formData
-    AsyncStorage.getItem(formData)
-      ? formData = JSON.parse(AsyncStorage.getItem(formData))
+    AsyncStorage.getItem('formData')
+      ? formData = JSON.parse(AsyncStorage.getItem('formData'))
       : formData = {}
     
     const { displayName } = this.props.auth
