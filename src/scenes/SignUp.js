@@ -52,7 +52,7 @@ class SignUp extends Component {
 
     const { style, app } = this.props;
     return (
-      <View style={[style.container, { justifyContent: 'center', backgroundColor: 'gray' }]}>
+      <View style={[style.container, { justifyContent: 'flex-start', backgroundColor: 'green' }]}>
         { auth.status === 'SIGNED_IN' && app.goToScene('dashboard', {app})}
         { auth.status === 'ANONYMOUS' && signUpView }
         { auth.status === 'CREATING_ACCOUNT' && <CreateGuardianAccount auth={auth} {...props} /> }

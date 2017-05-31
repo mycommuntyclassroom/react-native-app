@@ -9,7 +9,8 @@ import {
   Text,
   TouchableHighlight,
   TextInput,
-  AsyncStorage
+  AsyncStorage,
+  ScrollView
 } from 'react-native';
 
 import CheckBox from 'react-native-checkbox';
@@ -81,9 +82,9 @@ class CreateGuardianAccount extends Component {
    *
    * @param e
    */
-  handleChange(e) {
+  handleChange(value, fieldName) {
     this.setState({
-      [e.target.name]: e.target.value
+      fieldName: value
     });
   }
 
@@ -167,10 +168,8 @@ class CreateGuardianAccount extends Component {
               return ( 
                 <View key={item}>
                   <CheckBox
-                    label='Label'
-                    id={item}
+                    label={item}
                     name={category}
-                    value={item}
                     checked={true}
                     onChange={(checked) => console.log('I am checked', checked)}
                   />
@@ -190,14 +189,14 @@ class CreateGuardianAccount extends Component {
         // <BackButton path="/welcome-search" />
 
     return(
-      <View>
+      <ScrollView>
         <Text> Help us get to know you... </Text>
         <View onSubmit={ this.submitForm } >
-          <TextInput name="displayName"
-                 type="text"
-                 placeholder={displayName}
-                 value={ this.state.displayName }
-                 onChangeText={ this.handleChange } />
+          <TextInput
+            style={{width: 200, height: 40}}
+            placeholder='Your Name'
+            onChangeText={ (value) => this.handleChange(value, 'name') } 
+          />
 
           <View onChange={ this.radioButtonChange }>
             <RadioForm
@@ -209,33 +208,28 @@ class CreateGuardianAccount extends Component {
 
           <View className="address">
             <Text>Address</Text>
-            <TextInput name="street"
-                   type="text"
-                   placeholder="Street Address"
-                   value={ this.state.street }
-                   onChangeText={ this.handleChange } />
+            <TextInput 
+              style={{width: 200, height: 40}}
+              placeholder="Street Address"
+              onChangeText={ (value) => this.handleChange(value, 'address') } />
             <View className="no-wrap">
               <View>
-                <TextInput name="city"
-                       type="text"
-                       placeholder="City"
-                       value={ this.state.city }
-                       onChangeText={ this.handleChange } />
+                <TextInput
+                  style={{width: 200, height: 40}}
+                  placeholder="City"
+                  onChangeText={ (value) => this.handleChange(value, 'city') } />
               </View>
               <View>
-                <TextInput className="state-field"
-                       name="state"
-                       type="text"
-                       placeholder="State"
-                       value={ this.state.state }
-                       onChangeText={ this.handleChange } />
+                <TextInput
+                  style={{width: 200, height: 40}}
+                  placeholder="State"
+                  onChangeText={ (value) => this.handleChange(value, 'state') } />
               </View>
               <View>
                 <TextInput name="zipCode"
-                       type="text"
-                       placeholder="Zipcode"
-                       value={ this.state.zipCode }
-                       onChangeText={ this.handleChange } />
+                  style={{width: 200, height: 40}}
+                  placeholder="Zipcode"
+                  onChangeText={ (value) => this.handleChange(value, 'Zipcode') } />
               </View>
             </View>
           </View>
@@ -244,7 +238,7 @@ class CreateGuardianAccount extends Component {
 
           <Button text='Submit' onPress= { () => console.log('submit Button clicked') }></Button>
         </View>
-      </View>
+      </ScrollView>
     )
   }
 }

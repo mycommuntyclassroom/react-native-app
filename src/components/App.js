@@ -73,7 +73,7 @@ class App extends Component {
     // if (justLoaded) {
 
       // If first time starting app, show welcome scene
-      this.goToScene('Welcome');
+      // this.goToScene('Welcome');
 
       // Else If not logged in, go to login
 
