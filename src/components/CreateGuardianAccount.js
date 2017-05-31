@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import CheckBox from 'react-native-checkbox';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button';
 
 // import BackButton from '../components/BackButton';
@@ -38,6 +39,7 @@ class CreateGuardianAccount extends Component {
     .ref('formData/guardians')
     .once('value')
     .then((snapshot) => {
+      console.log('Here is the Snapshot for the formData: ', snapshot.val())
       // setup the state properties
       let categories = {
         uid: auth.uid,
@@ -61,8 +63,8 @@ class CreateGuardianAccount extends Component {
       }
       checkBoxCategories();
 
-      // stringify the snapshot and save it as formData in the AsyncStorage 
-      AsyncStorage.setItem('formData', JSON.stringify(snapshot.val()))
+      // store the formData in the state
+      this.setState({formData: snapshot.val()})
 
       // UPDATE THE STATE
       this.setState(categories);
@@ -140,17 +142,6 @@ class CreateGuardianAccount extends Component {
     // TODO:::: NAV for native
     // browserHistory.push('/tutorial');
   }
-  
-  async getCache(key){
-    try{
-        let value = await AsyncStorage.getItem('formData');
-        return value.json();
-    }
-    catch(e){
-        console.log('caught error', e);
-        // Handle exceptions
-    }
-  }
 
   /**
    *
@@ -158,26 +149,23 @@ class CreateGuardianAccount extends Component {
    */
   render() {
     console.log('Here are the props passed in CREAT G-acct: ', this.props)
-    console.log('This is the AsyncStorage.getItem(formData): ', AsyncStorage.getItem('formData'));
+    const props = this.props
 
-    jsonFormData =  getCache();
-    console.log('jsonFormData: ', jsonFormData);
-    let formData
-    AsyncStorage.getItem('formData')
-      ? formData = JSON.parse(AsyncStorage.getItem('formData'))
-      : formData = {}
+    let formData = this.state.formData || {};
+
+    console.log('HERE is the formData: ', formData);
     
-    const { displayName } = this.props.auth
+    const { displayName } = props.auth
 
     const outputCheckboxes = () => {
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
           <View key={category} onChange={ this.checkboxChange }>
-            <h3>{category}</h3>
+            <Text>{category}</Text>
             {formData[category].map(item => {
               return ( 
-                <span key={item}>
+                <View key={item}>
                   <CheckBox
                     label='Label'
                     id={item}
@@ -186,8 +174,7 @@ class CreateGuardianAccount extends Component {
                     checked={true}
                     onChange={(checked) => console.log('I am checked', checked)}
                   />
-                  <Text htmlFor={item}>{item}</Text>
-                </span>
+                </View>
               )
             })}
           </View>
@@ -203,8 +190,8 @@ class CreateGuardianAccount extends Component {
         // <BackButton path="/welcome-search" />
 
     return(
-      <div className="create-account">
-        <h1> Help us get to know you... </h1>
+      <View>
+        <Text> Help us get to know you... </Text>
         <View onSubmit={ this.submitForm } >
           <TextInput name="displayName"
                  type="text"
@@ -239,7 +226,6 @@ class CreateGuardianAccount extends Component {
                 <TextInput className="state-field"
                        name="state"
                        type="text"
-                       maxLength="2"
                        placeholder="State"
                        value={ this.state.state }
                        onChangeText={ this.handleChange } />
@@ -256,13 +242,9 @@ class CreateGuardianAccount extends Component {
 
           { outputCheckboxes() }
 
-          <input className="button"
-                 type="submit"
-                 name="submit"
-                 value="Submit" />
           <Button text='Submit' onPress= { () => console.log('submit Button clicked') }></Button>
         </View>
-      </div>
+      </View>
     )
   }
 }
