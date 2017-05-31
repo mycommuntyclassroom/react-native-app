@@ -5,6 +5,7 @@ import actions from '../redux/actions';
 import store from '../redux/store';
 
 import CheckBox from 'react-native-checkbox';
+import Button from '../components/Button';
 
 // import BackButton from '../components/BackButton';
 
@@ -178,7 +179,7 @@ class CreateGuardianAccount extends Component {
     return(
       <div className="create-account">
         <h1> Help us get to know you... </h1>
-        <form onSubmit={ this.submitForm } >
+        <View onSubmit={ this.submitForm } >
           <TextInput name="displayName"
                  type="text"
                  placeholder={displayName}
@@ -191,47 +192,39 @@ class CreateGuardianAccount extends Component {
               initial={0}
               onPress={(value) => { this.radioButtonChange }}
             />
-            <span>
-              <input type="radio" id="male" name="gender" value="male"/>
-              <label htmlFor="male">Male</label>
-            </span>
-            <span>
-              <input type="radio" id="female" name="gender" value="female"/>
-              <label htmlFor="female">Female</label>
-            </span>
           </View>
 
           <View className="address">
-            <h3>Address</h3>
-            <input name="street"
+            <Text>Address</Text>
+            <TextInput name="street"
                    type="text"
                    placeholder="Street Address"
                    value={ this.state.street }
-                   onChange={ this.handleChange } />
+                   onChangeText={ this.handleChange } />
             <View className="no-wrap">
-              <span>
-                <input name="city"
+              <View>
+                <TextInput name="city"
                        type="text"
                        placeholder="City"
                        value={ this.state.city }
-                       onChange={ this.handleChange } />
-              </span>
-              <span>
-                <input className="state-field"
+                       onChangeText={ this.handleChange } />
+              </View>
+              <View>
+                <TextInput className="state-field"
                        name="state"
                        type="text"
                        maxLength="2"
                        placeholder="State"
                        value={ this.state.state }
-                       onChange={ this.handleChange } />
-              </span>
-              <span>
-                <input name="zipCode"
+                       onChangeText={ this.handleChange } />
+              </View>
+              <View>
+                <TextInput name="zipCode"
                        type="text"
                        placeholder="Zipcode"
                        value={ this.state.zipCode }
-                       onChange={ this.handleChange } />
-              </span>
+                       onChangeText={ this.handleChange } />
+              </View>
             </View>
           </View>
 
@@ -241,7 +234,8 @@ class CreateGuardianAccount extends Component {
                  type="submit"
                  name="submit"
                  value="Submit" />
-        </form>
+          <Button text='Submit' onPress= { () => console.log('submit Button clicked') }></Button>
+        </View>
       </div>
     )
   }
