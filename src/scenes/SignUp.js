@@ -6,11 +6,13 @@ import {
   TouchableHighlight,
   TextInput
 } from 'react-native';
+import Button from '../components/Button';
 
 class SignUp extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
 
     this.state = {
       email: '',
@@ -25,10 +27,14 @@ class SignUp extends Component {
 
   render() {
 
+    console.log('THESE are the props: ', this.props)
+    const props = this.props;
+    const { auth } = props.app.props;
     console.log('this.state in RENDER: ', this.state);
     // view for the sign up with your ('X') account
     const signUpView = (
       <View className="register-form">
+        <Text> Sign up </Text>
         <TextInput
           style={{width: 200, height: 40}}
           placeholder="Email"
@@ -39,29 +45,17 @@ class SignUp extends Component {
           placeholder="Password"
           onChangeText={(password) => this.setState({password})}
         />
-        <TouchableHighlight onPress={ () => this.submitForm(this.state) }>
-          <Text>
-            Submit
-          </Text>
-        </TouchableHighlight>
+        <Button text='Search your area' onPress= { () => app.goToScene('Settings', {app}) }></Button>
+        <Button text='Submit' onPress= { () => this.submitForm(this.state) }></Button>
       </View>
     );
 
     const { style, app } = this.props;
     return (
       <View style={[style.container, { justifyContent: 'center', backgroundColor: 'gray' }]}>
-        <Text>
-          Sign up
-        </Text>
-        { signUpView }
-        <TouchableHighlight
-          onPress={() => {
-            app.goToScene('Settings', {app});
-          }}>
-          <Text style={style.navText}>
-            Search your area
-          </Text>
-        </TouchableHighlight>
+        { auth.status === 'SIGNED_IN' && browserHistory.push('/dashboard')}
+        { auth.status === 'ANONYMOUS' && signUpView }
+        { auth.status === 'CREATING_ACCOUNT' && <CreateGuardianAccount auth={auth} {...props} /> }
       </View>
     );
   };

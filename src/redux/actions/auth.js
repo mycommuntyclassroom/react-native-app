@@ -9,6 +9,7 @@ import {
 
 // auth actions
 export function createGuardianAccount (user) {
+  console.log('Creat Guardian Action Called: ', user)
   return {
     type: 'CREATING_ACCOUNT',
     user

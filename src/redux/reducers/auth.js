@@ -1,6 +1,7 @@
 import initialState from '../../initial-state.js';
 
 export default function authReducer(state = initialState.auth, action) {
+  console.log('CREATING_ACCOUNT Reducer called: ', action)
   switch(action.type) {
     case 'ATTEMPTING_LOGIN':
       return {

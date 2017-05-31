@@ -14,7 +14,7 @@ export function signInHandler (provider, type, data) {
   switch(type) {
     case 'CREATING_ACCOUNT':
       AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
-      console.log('CURRENTLY Creating an ACCOUNT, type: ', type)
+      console.log('CURRENTLY Creating an ACCOUNT, AsyncStorage.type: ', AsyncStorage.getItem('type'))
       AsyncStorage.setItem('status', 'COLLECTING_USER_PROFILE');
       break;
     case 'SIGNING_IN':
@@ -30,13 +30,12 @@ export function signInHandler (provider, type, data) {
       auth.signInWithRedirect(facebookAuthProvider);
       break;
     case 'manual':
-      email = data.email;
-      password = data.password;
+      const { email, password } = data;
       console.log('***Email and PW called: ', data);
       createUserWithEmailAndPassword(email, password);
       break;
     default:
-      auth.signInWithRedirect(googleAuthProvider);
+      // no action
   }
 }
 
@@ -81,7 +80,6 @@ export function authenticateUser (user, navigator) {
           break;
         case 'SignUp':
           console.log('authenticateUser SIGN-UP CALLED')
-          // navigator.push({ scene, {} });
           store.dispatch(actions.createGuardianAccount(user));
           AsyncStorage.removeItem('status');
           break;
