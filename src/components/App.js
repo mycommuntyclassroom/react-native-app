@@ -96,8 +96,6 @@ class App extends Component {
       zIndex: 10
     };
 
-    
-
     return (
       <View style={style.fullscreen}>
 

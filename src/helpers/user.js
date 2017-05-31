@@ -1,21 +1,27 @@
 import React from 'react';
 import { FaAngleRight } from 'react-icons/lib/fa';
 import { auth, database } from './firebase';
+import { createUserWithEmailAndPassword } from '../helpers/firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
 
-export function signInHandler (provider, type) {
-  // save a type within the localstorage to use when we redirect to the app
+import {
+  AsyncStorage
+} from 'react-native'
+
+export function signInHandler (provider, type, data) {
+  // save a type within the AsyncStorage to use when we redirect to the app
   switch(type) {
     case 'CREATING_ACCOUNT':
-      localStorage.setItem('type', 'CREATING_ACCOUNT');
-      localStorage.setItem('status', 'COLLECTING_USER_PROFILE');
+      AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
+      console.log('CURRENTLY Creating an ACCOUNT, type: ', type)
+      AsyncStorage.setItem('status', 'COLLECTING_USER_PROFILE');
       break;
     case 'SIGNING_IN':
-      localStorage.setItem('type', 'SIGNING_IN');
+      AsyncStorage.setItem('type', 'SIGNING_IN');
       break;
   }
-  console.log('sign in handler called, COLLECTING_USER_PROFILE is SET localStorage.status: ', localStorage.status );
+  console.log('sign in handler called, COLLECTING_USER_PROFILE is SET AsyncStorage.status: ', AsyncStorage.status );
   switch (provider) {
     case 'google':
       auth.signInWithRedirect(googleAuthProvider);
@@ -23,8 +29,11 @@ export function signInHandler (provider, type) {
     case 'facebook':
       auth.signInWithRedirect(facebookAuthProvider);
       break;
-    case 'password':
-      // 
+    case 'manual':
+      email = data.email;
+      password = data.password;
+      console.log('***Email and PW called: ', data);
+      createUserWithEmailAndPassword(email, password);
       break;
     default:
       auth.signInWithRedirect(googleAuthProvider);
@@ -38,10 +47,9 @@ export function signInHandler (provider, type) {
 export function authenticateUser (user, navigator) {
   console.log('authenticateUser CALLED')
   console.log('THIS IS THE navigator PASSED: ', navigator)
-  let currentRoute = navigator.getCurrentRoutes().pop();
+  // get the current scene
+  let currentRoute = navigator.getCurrentRoutes().pop().scene;
   console.log('HERE** is the currentRoute: ', currentRoute)
-  // get the URL path
-  let path = '';
   const { uid } = user;
   database
   .ref(`guardians/${uid}`)
@@ -49,11 +57,11 @@ export function authenticateUser (user, navigator) {
   .then((snapshot) => {
     // if the user exists within our DB log them in, otherwise redirect them
     if(snapshot.val() ){
-      switch (path) {
+      console.log('is a valid user')
+      switch (currentRoute) {
         case '/sign-up':
           // take the user to the sign in or signup with a different account
           console.log('YOU ARE**** ALREADY A MEMBER***')
-          alert('you are already a member. Sign in');
           break;
         default:
           // update the redux store with the user's data
@@ -62,17 +70,21 @@ export function authenticateUser (user, navigator) {
       }
     } 
     else {
-      switch (path) {
-        case '/':
+      switch (currentRoute) {
+        case 'Welcome':
+          console.log('this is a non-user')
           // Do nothing, its likely a non-user, visiting for the first time
           break;
-        case '/login': 
+        case 'Login': 
           // take the user to the sign up or sign in with a different account
-          alert('you are not a member foo! Sign up')
-        case '/sign-up':
+          console.log('you are not a member foo! Sign up')
+          break;
+        case 'SignUp':
           console.log('authenticateUser SIGN-UP CALLED')
+          // navigator.push({ scene, {} });
           store.dispatch(actions.createGuardianAccount(user));
-          localStorage.removeItem('status');
+          AsyncStorage.removeItem('status');
+          break;
         default:
           // Do nothing
           break;

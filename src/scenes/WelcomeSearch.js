@@ -22,6 +22,14 @@ class WelcomeSearch extends Component {
             Login
           </Text>
         </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => {
+            app.goToScene('SignUp', {app});
+          }}>
+          <Text style={style.navText}>
+            Sign up
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   };

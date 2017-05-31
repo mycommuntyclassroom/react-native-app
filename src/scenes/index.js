@@ -5,6 +5,7 @@ import Hosts from './Hosts';
 import Inbox from './Inbox';
 import Loading from './Loading';
 import Login from './Login';
+import SignUp from './SignUp';
 import Map from './Map';
 import Settings from './Settings';
 import Welcome from './Welcome';
@@ -18,6 +19,7 @@ export default {
   Hosts,
   Inbox,
   Login,
+  SignUp,
   Map,
   Settings,
   Welcome,

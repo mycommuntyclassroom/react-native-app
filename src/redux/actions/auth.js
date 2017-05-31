@@ -71,7 +71,7 @@ export const startListeningToAuthChanges = (navigator) => {
       // 
       else if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
         console.log('met the condition, is a valid login user')
-
+        // determine what to do with the user
         authenticateUser(user, navigator);
 
       }
