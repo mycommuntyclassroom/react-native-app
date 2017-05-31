@@ -1,38 +1,79 @@
-/*
- * action types
- */
+import { auth, database, googleAuthProvider } from '../../helpers/firebase';
+import store from '../store';
+import {
+  AsyncStorage
+} from 'react-native'
 
-export const LOG_IN = 'LOG_IN';
-export const LOG_OUT = 'LOG_OUT';
-export const SET_USER = 'SET_USER';
-export const SET_USERS = 'SET_USERS';
+export const updateUserInfo = () => {
+  return (dispatch) => {
+    dispatch({ type: 'LOGGED_IN' });
+  };
+};
 
-/*
- * action creators
- */
+export const userInfo = (userData) => {
+  console.log('userInfo called, heres the data: ', userData);
+  return (dispatch) => {
+    dispatch({ 
+      type: 'LOGGED_IN',
+      userData 
+    });
+  };
+};
 
-export function logIn() {
+export function handleChildProfile(formData) {
+  console.log('this is the handleChildProfile data: ', formData);
   return {
-    type: LOG_IN
+    type: 'CHILD_ACCOUNT_SET',
+    formData
   };
 }
 
-export function logOut() {
+export function handleHostEvent(formData) {
   return {
-    type: LOG_OUT
+    type: 'HANDLE_EVENT',
+    formData
   };
 }
 
-export function setUser(user) {
+const createNewUser = (user) => {
   return {
-    type: SET_USER,
-    user
+    type: 'NEW_ACCOUNT_IN_PROGRESS',
+    email: user.email,
+    displayName: user.displayName,
+    photoURL: user.photoURL,
+    uid: user.uid,
+    isMember: false
+  };
+};
+
+export function acceptFriendRequest(friendObj) {
+  console.log('acceptFriendRequest CALLED')
+  return (dispatch) => {
+    dispatch({ 
+      type: 'FRIEND_ADDED',
+      friendObj 
+    });
   };
 }
 
-export function setUsers(users) {
-  return {
-    type: SET_USERS,
-    users
+
+// 
+// 
+export const startListeningForUsers = (navigator) => {
+  return (dispatch) => {
+    auth.onAuthStateChanged((user) => {
+
+      console.log('this is the AsyncStorage.type: ', AsyncStorage.type)
+      if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
+        
+        // pull the user's tree from the DB
+        database
+        .ref(`guardians/${user.uid}`)
+        .once('value')
+        .then((snapshot) => {
+          store.dispatch(userInfo(snapshot.val()));
+        }) 
+      }
+    });
   };
-}
+};

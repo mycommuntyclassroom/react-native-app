@@ -1,43 +1,27 @@
-import actions from '../actions';
-import User from '../../helpers/user';
+import initialState from '../../initial-state.js';
 
-const {
-  LOG_IN,
-  LOG_OUT,
-  SET_USER,
-  SET_USERS
-} = actions;
-
-/*
- * Reducers
- */
-
-export function user(state = null, action) {
-  switch (action.type) {
-
-  case LOG_IN:
-    User.logIn();
-    return state;
-
-  case LOG_OUT:
-    User.logOut();
-    return null;
-
-  case SET_USER:
-    return action.user;
-
-  default:
-    return state;
-  }
-}
-
-export function users(state = {}, action) {
-  switch (action.type) {
-
-  case SET_USERS:
-    return action.users;
-
-  default:
-    return state;
+export default function userReducer(state = initialState.auth, action) {
+  switch(action.type) {
+    case 'NEW_ACCOUNT_CREATED':
+      return {
+        status: 'NEW_ACCOUNT_CREATED',
+        ...action.formData
+      };
+    case 'LOGGED_IN':
+      return {
+        ...action.userData
+      };
+    case 'CHILD_ACCOUNT_SET':
+      return {
+        status: 'CHILD_ACCOUNT_SET',
+        ...action.formData
+      };
+    case 'FRIEND_ADDED':
+      return {
+        status: 'FRIEND_ADDED',
+        ...action.friendObj
+      };
+    default:
+      return state;
   }
 }

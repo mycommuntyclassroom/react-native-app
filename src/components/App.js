@@ -3,7 +3,8 @@ import {
   Navigator,
   View,
   TouchableHighlight,
-  Text
+  Text,
+  AsyncStorage
 } from 'react-native';
 
 import random from '../helpers/random';
@@ -12,6 +13,12 @@ import scenes from '../scenes';
 import style from '../style';
 import Nav from './Nav';
 import Button from './Button';
+import store from '../redux/store';
+
+import { startListeningForUsers } from '../redux/actions/user';
+import { startListeningToAuthChanges } from '../redux/actions/auth';
+import { startListeningForNotifications } from '../redux/actions/notifications';
+
 
 const ROUTES = Object.keys(scenes).map((scene, i) => ({ scene }));
 
@@ -60,10 +67,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const dataIsReady = this.props.dataReady;
-    const dataWasReady = prevProps.dataReady;
-    const justLoaded = dataIsReady && !dataWasReady;
-    if (justLoaded) {
+    // const dataIsReady = this.props.dataReady;
+    // const dataWasReady = prevProps.dataReady;
+    // const justLoaded = dataIsReady && !dataWasReady;
+    // if (justLoaded) {
 
       // If first time starting app, show welcome scene
       this.goToScene('Welcome');
@@ -71,7 +78,15 @@ class App extends Component {
       // Else If not logged in, go to login
 
       // If already logged in, go to last visited page (use local data)
-    }
+    // }
+  }
+
+  componentDidMount() {
+    this.goToScene('Welcome');
+    console.log('this.refs.navigator: ', this.refs.navigator)
+    store.dispatch(startListeningForUsers(this.refs.navigator));
+    store.dispatch(startListeningToAuthChanges(this.refs.navigator));
+    store.dispatch(startListeningForNotifications(this.refs.navigator));
   }
 
   render() {
@@ -92,16 +107,16 @@ class App extends Component {
 
         <Nav ref='navMenu' app={this} style={style} />
 
-        {this.props.dataReady ?
-          <Button
-            text='open'
-            onPress={() => this.refs.navMenu.open()}
-            extraStyle={buttonStyle} />
-          : null}
+        <Button
+          text='open'
+          onPress={() => this.refs.navMenu.open()}
+          extraStyle={buttonStyle} />
 
       </View>
     );
+    
   }
 }
+
 
 export default App;
