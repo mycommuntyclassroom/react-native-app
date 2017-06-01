@@ -68,6 +68,15 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log('componentDidUpdate props::: ', this.props)
+    const { navigator } = this.refs
+    const props = this.props;
+    // get the current scene
+    let currentScene = navigator.getCurrentRoutes().pop().scene;
+    console.log('currentScene: ', currentScene)
+    console.log('here are the App props: ', props);
+    console.log('navigator: ', navigator)
+    let { status } = props.auth;
+    console.log('status: ', status)
     // const dataIsReady = this.props.dataReady;
     // const dataWasReady = prevProps.dataReady;
     // const justLoaded = dataIsReady && !dataWasReady;
@@ -80,6 +89,18 @@ class App extends Component {
 
       // If already logged in, go to last visited page (use local data)
     // }
+    // since there are several different scenes that could be rendered
+    // based on your Auth status, determine which page to render on the index
+    // 
+    if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome')) {
+      this.goToScene('Dashboard')
+    } 
+    else if((status === 'SIGN_OUT' || status === 'CREATING_ACCOUNT') && currentScene === 'Loading') {
+     this.goToScene('Welcome');
+    } 
+    else {
+      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***')
+    }
   }
 
   componentDidMount() {
@@ -89,27 +110,6 @@ class App extends Component {
     store.dispatch(startListeningForUsers(navigator));
     store.dispatch(startListeningToAuthChanges(navigator));
     store.dispatch(startListeningForNotifications(navigator));
-
-    const props = this.props;
-    // get the current scene
-    let currentScene = navigator.getCurrentRoutes().pop().scene;
-
-    console.log('here are the App props: ', props);
-    console.log('navigator: ', navigator)
-    let { status } = props.auth;
-
-    // since there are several different scenes that could be rendered
-    // based on your Auth status, determine which page to render on the index
-    // 
-    if((status === 'ANONYMOUS' || status === 'CREATING_ACCOUNT') && currentScene === 'Loading') {
-     this.goToScene('Welcome');
-    } 
-    else if(status === 'SIGNED_IN' && currentScene === 'Loading') {
-      this.goToScene('Dashboard')
-    } 
-    else {
-      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***')
-    }
   }
 
   render() {
