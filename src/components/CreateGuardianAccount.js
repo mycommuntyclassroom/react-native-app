@@ -89,7 +89,6 @@ class CreateGuardianAccount extends Component {
   }
 
   checkboxChange(checkbox, checkboxOptions, checked) {
-    console.log('checkboxChange CALLED!!!!')
     // current array of options
     const options = this.state[ checkboxOptions ];
     let index;
@@ -123,8 +122,10 @@ class CreateGuardianAccount extends Component {
    *
    * @param e
    */
-  submitForm(e) {
-    e.preventDefault();
+  submitForm() {
+    console.log('submitForm CALLED');
+    const props = this.props;
+    const { app } = props;
     const data = {...this.state};
 
     // update the store with the information the user submitted
@@ -135,9 +136,11 @@ class CreateGuardianAccount extends Component {
     // update the database
     updateProfile(data);
 
+    console.log('submitForm method ended')
+
     // navigate to the tutorial page
     // TODO:::: NAV for native
-    // browserHistory.push('/tutorial');
+    app.goToScene('tutorial', {app})
   }
 
   /**
@@ -166,9 +169,7 @@ class CreateGuardianAccount extends Component {
                 <View key={item}>
                   <CheckBox
                     label={item}
-                    name={category}
-                    checked={true}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
+                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
                   />
                 </View>
               )
@@ -233,7 +234,7 @@ class CreateGuardianAccount extends Component {
 
           { outputCheckboxes() }
 
-          <Button text='Submit' onPress= { () => console.log('submit Button clicked') }></Button>
+          <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>
       </ScrollView>
     )

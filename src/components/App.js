@@ -67,6 +67,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate props::: ', this.props)
     // const dataIsReady = this.props.dataReady;
     // const dataWasReady = prevProps.dataReady;
     // const justLoaded = dataIsReady && !dataWasReady;
