@@ -7,12 +7,12 @@ import {
   TextInput
 } from 'react-native';
 import Button from '../components/Button';
+import CreateGuardianAccount from '../components/CreateGuardianAccount';
 
 class SignUp extends Component {
 
   constructor(props) {
     super(props);
-
 
     this.state = {
       email: '',
@@ -52,8 +52,8 @@ class SignUp extends Component {
 
     const { style, app } = this.props;
     return (
-      <View style={[style.container, { justifyContent: 'center', backgroundColor: 'gray' }]}>
-        { auth.status === 'SIGNED_IN' && browserHistory.push('/dashboard')}
+      <View style={[style.container, { justifyContent: 'flex-start', backgroundColor: 'green' }]}>
+        { auth.status === 'SIGNED_IN' && app.goToScene('Dashboard', {app})}
         { auth.status === 'ANONYMOUS' && signUpView }
         { auth.status === 'CREATING_ACCOUNT' && <CreateGuardianAccount auth={auth} {...props} /> }
       </View>

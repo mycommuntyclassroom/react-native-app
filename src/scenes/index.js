@@ -10,6 +10,8 @@ import Map from './Map';
 import Settings from './Settings';
 import Welcome from './Welcome';
 import WelcomeSearch from './WelcomeSearch';
+import Tutorial from './Tutorial';
+import Dashboard from './Dashboard';
 
 export default {
   Loading,
@@ -24,4 +26,6 @@ export default {
   Settings,
   Welcome,
   WelcomeSearch,
+  Tutorial,
+  Dashboard
 };

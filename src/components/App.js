@@ -67,13 +67,14 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate props::: ', this.props)
     // const dataIsReady = this.props.dataReady;
     // const dataWasReady = prevProps.dataReady;
     // const justLoaded = dataIsReady && !dataWasReady;
     // if (justLoaded) {
 
       // If first time starting app, show welcome scene
-      this.goToScene('Welcome');
+      // this.goToScene('Welcome');
 
       // Else If not logged in, go to login
 
@@ -82,11 +83,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.goToScene('Welcome');
-    console.log('this.refs.navigator: ', this.refs.navigator)
     store.dispatch(startListeningForUsers(this.refs.navigator));
     store.dispatch(startListeningToAuthChanges(this.refs.navigator));
     store.dispatch(startListeningForNotifications(this.refs.navigator));
+    this.goToScene('Welcome');
+    console.log('this.refs.navigator: ', this.refs.navigator)
   }
 
   render() {
