@@ -99,7 +99,8 @@ class App extends Component {
      this.goToScene('Welcome');
     } 
     else {
-      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***')
+      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered Welcome***');
+      this.goToScene('Welcome');
     }
   }
 

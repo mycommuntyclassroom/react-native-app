@@ -5,6 +5,10 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
+
+import actions from '../redux/actions';
+import store from '../redux/store';
+
 import Dimensions from 'Dimensions';
 import Easing from 'Easing';
 import Button from './Button';
@@ -94,7 +98,10 @@ class Nav extends Component {
     const { style } = this.props;
     return (
       <Animated.View style={[style.Nav, { left: this.state.x }]}>
-
+        <Button
+          text='Logout'
+          onPress={ () => store.dispatch(actions.signOut()) }
+          extraStyle={style.navLink} />
         {ROUTES.map((route, i) => {
           const { scene, props } = route;
           return (
