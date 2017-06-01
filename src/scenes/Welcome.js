@@ -3,8 +3,7 @@ import {
   View,
   TouchableHighlight,
   Text,
-  Image,
-  Button
+  Image
 } from 'react-native';
 
 class Welcome extends Component {
