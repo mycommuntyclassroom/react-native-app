@@ -26,6 +26,6 @@ export default {
   Settings,
   Welcome,
   WelcomeSearch,
-  // Tutorial,
-  // Dashboard
+  Tutorial,
+  Dashboard
 };

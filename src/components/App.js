@@ -83,11 +83,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.goToScene('Welcome');
-    console.log('this.refs.navigator: ', this.refs.navigator)
     store.dispatch(startListeningForUsers(this.refs.navigator));
     store.dispatch(startListeningToAuthChanges(this.refs.navigator));
     store.dispatch(startListeningForNotifications(this.refs.navigator));
+    this.goToScene('Welcome');
+    console.log('this.refs.navigator: ', this.refs.navigator)
   }
 
   render() {
