@@ -88,16 +88,14 @@ class CreateGuardianAccount extends Component {
     this.setState(inputObj);
   }
 
-  checkboxChange(e) {
+  checkboxChange(checkbox, checkboxOptions, checked) {
+    console.log('checkboxChange CALLED!!!!')
     // current array of options
-    let checkboxOptions = e.target.name
-
-    let checkbox = e.target.value
-    const options = this.state[ checkboxOptions ]
-    let index
+    const options = this.state[ checkboxOptions ];
+    let index;
 
     // check if the check box is checked or unchecked
-    if (e.target.checked) {
+    if (checked) {
       // add the numerical value of the checkbox to options array
       options.push(checkbox)
     } else {
@@ -106,8 +104,6 @@ class CreateGuardianAccount extends Component {
       options.splice(index, 1)
     }
 
-    // update the state with the new array of options
-    this.setState({ checkboxOptions })
   }
 
   radioButtonChange(e) {
@@ -163,7 +159,7 @@ class CreateGuardianAccount extends Component {
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category} onChange={ this.checkboxChange }>
+          <View key={category}>
             <Text>{category}</Text>
             {formData[category].map(item => {
               return ( 
@@ -172,7 +168,7 @@ class CreateGuardianAccount extends Component {
                     label={item}
                     name={category}
                     checked={true}
-                    onChange={(checked) => console.log('I am checked', checked)}
+                    onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />
                 </View>
               )
@@ -196,7 +192,7 @@ class CreateGuardianAccount extends Component {
           <TextInput
             style={{width: 200, height: 40}}
             placeholder='Your Name'
-            onChangeText={ (value) => this.handleChange(value, 'name') } 
+            onChangeText={ (value) => this.handleChange(value, 'displayName') } 
           />
 
           <View onChange={ this.radioButtonChange }>
@@ -212,7 +208,7 @@ class CreateGuardianAccount extends Component {
             <TextInput 
               style={{width: 200, height: 40}}
               placeholder="Street Address"
-              onChangeText={ (value) => this.handleChange(value, 'address') } />
+              onChangeText={ (value) => this.handleChange(value, 'street') } />
             <View className="no-wrap">
               <View>
                 <TextInput
