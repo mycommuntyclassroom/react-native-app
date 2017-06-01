@@ -83,9 +83,9 @@ class CreateGuardianAccount extends Component {
    * @param e
    */
   handleChange(value, fieldName) {
-    this.setState({
-      fieldName: value
-    });
+    let inputObj = {}
+    inputObj[fieldName] = value;
+    this.setState(inputObj);
   }
 
   checkboxChange(e) {
@@ -149,7 +149,8 @@ class CreateGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Here are the props passed in CREAT G-acct: ', this.props)
+    console.log('Here are the props passed in CREAT G-acct: ', this.props);
+    console.log('THIS IS THE STATE DATA: ', this.state);
     const props = this.props
 
     let formData = this.state.formData || {};
