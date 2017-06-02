@@ -9,7 +9,7 @@ import Header from '../Header/Header';
 import Hero from '../Hero/Hero';
 // import FooterNav from '../FooterNav';
 // import Summary from '../Summary';
-// import CirclesTeaser from '../CirclesTeaser';
+import CirclesTeaser from '../CirclesTeaser/CirclesTeaser';
 // import EventTeaser from '../EventTeaser';
 
 class AdminView extends Component {
@@ -20,17 +20,18 @@ class AdminView extends Component {
 
 
         // <Summary {...props} />
-        // <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} />
         // <EventTeaser {...props} />
         // <FooterNav { ...props } />
   render() {
     const props = this.props;
     const { app } = props;
+    const { user } = app.props;
 
     return(
       <View>
         <Header { ...props } />
-        <Hero {...props} user={app.props.user} />
+        <Hero {...props} user={user} />
+        <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} />
       </View>
     )
   }

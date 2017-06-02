@@ -7,8 +7,7 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Button from '../components/Button';
-
-import Dimensions from 'Dimensions';
+import { deviceDimensions } from '../styles';
 
 class Tutorial extends Component {
   constructor(props) {
@@ -37,6 +36,8 @@ class Tutorial extends Component {
   }
 
   render() {
+
+    console.log('***TUT rendered***!!!: deviceDimensions: ', deviceDimensions)
     const { style, app } = this.props;
 
     const getSlideIndex = (slideIndex) => {
@@ -45,16 +46,14 @@ class Tutorial extends Component {
       slideIndex === 4 && this.setState({nextBtnName: 'Get Started'})
     }
 
-    const deviceWidth = Dimensions.get('window').width;
-    const deviceHeight = Dimensions.get('window').height;
-    const imageDimensions = { width: deviceWidth, height: 500 };
+    const imageDimensions = { width: deviceDimensions.deviceWidth, height: 500 };
 
     return (
       <View style={{ height:'100%', backgroundColor: '#74bcf7' }}>
         <Carousel
           ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={deviceWidth}
-          itemWidth={deviceWidth}
+          sliderWidth={deviceDimensions.deviceWidth}
+          itemWidth={deviceDimensions.deviceWidth}
           onSnapToItem={(slideIndex) => { getSlideIndex(slideIndex) }}
         >
           <View><Image source={require('../../images/intro-tut-card-0.png')} resizeMode='contain' style={imageDimensions} /></View>
