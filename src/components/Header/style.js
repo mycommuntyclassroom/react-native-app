@@ -1,15 +1,19 @@
 import { StyleSheet } from 'react-native';
+import variables from '../../styles/variables';
 
 const HEADER = {};
 
 /* Header Styles */
 
+HEADER.container = {
+  paddingTop: 30,
+  height: 93,
+  backgroundColor: variables.mc2PowderBlue
+}
+
 HEADER.baseHeader = {
   display: 'flex',
-  width: '100%',
-  maxWidth: '100%',
-  minHeight: 73,
-  backgroundColor: 'blue'
+  flexDirection: 'row',
 }
 
 HEADER.baseLogo = {

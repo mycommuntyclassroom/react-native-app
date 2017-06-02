@@ -11,6 +11,7 @@ import Nav from '../Nav';
 import Invite from '../Invite/Invite';
 import Link from '../Link/Link';
 import style from './style';
+import globalStyles from '../../styles';
 
 class Header extends Component {
   static PropTypes={
@@ -33,12 +34,6 @@ class Header extends Component {
    *
    * @param e
    */
-  handleMenu(e) {
-    e.preventDefault();
-    this.setState({
-      navOpen: !this.state.navOpen
-    })
-  }
 
   handleInvite(e) {
     e.preventDefault();
@@ -57,12 +52,6 @@ class Header extends Component {
     console.log('HEADER props: ', props)
     const { app } = props;
 
-    const renderNav=() => (
-      <View className="nav-holder">
-        <Nav ref='navMenu' app={this} style={style} />
-      </View>
-    );
-
     const renderInvite = () => (
       <View className = "invite-holder" onClick={ this.handleInvite } >
         <Invite { ...this.props } handleInvite={ (e) => this.handleInvite(e) } />
@@ -71,7 +60,7 @@ class Header extends Component {
 
     let headerLinks;
 
-    // determine if the user is editing/viewing a profile, output the appropriate view
+    // determine if the user is editing/viewing a profile, and output the appropriate view
     if(props.editMode) {
       headerLinks =
         <View>
@@ -93,12 +82,12 @@ class Header extends Component {
     } else {
       headerNav =
         <TouchableHighlight onPress={() => app.refs.navMenu.open()}>
-          <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{ width: 50 }}/>
+          <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{ width: 50, height: 50}}/>
         </TouchableHighlight>
     }
 
     return (
-      <View className="wrap">
+      <View style={style.container}>
         <View style={style.baseHeader}>
           <View className="base-logo hamburger">
             { headerNav }

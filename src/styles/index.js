@@ -17,10 +17,8 @@ STYLE.loader = {
 
 STYLE.container = {
   flex: 1,
-  alignItems: 'center',
   // justifyContent: 'space-between',
-  padding: 20,
-  backgroundColor: '#eee'
+  paddingTop: 20
 };
 
 STYLE.title = {

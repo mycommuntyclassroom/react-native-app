@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import variables from '../../styles/variables';
+// import variables from '../../styles/variables';
 
 const STYLE = {};
 
