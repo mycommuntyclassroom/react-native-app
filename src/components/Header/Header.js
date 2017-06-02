@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types';
 import BackButton from '../BackButton/BackButton';
 import Nav from '../Nav';
-// import Invite from '../Invite';
+import Invite from '../Invite/Invite';
 import Link from '../Link/Link';
 
 class Header extends Component {
@@ -25,7 +25,6 @@ class Header extends Component {
       inviteOpen: false
     };
 
-    this.handleMenu = this.handleMenu.bind(this);
     this.handleInvite = this.handleInvite.bind(this);
   }
 
@@ -54,17 +53,18 @@ class Header extends Component {
   render() {
 
     const props = this.props;
+    console.log('HEADER props: ', props)
     const { app } = props;
 
     const renderNav=() => (
       <View className="nav-holder">
-        <Nav menu={ this.handleMenu } />
+        <Nav ref='navMenu' app={this} style={style} />
       </View>
     );
-        // <Invite { ...this.props } handleInvite={ (e) => this.handleInvite(e) } />
 
     const renderInvite = () => (
       <View className = "invite-holder" onClick={ this.handleInvite } >
+        <Invite { ...this.props } handleInvite={ (e) => this.handleInvite(e) } />
       </View>
     );
 
@@ -80,7 +80,7 @@ class Header extends Component {
       headerLinks =
         <View>
           <Link onClick={ this.handleInvite } text='Invite' />
-          <Link txt='Donate' />
+          <Link text='Donate' />
         </View>
     }
 
@@ -91,7 +91,7 @@ class Header extends Component {
       headerNav = <BackButton />
     } else {
       headerNav =
-        <TouchableHighlight onClick={ this.handleMenu }>
+        <TouchableHighlight onPress={() => this.props.app.refs.navMenu.open()}>
           <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{ width: 50 }}/>
         </TouchableHighlight>
     }
@@ -109,7 +109,6 @@ class Header extends Component {
             {/** empty block for now **/}
           </View>
         </View>
-        { this.state.navOpen ? renderNav() : false }
         { this.state.inviteOpen ? renderInvite() : false }
       </View>
     )

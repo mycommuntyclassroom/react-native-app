@@ -109,14 +109,9 @@ class App extends Component {
           style={style.fullscreen}
           initialRoute={ROUTES[0]}
           renderScene={this.renderScene}
-          configureScene={this.configureScene}/>
+          configureScene={this.configureScene} />
 
         <Nav ref='navMenu' app={this} style={style} />
-
-        <Button
-          text='open'
-          onPress={() => this.refs.navMenu.open()}
-          extraStyle={buttonStyle} />
 
       </View>
     );

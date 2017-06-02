@@ -21,7 +21,7 @@ class Dashboard extends Component {
     return(
       <View>
         { status === 'ANONYMOUS' && app.goToScene('Welcome', {app}) }
-        <AdminView />
+        <AdminView {...props} />
       </View>
     )
   }
