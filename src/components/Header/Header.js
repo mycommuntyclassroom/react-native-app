@@ -10,6 +10,7 @@ import BackButton from '../BackButton/BackButton';
 import Nav from '../Nav';
 import Invite from '../Invite/Invite';
 import Link from '../Link/Link';
+import style from './style';
 
 class Header extends Component {
   static PropTypes={
@@ -91,14 +92,14 @@ class Header extends Component {
       headerNav = <BackButton />
     } else {
       headerNav =
-        <TouchableHighlight onPress={() => this.props.app.refs.navMenu.open()}>
+        <TouchableHighlight onPress={() => app.refs.navMenu.open()}>
           <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{ width: 50 }}/>
         </TouchableHighlight>
     }
 
     return (
       <View className="wrap">
-        <View className="base-header">
+        <View style={style.baseHeader}>
           <View className="base-logo hamburger">
             { headerNav }
           </View>

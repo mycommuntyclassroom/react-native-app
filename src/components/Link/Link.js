@@ -4,7 +4,7 @@ import {
   Text
 } from 'react-native';
 
-import style from '../../style';
+import style from '../../styles';
 
 const Link = ({ text, onClick, extraStyle }) => (
   <TouchableHighlight style={[style.Link, extraStyle || {}]} onClick={onClick}>

@@ -9,7 +9,7 @@ import {
 
 import random from '../helpers/random';
 import scenes from '../scenes';
-import style from '../style';
+import style from '../styles';
 import Nav from './Nav';
 import Button from './Button';
 import store from '../redux/store';

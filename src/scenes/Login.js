@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   TextInput
 } from 'react-native';
-import style from '../style';
+import style from '../styles';
 
 class Login extends Component {
 

@@ -4,7 +4,7 @@ import {
   Text
 } from 'react-native';
 
-import style from '../style';
+import style from '../styles';
 
 const Button = ({ text, onPress, extraStyle }) => (
   <TouchableHighlight style={[style.Button, extraStyle || {}]} onPress={onPress}>
