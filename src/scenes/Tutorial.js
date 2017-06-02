@@ -23,6 +23,7 @@ class Tutorial extends Component {
   }
 
   componentDidMount() {
+    // console for sanity check troubleshooting
     console.log('mounted Tutorial', this.props);
   }
 
@@ -39,9 +40,8 @@ class Tutorial extends Component {
     const { style, app } = this.props;
 
     const getSlideIndex = (slideIndex) => {
+      // update the state with the index of the slider
       this.setState({slideIndex});
-      console.log('this.state.slideIndex: ', this.state.slideIndex);
-      console.log('slideIndex === 4 : ', slideIndex === 4 )
       slideIndex === 4 && this.setState({nextBtnName: 'Get Started'})
     }
 

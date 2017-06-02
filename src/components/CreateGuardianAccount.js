@@ -136,8 +136,6 @@ class CreateGuardianAccount extends Component {
     // update the database
     updateProfile(data);
 
-    console.log('submitForm method ended')
-
     // navigate to the tutorial page
     app.goToScene('Tutorial', {app})
   }
@@ -147,14 +145,8 @@ class CreateGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Here are the props passed in CREAT G-acct: ', this.props);
-    console.log('THIS IS THE STATE DATA: ', this.state);
     const props = this.props
-
     let formData = this.state.formData || {};
-
-    console.log('HERE is the formData: ', formData);
-    
     const { displayName } = props.auth
 
     const outputCheckboxes = () => {

@@ -71,9 +71,7 @@ class App extends Component {
     const props = this.props;
     // get the current scene
     let currentScene = navigator.getCurrentRoutes().pop().scene;
-    console.log('currentScene: ', currentScene)
-    console.log('here are the App props: ', props);
-    console.log('navigator: ', navigator)
+    // get the status of the authentication
     let { status } = props.auth;
     console.log('status: ', status)
     // const dataIsReady = this.props.dataReady;
@@ -91,9 +89,12 @@ class App extends Component {
     // since there are several different scenes that could be rendered
     // based on your Auth status, determine which page to render on the index
     // 
+
+    // if the user is signed in, take them to the dashboard
     if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome')) {
       this.goToScene('Dashboard')
     } 
+    // if the user is anonymous, take them to the welcome screen
     else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene === 'Loading') {
      this.goToScene('Welcome');
     } 
@@ -139,6 +140,5 @@ class App extends Component {
     
   }
 }
-
 
 export default App;
