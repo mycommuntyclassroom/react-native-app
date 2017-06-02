@@ -79,6 +79,7 @@ class Nav extends Component {
   }
 
   open() {
+    console.log('open NAV called');
     this.animate(0);
   }
 

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { createUserWithEmailAndPassword } from '../helpers/firebase';
+import { signInWithEmailAndPassword } from '../helpers/firebase';
 import {
   View,
   Text,
   TouchableHighlight,
   TextInput
 } from 'react-native';
+import style from '../styles';
 
 class Login extends Component {
 
@@ -19,9 +20,8 @@ class Login extends Component {
   }
 
   submitForm(state) {
-    console.log('submitForm CALLED')
     const { email, password } = state;
-    createUserWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(email, password);
   }
 
   render() {
@@ -48,21 +48,14 @@ class Login extends Component {
       </View>
     );
 
-    const { style, app } = this.props;
+    const props = this.props;
+    const { auth, app } = props;
+    const { status } = auth;
+
     return (
       <View style={[style.container, { justifyContent: 'center', backgroundColor: 'gray' }]}>
-        <Text>
-          Welcome Seach Page
-        </Text>
-        { signUpView }
-        <TouchableHighlight
-          onPress={() => {
-            app.goToScene('Settings', {app});
-          }}>
-          <Text style={style.navText}>
-            Search your area
-          </Text>
-        </TouchableHighlight>
+        { status === 'ANONYMOUS' && signUpView }
+        { status === 'SIGNED_IN' && app.goToScene('Dashboard', {app}) } 
       </View>
     );
   };

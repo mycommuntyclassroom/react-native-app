@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-// import variables from '../../styles/variables';
+import variables from './variables';
 
 const STYLE = {};
 
@@ -17,10 +17,8 @@ STYLE.loader = {
 
 STYLE.container = {
   flex: 1,
-  alignItems: 'center',
   // justifyContent: 'space-between',
-  padding: 20,
-  backgroundColor: '#eee'
+  paddingTop: 20
 };
 
 STYLE.title = {
