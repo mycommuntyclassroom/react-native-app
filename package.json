@@ -13,6 +13,7 @@
     "firebase-admin": "^4.2.1",
     "firebase-tools": "^3.6.1",
     "moment": "^2.18.1",
+    "prop-types": "^15.5.10",
     "rc-time-picker": "^2.4.1",
     "react": "16.0.0-alpha.6",
     "react-datepicker": "^0.46.0",

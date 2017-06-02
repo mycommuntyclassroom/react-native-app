@@ -5,11 +5,11 @@ import {
   Text,
   Image
 } from 'react-native';
-
+import PropTypes from 'prop-types';
 import BackButton from '../BackButton/BackButton';
 import Nav from '../Nav';
-import Invite from '../Invite';
-import Link from '../Link';
+// import Invite from '../Invite';
+import Link from '../Link/Link';
 
 class Header extends Component {
   static PropTypes={
@@ -61,10 +61,10 @@ class Header extends Component {
         <Nav menu={ this.handleMenu } />
       </View>
     );
+        // <Invite { ...this.props } handleInvite={ (e) => this.handleInvite(e) } />
 
     const renderInvite = () => (
       <View className = "invite-holder" onClick={ this.handleInvite } >
-        <Invite { ...this.props } handleInvite={ (e) => this.handleInvite(e) } />
       </View>
     );
 
@@ -92,7 +92,7 @@ class Header extends Component {
     } else {
       headerNav =
         <TouchableHighlight onClick={ this.handleMenu }>
-          <Image source={require('../../logo.png')} resizeMode='contain' style={{ width: 50 }}/>
+          <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{ width: 50 }}/>
         </TouchableHighlight>
     }
 
