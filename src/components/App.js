@@ -66,29 +66,12 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate props::: ', this.props)
     const { navigator } = this.refs
     const props = this.props;
     // get the current scene
     let currentScene = navigator.getCurrentRoutes().pop().scene;
-    // get the status of the authentication
+    // get the status of the user authentication
     let { status } = props.auth;
-    console.log('status: ', status)
-    // const dataIsReady = this.props.dataReady;
-    // const dataWasReady = prevProps.dataReady;
-    // const justLoaded = dataIsReady && !dataWasReady;
-    // if (justLoaded) {
-
-      // If first time starting app, show welcome scene
-      // this.goToScene('Welcome');
-
-      // Else If not logged in, go to login
-
-      // If already logged in, go to last visited page (use local data)
-    // }
-    // since there are several different scenes that could be rendered
-    // based on your Auth status, determine which page to render on the index
-    // 
 
     // if the user is signed in, take them to the dashboard
     if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome')) {
