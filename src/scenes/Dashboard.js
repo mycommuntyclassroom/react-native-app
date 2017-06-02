@@ -16,11 +16,12 @@ class Dashboard extends Component {
     const props = this.props;
     const { app } = props;
     let { status } = props.auth;
+    console.log('This is the status: ', status)
 
     return(
       <View>
         { status === 'ANONYMOUS' && app.goToScene('Welcome', {app}) }
-        { status === 'SIGNED_IN' && <AdminView /> }
+        <AdminView />
       </View>
     )
   }

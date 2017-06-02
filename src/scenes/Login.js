@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createUserWithEmailAndPassword } from '../helpers/firebase';
+import { signInWithEmailAndPassword } from '../helpers/firebase';
 import {
   View,
   Text,
@@ -21,7 +21,7 @@ class Login extends Component {
 
   submitForm(state) {
     const { email, password } = state;
-    createUserWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(email, password);
   }
 
   render() {

@@ -61,3 +61,7 @@ export const database = firebase.database();
 export function createUserWithEmailAndPassword(email, password) {
   firebase.auth().createUserWithEmailAndPassword(email, password)
 }
+
+export function signInWithEmailAndPassword(email, password) {
+  firebase.auth().signInWithEmailAndPassword(email, password)
+}
