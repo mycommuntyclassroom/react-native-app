@@ -4,29 +4,26 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
+import AdminView from '../components/dashboard-views/AdminView';
 
 class Dashboard extends Component {
-
-  constructor() {
-    super();
-
-  }
 
   componentDidMount() {
     console.log('mounted Dashboard', this.props);
   }
 
   render() {
-    const { style, app } = this.props;
-    return (
-      <View style={[style.container, { backgroundColor: 'white' }]}>
-        <Text>
-          Dashboard HERE
-        </Text>
-      </View>
-    );
-  };
+    const props = this.props;
+    const { app } = props;
+    let { status } = props.auth;
 
+    return(
+      <View>
+        { status === 'ANONYMOUS' && app.goToScene('Welcome', {app}) }
+        { status === 'SIGNED_IN' && <AdminView /> }
+      </View>
+    )
+  }
 }
 
 export default Dashboard;
