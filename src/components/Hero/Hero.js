@@ -17,6 +17,8 @@ class Hero extends Component {
 
     const props = this.props
     let userData
+
+    console.log('props.user: ', props.user);
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
     props.guardianData ? userData = props.guardianData : userData = props.user
@@ -24,22 +26,26 @@ class Hero extends Component {
 
     let userImg = profileImage || photoURL;
 
-    let ImageStyles = {
-      backgroundImage: `url('${userImg}')`,
-      backgroundSize: 'cover'
-    };
+    // let ImageStyles = {
+    //   backgroundImage: `url('${userImg}')`,
+    //   backgroundSize: 'cover'
+    // };
 
     return(
       <View className="hero">
-        <View className="profile-image" style={ ImageStyles }>
-          <Text className="main-info">
+        <View className="profile-image">
+          <View className="main-info">
             <Text>{ displayName }</Text>
-            <Text className="address"> {street}, {city}, <View className="caps">{state}</View> {zipCode}</Text>
-          </Text>
+            <View className="address"> 
+              <Text>{street}, {city}, </Text> 
+              <Text className="caps">{state}</Text> 
+              <Text>{zipCode}</Text>
+            </View>
+          </View>
         </View>
         { !props.guardianData && 
             <TouchableHighlight onPress={() => app.goToScene('editProfile', {app})} className="add-item-button edit-profile-button">
-              <FaPencil/>
+              <Text>FaPencil</Text>
             </TouchableHighlight>
         }
       </View>
