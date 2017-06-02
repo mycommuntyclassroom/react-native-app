@@ -76,9 +76,9 @@ export const startListeningToAuthChanges = (navigator) => {
         authenticateUser(user, navigator);
 
       }
-      // else {
-      //   dispatch(signedOut());
-      // }
+      else {
+        dispatch(signedOut());
+      }
     });
   };
 };

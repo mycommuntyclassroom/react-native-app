@@ -20,10 +20,10 @@
     "react-native": "^0.43.4",
     "react-native-checkbox": "^1.1.0",
     "react-native-simple-radio-button": "^2.5.0-alpha.1",
+    "react-native-snap-carousel": "^2.1.4",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0",
-    "slick-carousel": "^1.6.0"
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

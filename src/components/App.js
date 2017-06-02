@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import random from '../helpers/random';
-import { goToScene } from '../helpers/navigation';
 import scenes from '../scenes';
 import style from '../style';
 import Nav from './Nav';
@@ -67,27 +66,33 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate props::: ', this.props)
-    // const dataIsReady = this.props.dataReady;
-    // const dataWasReady = prevProps.dataReady;
-    // const justLoaded = dataIsReady && !dataWasReady;
-    // if (justLoaded) {
+    const { navigator } = this.refs
+    const props = this.props;
+    // get the current scene
+    let currentScene = navigator.getCurrentRoutes().pop().scene;
+    // get the status of the user authentication
+    let { status } = props.auth;
 
-      // If first time starting app, show welcome scene
-      // this.goToScene('Welcome');
-
-      // Else If not logged in, go to login
-
-      // If already logged in, go to last visited page (use local data)
-    // }
+    // if the user is signed in, take them to the dashboard
+    if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome')) {
+      this.goToScene('Dashboard')
+    } 
+    // if the user is anonymous, take them to the welcome screen
+    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene === 'Loading') {
+     this.goToScene('Welcome');
+    } 
+    else {
+      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***');
+    }
   }
 
   componentDidMount() {
-    store.dispatch(startListeningForUsers(this.refs.navigator));
-    store.dispatch(startListeningToAuthChanges(this.refs.navigator));
-    store.dispatch(startListeningForNotifications(this.refs.navigator));
-    this.goToScene('Welcome');
-    console.log('this.refs.navigator: ', this.refs.navigator)
+    const { navigator } = this.refs
+
+    // start listening for changes in Firebase
+    store.dispatch(startListeningForUsers(navigator));
+    store.dispatch(startListeningToAuthChanges(navigator));
+    store.dispatch(startListeningForNotifications(navigator));
   }
 
   render() {
@@ -118,6 +123,5 @@ class App extends Component {
     
   }
 }
-
 
 export default App;
