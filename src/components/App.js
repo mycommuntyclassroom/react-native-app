@@ -94,12 +94,11 @@ class App extends Component {
     if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome')) {
       this.goToScene('Dashboard')
     } 
-    else if((status === 'SIGN_OUT' || status === 'CREATING_ACCOUNT') && currentScene === 'Loading') {
+    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene === 'Loading') {
      this.goToScene('Welcome');
     } 
     else {
-      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered Welcome***');
-      this.goToScene('Tutorial');
+      console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***');
     }
   }
 

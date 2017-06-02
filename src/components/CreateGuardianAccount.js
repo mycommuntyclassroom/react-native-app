@@ -139,8 +139,7 @@ class CreateGuardianAccount extends Component {
     console.log('submitForm method ended')
 
     // navigate to the tutorial page
-    // TODO:::: NAV for native
-    app.goToScene('tutorial', {app})
+    app.goToScene('Tutorial', {app})
   }
 
   /**
