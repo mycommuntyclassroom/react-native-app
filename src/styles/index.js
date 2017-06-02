@@ -1,9 +1,19 @@
 import { StyleSheet } from 'react-native';
 import variables from './variables';
+import Dimensions from 'Dimensions';
+
+// save device dimensions
+const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+
+export const deviceDimensions = {
+  deviceWidth,
+  deviceHeight
+}
 
 const STYLE = {};
 
-/* Global */
+/* Global styles */
 
 STYLE.fullscreen = {
   flex: 1
