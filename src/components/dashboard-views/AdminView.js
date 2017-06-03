@@ -8,7 +8,7 @@ import {
 import Header from '../Header/Header';
 import Hero from '../Hero/Hero';
 // import FooterNav from '../FooterNav';
-// import Summary from '../Summary';
+import Summary from '../Summary/Summary';
 import CirclesTeaser from '../CirclesTeaser/CirclesTeaser';
 // import EventTeaser from '../EventTeaser';
 
@@ -18,8 +18,6 @@ class AdminView extends Component {
     console.log('mounted Dashboard: ADMIN VIEW', this.props);
   }
 
-
-        // <Summary {...props} />
         // <EventTeaser {...props} />
         // <FooterNav { ...props } />
   render() {
@@ -31,6 +29,7 @@ class AdminView extends Component {
       <View>
         <Header { ...props } />
         <Hero {...props} user={user} />
+        <Summary {...props} />
         <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} />
       </View>
     )
