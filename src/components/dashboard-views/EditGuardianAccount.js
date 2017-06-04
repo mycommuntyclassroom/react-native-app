@@ -206,30 +206,41 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the RENDER')
+    console.log('Reached the RENDER, props: ', this.props)
     const props = this.props;
-    const { uid, displayName, profileImage } = props.user;
+    const { app } = props
+    const { uid, displayName, profileImage } = app.props.user;
     const { uploadProgress } = this.state;
     // grab the form data set within the state
     let formData = this.state.formData || {};
 
+    console.log('formData: ', formData)
+
     const outputCheckboxes = () => {
+      console.log('outputCheckboxes Called ');
       // skip this function if the state doesn't have basic info
+      console.log('this is the uid: ', uid);
       if (uid === null) { return }
-        
-      let checkboxOutput = []
+      console.log('guard PASSED')
+      let checkboxOutput = [];
       for (var category in formData) {
+        console.log('this is the category: ', category)
         checkboxOutput.push(
-          <View key={category} onChange={ this.checkboxChange }>
+          <View key={category}>
             <Text>{category}</Text>
             {formData[category].map(item => {
+              console.log('checkbox inner called, item: ', item)
+              console.log('this is the inner category: ', category)
+              console.log('this is the state:', this.state )
+              console.log('this.state[`${category}`]', this.state[`${category}`] )
               var checkbox = '';
               // pre-check any items that were selected and saved
-              if (this.state[`${category}`].indexOf(item) > -1) {
+              if (this.state.formData[`${category}`].indexOf(item) > -1) {
                 checkbox = 
                   <CheckBox
                     label={item}
                     checked={true}
+                    key={item}
                     // using '!checked' to force a truthy value, this seems to be an issue with the component 
                     onChange={(checked) => this.checkboxChange(item, category, !checked) }
                   />
@@ -237,6 +248,7 @@ class EditGuardianAccount extends Component {
                 checkbox = 
                   <CheckBox
                     label={item}
+                    key={item}
                     // using '!checked' to force a truthy value, this seems to be an issue with the component 
                     onChange={(checked) => this.checkboxChange(item, category, !checked) }
                   />
@@ -249,7 +261,9 @@ class EditGuardianAccount extends Component {
         )
       }
       return checkboxOutput
+      console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
+
 
     // set the data structure for the radio buttons
     const radio_props = [
