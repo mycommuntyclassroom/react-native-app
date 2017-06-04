@@ -14,7 +14,6 @@ import Button from '../Button';
 
 import { updateProfile } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
-// import FileInput from 'react-file-input';
 import PageLoader from '../PageLoader/PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -216,9 +215,8 @@ class EditGuardianAccount extends Component {
 
     const outputCheckboxes = () => {
       // skip this function if the state doesn't have basic info
-      let { displayName } = this.state
-      if (displayName === null || displayName === undefined) { return }
-
+      if (uid === null) { return }
+        
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
@@ -260,96 +258,91 @@ class EditGuardianAccount extends Component {
     ];
 
     let userGender = this.state.gender
+    let userImage = profileImage ? require(`${profileImage}`) : require('../../../images/blank-profile-pic.png');
 
     return(
       <ScrollView className="create-account">
-        {
-          displayName === null
-            ? <PageLoader/>
-            : 
-          <View>
-          <Text> Editing Profile </Text>
 
-          <View className="image-uploader">
-            {
-              uploadProgress &&
-              <View>
-                <Text>Uploading</Text>: { Math.round(uploadProgress) }%
-              </View>
-            }
-            <View className="image-uploader--image-container">
-              <Image source={require(this.state.profileImage)} 
-                     className="image-uploader--photo"
-                     resizeMode='contain' 
-                     style={{width: '90%', height: 100}} />
-            </View>
-            <View className="image-uploader--identification">
-              <Text>File Input</Text>
-            </View>
+        <Text> Editing Profile </Text>
+
+        <View className="image-uploader">
+          <View className="image-uploader--image-container">
+            <Image 
+              source={userImage} 
+              className="image-uploader--photo"
+              resizeMode='contain' 
+              style={{width: '90%', height: 100}} />
           </View>
-
-          <View onSubmit={ this.submitForm } >
-
-            <TextInput name="displayName"
-                   type="text"
-                   value={ this.state.displayName }
-                   onChange={ this.handleChange } />
-
-            <View>
-              <RadioForm
-                radio_props={radio_props}
-                initial={0}
-                onPress={(value) => { this.radioButtonChange }}
-              />
-            </View>
-
-            <View className="address">
-              <Text>Address</Text>
-              <TextInput 
-                name="street"
-                type="text"
-                placeholder="Street Address"
-                value={ this.state.street }
-                onChange={ this.handleChange }
-              />
-              <View className="no-wrap">
-                <View>
-                  <TextInput 
-                    name="city"
-                    type="text"
-                    placeholder="City"
-                    value={ this.state.city }
-                    onChange={ this.handleChange } 
-                  />
-                </View>
-                <View>
-                  <TextInput 
-                    className="state-field"
-                    name="state"
-                    type="text"
-                    placeholder="State"
-                    value={ this.state.state }
-                    onChange={ this.handleChange } 
-                  />
-                </View>
-                <View>
-                  <TextInput 
-                    name="zipCode"
-                    type="text"
-                    placeholder="Zipcode"
-                    value={ this.state.zipCode }
-                    onChange={ this.handleChange } 
-                  />
-                </View>
-              </View>
-            </View>
-
-            { outputCheckboxes() }
-
-            <Button text='Submit' onPress= { () => this.submitForm() }></Button>
+          <View className="image-uploader--identification">
+            <Text>File Input</Text>
           </View>
         </View>
-        }
+
+        <View>
+          <TextInput
+            style={{height: 50}}
+            name="displayName"
+            type="text"
+            value={ this.state.displayName }
+            onChange={ this.handleChange } />
+
+          <View>
+            <RadioForm
+              radio_props={radio_props}
+              initial={0}
+              onPress={(value) => { this.radioButtonChange }}
+            />
+          </View>
+
+          <View className="address">
+            <Text>Address</Text>
+            <TextInput
+              style={{height: 50}}
+              name="street"
+              type="text"
+              placeholder="Street Address"
+              value={ this.state.street }
+              onChange={ this.handleChange }
+            />
+            <View className="no-wrap">
+              <View>
+                <TextInput
+                  style={{height: 50}}
+                  name="city"
+                  type="text"
+                  placeholder="City"
+                  value={ this.state.city }
+                  onChange={ this.handleChange } 
+                />
+              </View>
+              <View>
+                <TextInput
+                  style={{height: 50}}
+                  className="state-field"
+                  name="state"
+                  type="text"
+                  placeholder="State"
+                  value={ this.state.state }
+                  onChange={ this.handleChange } 
+                />
+              </View>
+              <View>
+                <TextInput
+                  style={{height: 50}}
+                  name="zipCode"
+                  type="text"
+                  placeholder="Zipcode"
+                  value={ this.state.zipCode }
+                  onChange={ this.handleChange } 
+                />
+              </View>
+            </View>
+          </View>
+
+          { outputCheckboxes() }
+
+          <Button text='Submit' onPress= { () => this.submitForm() }></Button>
+        </View>
       </ScrollView>
     )
   }
