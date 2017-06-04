@@ -19,9 +19,8 @@ class EventTeaser extends Component {
   }
 
   goToScene(scene, id=0) {
-    console.log('goToScene CALLED')
     const { app } = this.props;
-    app.goToScene(scene, {app}, id)
+    app.goToScene(scene, {app, id})
   }
 
   render(){ 
@@ -48,7 +47,7 @@ class EventTeaser extends Component {
       teaserOutput = 
         <View className="event-teaser-element null-teaser">
           <Text>Want to host? Add an event here</Text>
-          <Link onClick={ () => this.goToScene('Tutorial') } text='TiPlus' />
+          <Link onClick={ () => this.goToScene('addEvent') } text='TiPlus' />
         </View>;
       nullClass = 'null-teaser';
     } else {
@@ -66,10 +65,10 @@ class EventTeaser extends Component {
               <Image source={require(image)} resizeMode='contain' />
             </View>
             <View className="event-View">
-              <Link onClick={ this.goToScene('editEvent', teaser) } text='FaPencil' />
+              <Link onClick={ () => this.goToScene('editEvent', teaser) } text='FaPencil' />
               {
                !props.guardianData &&
-                  <Link onClick={ this.goToScene('addEvent') } text='FaPencil' />
+                  <Link onClick={ () => this.goToScene('addEvent') } text='FaPencil' />
               }
               <Text>{title}</Text>
               <View className="tags">
