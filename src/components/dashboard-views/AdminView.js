@@ -7,10 +7,10 @@ import {
 
 import Header from '../Header/Header';
 import Hero from '../Hero/Hero';
-// import FooterNav from '../FooterNav';
 import Summary from '../Summary/Summary';
 import CirclesTeaser from '../CirclesTeaser/CirclesTeaser';
-// import EventTeaser from '../EventTeaser';
+import EventTeaser from '../EventTeaser/EventTeaser';
+// import FooterNav from '../FooterNav';
 
 class AdminView extends Component {
 
@@ -18,7 +18,6 @@ class AdminView extends Component {
     console.log('mounted Dashboard: ADMIN VIEW', this.props);
   }
 
-        // <EventTeaser {...props} />
         // <FooterNav { ...props } />
   render() {
     const props = this.props;
@@ -31,6 +30,7 @@ class AdminView extends Component {
         <Hero {...props} user={user} />
         <Summary {...props} />
         <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} />
+        <EventTeaser {...props} />
       </View>
     )
   }
