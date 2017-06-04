@@ -8,7 +8,7 @@ import {
 
 import CheckBox from 'react-native-checkbox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import Button from '../components/Button';
+import Button from '../Button';
 
 import { updateProfile } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
@@ -28,7 +28,7 @@ class EditGuardianAccount extends Component {
             .once('value')
             .then((snapshot) => {
               // store the formData in the state
-              this.setState({formData: snapshot.val()}))
+              this.setState({formData: snapshot.val()});
             }) 
 
     const { 
@@ -271,10 +271,7 @@ class EditGuardianAccount extends Component {
                      style={{width: '90%', height: 100}} />
             </View>
             <View className="image-uploader--identification">
-              <FileInput name="image-uploader--fileinput"
-                         accept=".png,.gif,.jpg"
-                         className="image-uploader--upload"
-                         onChange={this.handleFileUpload} />
+              <Text>File Input</Text>
             </View>
           </View>
 

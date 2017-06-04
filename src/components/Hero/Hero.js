@@ -16,6 +16,8 @@ class Hero extends Component {
   render() {
 
     const props = this.props
+    const { app } = props
+    console.log('THIS IS THE HERO APP: ', app);
     let userData
 
     console.log('props.user: ', props.user);
@@ -44,7 +46,7 @@ class Hero extends Component {
           </View>
         </View>
         { !props.guardianData && 
-            <TouchableHighlight onPress={() => app.goToScene('editProfile', {app})} className="add-item-button edit-profile-button">
+            <TouchableHighlight onPress={() => app.goToScene('EditGuardian', {app})} className="add-item-button edit-profile-button">
               <Text>FaPencil</Text>
             </TouchableHighlight>
         }

@@ -12,6 +12,7 @@ import Welcome from './Welcome';
 import WelcomeSearch from './WelcomeSearch';
 import Tutorial from './Tutorial';
 import Dashboard from './Dashboard';
+import EditGuardian from './EditGuardian';
 
 export default {
   Loading,
@@ -27,5 +28,6 @@ export default {
   Welcome,
   WelcomeSearch,
   Tutorial,
-  Dashboard
+  Dashboard,
+  EditGuardian
 };
