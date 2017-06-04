@@ -171,6 +171,7 @@ class CreateGuardianAccount extends Component {
       return checkboxOutput
     }
 
+    // set the data structure for the radio buttons
     const radio_props = [
       {label: 'Male', value: 'male' },
       {label: 'Female', value: 'female' }
@@ -187,7 +188,7 @@ class CreateGuardianAccount extends Component {
             onChangeText={ (value) => this.handleChange(value, 'displayName') } 
           />
 
-          <View onChange={ this.radioButtonChange }>
+          <View>
             <RadioForm
               radio_props={radio_props}
               initial={0}

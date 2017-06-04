@@ -6,6 +6,10 @@ import {
   TextInput
 } from 'react-native';
 
+import CheckBox from 'react-native-checkbox';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import Button from '../components/Button';
+
 import { updateProfile } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
 // import FileInput from 'react-file-input';
@@ -82,48 +86,6 @@ class EditGuardianAccount extends Component {
     this.storageRef = storage.ref(`user-images/${props.auth.uid}/guardian`);
     this.handleFileUpload = this.handleFileUpload.bind(this);
   }
-
-  // 
-  // Backup function for setting state
-  // 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('componentWillReceiveProps called');
-  //   const { 
-  //           uid, displayName, profileImage, 
-  //           street, city, zipCode, gender, state
-  //         } = nextProps.user;
-
-  //   // build the state object with the key values in the props
-  //   let newStateObject = {
-  //     uid,
-  //     displayName,
-  //     profileImage,
-  //     street,
-  //     city,
-  //     zipCode,
-  //     gender,
-  //     state,
-  //     uploadProgress: null
-  //   }
-
-  //   // grab the form data set within local storage
-  //   const formData = JSON.parse(localStorage.formData);
-
-  //   // gather all of the checkbox categories and pass them to the state (categories) object
-  //   const checkBoxCategories = () => {
-  //     for (var category in formData) {
-  //       // add a new property to the newStateObject
-  //       // with the name of each checkbox group name and its checked fields
-  //       newStateObject[category] = nextProps.user[category]
-  //     }
-  //   }
-
-  //   checkBoxCategories();
-
-  //   // update the state after the render
-  //   this.setState(newStateObject)
-  //   console.log('this is the state obj after the insertion: ', this.state);
-  // }
 
   handleFileUpload(event) {
     const file = event.target.files[0];
@@ -250,19 +212,27 @@ class EditGuardianAccount extends Component {
           <View key={category} onChange={ this.checkboxChange }>
             <Text>{category}</Text>
             {formData[category].map(item => {
-              var checkbox = ''
+              var checkbox = '';
               // pre-check any items that were selected and saved
               if (this.state[`${category}`].indexOf(item) > -1) {
-                checkbox = <input type="checkbox" id={item} name={category} value={item} defaultChecked />
+                checkbox = 
+                  <CheckBox
+                    label={item}
+                    checked={true}
+                    // using '!checked' to force a truthy value, this seems to be an issue with the component 
+                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
+                  />
               } else {
-                checkbox = <input type="checkbox" id={item} name={category} value={item}/>
+                checkbox = 
+                  <CheckBox
+                    label={item}
+                    // using '!checked' to force a truthy value, this seems to be an issue with the component 
+                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
+                  />
               }
-              return ( 
-                <View key={item}>
-                  { checkbox }
-                  <label htmlFor={item}>{item}</label>
-                </View>
-              )
+
+              return checkbox;
+
             })}
           </View>
         )
@@ -270,10 +240,16 @@ class EditGuardianAccount extends Component {
       return checkboxOutput
     }
 
+    // set the data structure for the radio buttons
+    const radio_props = [
+      {label: 'Male', value: 'male' },
+      {label: 'Female', value: 'female' }
+    ];
+
     let userGender = this.state.gender
 
     return(
-      <View className="create-account">
+      <ScrollView className="create-account">
         {
           displayName === null
             ? <PageLoader/>
@@ -285,14 +261,14 @@ class EditGuardianAccount extends Component {
             {
               uploadProgress &&
               <View>
-                <strong>Uploading</strong>: { Math.round(uploadProgress) }%
+                <Text>Uploading</Text>: { Math.round(uploadProgress) }%
               </View>
             }
             <View className="image-uploader--image-container">
-              <img
-                className="image-uploader--photo"
-                src={ this.state.profileImage }
-              />
+              <Image source={require(this.state.profileImage)} 
+                     className="image-uploader--photo"
+                     resizeMode='contain' 
+                     style={{width: '90%', height: 100}} />
             </View>
             <View className="image-uploader--identification">
               <FileInput name="image-uploader--fileinput"
@@ -302,56 +278,59 @@ class EditGuardianAccount extends Component {
             </View>
           </View>
 
-          <form onSubmit={ this.submitForm } >
+          <View onSubmit={ this.submitForm } >
 
             <TextInput name="displayName"
                    type="text"
                    value={ this.state.displayName }
                    onChange={ this.handleChange } />
 
-            <View onChange={ this.radioButtonChange }>
-              <View>
-                { userGender == 'male' && <input type="radio" id="male" name="gender" value="male" defaultChecked /> }
-                { userGender !== 'male' && <input type="radio" id="male" name="gender" value="male" /> }
-                <label htmlFor="male">Male</label>
-              </View>
-              <View>
-                { userGender == 'female' && <input type="radio" id="female" name="gender" value="female" defaultChecked /> }
-                { userGender !== 'female' && <input type="radio" id="female" name="gender" value="female"/> }
-                <label htmlFor="female">Female</label>
-              </View>
+            <View>
+              <RadioForm
+                radio_props={radio_props}
+                initial={0}
+                onPress={(value) => { this.radioButtonChange }}
+              />
             </View>
 
             <View className="address">
               <Text>Address</Text>
-              <TextInput name="street"
-                     type="text"
-                     placeholder="Street Address"
-                     value={ this.state.street }
-                     onChange={ this.handleChange } />
+              <TextInput 
+                name="street"
+                type="text"
+                placeholder="Street Address"
+                value={ this.state.street }
+                onChange={ this.handleChange }
+              />
               <View className="no-wrap">
                 <View>
-                  <TextInput name="city"
-                         type="text"
-                         placeholder="City"
-                         value={ this.state.city }
-                         onChange={ this.handleChange } />
+                  <TextInput 
+                    name="city"
+                    type="text"
+                    placeholder="City"
+                    value={ this.state.city }
+                    onChange={ this.handleChange } 
+                  />
                 </View>
                 <View>
-                  <TextInput className="state-field"
-                         name="state"
-                         type="text"
-                         maxLength="2"
-                         placeholder="State"
-                         value={ this.state.state }
-                         onChange={ this.handleChange } />
+                  <TextInput 
+                    className="state-field"
+                    name="state"
+                    type="text"
+                    maxLength="2"
+                    placeholder="State"
+                    value={ this.state.state }
+                    onChange={ this.handleChange } 
+                  />
                 </View>
                 <View>
-                  <TextInput name="zipCode"
-                         type="text"
-                         placeholder="Zipcode"
-                         value={ this.state.zipCode }
-                         onChange={ this.handleChange } />
+                  <TextInput 
+                    name="zipCode"
+                    type="text"
+                    placeholder="Zipcode"
+                    value={ this.state.zipCode }
+                    onChange={ this.handleChange } 
+                  />
                 </View>
               </View>
             </View>
@@ -359,10 +338,10 @@ class EditGuardianAccount extends Component {
             { outputCheckboxes() }
 
             <Button text='Submit' onPress= { () => this.submitForm() }></Button>
-          </form>
           </View>
+        </View>
         }
-      </View>
+      </ScrollView>
     )
   }
 }
