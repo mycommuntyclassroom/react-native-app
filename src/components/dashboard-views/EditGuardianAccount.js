@@ -3,7 +3,9 @@ import {
   View,
   TouchableHighlight,
   Text,
-  TextInput
+  TextInput,
+  ScrollView,
+  Image
 } from 'react-native';
 
 import CheckBox from 'react-native-checkbox';
@@ -91,31 +93,31 @@ class EditGuardianAccount extends Component {
 
     // FILE UPLOAD
     console.log('FILE UPLOAD Reached')
-    this.userRef = database.ref(`guardians/${props.auth.uid}`);
-    this.storageRef = storage.ref(`user-images/${props.auth.uid}/guardian`);
+    // this.userRef = database.ref(`guardians/${props.auth.uid}`);
+    // this.storageRef = storage.ref(`user-images/${props.auth.uid}/guardian`);
     this.handleFileUpload = this.handleFileUpload.bind(this);
     console.log('FILE UPLOAD Passed')
   }
 
   handleFileUpload(event) {
-    const file = event.target.files[0];
-    const uploadTask = this.storageRef.child(file.name)
-                                      .put(file, { contentType: file.type });
+    // const file = event.target.files[0];
+    // const uploadTask = this.storageRef.child(file.name)
+    //                                   .put(file, { contentType: file.type });
 
-    uploadTask.on('state_changed', (snapshot) => {
-      const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      this.setState({ uploadProgress });
-    });
+    // uploadTask.on('state_changed', (snapshot) => {
+    //   const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //   this.setState({ uploadProgress });
+    // });
 
-    uploadTask.then((snapshot) => {
-      this.userRef.update({
-        profileImage: snapshot.downloadURL
-      });
-      this.setState({ 
-        uploadProgress: null,
-        profileImage: snapshot.downloadURL
-      });
-    });
+    // uploadTask.then((snapshot) => {
+    //   this.userRef.update({
+    //     profileImage: snapshot.downloadURL
+    //   });
+    //   this.setState({ 
+    //     uploadProgress: null,
+    //     profileImage: snapshot.downloadURL
+    //   });
+    // });
   }
 
   /**
@@ -205,6 +207,7 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
+    console.log('Reached the RENDER')
     const props = this.props;
     const { uid, displayName, profileImage } = props.user;
     const { uploadProgress } = this.state;
@@ -324,7 +327,6 @@ class EditGuardianAccount extends Component {
                     className="state-field"
                     name="state"
                     type="text"
-                    maxLength="2"
                     placeholder="State"
                     value={ this.state.state }
                     onChange={ this.handleChange } 
