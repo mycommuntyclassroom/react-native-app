@@ -16,6 +16,9 @@ class EditGuardian extends Component {
   }
 
   render() {
+    const props = this.props;
+    const { app } = props;
+
     return (
       <View className="edit-view">
         <Header { ...props } editMode={ true } />

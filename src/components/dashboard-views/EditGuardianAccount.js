@@ -22,6 +22,10 @@ class EditGuardianAccount extends Component {
   constructor(props) {
     super(props);
 
+    this.state={}
+
+    console.log('EditGuardianAccount CALLED!!!')
+
     // pull the formData tree and grab all of the checkboxes for the guardians
     // and save it in local storage
     database.ref('formData/guardians')
@@ -51,6 +55,10 @@ class EditGuardianAccount extends Component {
       uploadProgress: null
     }
 
+    let formData = this.state.formData || {}
+
+    console.log('this is the formData: ', formData)
+
     // gather all of the checkbox categories and pass them to the state (categories) object
     const checkBoxCategories = () => {
       for (var category in formData) {
@@ -73,7 +81,7 @@ class EditGuardianAccount extends Component {
     // will be set in componentWillReceiveProps()
     // 
     console.log('here are the props: ', props)
-    this.state=newStateObject;
+    this.setState(newStateObject);
 
     // Bound functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
@@ -82,9 +90,11 @@ class EditGuardianAccount extends Component {
     this.submitForm=this.submitForm.bind(this);
 
     // FILE UPLOAD
+    console.log('FILE UPLOAD Reached')
     this.userRef = database.ref(`guardians/${props.auth.uid}`);
     this.storageRef = storage.ref(`user-images/${props.auth.uid}/guardian`);
     this.handleFileUpload = this.handleFileUpload.bind(this);
+    console.log('FILE UPLOAD Passed')
   }
 
   handleFileUpload(event) {
