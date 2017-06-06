@@ -24,26 +24,9 @@ class EditGuardianAccount extends Component {
     super(props);
 
     console.log('EditGuardianAccount CALLED!!!')
-    // const userImage = profileImage || photoURL;
 
-    // 
-    // STATE OBJECT
-    // 
-    // init an empty obj for the state, the props for the state
-    // will be set in componentWillReceiveProps()
-    // 
-    this.state={};
-
-    // bind functions
-    this.radioButtonChange=this.radioButtonChange.bind(this);
-    this.checkboxChange=this.checkboxChange.bind(this);
-    this.handleChange=this.handleChange.bind(this);
-    this.submitForm=this.submitForm.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps called, nextProps: ', nextProps);
-    const { app } = nextProps;
+    // console.log('componentWillReceiveProps called, nextProps: ', nextProps);
+    const { app } = props;
 
     console.log('thie is the APP data: ', app)
 
@@ -51,6 +34,8 @@ class EditGuardianAccount extends Component {
             uid, displayName, profileImage, specialties, 
             street, city, zipCode, gender, state
           } = app.props.user;
+
+    console.log('displayName: ', displayName)
 
     // build the state object with the key values in the props
     let newStateObject = {
@@ -66,6 +51,11 @@ class EditGuardianAccount extends Component {
       uploadProgress: null
     };
 
+    // update the state after the render
+    this.state = newStateObject;
+
+    console.log('this is the newStateObject: ', newStateObject)
+
     // pull the formData tree and grab all of the checkboxes for the guardians
     // and save it in the state
     database
@@ -80,22 +70,29 @@ class EditGuardianAccount extends Component {
 
       // gather all of the checkbox categories and pass them to the state (categories) object
       console.log('componentWillReceiveProps checkBoxCategories Called')
-      for (var category in formData) {
-        console.log('formData within the checkBoxCategories func: ', formData);
-        console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
-        // add a new property to the newStateObject
-        // with the name of each checkbox group name and its checked fields
-        let categoryArray = props.user[category] || [];
-        console.log('categoryArray: ', categoryArray)
-        let newCategoryArray = categoryArray.slice();
-        console.log('newCategoryArray: ', newCategoryArray)
-        newStateObject[category] = newCategoryArray;
-      }
+      // for (var category in formData) {
+      //   console.log('formData within the checkBoxCategories func: ', formData);
+      //   console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
+      //   // add a new property to the newStateObject
+      //   // with the name of each checkbox group name and its checked fields
+      //   let categoryArray = props.user[category] || [];
+      //   console.log('categoryArray: ', categoryArray)
+      //   let newCategoryArray = categoryArray.slice();
+      //   console.log('newCategoryArray: ', newCategoryArray)
+      //   newStateObject[category] = newCategoryArray;
+      // }
     })
 
-    // update the state after the render
-    this.setState(newStateObject)
+  
     console.log('this is the state obj after the insertion: ', this.state);
+
+    // const userImage = profileImage || photoURL;
+
+    // bind functions
+    this.radioButtonChange=this.radioButtonChange.bind(this);
+    this.checkboxChange=this.checkboxChange.bind(this);
+    this.handleChange=this.handleChange.bind(this);
+    this.submitForm=this.submitForm.bind(this);
   }
 
   handleFileUpload(event) {
@@ -123,10 +120,10 @@ class EditGuardianAccount extends Component {
    *
    * @param e
    */
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+  handleChange(value, fieldName) {
+    let inputObj = {}
+    inputObj[fieldName] = value;
+    this.setState(inputObj);
   }
 
   checkboxChange(checkbox, checkboxOptions, checked) {
@@ -167,7 +164,7 @@ class EditGuardianAccount extends Component {
    */
 
   submitForm() {
-    console.log('submitForm CALLED');
+    console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
     const { app } = props;
     const data = {...this.state};
@@ -192,7 +189,7 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the RENDER, props: ', this.props)
+    console.log('Reached the RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
     const userObj = app.props.user
@@ -232,7 +229,7 @@ class EditGuardianAccount extends Component {
                     checked={true}
                     key={item}
                     // using '!checked' to force a truthy value, this seems to be an issue with the component 
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
+                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
                   />;
               } else {
                 checkbox = 
@@ -262,9 +259,12 @@ class EditGuardianAccount extends Component {
     ];
 
     let userGender = this.state.gender
-    // console.log('This is the profileImage: ', profileImage);
-    // let userImage = profileImage ? require(`${profileImage}`) : require('../../../images/blank-profile-pic.png');
-    // console.log('This is the userImage: ', userImage);
+    console.log('This is the profileImage: ', profileImage);
+
+    // handle the output of the required image
+    let userImage = profileImage != '../../../images/blank-profile-pic.png'
+      ? {uri: profileImage} 
+      : require('../../../images/blank-profile-pic.png');
 
     return(
       <ScrollView className="create-account">
@@ -274,10 +274,10 @@ class EditGuardianAccount extends Component {
         <View className="image-uploader">
           <View className="image-uploader--image-container">
             <Image 
-              source={require('../../../images/blank-profile-pic.png')} 
+              source={userImage} 
               className="image-uploader--photo"
               resizeMode='contain' 
-              style={{width: '90%', height: 100}} />
+              style={{width: 100, height: 100}} />
           </View>
           <View className="image-uploader--identification">
             <Text>File Input</Text>
@@ -288,8 +288,7 @@ class EditGuardianAccount extends Component {
           <TextInput
             style={{height: 50}}
             name="displayName"
-            type="text"
-            value={ this.state.displayName }
+            defaultValue={ this.state.displayName }
             onChange={ this.handleChange } />
 
           <View>
@@ -307,7 +306,7 @@ class EditGuardianAccount extends Component {
               name="street"
               type="text"
               placeholder="Street Address"
-              value={ this.state.street }
+              defaultValue={ this.state.street }
               onChange={ this.handleChange }
             />
             <View className="no-wrap">
@@ -317,7 +316,7 @@ class EditGuardianAccount extends Component {
                   name="city"
                   type="text"
                   placeholder="City"
-                  value={ this.state.city }
+                  defaultValue={ this.state.city }
                   onChange={ this.handleChange } 
                 />
               </View>
@@ -326,9 +325,8 @@ class EditGuardianAccount extends Component {
                   style={{height: 50}}
                   className="state-field"
                   name="state"
-                  type="text"
                   placeholder="State"
-                  value={ this.state.state }
+                  defaultValue={ this.state.state }
                   onChange={ this.handleChange } 
                 />
               </View>
@@ -338,7 +336,7 @@ class EditGuardianAccount extends Component {
                   name="zipCode"
                   type="text"
                   placeholder="Zipcode"
-                  value={ this.state.zipCode }
+                  defaultValue={ this.state.zipCode }
                   onChange={ this.handleChange } 
                 />
               </View>
