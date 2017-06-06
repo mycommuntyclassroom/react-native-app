@@ -60,7 +60,7 @@ class EditGuardianAccount extends Component {
       street,
       city,
       zipCode,
-      gender,
+      gender: gender || '',
       specialties,
       state,
       uploadProgress: null
@@ -165,35 +165,26 @@ class EditGuardianAccount extends Component {
    *
    * @param e
    */
-  submitForm(e) {
-    console.log('SUBMIT form called')
-    e.preventDefault();
+
+  submitForm() {
+    console.log('submitForm CALLED');
+    const props = this.props;
+    const { app } = props;
     const data = {...this.state};
-    // console.log('this is the submit data: ', data);
-    console.log('this is the submit data: ', data);
 
-    console.log('here are the component props: ', this.props);
-
-
-    // update the store, create a new user object with the profile info in it
-    console.log('this is the current user Obj: ', this.props.user);
-    console.log('this is the current state: ', data);
-    const newUserObject = this.props.user;
-
-    console.log('here is the newUserObject: ', newUserObject)
-
-    const updatedUser = Object.assign(newUserObject, data)
-
+    const currentUserObject = app.props.user;
+    console.log('here is the currentUserObject: ', currentUserObject)
+    const updatedUser = Object.assign(currentUserObject, data)
     console.log('here is the updatedUser: ', updatedUser)
 
     // pass the updated object to the store
     store.dispatch(actions.userInfo(updatedUser));
 
-    // update the database - path, data
-    updateProfile(`guardians/${data.uid}`, data);
+    // update the database
+    updateProfile(data);
 
     // navigate to the dashboard
-    browserHistory.push('/dashboard');
+    app.goToScene('Dashboard', {app})
   }
 
   /**
@@ -271,7 +262,9 @@ class EditGuardianAccount extends Component {
     ];
 
     let userGender = this.state.gender
-    let userImage = profileImage ? require(`${profileImage}`) : require('../../../images/blank-profile-pic.png');
+    // console.log('This is the profileImage: ', profileImage);
+    // let userImage = profileImage ? require(`${profileImage}`) : require('../../../images/blank-profile-pic.png');
+    // console.log('This is the userImage: ', userImage);
 
     return(
       <ScrollView className="create-account">
@@ -281,7 +274,7 @@ class EditGuardianAccount extends Component {
         <View className="image-uploader">
           <View className="image-uploader--image-container">
             <Image 
-              source={userImage} 
+              source={require('../../../images/blank-profile-pic.png')} 
               className="image-uploader--photo"
               resizeMode='contain' 
               style={{width: '90%', height: 100}} />
