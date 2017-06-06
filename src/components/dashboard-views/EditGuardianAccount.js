@@ -23,46 +23,65 @@ class EditGuardianAccount extends Component {
   constructor(props) {
     super(props);
 
-    this.state={}
-
     console.log('EditGuardianAccount CALLED!!!')
+    // const userImage = profileImage || photoURL;
 
-    // pull the formData tree and grab all of the checkboxes for the guardians
-    // and save it in local storage
-    database.ref('formData/guardians')
-            .once('value')
-            .then((snapshot) => {
-              // store the formData in the state
-              this.setState({formData: snapshot.val()});
-            }) 
+    // 
+    // STATE OBJECT
+    // 
+    // init an empty obj for the state, the props for the state
+    // will be set in componentWillReceiveProps()
+    // 
+    this.state={};
+
+    // bind functions
+    this.radioButtonChange=this.radioButtonChange.bind(this);
+    this.checkboxChange=this.checkboxChange.bind(this);
+    this.handleChange=this.handleChange.bind(this);
+    this.submitForm=this.submitForm.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps called, nextProps: ', nextProps);
+    const { app } = nextProps;
+
+    console.log('thie is the APP data: ', app)
 
     const { 
-            uid, displayName, profileImage, photoURL, 
+            uid, displayName, profileImage, 
             street, city, zipCode, gender, state
-          } = props.user;
-
-    const userImage = profileImage || photoURL;
+          } = app.props.user;
 
     // build the state object with the key values in the props
     let newStateObject = {
       uid,
       displayName,
-      profileImage: userImage,
+      profileImage,
       street,
       city,
       zipCode,
       gender,
       state,
       uploadProgress: null
-    }
+    };
 
-    let formData = this.state.formData || {}
+    // pull the formData tree and grab all of the checkboxes for the guardians
+    // and save it in the state
+    database
+    .ref('formData/guardians')
+    .once('value')
+    .then((snapshot) => {
+      // store the formData in the state
+      console.log('*!*!*!*!* firebase call returned *!*!*!*!')
+      this.setState({formData: snapshot.val()});
 
-    console.log('this is the formData: ', formData)
+      let formData = snapshot.val() || {}
 
-    // gather all of the checkbox categories and pass them to the state (categories) object
-    const checkBoxCategories = () => {
+      // gather all of the checkbox categories and pass them to the state (categories) object
+      console.log('componentWillReceiveProps checkBoxCategories Called')
       for (var category in formData) {
+        console.log('formData within the checkBoxCategories func: ', formData);
+        console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
         // add a new property to the newStateObject
         // with the name of each checkbox group name and its checked fields
         let categoryArray = props.user[category] || [];
@@ -71,31 +90,11 @@ class EditGuardianAccount extends Component {
         console.log('newCategoryArray: ', newCategoryArray)
         newStateObject[category] = newCategoryArray;
       }
-    }
+    })
 
-    checkBoxCategories();
-
-    // 
-    // STATE OBJECT
-    // 
-    // init an empty obj for the state, the props for the state
-    // will be set in componentWillReceiveProps()
-    // 
-    console.log('here are the props: ', props)
-    this.setState(newStateObject);
-
-    // Bound functions
-    this.radioButtonChange=this.radioButtonChange.bind(this);
-    this.checkboxChange=this.checkboxChange.bind(this);
-    this.handleChange=this.handleChange.bind(this);
-    this.submitForm=this.submitForm.bind(this);
-
-    // FILE UPLOAD
-    console.log('FILE UPLOAD Reached')
-    // this.userRef = database.ref(`guardians/${props.auth.uid}`);
-    // this.storageRef = storage.ref(`user-images/${props.auth.uid}/guardian`);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
-    console.log('FILE UPLOAD Passed')
+    // update the state after the render
+    this.setState(newStateObject)
+    console.log('this is the state obj after the insertion: ', this.state);
   }
 
   handleFileUpload(event) {
@@ -209,12 +208,16 @@ class EditGuardianAccount extends Component {
     console.log('Reached the RENDER, props: ', this.props)
     const props = this.props;
     const { app } = props
-    const { uid, displayName, profileImage } = app.props.user;
+    const userObj = app.props.user
+    const { uid, displayName, profileImage } = userObj;
     const { uploadProgress } = this.state;
+    const userSpecialties = userObj.specialties
+
     // grab the form data set within the state
     let formData = this.state.formData || {};
 
     console.log('formData: ', formData)
+    console.log('this is the RENDER STATE: ', this.state)
 
     const outputCheckboxes = () => {
       console.log('outputCheckboxes Called ');
@@ -232,10 +235,10 @@ class EditGuardianAccount extends Component {
               console.log('checkbox inner called, item: ', item)
               console.log('this is the inner category: ', category)
               console.log('this is the state:', this.state )
-              console.log('this.state[`${category}`]', this.state[`${category}`] )
+              console.log('this.state[`${category}`]', this.state.formData[`${category}`] )
               var checkbox = '';
               // pre-check any items that were selected and saved
-              if (this.state.formData[`${category}`].indexOf(item) > -1) {
+              if (userSpecialties.indexOf(item) > -1) {
                 checkbox = 
                   <CheckBox
                     label={item}
@@ -243,7 +246,7 @@ class EditGuardianAccount extends Component {
                     key={item}
                     // using '!checked' to force a truthy value, this seems to be an issue with the component 
                     onChange={(checked) => this.checkboxChange(item, category, !checked) }
-                  />
+                  />;
               } else {
                 checkbox = 
                   <CheckBox
@@ -251,11 +254,11 @@ class EditGuardianAccount extends Component {
                     key={item}
                     // using '!checked' to force a truthy value, this seems to be an issue with the component 
                     onChange={(checked) => this.checkboxChange(item, category, !checked) }
-                  />
+                  />;
               }
 
               return checkbox;
-
+              console.log('returned checkbox: ', checkbox);
             })}
           </View>
         )
