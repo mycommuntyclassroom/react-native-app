@@ -48,7 +48,7 @@ class EditGuardianAccount extends Component {
     console.log('thie is the APP data: ', app)
 
     const { 
-            uid, displayName, profileImage, 
+            uid, displayName, profileImage, specialties, 
             street, city, zipCode, gender, state
           } = app.props.user;
 
@@ -61,6 +61,7 @@ class EditGuardianAccount extends Component {
       city,
       zipCode,
       gender,
+      specialties,
       state,
       uploadProgress: null
     };
@@ -128,17 +129,15 @@ class EditGuardianAccount extends Component {
     });
   }
 
-  checkboxChange(e) {
-    console.log('checkboxChange CALLED')
+  checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    let checkboxOptions = e.target.name;
-
-    let checkbox = e.target.value;
-    const options = this.state[ checkboxOptions ];
+    console.log('this is the checkboxChange state: ', this.state)
+    const options = this.state.specialties;
+    console.log('This is the checkboxChange options: ', this.state.specialties);
     let index;
 
     // check if the check box is checked or unchecked
-    if (e.target.checked) {
+    if (checked) {
       // add the numerical value of the checkbox to options array
       options.push(checkbox)
     } else {
@@ -147,15 +146,12 @@ class EditGuardianAccount extends Component {
       options.splice(index, 1)
     }
 
-    // update the state with the new array of options
-    this.setState({ checkboxOptions })
-    console.log('HERE is the State afterwards: ', this.state)
   }
 
-  radioButtonChange(e) {
+  radioButtonChange(value, group) {
     // current array of options
-    let radioButtonGroup = e.target.name
-    let radio = e.target.value
+    let radioButtonGroup = group
+    let radio = value
 
     const newState = {}
     newState[radioButtonGroup] = radio
@@ -245,7 +241,7 @@ class EditGuardianAccount extends Component {
                     checked={true}
                     key={item}
                     // using '!checked' to force a truthy value, this seems to be an issue with the component 
-                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
+                    onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               } else {
                 checkbox = 
@@ -307,7 +303,7 @@ class EditGuardianAccount extends Component {
             <RadioForm
               radio_props={radio_props}
               initial={0}
-              onPress={(value) => { this.radioButtonChange }}
+              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>
 

@@ -105,10 +105,10 @@ class CreateGuardianAccount extends Component {
 
   }
 
-  radioButtonChange(e) {
+  radioButtonChange(value, group) {
     // current array of options
-    let radioButtonGroup = e.target.name
-    let radio = e.target.value
+    let radioButtonGroup = group
+    let radio = value
 
     const newState = {}
     newState[radioButtonGroup] = radio
@@ -192,7 +192,7 @@ class CreateGuardianAccount extends Component {
             <RadioForm
               radio_props={radio_props}
               initial={0}
-              onPress={(value) => { this.radioButtonChange }}
+              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>
 
