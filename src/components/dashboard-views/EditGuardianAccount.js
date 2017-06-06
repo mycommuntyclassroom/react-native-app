@@ -291,7 +291,7 @@ class EditGuardianAccount extends Component {
           </View>
         </View>
 
-        <View>
+        <View style={{paddingBottom: 93}}>
           <TextInput
             style={{height: 50}}
             name="displayName"
