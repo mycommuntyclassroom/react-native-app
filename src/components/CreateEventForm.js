@@ -16,6 +16,7 @@ import {
 // import DatePicker from 'react-datepicker';
 // import TimePicker from 'rc-time-picker';
 // import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 import CheckBox from './CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button';
@@ -56,7 +57,10 @@ class CreateEventForm extends Component {
         uploadProgress: null,
         recurringDays: [' '],
         frequency: '',
-        ageRange: []
+        ageRange: [],
+        date: '',
+        time: '20:00',
+        datetime: '2016-05-05 20:00'
         // startDateObj: moment(),
         // finishDateObj: moment(),
         // startTimeObj: now,
@@ -220,6 +224,23 @@ class CreateEventForm extends Component {
       <ScrollView>
         <Text> Add an Event! </Text>
         <View>
+
+          <Text>
+            Welcome to react-native-datepicker example!
+          </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.date}
+            mode="date"
+            placeholder="placeholder"
+            format="YYYY-MM-DD"
+            minDate="2016-05-01"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            // iconSource={require('./google_calendar.png')}
+            onDateChange={(date) => {this.setState({date: date});}}
+          />
+
           <TextInput
             style={{width: 200, height: 40}}
             placeholder='Event Title'
@@ -236,7 +257,7 @@ class CreateEventForm extends Component {
             <RadioForm
               radio_props={radio_props}
               initial={0}
-              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
+              onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
 
