@@ -15,12 +15,7 @@ class CheckBox extends Component {
 
   constructor(props) {
     super(props);
-
-    console.log('the TRUE checkbox was called| props: ', props)
-
     const checked = props.checked || false;
-    console.log('this is the checked: ', checked)
-
 
     this.state={
       checked
@@ -30,11 +25,8 @@ class CheckBox extends Component {
   }
 
   handleCheckbox() {
-    console.log('handleCheckbox Called');
-    console.log('this.state.checked: ', this.state.checked)
     let checkboxSwitch = !this.state.checked;
     this.setState({checked: checkboxSwitch});
-    console.log('checkboxSwitch Value: ', checkboxSwitch)
     this.props.onChange(checkboxSwitch);
   }
 
