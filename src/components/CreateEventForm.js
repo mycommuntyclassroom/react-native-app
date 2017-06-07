@@ -101,7 +101,6 @@ class CreateEventForm extends Component {
   // 
   // 
   handleSeatsAvailable(option) {
-    console.log('handleSeatsAvailable CALLED');
     // get the current seats available
     let currentSeats = this.state.seatsAvailable;
 
@@ -149,7 +148,6 @@ class CreateEventForm extends Component {
    * @param e
    */
   submitForm() {
-    console.log('*(*(*(*(submitForm CALLED');
     const props = this.props;
     const { app } = props;
     const newEvent = {...this.state};
