@@ -231,12 +231,13 @@ class CreateEventForm extends Component {
           <DatePicker
             style={{width: 200}}
             date={this.state.date}
-            mode="date"
-            placeholder="placeholder"
-            format="YYYY-MM-DD"
+            mode="datetime"
+            placeholder="Start Date"
+            format="MMMM Do YYYY, h:mm:ss a"
             minDate="2016-05-01"
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            showIcon={false}
             // iconSource={require('./google_calendar.png')}
             onDateChange={(date) => {this.setState({date: date});}}
           />
