@@ -13,13 +13,10 @@ import {
   ScrollView
 } from 'react-native';
 
-// import DatePicker from 'react-datepicker';
-// import TimePicker from 'rc-time-picker';
-// import moment from 'moment';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
-import CheckBox from './CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import CheckBox from './CheckBox';
 import Button from '../components/Button';
 
 const now = moment().hour(0).minute(0);
@@ -69,16 +66,7 @@ class CreateEventForm extends Component {
         ageRange: [],
         startDate: `${today}`,
         finishDate: `${today}`,
-        time: '20:00',
         datetime: '2016-05-05 20:00'
-        // startDateObj: moment(),
-        // finishDateObj: moment(),
-        // startTimeObj: now,
-        // finishTimeObj: now,
-        // startDate: `${moment()._d}`,
-        // finishDate: `${moment()._d}`,
-        // startTime: `${now.format(format)}`,
-        // finishTime: `${now.format(format)}`
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
@@ -122,7 +110,7 @@ class CreateEventForm extends Component {
 
     // check if the check box is checked or unchecked
     if (checked) {
-      // add the numerical value of the checkbox to options array
+      // add the value of the checkbox to options array
       options.push(checkbox)
     } else {
       // or remove the value from the unchecked checkbox from the array
@@ -222,18 +210,41 @@ class CreateEventForm extends Component {
       return checkboxOutput
     }
 
-    // set the data structure for the radio buttons
-    const radio_props = [
+    // set the data structure for the frequency radio buttons group
+    const frequency_radio_props = [
       {label: 'none', value: 'none' },
       {label: 'weekly', value: 'weekly' },
       {label: 'monthly', value: 'monthly' }
+    ];
+
+    // set the data structure for the recurringDays checkbox group
+    const recurringDays_checkbox_props = [
+      {label: 'Mon', value: 'M' },
+      {label: 'Tue', value: 'T' },
+      {label: 'Wed', value: 'W' },
+      {label: 'Thu', value: 'Th' },
+      {label: 'Fri', value: 'F' },
+      {label: 'Sat', value: 'S' },
+      {label: 'Sun', value: 'Su' }
     ];
         // <BackButton path="/welcome-search" />
 
     return(
       <ScrollView>
         <Text> Add an Event! </Text>
-        <View>
+        <View style={{paddingBottom: 91}}>
+
+          <TextInput
+            style={{width: 200, height: 40}}
+            placeholder='Event Title'
+            onChangeText={ (value) => this.handleChange(value, 'title') } 
+          />
+
+          <TextInput
+            style={{width: 200, height: 40}}
+            placeholder='Summary of the event'
+            onChangeText={ (value) => this.handleChange(value, 'summary') } 
+          />
 
           <Text>
             Start Date
@@ -249,7 +260,6 @@ class CreateEventForm extends Component {
             cancelBtnText="Cancel"
             minuteInterval={5}
             showIcon={false}
-            // iconSource={require('./google_calendar.png')}
             onDateChange={(date) => {this.setState({startDate: date});}}
           />
 
@@ -267,26 +277,32 @@ class CreateEventForm extends Component {
             cancelBtnText="Cancel"
             minuteInterval={5}
             showIcon={false}
-            // iconSource={require('./google_calendar.png')}
             onDateChange={(date) => {this.setState({finishDate: date});}}
           />
 
-          <TextInput
-            style={{width: 200, height: 40}}
-            placeholder='Event Title'
-            onChangeText={ (value) => this.handleChange(value, 'title') } 
-          />
+          <Text>Repeats</Text>
+          {
+            /* custom checkbox output for the event form. This doesn't exist in the formData */
+            recurringDays_checkbox_props.map((item) =>{
+              console.log('Map called *(*(*#(#*#*(*#')
+              let { label, value } = item;
+              return (
+                <CheckBox
+                  label={label}
+                  key={label}
+                  onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                />
+              )
+            })
 
-          <TextInput
-            style={{width: 200, height: 40}}
-            placeholder='Summary of the event'
-            onChangeText={ (value) => this.handleChange(value, 'summary') } 
-          />
+          }
 
           <View>
+            <Text>frequency_radio_props</Text>
             <RadioForm
-              radio_props={radio_props}
+              radio_props={frequency_radio_props}
               initial={0}
+              buttonColor={'#2196f3'}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
