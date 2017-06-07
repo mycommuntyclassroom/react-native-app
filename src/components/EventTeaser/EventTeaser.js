@@ -47,7 +47,7 @@ class EventTeaser extends Component {
       teaserOutput = 
         <View className="event-teaser-element null-teaser">
           <Text>Want to host? Add an event here</Text>
-          <Link onClick={ () => this.goToScene('addEvent') } text='TiPlus' />
+          <Link onClick={ () => this.goToScene('CreateEvent') } text='TiPlus' />
         </View>;
       nullClass = 'null-teaser';
     } else {

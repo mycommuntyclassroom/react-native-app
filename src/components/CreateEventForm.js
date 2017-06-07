@@ -218,7 +218,7 @@ class CreateEventForm extends Component {
 
     return(
       <ScrollView>
-        <Text> Add your child here! </Text>
+        <Text> Add an Event! </Text>
         <View>
           <TextInput
             style={{width: 200, height: 40}}
@@ -235,7 +235,7 @@ class CreateEventForm extends Component {
           <View>
             <RadioForm
               radio_props={radio_props}
-              initial={userGender === 'male' ? 0 : 1 }
+              initial={0}
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>
