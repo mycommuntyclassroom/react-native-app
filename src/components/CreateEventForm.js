@@ -97,6 +97,23 @@ class CreateEventForm extends Component {
     this.setState(inputObj);
   }
 
+  // HANDLE THE SEATS AVAILABLE
+  // 
+  // 
+  handleSeatsAvailable(option) {
+    console.log('handleSeatsAvailable CALLED');
+    // get the current seats available
+    let currentSeats = this.state.seatsAvailable;
+
+    option == 'add'
+      ? currentSeats++
+      : currentSeats--
+
+    if (currentSeats < 0)  currentSeats = 0;
+
+    this.setState({seatsAvailable: currentSeats});
+  }
+
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
     const options = this.state[ checkboxOptions ];
@@ -230,6 +247,20 @@ class CreateEventForm extends Component {
             placeholder='Summary of the event'
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
           />
+
+          <View className="seats-available">
+            <Text>Seats Available</Text>
+            <View>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
+                <Text>Minus Icon</Text> 
+              </TouchableHighlight>
+              <Text>Chair Icon</Text>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
+                <Text>Plus Icon</Text> 
+              </TouchableHighlight>
+              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
+            </View>
+          </View>
 
           <Text>
             Start Date
