@@ -8,7 +8,7 @@ import {
   Image
 } from 'react-native';
 
-import CheckBox from '../Checkbox';
+import CheckBox from '../CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../Button';
 

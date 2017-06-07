@@ -13,6 +13,7 @@ import WelcomeSearch from './WelcomeSearch';
 import Tutorial from './Tutorial';
 import Dashboard from './Dashboard';
 import EditGuardian from './EditGuardian';
+import CreateChild from './CreateChild';
 
 export default {
   Loading,
@@ -29,5 +30,6 @@ export default {
   WelcomeSearch,
   Tutorial,
   Dashboard,
-  EditGuardian
+  EditGuardian,
+  CreateChild
 };
