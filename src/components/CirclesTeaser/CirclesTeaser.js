@@ -80,7 +80,7 @@ class CirclesTeaser extends Component {
 
         circleElement = 
           // <View className={`circle-element ${customClassName}`} id={circle} key={circle}></View>;
-          <View><Image source={require('../../../images/intro-tut-card-1.png')} resizeMode='contain' /></View>;
+          <View><Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} /></View>;
 
         circlesOutput.push(circleElement);
       }
@@ -89,16 +89,6 @@ class CirclesTeaser extends Component {
       // this is to prevent the react-slick slider from throwing an undefined error
       circlesOutput = circlesOutput == [] ? [' '] : circlesOutput;
     }
-
-    const settings = {
-      arrows: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 5,
-      swipeToSlide: true,
-      focusOnSelect: true,
-      slidesToScroll: 1
-    };
 
     const { title, path, app } = props
     console.log('IN the REnder of circles teaser, props: ', props)
@@ -112,7 +102,6 @@ class CirclesTeaser extends Component {
             ref={(carousel) => { this._carousel = carousel; }}
             sliderWidth={deviceDimensions.deviceWidth}
             itemWidth={50}
-            onSnapToItem={(slideIndex) => { getSlideIndex(slideIndex) }}
           >
             {circlesOutput}
           </Carousel>
