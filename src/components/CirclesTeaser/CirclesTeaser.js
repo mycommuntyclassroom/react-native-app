@@ -40,11 +40,21 @@ class CirclesTeaser extends Component {
     // if the circlesData is undefined, output a null-circle element
     switch (props.circleType) {
       case 'myChildren':
-        nullOutput = <View><Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{borderRadius:25, width: 50, height: 50}} /></View>
         console.log('got the null outPut for the circles')
+        nullOutput = 
+          <View>
+            <Image 
+              source={require('../../../images/blank-profile-pic.png')} 
+              resizeMode='contain' 
+              style={{borderRadius:25, width: 50, height: 50}} 
+            />
+          </View>
         break;
       case 'eventDetail':
-        nullOutput = <View className="no-child-booked">There are no children booked for this event</View>;
+        nullOutput = 
+          <View className="no-child-booked">
+            There are no children booked for this event
+          </View>;
         circlesData = circlesData.students || [' ']
         customClassName = 'children-event-bubble'
         break;
@@ -70,7 +80,7 @@ class CirclesTeaser extends Component {
 
         circleElement = 
           // <View className={`circle-element ${customClassName}`} id={circle} key={circle}></View>;
-          <View><Image source={require('../../../images/intro-tut-card-1.png')} resizeMode='contain' /></View>;
+          <View key={circle}><Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} /></View>;
 
         circlesOutput.push(circleElement);
       }
@@ -80,17 +90,9 @@ class CirclesTeaser extends Component {
       circlesOutput = circlesOutput == [] ? [' '] : circlesOutput;
     }
 
-    const settings = {
-      arrows: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 5,
-      swipeToSlide: true,
-      focusOnSelect: true,
-      slidesToScroll: 1
-    };
-
-    const { title, path } = props
+    const { title, path, app } = props
+    console.log('IN the REnder of circles teaser, props: ', props)
+    console.log('IN the REnder of circles teaser, app: ', app)
 
     return(
       <View className="circles-teaser">
@@ -100,13 +102,12 @@ class CirclesTeaser extends Component {
             ref={(carousel) => { this._carousel = carousel; }}
             sliderWidth={deviceDimensions.deviceWidth}
             itemWidth={50}
-            onSnapToItem={(slideIndex) => { getSlideIndex(slideIndex) }}
           >
             {circlesOutput}
           </Carousel>
           {
             props.hasAddButton &&
-              <Link className="add-item-button add-circle" onClick={ () => console.log('CLICK on a link to add a child, path: ', path)/*app.goToScene('Welcome', {app})*/ } text='TiPlus' />
+              <Link className="add-item-button add-circle" onClick={ () => app.goToScene('CreateChild', {app})} text='TiPlus' />
           }
         </View>
       </View>

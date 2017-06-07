@@ -29,7 +29,7 @@ class AdminView extends Component {
         <Header { ...props } />
         <Hero {...props} user={user} />
         <Summary {...props} />
-        <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} />
+        <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} {...props} />
         <EventTeaser {...props} />
       </View>
     )

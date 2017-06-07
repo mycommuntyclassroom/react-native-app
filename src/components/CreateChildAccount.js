@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateProfile } from '../helpers/form';
+import { addChildProfile, removeItem } from '../helpers/form';
 import { database } from '../helpers/firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
@@ -19,12 +19,12 @@ import Button from '../components/Button';
 
 // import BackButton from '../components/BackButton';
 
-class CreateGuardianAccount extends Component {
+class CreateChildAccount extends Component {
 
   constructor(props) {
     super();
 
-    console.log('CreateGuardianAccount REndered')
+    console.log('CreateChildAccount REndered')
     // 
     // STATE OBJECT
     // 
@@ -37,21 +37,19 @@ class CreateGuardianAccount extends Component {
 
     // pull the formData tree from the DB and grab all of the checkboxes for the guardians
     database
-    .ref('formData/guardians')
+    .ref('formData/children')
     .once('value')
     .then((snapshot) => {
       console.log('Here is the Snapshot for the formData: ', snapshot.val())
       // setup the state properties
+
       let categories = {
-        uid: auth.uid,
-        displayName: auth.displayName,
-        photoURL: auth.photoURL,
-        email: auth.email,
-        street: '',
-        city: '',
-        zipCode: '',
-        children: [' '],
-        gender: null
+        gid: auth.uid,
+        fName: '',
+        lName: '',
+        profileImage: '../../../images/blank-profile-pic.png',
+        gender: null,
+        uploadProgress: null
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
@@ -124,20 +122,43 @@ class CreateGuardianAccount extends Component {
    */
   submitForm() {
     console.log('submitForm CALLED');
+    
     const props = this.props;
     const { app } = props;
-    const data = {...this.state};
+    const { fName, lName } = this.state;
+    // gather the child's info from the state
+    const newChild = {...this.state};
+    // create a temporary id for the new child
+    const tempNewChildID = `${fName}${lName}`;
 
-    // update the store with the information the user submitted
-    store.dispatch(
-      actions.newAccountCreated(data)
-    );
+    // get the user
+    let parent = app.props.user;
+    // get the users group of children
+    let userChildren = parent.children || {};
+
+    // if this is the first time the user is adding children, remove the empty placeholder
+    if (userChildren[0] == ' ') {
+      // remove the placeholder from the DB
+      removeItem(`guardians/${newChild.gid}/children/0`)
+      // remove the placeholder locally
+      delete userChildren['0'];
+    }
+
+    // create a copy of the user's children
+    const updatedUserChildren = Object.assign(userChildren);
+
+    // add the new child to the user's children
+    updatedUserChildren[tempNewChildID] = newChild;
+
+    // pass the user with the updated children to the store
+    const updatedUser = Object.assign(parent, updatedUserChildren);
+    store.dispatch(actions.handleChildProfile(updatedUser));
 
     // update the database
-    updateProfile(data);
+    addChildProfile(newChild);
 
-    // navigate to the tutorial page
-    app.goToScene('Tutorial', {app})
+    // navigate to the dashboard
+    app.goToScene('Dashboard', {app})
   }
 
   /**
@@ -147,7 +168,7 @@ class CreateGuardianAccount extends Component {
   render() {
     const props = this.props
     let formData = this.state.formData || {};
-    const { displayName } = props.auth
+    const { displayName, email, imageName } = this.props.auth;
 
     const outputCheckboxes = () => {
       let checkboxOutput = []
@@ -182,12 +203,18 @@ class CreateGuardianAccount extends Component {
 
     return(
       <ScrollView>
-        <Text> Help us get to know you... </Text>
+        <Text> Add your child here! </Text>
         <View>
           <TextInput
             style={{width: 200, height: 40}}
-            placeholder='Your Name'
-            onChangeText={ (value) => this.handleChange(value, 'displayName') } 
+            placeholder='First Name'
+            onChangeText={ (value) => this.handleChange(value, 'fName') } 
+          />
+
+          <TextInput
+            style={{width: 200, height: 40}}
+            placeholder='Last Name'
+            onChangeText={ (value) => this.handleChange(value, 'lName') } 
           />
 
           <View>
@@ -196,34 +223,6 @@ class CreateGuardianAccount extends Component {
               initial={userGender === 'male' ? 0 : 1 }
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
-          </View>
-
-          <View className="address">
-            <Text>Address</Text>
-            <TextInput 
-              style={{width: 200, height: 40}}
-              placeholder="Street Address"
-              onChangeText={ (value) => this.handleChange(value, 'street') } />
-            <View className="no-wrap">
-              <View>
-                <TextInput
-                  style={{width: 200, height: 40}}
-                  placeholder="City"
-                  onChangeText={ (value) => this.handleChange(value, 'city') } />
-              </View>
-              <View>
-                <TextInput
-                  style={{width: 200, height: 40}}
-                  placeholder="State"
-                  onChangeText={ (value) => this.handleChange(value, 'state') } />
-              </View>
-              <View>
-                <TextInput name="zipCode"
-                  style={{width: 200, height: 40}}
-                  placeholder="Zipcode"
-                  onChangeText={ (value) => this.handleChange(value, 'Zipcode') } />
-              </View>
-            </View>
           </View>
 
           { outputCheckboxes() }
@@ -235,4 +234,4 @@ class CreateGuardianAccount extends Component {
   }
 }
 
-export default CreateGuardianAccount;
+export default CreateChildAccount;

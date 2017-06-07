@@ -1,17 +1,17 @@
-const Checkbox = {};
+const CheckBox = {};
 
-Checkbox.container = {
+CheckBox.container = {
   height: 50,
   width: 100,
   backgroundColor: 'yellow'
 }
 
-Checkbox.true = {
+CheckBox.true = {
   backgroundColor: 'blue'
 }
 
-Checkbox.false = {
+CheckBox.false = {
   backgroundColor: 'red'
 }
 
-export default Checkbox;
+export default CheckBox;
