@@ -15,22 +15,19 @@ class EventTeaser extends Component {
   constructor(props){
     super(props)
 
-    this.goToScene = this.goToScene.bind(this);
-  }
-
-  goToScene(scene, id=0) {
-    const { app } = this.props;
-    app.goToScene(scene, {app, id})
   }
 
   render(){ 
 
     const props = this.props
+    const { app } = this.props;
     let userData;
+
+    console.log('***&*&*These are the props&*&*&*: ', props)
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    props.guardianData ? userData = props.guardianData : userData = props.user
+    props.guardianData ? userData = props.guardianData : userData = app.props.user
 
     const teaserData = userData.hostEvents || [' '];
 
@@ -47,7 +44,7 @@ class EventTeaser extends Component {
       teaserOutput = 
         <View className="event-teaser-element null-teaser">
           <Text>Want to host? Add an event here</Text>
-          <Link onClick={ () => this.goToScene('CreateEvent') } text='TiPlus' />
+          <Link onClick={ () => app.goToScene('CreateEvent') } text='TiPlus' />
         </View>;
       nullClass = 'null-teaser';
     } else {
@@ -59,16 +56,17 @@ class EventTeaser extends Component {
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
 
+              // <Image source={require(image)} resizeMode='contain' />
         teaserElement =
           <View className="teaser-container" key={teaser}>
             <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
-              <Image source={require(image)} resizeMode='contain' />
+              <Text>IMAGE</Text>
             </View>
             <View className="event-View">
-              <Link onClick={ () => this.goToScene('editEvent', teaser) } text='FaPencil' />
+              <Link onClick={ () => app.goToScene('editEvent', teaser) } text='FaPencil' />
               {
                !props.guardianData &&
-                  <Link onClick={ () => this.goToScene('addEvent') } text='FaPencil' />
+                  <Link onClick={ () => app.goToScene('CreateEvent') } text='FaPlus' />
               }
               <Text>{title}</Text>
               <View className="tags">

@@ -23,10 +23,6 @@ const now = moment().hour(0).minute(0);
 const today = now.format('YYYY-MM-DD');
 const priorDay = today.slice(-2) - 1;
 const yesterday = `${today.slice(0, 8)}${priorDay}`;
-
-console.log('moment yesterday******()()(: ', yesterday)
-console.log('moment today******()()(: ', today)
-
 // import BackButton from '../components/BackButton';
 
 class CreateEventForm extends Component {
@@ -50,13 +46,12 @@ class CreateEventForm extends Component {
     .ref('formData/hostEvents')
     .once('value')
     .then((snapshot) => {
-      console.log('Here is the Snapshot for the formData: ', snapshot.val())
       // setup the state properties
 
       let categories = {
         gid: auth.uid,
         hostName: auth.displayName,
-        image: '',
+        image: null,
         title: '',
         summary: '',
         seatsAvailable: 0,
@@ -65,8 +60,7 @@ class CreateEventForm extends Component {
         frequency: '',
         ageRange: [],
         startDate: `${today}`,
-        finishDate: `${today}`,
-        datetime: '2016-05-05 20:00'
+        finishDate: `${today}`
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
@@ -138,41 +132,33 @@ class CreateEventForm extends Component {
    * @param e
    */
   submitForm() {
-    console.log('submitForm CALLED');
-    
+    console.log('*(*(*(*(submitForm CALLED');
     const props = this.props;
     const { app } = props;
-    const { fName, lName } = this.state;
-    // gather the child's info from the state
-    const newChild = {...this.state};
-    // create a temporary id for the new child
-    const tempNewChildID = `${fName}${lName}`;
+    const newEvent = {...this.state};
 
-    // get the user
-    let parent = app.props.user;
-    // get the users group of children
-    let userChildren = parent.children || {};
+    // add a timestamp to the added event
+    newEvent.timestamp = (new Date()).getTime();
 
-    // if this is the first time the user is adding children, remove the empty placeholder
-    if (userChildren[0] == ' ') {
-      // remove the placeholder from the DB
-      removeItem(`guardians/${newChild.gid}/children/0`)
-      // remove the placeholder locally
-      delete userChildren['0'];
-    }
+    // update the store, create a new user object with the updated event in it
+    const newUserObject = app.props.user;
 
-    // create a copy of the user's children
-    const updatedUserChildren = Object.assign(userChildren);
+    // get the collection of the host's events
+    const eventGroup = app.props.user.hostEvents || {};
 
-    // add the new child to the user's children
-    updatedUserChildren[tempNewChildID] = newChild;
-
-    // pass the user with the updated children to the store
-    const updatedUser = Object.assign(parent, updatedUserChildren);
-    store.dispatch(actions.handleChildProfile(updatedUser));
+    // add the new event to the event group
+    eventGroup[`${newEvent.title}`] = newEvent;
+    newUserObject['hostEvents'] = eventGroup;
+    
+    // pass the updated object to the store
+    store.dispatch(actions.handleHostEvent(newUserObject));
 
     // update the database
-    addChildProfile(newChild);
+    // 
+    // add the event to the guardian host branch - path, data
+    addItem(`guardians/${this.state.gid}/hostEvents`, newEvent);
+    // add the event to the general hosts tree - path, data
+    addItem(`hostEvents/${this.state.gid}`, newEvent);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -185,7 +171,6 @@ class CreateEventForm extends Component {
   render() {
     const props = this.props
     let formData = this.state.formData || {};
-    const { displayName, email, imageName } = this.props.auth;
 
     const outputCheckboxes = () => {
       let checkboxOutput = []
@@ -284,7 +269,6 @@ class CreateEventForm extends Component {
           {
             /* custom checkbox output for the event form. This doesn't exist in the formData */
             recurringDays_checkbox_props.map((item) =>{
-              console.log('Map called *(*(*#(#*#*(*#')
               let { label, value } = item;
               return (
                 <CheckBox
@@ -302,7 +286,6 @@ class CreateEventForm extends Component {
             <RadioForm
               radio_props={frequency_radio_props}
               initial={0}
-              buttonColor={'#2196f3'}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
