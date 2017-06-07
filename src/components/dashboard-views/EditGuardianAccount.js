@@ -8,7 +8,7 @@ import {
   Image
 } from 'react-native';
 
-import CheckBox from '../Checkbox/Checkbox';
+import CheckBox from '../Checkbox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../Button';
 
@@ -224,7 +224,6 @@ class EditGuardianAccount extends Component {
                     label={item}
                     checked={true}
                     key={item}
-                    // using '!checked' to force a truthy value, this seems to be an issue with the component 
                     onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               } else {
@@ -232,7 +231,6 @@ class EditGuardianAccount extends Component {
                   <CheckBox
                     label={item}
                     key={item}
-                    // using '!checked' to force a truthy value, this seems to be an issue with the component 
                     onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               }

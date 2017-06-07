@@ -13,7 +13,7 @@ import {
   ScrollView
 } from 'react-native';
 
-import CheckBox from 'react-native-checkbox';
+import CheckBox from './Checkbox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button';
 
@@ -160,7 +160,8 @@ class CreateGuardianAccount extends Component {
                 <View key={item}>
                   <CheckBox
                     label={item}
-                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
+                    key={item}
+                    onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />
                 </View>
               )

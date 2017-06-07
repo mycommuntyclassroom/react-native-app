@@ -3,7 +3,7 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
-import PropTypes from 'prop-types';;
+import PropTypes from 'prop-types';
 import style from './style';
 
 class CheckBox extends Component {
@@ -43,7 +43,7 @@ class CheckBox extends Component {
 
     return (
 
-      <TouchableHighlight onPress={() => this.handleCheckbox} style={[ style.container, style[this.state.checked]]} >
+      <TouchableHighlight onPress={this.handleCheckbox} style={[ style.container, style[this.state.checked]]} >
         <Text>{props.label}</Text>
       </TouchableHighlight>
 
