@@ -13,13 +13,16 @@ import {
   ScrollView
 } from 'react-native';
 
-// import DatePicker from 'react-datepicker';
-// import TimePicker from 'rc-time-picker';
-// import moment from 'moment';
-import CheckBox from './CheckBox';
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import CheckBox from './CheckBox';
 import Button from '../components/Button';
 
+const now = moment().hour(0).minute(0);
+const today = now.format('YYYY-MM-DD');
+const priorDay = today.slice(-2) - 1;
+const yesterday = `${today.slice(0, 8)}${priorDay}`;
 // import BackButton from '../components/BackButton';
 
 class CreateEventForm extends Component {
@@ -43,28 +46,21 @@ class CreateEventForm extends Component {
     .ref('formData/hostEvents')
     .once('value')
     .then((snapshot) => {
-      console.log('Here is the Snapshot for the formData: ', snapshot.val())
       // setup the state properties
 
       let categories = {
         gid: auth.uid,
         hostName: auth.displayName,
-        image: '',
+        image: null,
         title: '',
         summary: '',
         seatsAvailable: 0,
         uploadProgress: null,
         recurringDays: [' '],
         frequency: '',
-        ageRange: []
-        // startDateObj: moment(),
-        // finishDateObj: moment(),
-        // startTimeObj: now,
-        // finishTimeObj: now,
-        // startDate: `${moment()._d}`,
-        // finishDate: `${moment()._d}`,
-        // startTime: `${now.format(format)}`,
-        // finishTime: `${now.format(format)}`
+        ageRange: [],
+        startDate: `${today}`,
+        finishDate: `${today}`
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
@@ -101,6 +97,22 @@ class CreateEventForm extends Component {
     this.setState(inputObj);
   }
 
+  // HANDLE THE SEATS AVAILABLE
+  // 
+  // 
+  handleSeatsAvailable(option) {
+    // get the current seats available
+    let currentSeats = this.state.seatsAvailable;
+
+    option == 'add'
+      ? currentSeats++
+      : currentSeats--
+
+    if (currentSeats < 0)  currentSeats = 0;
+
+    this.setState({seatsAvailable: currentSeats});
+  }
+
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
     const options = this.state[ checkboxOptions ];
@@ -108,7 +120,7 @@ class CreateEventForm extends Component {
 
     // check if the check box is checked or unchecked
     if (checked) {
-      // add the numerical value of the checkbox to options array
+      // add the value of the checkbox to options array
       options.push(checkbox)
     } else {
       // or remove the value from the unchecked checkbox from the array
@@ -136,41 +148,32 @@ class CreateEventForm extends Component {
    * @param e
    */
   submitForm() {
-    console.log('submitForm CALLED');
-    
     const props = this.props;
     const { app } = props;
-    const { fName, lName } = this.state;
-    // gather the child's info from the state
-    const newChild = {...this.state};
-    // create a temporary id for the new child
-    const tempNewChildID = `${fName}${lName}`;
+    const newEvent = {...this.state};
 
-    // get the user
-    let parent = app.props.user;
-    // get the users group of children
-    let userChildren = parent.children || {};
+    // add a timestamp to the added event
+    newEvent.timestamp = (new Date()).getTime();
 
-    // if this is the first time the user is adding children, remove the empty placeholder
-    if (userChildren[0] == ' ') {
-      // remove the placeholder from the DB
-      removeItem(`guardians/${newChild.gid}/children/0`)
-      // remove the placeholder locally
-      delete userChildren['0'];
-    }
+    // update the store, create a new user object with the updated event in it
+    const newUserObject = app.props.user;
 
-    // create a copy of the user's children
-    const updatedUserChildren = Object.assign(userChildren);
+    // get the collection of the host's events
+    const eventGroup = app.props.user.hostEvents || {};
 
-    // add the new child to the user's children
-    updatedUserChildren[tempNewChildID] = newChild;
-
-    // pass the user with the updated children to the store
-    const updatedUser = Object.assign(parent, updatedUserChildren);
-    store.dispatch(actions.handleChildProfile(updatedUser));
+    // add the new event to the event group
+    eventGroup[`${newEvent.title}`] = newEvent;
+    newUserObject['hostEvents'] = eventGroup;
+    
+    // pass the updated object to the store
+    store.dispatch(actions.handleHostEvent(newUserObject));
 
     // update the database
-    addChildProfile(newChild);
+    // 
+    // add the event to the guardian host branch - path, data
+    addItem(`guardians/${this.state.gid}/hostEvents`, newEvent);
+    // add the event to the general hosts tree - path, data
+    addItem(`hostEvents/${this.state.gid}`, newEvent);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -183,7 +186,6 @@ class CreateEventForm extends Component {
   render() {
     const props = this.props
     let formData = this.state.formData || {};
-    const { displayName, email, imageName } = this.props.auth;
 
     const outputCheckboxes = () => {
       let checkboxOutput = []
@@ -208,18 +210,30 @@ class CreateEventForm extends Component {
       return checkboxOutput
     }
 
-    // set the data structure for the radio buttons
-    const radio_props = [
+    // set the data structure for the frequency radio buttons group
+    const frequency_radio_props = [
       {label: 'none', value: 'none' },
       {label: 'weekly', value: 'weekly' },
       {label: 'monthly', value: 'monthly' }
+    ];
+
+    // set the data structure for the recurringDays checkbox group
+    const recurringDays_checkbox_props = [
+      {label: 'Mon', value: 'M' },
+      {label: 'Tue', value: 'T' },
+      {label: 'Wed', value: 'W' },
+      {label: 'Thu', value: 'Th' },
+      {label: 'Fri', value: 'F' },
+      {label: 'Sat', value: 'S' },
+      {label: 'Sun', value: 'Su' }
     ];
         // <BackButton path="/welcome-search" />
 
     return(
       <ScrollView>
-        <Text> Add your child here! </Text>
-        <View>
+        <Text> Add an Event! </Text>
+        <View style={{paddingBottom: 91}}>
+
           <TextInput
             style={{width: 200, height: 40}}
             placeholder='Event Title'
@@ -232,11 +246,76 @@ class CreateEventForm extends Component {
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
           />
 
+          <View className="seats-available">
+            <Text>Seats Available</Text>
+            <View>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
+                <Text>Minus Icon</Text> 
+              </TouchableHighlight>
+              <Text>Chair Icon</Text>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
+                <Text>Plus Icon</Text> 
+              </TouchableHighlight>
+              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
+            </View>
+          </View>
+
+          <Text>
+            Start Date
+          </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.startDate}
+            mode="datetime"
+            placeholder="Start Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            onDateChange={(date) => {this.setState({startDate: date});}}
+          />
+
+          <Text>
+            Finish Date
+          </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.finishDate}
+            mode="datetime"
+            placeholder="Finish Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            onDateChange={(date) => {this.setState({finishDate: date});}}
+          />
+
+          <Text>Repeats</Text>
+          {
+            /* custom checkbox output for the event form. This doesn't exist in the formData */
+            recurringDays_checkbox_props.map((item) =>{
+              let { label, value } = item;
+              return (
+                <CheckBox
+                  label={label}
+                  key={label}
+                  onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                />
+              )
+            })
+
+          }
+
           <View>
+            <Text>frequency_radio_props</Text>
             <RadioForm
-              radio_props={radio_props}
-              initial={userGender === 'male' ? 0 : 1 }
-              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
+              radio_props={frequency_radio_props}
+              initial={0}
+              onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
 
