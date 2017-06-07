@@ -16,10 +16,19 @@ import {
 // import DatePicker from 'react-datepicker';
 // import TimePicker from 'rc-time-picker';
 // import moment from 'moment';
+import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import CheckBox from './CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button';
+
+const now = moment().hour(0).minute(0);
+const today = now.format('YYYY-MM-DD');
+const priorDay = today.slice(-2) - 1;
+const yesterday = `${today.slice(0, 8)}${priorDay}`;
+
+console.log('moment yesterday******()()(: ', yesterday)
+console.log('moment today******()()(: ', today)
 
 // import BackButton from '../components/BackButton';
 
@@ -58,7 +67,8 @@ class CreateEventForm extends Component {
         recurringDays: [' '],
         frequency: '',
         ageRange: [],
-        date: '',
+        startDate: `${today}`,
+        finishDate: `${today}`,
         time: '20:00',
         datetime: '2016-05-05 20:00'
         // startDateObj: moment(),
@@ -226,20 +236,39 @@ class CreateEventForm extends Component {
         <View>
 
           <Text>
-            Welcome to react-native-datepicker example!
+            Start Date
           </Text>
           <DatePicker
             style={{width: 200}}
-            date={this.state.date}
+            date={this.state.startDate}
             mode="datetime"
             placeholder="Start Date"
-            format="MMMM Do YYYY, h:mm:ss a"
-            minDate="2016-05-01"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            minuteInterval={5}
             showIcon={false}
             // iconSource={require('./google_calendar.png')}
-            onDateChange={(date) => {this.setState({date: date});}}
+            onDateChange={(date) => {this.setState({startDate: date});}}
+          />
+
+          <Text>
+            Finish Date
+          </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.finishDate}
+            mode="datetime"
+            placeholder="Finish Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            // iconSource={require('./google_calendar.png')}
+            onDateChange={(date) => {this.setState({finishDate: date});}}
           />
 
           <TextInput
