@@ -64,7 +64,7 @@ class Header extends Component {
     if(props.editMode) {
       headerLinks =
         <View>
-          <Link onClick={ () => app.goToScene('Welcome', {app}) } text='Cancel' />
+          <Link onClick={ () => app.goToScene('Dashboard', {app}) } text='Cancel' />
         </View>
     } else {
       headerLinks =

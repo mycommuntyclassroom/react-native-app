@@ -13,7 +13,7 @@ import {
   ScrollView
 } from 'react-native';
 
-import CheckBox from 'react-native-checkbox';
+import CheckBox from './Checkbox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../components/Button';
 
@@ -105,10 +105,10 @@ class CreateGuardianAccount extends Component {
 
   }
 
-  radioButtonChange(e) {
+  radioButtonChange(value, group) {
     // current array of options
-    let radioButtonGroup = e.target.name
-    let radio = e.target.value
+    let radioButtonGroup = group
+    let radio = value
 
     const newState = {}
     newState[radioButtonGroup] = radio
@@ -160,7 +160,8 @@ class CreateGuardianAccount extends Component {
                 <View key={item}>
                   <CheckBox
                     label={item}
-                    onChange={(checked) => this.checkboxChange(item, category, !checked) }
+                    key={item}
+                    onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />
                 </View>
               )
@@ -171,6 +172,7 @@ class CreateGuardianAccount extends Component {
       return checkboxOutput
     }
 
+    // set the data structure for the radio buttons
     const radio_props = [
       {label: 'Male', value: 'male' },
       {label: 'Female', value: 'female' }
@@ -187,11 +189,11 @@ class CreateGuardianAccount extends Component {
             onChangeText={ (value) => this.handleChange(value, 'displayName') } 
           />
 
-          <View onChange={ this.radioButtonChange }>
+          <View>
             <RadioForm
               radio_props={radio_props}
               initial={0}
-              onPress={(value) => { this.radioButtonChange }}
+              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>
 
