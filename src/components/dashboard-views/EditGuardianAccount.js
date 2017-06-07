@@ -121,6 +121,7 @@ class EditGuardianAccount extends Component {
    * @param e
    */
   handleChange(value, fieldName) {
+    console.log('handleChange CALLED| value and fieldName', `${value} | ${fieldName}`)
     let inputObj = {}
     inputObj[fieldName] = value;
     this.setState(inputObj);
@@ -211,15 +212,10 @@ class EditGuardianAccount extends Component {
       console.log('guard PASSED')
       let checkboxOutput = [];
       for (var category in formData) {
-        console.log('this is the category: ', category)
         checkboxOutput.push(
           <View key={category}>
             <Text>{category}</Text>
             {formData[category].map(item => {
-              console.log('checkbox inner called, item: ', item)
-              console.log('this is the inner category: ', category)
-              console.log('this is the state:', this.state )
-              console.log('this.state[`${category}`]', this.state.formData[`${category}`] )
               var checkbox = '';
               // pre-check any items that were selected and saved
               if (userSpecialties.indexOf(item) > -1) {
@@ -259,6 +255,7 @@ class EditGuardianAccount extends Component {
     ];
 
     let userGender = this.state.gender
+    console.log('!!!!!!~~~~userGender: ', userGender)
     console.log('This is the profileImage: ', profileImage);
 
     // handle the output of the required image
@@ -289,12 +286,12 @@ class EditGuardianAccount extends Component {
             style={{height: 50}}
             name="displayName"
             defaultValue={ this.state.displayName }
-            onChange={ this.handleChange } />
+            onChangeText={ (value) => this.handleChange(value, 'displayName') } />
 
           <View>
             <RadioForm
               radio_props={radio_props}
-              initial={0}
+              initial={userGender === 'male' ? 0 : 1 }
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>
@@ -303,11 +300,10 @@ class EditGuardianAccount extends Component {
             <Text>Address</Text>
             <TextInput
               style={{height: 50}}
-              name="street"
               type="text"
               placeholder="Street Address"
               defaultValue={ this.state.street }
-              onChange={ this.handleChange }
+              onChangeText={ (value) => this.handleChange(value, 'street') }
             />
             <View className="no-wrap">
               <View>
@@ -317,7 +313,7 @@ class EditGuardianAccount extends Component {
                   type="text"
                   placeholder="City"
                   defaultValue={ this.state.city }
-                  onChange={ this.handleChange } 
+                  onChangeText={ (value) => this.handleChange(value, 'city') } 
                 />
               </View>
               <View>
@@ -327,7 +323,7 @@ class EditGuardianAccount extends Component {
                   name="state"
                   placeholder="State"
                   defaultValue={ this.state.state }
-                  onChange={ this.handleChange } 
+                  onChangeText={ (value) => this.handleChange(value, 'state') } 
                 />
               </View>
               <View>
@@ -337,7 +333,7 @@ class EditGuardianAccount extends Component {
                   type="text"
                   placeholder="Zipcode"
                   defaultValue={ this.state.zipCode }
-                  onChange={ this.handleChange } 
+                  onChangeText={ (value) => this.handleChange(value,'zipCode') } 
                 />
               </View>
             </View>
