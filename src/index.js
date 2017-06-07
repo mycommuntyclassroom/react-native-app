@@ -14,8 +14,6 @@ const AppContainer = connect(
   mapDispatchToProps
 )(App);
 
-Data.fetch();
-
 export default () => (
   <Provider store={store}>
     <AppContainer />

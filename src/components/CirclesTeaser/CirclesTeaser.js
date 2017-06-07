@@ -80,7 +80,7 @@ class CirclesTeaser extends Component {
 
         circleElement = 
           // <View className={`circle-element ${customClassName}`} id={circle} key={circle}></View>;
-          <View><Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} /></View>;
+          <View key={circle}><Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} /></View>;
 
         circlesOutput.push(circleElement);
       }

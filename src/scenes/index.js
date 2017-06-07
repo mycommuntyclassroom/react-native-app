@@ -14,6 +14,7 @@ import Tutorial from './Tutorial';
 import Dashboard from './Dashboard';
 import EditGuardian from './EditGuardian';
 import CreateChild from './CreateChild';
+import CreateEvent from './CreateEvent';
 
 export default {
   Loading,
@@ -31,5 +32,6 @@ export default {
   Tutorial,
   Dashboard,
   EditGuardian,
-  CreateChild
+  CreateChild,
+  CreateEvent
 };
