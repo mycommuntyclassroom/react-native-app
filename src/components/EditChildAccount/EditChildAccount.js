@@ -23,8 +23,6 @@ class EditChildAccount extends Component {
   constructor(props) {
     super(props);
 
-    console.log('EditChildAccount CALLED!!!')
-
     // child's id
     const { childId } = props;
     const { app } = props;
@@ -118,7 +116,6 @@ class EditChildAccount extends Component {
       index = options.indexOf(checkbox)
       options.splice(index, 1)
     }
-
   }
 
   radioButtonChange(value, group) {
@@ -134,11 +131,9 @@ class EditChildAccount extends Component {
 
   }
 
-  /**
-   *
-   * @param e
-   */
-
+  // SUBMIT FORM DATA
+  // 
+  // 
   submitForm() {
     console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
@@ -193,12 +188,9 @@ class EditChildAccount extends Component {
     console.log('this is the RENDER STATE: ', this.state)
 
     const outputCheckboxes = () => {
-      console.log('outputCheckboxes Called ');
-      // skip this function if the state doesn't have basic info
-      console.log('this is the gid: ', gid);
+      // skip this function if the state doesn't have basic info (id)
       if (gid === null) { return }
-      console.log('guard PASSED')
-      console.log('formData: ', formData)
+      
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(

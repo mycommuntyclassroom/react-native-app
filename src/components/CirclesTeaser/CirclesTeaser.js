@@ -32,11 +32,6 @@ class CirclesTeaser extends Component {
     let nullOutput;
     let customClassName = '';
 
-    console.log('here is the circlesData: ', circlesData);
-    console.log('here is the circlesData[0]: ', circlesData[0]);
-    console.log("here is the circlesData[0] === ' ': ", circlesData[0] === ' ');
-    console.log('PROPS: ', props)
-
     // if the circlesData is undefined, output a null-circle element
     switch (props.circleType) {
       case 'myChildren':
@@ -79,7 +74,6 @@ class CirclesTeaser extends Component {
         };
 
         circleElement = 
-          // <View className={`circle-element ${customClassName}`} id={circle} key={circle}></View>;
           <TouchableHighlight key={circle} onPress={ () => app.goToScene('EditChild', {app, childId: circle})} >
             <Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} />
           </TouchableHighlight>
@@ -93,8 +87,6 @@ class CirclesTeaser extends Component {
     }
 
     const { title, path, app } = props
-    console.log('IN the REnder of circles teaser, props: ', props)
-    console.log('IN the REnder of circles teaser, app: ', app)
 
     return(
       <View className="circles-teaser">
