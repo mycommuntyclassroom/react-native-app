@@ -14,6 +14,7 @@ import Tutorial from './Tutorial';
 import Dashboard from './Dashboard';
 import EditGuardian from './EditGuardian';
 import CreateChild from './CreateChild';
+import EditChild from './EditChild';
 import CreateEvent from './CreateEvent';
 import BrowseHosts from './BrowseHosts';
 import Notifications from './Notifications';
@@ -35,6 +36,7 @@ export default {
   Dashboard,
   EditGuardian,
   CreateChild,
+  EditChild,
   CreateEvent,
   BrowseHosts,
   Notifications

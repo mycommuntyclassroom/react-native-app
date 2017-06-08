@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import BackButton from '../BackButton/BackButton';
 import Nav from '../Nav';
 import Invite from '../Invite/Invite';
-import Link from '../Link/Link';
+import Link from '../Link';
 import style from './style';
 import globalStyles from '../../styles';
 

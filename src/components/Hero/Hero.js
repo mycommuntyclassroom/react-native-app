@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
-import Link from '../Link/Link';
+import Link from '../Link';
 
 class Hero extends Component {
   static PropTypes={
