@@ -25,31 +25,41 @@ class EditGuardianAccount extends Component {
 
     console.log('EditGuardianAccount CALLED!!!')
 
-    // console.log('componentWillReceiveProps called, nextProps: ', nextProps);
+    const { eventId } = props;
+
+    console.log('eventId: ', eventId)
+
     const { app } = props;
 
+    // event details
+    let hostEvents = app.props.user.hostEvents[eventId];
+
     console.log('thie is the APP data: ', app)
+    console.log('thie is the hostEvent: ', hostEvents)
 
     const { 
-            uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state
-          } = app.props.user;
+            gid, title, summary, image, hostName, seatsAvailable,
+            startDate, finishDate, recurringDays, frequency
+          } = hostEvents || null;
 
-    console.log('displayName: ', displayName)
+    console.log('hostEvents gid: ', gid)
+
+    const eventImage = image || '../../../images/blank-profile-pic.png';
 
     // build the state object with the key values in the props
     let newStateObject = {
-      uid,
-      displayName,
-      profileImage,
-      street,
-      city,
-      zipCode,
-      gender: gender || '',
-      specialties,
-      state,
+      gid,
+      title,
+      summary,
+      hostName,
+      startDate,
+      finishDate,
+      recurringDays,
+      frequency,
+      image,
+      seatsAvailable,
       uploadProgress: null
-    };
+    }
 
     // update the state after the render
     this.state = newStateObject;
@@ -59,7 +69,7 @@ class EditGuardianAccount extends Component {
     // pull the formData tree and grab all of the checkboxes for the guardians
     // and save it in the state
     database
-    .ref('formData/guardians')
+    .ref('formData/hostEvents')
     .once('value')
     .then((snapshot) => {
       // store the formData in the state
@@ -67,26 +77,9 @@ class EditGuardianAccount extends Component {
       this.setState({formData: snapshot.val()});
 
       let formData = snapshot.val() || {}
-
-      // gather all of the checkbox categories and pass them to the state (categories) object
-      console.log('componentWillReceiveProps checkBoxCategories Called')
-      // for (var category in formData) {
-      //   console.log('formData within the checkBoxCategories func: ', formData);
-      //   console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
-      //   // add a new property to the newStateObject
-      //   // with the name of each checkbox group name and its checked fields
-      //   let categoryArray = props.user[category] || [];
-      //   console.log('categoryArray: ', categoryArray)
-      //   let newCategoryArray = categoryArray.slice();
-      //   console.log('newCategoryArray: ', newCategoryArray)
-      //   newStateObject[category] = newCategoryArray;
-      // }
     })
 
-  
     console.log('this is the state obj after the insertion: ', this.state);
-
-    // const userImage = profileImage || photoURL;
 
     // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
@@ -107,11 +100,11 @@ class EditGuardianAccount extends Component {
 
     // uploadTask.then((snapshot) => {
     //   this.userRef.update({
-    //     profileImage: snapshot.downloadURL
+    //     image: snapshot.downloadURL
     //   });
     //   this.setState({ 
     //     uploadProgress: null,
-    //     profileImage: snapshot.downloadURL
+    //     image: snapshot.downloadURL
     //   });
     // });
   }
@@ -179,7 +172,7 @@ class EditGuardianAccount extends Component {
     store.dispatch(actions.userInfo(updatedUser));
 
     // update the database - path, data
-    updateProfile(`guardians/${data.uid}`, data);
+    updateProfile(`guardians/${data.gid}`, data);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -190,13 +183,15 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the RENDER, state: ', this.state)
+    console.log('Reached the Edit event RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
-    const userObj = app.props.user
-    const { uid, displayName, profileImage } = userObj;
-    const { uploadProgress } = this.state;
-    const userSpecialties = userObj.specialties
+
+    // state values for the event
+    const { 
+      title, uploadProgress, gid, image, recurringDays, 
+      frequency, startDate, finishDate, ageRange 
+    } = this.state;
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
@@ -207,8 +202,8 @@ class EditGuardianAccount extends Component {
     const outputCheckboxes = () => {
       console.log('outputCheckboxes Called ');
       // skip this function if the state doesn't have basic info
-      console.log('this is the uid: ', uid);
-      if (uid === null) { return }
+      console.log('this is the gid: ', gid);
+      if (gid === null) { return }
       console.log('guard PASSED')
       let checkboxOutput = [];
       for (var category in formData) {
@@ -217,8 +212,11 @@ class EditGuardianAccount extends Component {
             <Text>{category}</Text>
             {formData[category].map(item => {
               var checkbox = '';
+              console.log('output checkboxes this.state:: ', this.state)
+              console.log('output checkboxes category:: ', category)
+              console.log('output checkboxes this.state[`${category}`]:: ', this.state[`${category}`])
               // pre-check any items that were selected and saved
-              if (userSpecialties.indexOf(item) > -1) {
+              if (this.state[`${category}`].indexOf(item) > -1) {
                 checkbox = 
                   <CheckBox
                     label={item}
@@ -254,11 +252,11 @@ class EditGuardianAccount extends Component {
 
     let userGender = this.state.gender
     console.log('!!!!!!~~~~userGender: ', userGender)
-    console.log('This is the profileImage: ', profileImage);
+    console.log('This is the image: ', image);
 
     // handle the output of the required image
-    let userImage = profileImage != '../../../images/blank-profile-pic.png'
-      ? {uri: profileImage} 
+    let eventImage = image != '../../../images/blank-profile-pic.png'
+      ? {uri: image} 
       : require('../../../images/blank-profile-pic.png');
 
     return(
@@ -269,7 +267,7 @@ class EditGuardianAccount extends Component {
         <View className="image-uploader">
           <View className="image-uploader--image-container">
             <Image 
-              source={userImage} 
+              source={eventImage} 
               className="image-uploader--photo"
               resizeMode='contain' 
               style={{width: 100, height: 100}} />
@@ -292,49 +290,6 @@ class EditGuardianAccount extends Component {
               initial={userGender === 'male' ? 0 : 1 }
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
-          </View>
-
-          <View className="address">
-            <Text>Address</Text>
-            <TextInput
-              style={{height: 50}}
-              type="text"
-              placeholder="Street Address"
-              defaultValue={ this.state.street }
-              onChangeText={ (value) => this.handleChange(value, 'street') }
-            />
-            <View className="no-wrap">
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  name="city"
-                  type="text"
-                  placeholder="City"
-                  defaultValue={ this.state.city }
-                  onChangeText={ (value) => this.handleChange(value, 'city') } 
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  className="state-field"
-                  name="state"
-                  placeholder="State"
-                  defaultValue={ this.state.state }
-                  onChangeText={ (value) => this.handleChange(value, 'state') } 
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  name="zipCode"
-                  type="text"
-                  placeholder="Zipcode"
-                  defaultValue={ this.state.zipCode }
-                  onChangeText={ (value) => this.handleChange(value,'zipCode') } 
-                />
-              </View>
-            </View>
           </View>
 
           { outputCheckboxes() }
