@@ -18,75 +18,48 @@ import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
-class EditGuardianAccount extends Component {
+class EditChildAccount extends Component {
 
   constructor(props) {
     super(props);
 
-    console.log('EditGuardianAccount CALLED!!!')
-
-    // console.log('componentWillReceiveProps called, nextProps: ', nextProps);
+    // child's id
+    const { childId } = props;
     const { app } = props;
-
     console.log('thie is the APP data: ', app)
+    const child = app.props.user.children[childId];
 
+    console.log('This is the Child: ', child)
     const { 
-            uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state
-          } = app.props.user;
-
-    console.log('displayName: ', displayName)
+            gid, fName, lName, profileImage, gender, allergies
+          } = child;
 
     // build the state object with the key values in the props
     let newStateObject = {
-      uid,
-      displayName,
+      gid,
+      fName,
+      lName,
       profileImage,
-      street,
-      city,
-      zipCode,
-      gender: gender || '',
-      specialties,
-      state,
+      gender,
+      allergies,
       uploadProgress: null
-    };
+    }
 
-    // update the state after the render
+    // set the state
     this.state = newStateObject;
 
     console.log('this is the newStateObject: ', newStateObject)
 
-    // pull the formData tree and grab all of the checkboxes for the guardians
+    // pull the formData tree and grab all of the checkboxes for the children
     // and save it in the state
     database
-    .ref('formData/guardians')
+    .ref('formData/children')
     .once('value')
     .then((snapshot) => {
       // store the formData in the state
       console.log('*!*!*!*!* firebase call returned *!*!*!*!')
       this.setState({formData: snapshot.val()});
-
-      let formData = snapshot.val() || {}
-
-      // gather all of the checkbox categories and pass them to the state (categories) object
-      console.log('componentWillReceiveProps checkBoxCategories Called')
-      // for (var category in formData) {
-      //   console.log('formData within the checkBoxCategories func: ', formData);
-      //   console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
-      //   // add a new property to the newStateObject
-      //   // with the name of each checkbox group name and its checked fields
-      //   let categoryArray = props.user[category] || [];
-      //   console.log('categoryArray: ', categoryArray)
-      //   let newCategoryArray = categoryArray.slice();
-      //   console.log('newCategoryArray: ', newCategoryArray)
-      //   newStateObject[category] = newCategoryArray;
-      // }
     })
-
-  
-    console.log('this is the state obj after the insertion: ', this.state);
-
-    // const userImage = profileImage || photoURL;
 
     // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
@@ -130,8 +103,8 @@ class EditGuardianAccount extends Component {
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
     console.log('this is the checkboxChange state: ', this.state)
-    const options = this.state.specialties;
-    console.log('This is the checkboxChange options: ', this.state.specialties);
+    const options = this.state.allergies;
+    console.log('This is the checkboxChange options: ', this.state.allergies);
     let index;
 
     // check if the check box is checked or unchecked
@@ -143,7 +116,6 @@ class EditGuardianAccount extends Component {
       index = options.indexOf(checkbox)
       options.splice(index, 1)
     }
-
   }
 
   radioButtonChange(value, group) {
@@ -159,27 +131,38 @@ class EditGuardianAccount extends Component {
 
   }
 
-  /**
-   *
-   * @param e
-   */
-
+  // SUBMIT FORM DATA
+  // 
+  // 
   submitForm() {
     console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
+    const { childId } = props;
     const { app } = props;
     const data = {...this.state};
 
-    const currentUserObject = app.props.user;
-    console.log('here is the currentUserObject: ', currentUserObject)
-    const updatedUser = Object.assign(currentUserObject, data)
+    // remove the values from the formData prop
+    data.formData = null;
+
+    // update the store, create a new user object with the profile info in it
+    console.log('this is the current user Obj: ', props.user);
+    console.log('this is the current state: ', data);
+    const childProfile = app.props.user.children[childId];
+    const userProfile = app.props.user;
+
+    // update the child's profile with the data submitted
+    const updatedChildProfile = Object.assign(childProfile, data);
+    console.log('here is the updatedChildProfile: ', updatedChildProfile);
+    // update the user object with the updated child profile
+    const updatedUser = Object.assign(userProfile, updatedChildProfile)
+
     console.log('here is the updatedUser: ', updatedUser)
 
-    // pass the updated object to the store
+    // pass the updated user to the store
     store.dispatch(actions.userInfo(updatedUser));
 
     // update the database - path, data
-    updateProfile(`guardians/${data.uid}`, data);
+    updateProfile(`guardians/${data.gid}/children/${childId}`, data);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -193,10 +176,10 @@ class EditGuardianAccount extends Component {
     console.log('Reached the RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
-    const userObj = app.props.user
-    const { uid, displayName, profileImage } = userObj;
-    const { uploadProgress } = this.state;
-    const userSpecialties = userObj.specialties
+    const currentChild = this.state
+    const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
+
+    console.log('allergies: ', allergies)
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
@@ -205,11 +188,9 @@ class EditGuardianAccount extends Component {
     console.log('this is the RENDER STATE: ', this.state)
 
     const outputCheckboxes = () => {
-      console.log('outputCheckboxes Called ');
-      // skip this function if the state doesn't have basic info
-      console.log('this is the uid: ', uid);
-      if (uid === null) { return }
-      console.log('guard PASSED')
+      // skip this function if the state doesn't have basic info (id)
+      if (gid === null) { return }
+      
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
@@ -218,7 +199,7 @@ class EditGuardianAccount extends Component {
             {formData[category].map(item => {
               var checkbox = '';
               // pre-check any items that were selected and saved
-              if (userSpecialties.indexOf(item) > -1) {
+              if (allergies.indexOf(item) > -1) {
                 checkbox = 
                   <CheckBox
                     label={item}
@@ -252,19 +233,15 @@ class EditGuardianAccount extends Component {
       {label: 'Female', value: 'female' }
     ];
 
-    let userGender = this.state.gender
-    console.log('!!!!!!~~~~userGender: ', userGender)
-    console.log('This is the profileImage: ', profileImage);
-
     // handle the output of the required image
     let userImage = profileImage != '../../../images/blank-profile-pic.png'
       ? {uri: profileImage} 
       : require('../../../images/blank-profile-pic.png');
 
     return(
-      <ScrollView className="create-account">
+      <ScrollView className="edit-account">
 
-        <Text> Editing Profile </Text>
+        <Text> {`Updating ${fName}'s Profile`} </Text>
 
         <View className="image-uploader">
           <View className="image-uploader--image-container">
@@ -282,59 +259,22 @@ class EditGuardianAccount extends Component {
         <View style={{paddingBottom: 93}}>
           <TextInput
             style={{height: 50}}
-            name="displayName"
-            defaultValue={ this.state.displayName }
-            onChangeText={ (value) => this.handleChange(value, 'displayName') } />
+            name="fName"
+            defaultValue={ this.state.fName }
+            onChangeText={ (value) => this.handleChange(value, 'fName') } />
+
+          <TextInput
+            style={{height: 50}}
+            name="lName"
+            defaultValue={ this.state.lName }
+            onChangeText={ (value) => this.handleChange(value, 'lName') } />
 
           <View>
             <RadioForm
               radio_props={radio_props}
-              initial={userGender === 'male' ? 0 : 1 }
+              initial={gender === 'male' ? 0 : 1 }
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
-          </View>
-
-          <View className="address">
-            <Text>Address</Text>
-            <TextInput
-              style={{height: 50}}
-              type="text"
-              placeholder="Street Address"
-              defaultValue={ this.state.street }
-              onChangeText={ (value) => this.handleChange(value, 'street') }
-            />
-            <View className="no-wrap">
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  name="city"
-                  type="text"
-                  placeholder="City"
-                  defaultValue={ this.state.city }
-                  onChangeText={ (value) => this.handleChange(value, 'city') } 
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  className="state-field"
-                  name="state"
-                  placeholder="State"
-                  defaultValue={ this.state.state }
-                  onChangeText={ (value) => this.handleChange(value, 'state') } 
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  name="zipCode"
-                  type="text"
-                  placeholder="Zipcode"
-                  defaultValue={ this.state.zipCode }
-                  onChangeText={ (value) => this.handleChange(value,'zipCode') } 
-                />
-              </View>
-            </View>
           </View>
 
           { outputCheckboxes() }
@@ -346,4 +286,4 @@ class EditGuardianAccount extends Component {
   }
 }
 
-export default EditGuardianAccount;
+export default EditChildAccount;

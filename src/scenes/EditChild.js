@@ -7,12 +7,12 @@ import {
 
 
 import Header from '../components/Header';
-import CreateEventForm from '../components/CreateEventForm';
+import EditChildAccount from '../components/EditChildAccount';
 
-class CreateEvent extends Component {
+class EditChild extends Component {
 
   componentDidMount() {
-    console.log('mounted CreateEvent', this.props);
+    console.log('mounted EditChild', this.props);
   }
 
   render() {
@@ -22,11 +22,11 @@ class CreateEvent extends Component {
     return (
       <View className="edit-view">
         <Header { ...props } editMode={ true } />
-        <CreateEventForm { ...props } />
+        <EditChildAccount { ...props } />
       </View>
     );
   };
 
 }
 
-export default CreateEvent;
+export default EditChild;

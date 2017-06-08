@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 
-import Header from '../components/Header/Header';
+import Header from '../components/Header';
 import EditGuardianAccount from '../components/dashboard-views/EditGuardianAccount';
 
 class EditGuardian extends Component {

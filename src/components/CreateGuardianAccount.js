@@ -133,8 +133,8 @@ class CreateGuardianAccount extends Component {
       actions.newAccountCreated(data)
     );
 
-    // update the database
-    updateProfile(data);
+    // update the database - path, data
+    updateProfile(`guardians/${data.uid}`, data);
 
     // navigate to the tutorial page
     app.goToScene('Tutorial', {app})

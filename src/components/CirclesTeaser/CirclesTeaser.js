@@ -8,7 +8,7 @@ import {
 
 import PropTypes from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
-import Link from '../Link/Link';
+import Link from '../Link';
 import style from './style';
 import { deviceDimensions } from '../../styles';
 
@@ -31,11 +31,6 @@ class CirclesTeaser extends Component {
     let circleElement;
     let nullOutput;
     let customClassName = '';
-
-    console.log('here is the circlesData: ', circlesData);
-    console.log('here is the circlesData[0]: ', circlesData[0]);
-    console.log("here is the circlesData[0] === ' ': ", circlesData[0] === ' ');
-    console.log('PROPS: ', props)
 
     // if the circlesData is undefined, output a null-circle element
     switch (props.circleType) {
@@ -79,8 +74,9 @@ class CirclesTeaser extends Component {
         };
 
         circleElement = 
-          // <View className={`circle-element ${customClassName}`} id={circle} key={circle}></View>;
-          <View key={circle}><Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} /></View>;
+          <TouchableHighlight key={circle} onPress={ () => app.goToScene('EditChild', {app, childId: circle})} >
+            <Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} />
+          </TouchableHighlight>
 
         circlesOutput.push(circleElement);
       }
@@ -91,8 +87,6 @@ class CirclesTeaser extends Component {
     }
 
     const { title, path, app } = props
-    console.log('IN the REnder of circles teaser, props: ', props)
-    console.log('IN the REnder of circles teaser, app: ', app)
 
     return(
       <View className="circles-teaser">

@@ -5,11 +5,11 @@ import {
   Text
 } from 'react-native';
 
-import Header from '../Header/Header';
-import Hero from '../Hero/Hero';
-import Summary from '../Summary/Summary';
-import CirclesTeaser from '../CirclesTeaser/CirclesTeaser';
-import EventTeaser from '../EventTeaser/EventTeaser';
+import Header from '../Header';
+import Hero from '../Hero';
+import Summary from '../Summary';
+import CirclesTeaser from '../CirclesTeaser';
+import EventTeaser from '../EventTeaser';
 // import FooterNav from '../FooterNav';
 
 class AdminView extends Component {

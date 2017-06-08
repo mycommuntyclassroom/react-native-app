@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Link from '../Link/Link';
+import Link from '../Link';
 import { FaEnvelopeO, FaUser, FaMailForward } from 'react-icons/lib/fa';
 
 class Invite extends Component {

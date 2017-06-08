@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
-import Link from '../Link/Link';
+import Link from '../Link';
 // import style from './style';
 import { deviceDimensions } from '../../styles';
 
