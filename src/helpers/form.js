@@ -1,9 +1,9 @@
 import { database } from './firebase';
 
-export function updateProfile (formData) {
+export function updateProfile (path, formData) {
   console.log('updateProfile', formData);
-  database.ref('guardians')
-          .child(formData.uid)
+  console.log('updateProfile PATH', path);
+  database.ref(path)
           .update(formData);
 }
 

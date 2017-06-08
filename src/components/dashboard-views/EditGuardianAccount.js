@@ -178,8 +178,8 @@ class EditGuardianAccount extends Component {
     // pass the updated object to the store
     store.dispatch(actions.userInfo(updatedUser));
 
-    // update the database
-    updateProfile(data);
+    // update the database - path, data
+    updateProfile(`guardians/${data.uid}`, data);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})

@@ -105,8 +105,8 @@ class EditChildAccount extends Component {
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
     console.log('this is the checkboxChange state: ', this.state)
-    const options = this.state.specialties;
-    console.log('This is the checkboxChange options: ', this.state.specialties);
+    const options = this.state.allergies;
+    console.log('This is the checkboxChange options: ', this.state.allergies);
     let index;
 
     // check if the check box is checked or unchecked
@@ -142,19 +142,32 @@ class EditChildAccount extends Component {
   submitForm() {
     console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
+    const { childId } = props;
     const { app } = props;
     const data = {...this.state};
 
-    const currentUserObject = app.props.user;
-    console.log('here is the currentUserObject: ', currentUserObject)
-    const updatedUser = Object.assign(currentUserObject, data)
+    // remove the values from the formData prop
+    data.formData = null;
+
+    // update the store, create a new user object with the profile info in it
+    console.log('this is the current user Obj: ', props.user);
+    console.log('this is the current state: ', data);
+    const childProfile = app.props.user.children[childId];
+    const userProfile = app.props.user;
+
+    // update the child's profile with the data submitted
+    const updatedChildProfile = Object.assign(childProfile, data);
+    console.log('here is the updatedChildProfile: ', updatedChildProfile);
+    // update the user object with the updated child profile
+    const updatedUser = Object.assign(userProfile, updatedChildProfile)
+
     console.log('here is the updatedUser: ', updatedUser)
 
-    // pass the updated object to the store
+    // pass the updated user to the store
     store.dispatch(actions.userInfo(updatedUser));
 
-    // update the database
-    updateProfile(data);
+    // update the database - path, data
+    updateProfile(`guardians/${data.gid}/children/${childId}`, data);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -169,8 +182,9 @@ class EditChildAccount extends Component {
     const props = this.props;
     const { app } = props
     const currentChild = this.state
-    const { gid, fName, lName, gender, profileImage, uploadProgress } = currentChild;
-    const userSpecialties = currentChild.allergies
+    const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
+
+    console.log('allergies: ', allergies)
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
@@ -193,7 +207,7 @@ class EditChildAccount extends Component {
             {formData[category].map(item => {
               var checkbox = '';
               // pre-check any items that were selected and saved
-              if (userSpecialties.indexOf(item) > -1) {
+              if (allergies.indexOf(item) > -1) {
                 checkbox = 
                   <CheckBox
                     label={item}
