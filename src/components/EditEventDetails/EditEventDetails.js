@@ -39,12 +39,10 @@ class EditGuardianAccount extends Component {
 
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
-            startDate, finishDate, recurringDays, frequency
+            ageRange, startDate, finishDate, recurringDays, frequency 
           } = hostEvents || null;
 
     console.log('hostEvents gid: ', gid)
-
-    const eventImage = image || '../../../images/blank-profile-pic.png';
 
     // build the state object with the key values in the props
     let newStateObject = {
@@ -58,6 +56,8 @@ class EditGuardianAccount extends Component {
       frequency,
       image,
       seatsAvailable,
+      recurringDays,
+      ageRange,
       uploadProgress: null
     }
 
@@ -76,7 +76,8 @@ class EditGuardianAccount extends Component {
       console.log('*!*!*!*!* firebase call returned *!*!*!*!')
       this.setState({formData: snapshot.val()});
 
-      let formData = snapshot.val() || {}
+      let formData = snapshot.val() || {};
+
     })
 
     console.log('this is the state obj after the insertion: ', this.state);
