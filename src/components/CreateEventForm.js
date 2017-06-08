@@ -20,6 +20,7 @@ import CheckBox from './CheckBox';
 import Button from '../components/Button';
 
 const now = moment().hour(0).minute(0);
+const nowFormat = now.format('YYYY-MM-DD')
 const today = now.format('YYYY-MM-DD');
 const priorDay = today.slice(-2) - 1;
 const yesterday = `${today.slice(0, 8)}${priorDay}`;
@@ -59,8 +60,8 @@ class CreateEventForm extends Component {
         recurringDays: [' '],
         frequency: '',
         ageRange: [],
-        startDate: `${today}`,
-        finishDate: `${today}`
+        startDate: '',
+        finishDate: ''
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
