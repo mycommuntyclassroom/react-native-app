@@ -1,6 +1,7 @@
 import Calendar from './Calendar';
 import Feedback from './Feedback';
 import Friends from './Friends';
+import Invite from './Invite';
 import Hosts from './Hosts';
 import Inbox from './Inbox';
 import Loading from './Loading';
@@ -16,6 +17,7 @@ import EditGuardian from './EditGuardian';
 import CreateChild from './CreateChild';
 import EditChild from './EditChild';
 import CreateEvent from './CreateEvent';
+import EditEvent from './EditEvent';
 import BrowseHosts from './BrowseHosts';
 import Notifications from './Notifications';
 
@@ -24,6 +26,7 @@ export default {
   Calendar,
   Feedback,
   Friends,
+  Invite,
   Hosts,
   Inbox,
   Login,
@@ -38,6 +41,7 @@ export default {
   CreateChild,
   EditChild,
   CreateEvent,
+  EditEvent,
   BrowseHosts,
   Notifications
 };

@@ -14,7 +14,7 @@ import Button from '../Button';
 
 import { updateProfile } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
-import PageLoader from '../PageLoader/PageLoader';
+import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
