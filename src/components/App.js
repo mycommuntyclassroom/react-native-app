@@ -12,6 +12,7 @@ import scenes from '../scenes';
 import style from '../styles';
 import Nav from './Nav';
 import Button from './Button';
+import FooterNav from './FooterNav';
 import store from '../redux/store';
 
 import { startListeningForUsers } from '../redux/actions/user';
@@ -96,6 +97,7 @@ class App extends Component {
   }
 
   render() {
+
     const buttonStyle = {
       position: 'absolute',
       bottom: 50,
@@ -112,6 +114,7 @@ class App extends Component {
           configureScene={this.configureScene} />
 
         <Nav ref='navMenu' app={this} style={style} />
+        <FooterNav app={this} />
 
       </View>
     );

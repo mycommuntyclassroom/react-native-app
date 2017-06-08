@@ -15,6 +15,8 @@ import Dashboard from './Dashboard';
 import EditGuardian from './EditGuardian';
 import CreateChild from './CreateChild';
 import CreateEvent from './CreateEvent';
+import BrowseHosts from './BrowseHosts';
+import Notifications from './Notifications';
 
 export default {
   Loading,
@@ -33,5 +35,7 @@ export default {
   Dashboard,
   EditGuardian,
   CreateChild,
-  CreateEvent
+  CreateEvent,
+  BrowseHosts,
+  Notifications
 };
