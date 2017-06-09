@@ -35,9 +35,6 @@ class EditGuardianAccount extends Component {
     console.log('EditGuardianAccount CALLED!!!')
 
     const { eventId } = props;
-
-    console.log('eventId: ', eventId)
-
     const { app } = props;
 
     // event details
@@ -367,10 +364,16 @@ class EditGuardianAccount extends Component {
           <Text>Repeats</Text>
           {
             /* custom checkbox output for the event form. This doesn't exist in the formData */
-            recurringDays_checkbox_props.map((item) =>{
+            recurringDays_checkbox_props.map((item, i) =>{
               let { label, value } = item;
+              let currentValue = recurringDays_checkbox_props[i].value;
+              console.log('recurringDays_checkbox_props value: ', value)
+              console.log('recurringDays_checkbox_props: ', recurringDays_checkbox_props[i].value)
+              console.log('this.state.recurringDays.indexOf(currentValue): ', this.state.recurringDays.indexOf(currentValue))
+
+
               // pre-check any items that were selected and saved
-              if (recurringDays.indexOf(item) > -1) {
+              if (this.state.recurringDays.indexOf(currentValue) > -1) {
                 return (
                   <CheckBox
                     label={label}
