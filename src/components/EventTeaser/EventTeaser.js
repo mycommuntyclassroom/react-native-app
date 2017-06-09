@@ -55,15 +55,16 @@ class EventTeaser extends Component {
     function generateTeasers() {
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
+        console.log('******EventTeaser teaser: ', teaser)
 
               // <Image source={require(image)} resizeMode='contain' />
         teaserElement =
           <View className="teaser-container" key={teaser}>
-            <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
+            <TouchableHighlight className="event-image" onPress={ () => app.goToScene('EventDetails') }>
               <Text>IMAGE</Text>
-            </View>
+            </TouchableHighlight>
             <View className="event-View">
-              <Link onClick={ () => app.goToScene('editEvent', teaser) } text='FaPencil' />
+              <Link onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='FaPencil' />
               {
                !props.guardianData &&
                   <Link onClick={ () => app.goToScene('CreateEvent') } text='FaPlus' />

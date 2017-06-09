@@ -8,6 +8,8 @@ import {
   Image
 } from 'react-native';
 
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 import CheckBox from '../CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../Button';
@@ -18,6 +20,13 @@ import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
+// time/date values
+const now = moment().hour(0).minute(0);
+const nowFormat = now.format('YYYY-MM-DD')
+const today = now.format('YYYY-MM-DD');
+const priorDay = today.slice(-2) - 1;
+const yesterday = `${today.slice(0, 8)}${priorDay}`;
+
 class EditGuardianAccount extends Component {
 
   constructor(props) {
@@ -25,31 +34,33 @@ class EditGuardianAccount extends Component {
 
     console.log('EditGuardianAccount CALLED!!!')
 
-    // console.log('componentWillReceiveProps called, nextProps: ', nextProps);
+    const { eventId } = props;
     const { app } = props;
 
-    console.log('thie is the APP data: ', app)
+    // event details
+    let hostEvents = app.props.user.hostEvents[eventId];
 
     const { 
-            uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state
-          } = app.props.user;
-
-    console.log('displayName: ', displayName)
+            gid, title, summary, image, hostName, seatsAvailable,
+            ageRange, startDate, finishDate, recurringDays, frequency 
+          } = hostEvents || null;
 
     // build the state object with the key values in the props
     let newStateObject = {
-      uid,
-      displayName,
-      profileImage,
-      street,
-      city,
-      zipCode,
-      gender: gender || '',
-      specialties,
-      state,
+      gid,
+      title,
+      summary,
+      hostName,
+      startDate,
+      finishDate,
+      recurringDays,
+      frequency,
+      image,
+      seatsAvailable,
+      recurringDays,
+      ageRange,
       uploadProgress: null
-    };
+    }
 
     // update the state after the render
     this.state = newStateObject;
@@ -59,36 +70,18 @@ class EditGuardianAccount extends Component {
     // pull the formData tree and grab all of the checkboxes for the guardians
     // and save it in the state
     database
-    .ref('formData/guardians')
+    .ref('formData/hostEvents')
     .once('value')
     .then((snapshot) => {
       // store the formData in the state
       console.log('*!*!*!*!* firebase call returned *!*!*!*!')
       this.setState({formData: snapshot.val()});
 
-      let formData = snapshot.val() || {}
+      let formData = snapshot.val() || {};
 
-      // gather all of the checkbox categories and pass them to the state (categories) object
-      console.log('componentWillReceiveProps checkBoxCategories Called')
-      // for (var category in formData) {
-      //   console.log('formData within the checkBoxCategories func: ', formData);
-      //   console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
-      //   // add a new property to the newStateObject
-      //   // with the name of each checkbox group name and its checked fields
-      //   let categoryArray = props.user[category] || [];
-      //   console.log('categoryArray: ', categoryArray)
-      //   let newCategoryArray = categoryArray.slice();
-      //   console.log('newCategoryArray: ', newCategoryArray)
-      //   newStateObject[category] = newCategoryArray;
-      // }
     })
-
-  
-    console.log('this is the state obj after the insertion: ', this.state);
-
-    // const userImage = profileImage || photoURL;
-
     // bind functions
+    this.handleSeatsAvailable=this.handleSeatsAvailable.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -107,11 +100,11 @@ class EditGuardianAccount extends Component {
 
     // uploadTask.then((snapshot) => {
     //   this.userRef.update({
-    //     profileImage: snapshot.downloadURL
+    //     image: snapshot.downloadURL
     //   });
     //   this.setState({ 
     //     uploadProgress: null,
-    //     profileImage: snapshot.downloadURL
+    //     image: snapshot.downloadURL
     //   });
     // });
   }
@@ -129,9 +122,7 @@ class EditGuardianAccount extends Component {
 
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    console.log('this is the checkboxChange state: ', this.state)
-    const options = this.state.specialties;
-    console.log('This is the checkboxChange options: ', this.state.specialties);
+    const options = this.state[checkboxOptions];
     let index;
 
     // check if the check box is checked or unchecked
@@ -159,6 +150,22 @@ class EditGuardianAccount extends Component {
 
   }
 
+  // HANDLE THE SEATS AVAILABLE
+  // 
+  // 
+  handleSeatsAvailable(option) {
+    // get the current seats available
+    let currentSeats = this.state.seatsAvailable;
+
+    option == 'add'
+      ? currentSeats++
+      : currentSeats--
+
+    if (currentSeats < 0)  currentSeats = 0;
+
+    this.setState({seatsAvailable: currentSeats});
+  }
+
   /**
    *
    * @param e
@@ -167,19 +174,21 @@ class EditGuardianAccount extends Component {
   submitForm() {
     console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
-    const { app } = props;
-    const data = {...this.state};
+    const { eventId, app } = props;
+    const eventData = {...this.state};
 
-    const currentUserObject = app.props.user;
-    console.log('here is the currentUserObject: ', currentUserObject)
-    const updatedUser = Object.assign(currentUserObject, data)
-    console.log('here is the updatedUser: ', updatedUser)
+    // set a timestamp for last updated
+    eventData.lastUpdated = (new Date()).getTime();
 
-    // pass the updated object to the store
-    store.dispatch(actions.userInfo(updatedUser));
+    // update the store's event contents with the newly added event
+    app.props.user.hostEvents[eventId] = eventData;
 
-    // update the database - path, data
-    updateProfile(`guardians/${data.uid}`, data);
+    // update the database
+    // 
+    // update the event in the guardian host branch - path, data
+    updateProfile(`guardians/${this.state.gid}/hostEvents/${eventId}`, eventData);
+    // update the event in the general hosts tree - path, data
+    updateProfile(`hostEvents/${this.state.gid}/${eventId}`, eventData);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -190,26 +199,23 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the RENDER, state: ', this.state)
+    console.log('Reached the Edit event RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
-    const userObj = app.props.user
-    const { uid, displayName, profileImage } = userObj;
-    const { uploadProgress } = this.state;
-    const userSpecialties = userObj.specialties
+
+    // state values for the event
+    const { 
+      title, uploadProgress, gid, image, recurringDays, 
+      frequency, startDate, finishDate, ageRange, summary
+    } = this.state;
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
 
-    console.log('formData: ', formData)
-    console.log('this is the RENDER STATE: ', this.state)
-
     const outputCheckboxes = () => {
       console.log('outputCheckboxes Called ');
       // skip this function if the state doesn't have basic info
-      console.log('this is the uid: ', uid);
-      if (uid === null) { return }
-      console.log('guard PASSED')
+      if (gid === null) { return }
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
@@ -218,19 +224,19 @@ class EditGuardianAccount extends Component {
             {formData[category].map(item => {
               var checkbox = '';
               // pre-check any items that were selected and saved
-              if (userSpecialties.indexOf(item) > -1) {
+              if (this.state[`${category}`].indexOf(item) > -1) {
                 checkbox = 
                   <CheckBox
                     label={item}
                     checked={true}
-                    key={item}
+                    key={`${item}${category}`}
                     onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               } else {
                 checkbox = 
                   <CheckBox
                     label={item}
-                    key={item}
+                    key={`${item}${category}`}
                     onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               }
@@ -245,31 +251,47 @@ class EditGuardianAccount extends Component {
       console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
 
-
-    // set the data structure for the radio buttons
-    const radio_props = [
-      {label: 'Male', value: 'male' },
-      {label: 'Female', value: 'female' }
+    // set the data structure for the frequency radio buttons group
+    const frequency_radio_props = [
+      {label: 'none', value: 'none' },
+      {label: 'weekly', value: 'weekly' },
+      {label: 'monthly', value: 'monthly' }
     ];
 
-    let userGender = this.state.gender
-    console.log('!!!!!!~~~~userGender: ', userGender)
-    console.log('This is the profileImage: ', profileImage);
+    // get the index of the frequency
+    let frequencySelected;
+    frequency_radio_props.map((option, i) => {
+      // if there's a match, return the index of the matching item
+      if (this.state.frequency === option.value) {
+        frequencySelected = i;
+      }
+    })
+
+    // set the data structure for the recurringDays checkbox group
+    const recurringDays_checkbox_props = [
+      {label: 'Mon', value: 'M' },
+      {label: 'Tue', value: 'T' },
+      {label: 'Wed', value: 'W' },
+      {label: 'Thu', value: 'Th' },
+      {label: 'Fri', value: 'F' },
+      {label: 'Sat', value: 'S' },
+      {label: 'Sun', value: 'Su' }
+    ];
 
     // handle the output of the required image
-    let userImage = profileImage != '../../../images/blank-profile-pic.png'
-      ? {uri: profileImage} 
+    let eventImage = image != '../../../images/blank-profile-pic.png'
+      ? {uri: image} 
       : require('../../../images/blank-profile-pic.png');
 
     return(
       <ScrollView className="create-account">
 
-        <Text> Editing Profile </Text>
+        <Text> { `Editing ${title}` }  </Text>
 
         <View className="image-uploader">
           <View className="image-uploader--image-container">
             <Image 
-              source={userImage} 
+              source={eventImage} 
               className="image-uploader--photo"
               resizeMode='contain' 
               style={{width: 100, height: 100}} />
@@ -282,59 +304,102 @@ class EditGuardianAccount extends Component {
         <View style={{paddingBottom: 93}}>
           <TextInput
             style={{height: 50}}
-            name="displayName"
-            defaultValue={ this.state.displayName }
-            onChangeText={ (value) => this.handleChange(value, 'displayName') } />
+            name="title"
+            defaultValue={ this.state.title }
+            onChangeText={ (value) => this.handleChange(value, 'title') } />
 
-          <View>
-            <RadioForm
-              radio_props={radio_props}
-              initial={userGender === 'male' ? 0 : 1 }
-              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
-            />
+          <TextInput
+            style={{minHeight: 50}}
+            name="summary"
+            multiline={true}
+            numberOfLines={4}
+            defaultValue={ this.state.summary }
+            onChangeText={ (value) => this.handleChange(value, 'summary') } />
+
+
+          <View className="seats-available">
+            <Text>Seats Available</Text>
+            <View>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
+                <Text>Minus Icon</Text> 
+              </TouchableHighlight>
+              <Text>Chair Icon</Text>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
+                <Text>Plus Icon</Text> 
+              </TouchableHighlight>
+              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
+            </View>
           </View>
 
-          <View className="address">
-            <Text>Address</Text>
-            <TextInput
-              style={{height: 50}}
-              type="text"
-              placeholder="Street Address"
-              defaultValue={ this.state.street }
-              onChangeText={ (value) => this.handleChange(value, 'street') }
+          <Text> Start Date </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.startDate}
+            mode="datetime"
+            placeholder="Start Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            onDateChange={(date) => {this.setState({startDate: date});}}
+          />
+
+          <Text> Finish Date </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.finishDate}
+            mode="datetime"
+            placeholder="Finish Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            onDateChange={(date) => {this.setState({finishDate: date});}}
+          />
+
+          <Text>Repeats</Text>
+          {
+            /* custom checkbox output for the event form. This doesn't exist in the formData */
+            recurringDays_checkbox_props.map((item, i) =>{
+              let { label, value } = item;
+              let currentValue = recurringDays_checkbox_props[i].value;
+              console.log('recurringDays_checkbox_props value: ', value)
+              console.log('recurringDays_checkbox_props: ', recurringDays_checkbox_props[i].value)
+              console.log('this.state.recurringDays.indexOf(currentValue): ', this.state.recurringDays.indexOf(currentValue))
+
+
+              // pre-check any items that were selected and saved
+              if (this.state.recurringDays.indexOf(currentValue) > -1) {
+                return (
+                  <CheckBox
+                    label={label}
+                    key={label}
+                    checked={true}
+                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                  />
+                ) 
+              } else {
+                return (
+                  <CheckBox
+                    label={label}
+                    key={label}
+                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                  />
+                )
+              }
+            })
+          }
+          <View>
+            <Text>frequency</Text>
+            <RadioForm
+              radio_props={frequency_radio_props}
+              initial={frequencySelected}
+              onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
-            <View className="no-wrap">
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  name="city"
-                  type="text"
-                  placeholder="City"
-                  defaultValue={ this.state.city }
-                  onChangeText={ (value) => this.handleChange(value, 'city') } 
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  className="state-field"
-                  name="state"
-                  placeholder="State"
-                  defaultValue={ this.state.state }
-                  onChangeText={ (value) => this.handleChange(value, 'state') } 
-                />
-              </View>
-              <View>
-                <TextInput
-                  style={{height: 50}}
-                  name="zipCode"
-                  type="text"
-                  placeholder="Zipcode"
-                  defaultValue={ this.state.zipCode }
-                  onChangeText={ (value) => this.handleChange(value,'zipCode') } 
-                />
-              </View>
-            </View>
           </View>
 
           { outputCheckboxes() }
