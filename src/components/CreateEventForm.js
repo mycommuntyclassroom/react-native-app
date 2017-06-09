@@ -312,7 +312,7 @@ class CreateEventForm extends Component {
           }
 
           <View>
-            <Text>frequency_radio_props</Text>
+            <Text>frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
               initial={0}

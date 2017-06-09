@@ -191,7 +191,7 @@ class EditGuardianAccount extends Component {
     // state values for the event
     const { 
       title, uploadProgress, gid, image, recurringDays, 
-      frequency, startDate, finishDate, ageRange 
+      frequency, startDate, finishDate, ageRange, summary
     } = this.state;
 
     // grab the form data set within the state
@@ -244,6 +244,18 @@ class EditGuardianAccount extends Component {
       console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
 
+    // set the data structure for the frequency radio buttons group
+    const frequency_radio_props = [
+      {label: 'none', value: 'none' },
+      {label: 'weekly', value: 'weekly' },
+      {label: 'monthly', value: 'monthly' }
+    ];
+
+    // get the index of the frequency
+    let frequencySelected = frequency_radio_props.map((option) => {
+      option.value
+    })
+
     // set the data structure for the recurringDays checkbox group
     const recurringDays_checkbox_props = [
       {label: 'Mon', value: 'M' },
@@ -255,8 +267,6 @@ class EditGuardianAccount extends Component {
       {label: 'Sun', value: 'Su' }
     ];
 
-    let userGender = this.state.gender
-    console.log('!!!!!!~~~~userGender: ', userGender)
     console.log('This is the image: ', image);
 
     // handle the output of the required image
@@ -267,7 +277,7 @@ class EditGuardianAccount extends Component {
     return(
       <ScrollView className="create-account">
 
-        <Text> Editing Profile </Text>
+        <Text> { `Editing ${title}` }  </Text>
 
         <View className="image-uploader">
           <View className="image-uploader--image-container">
@@ -285,9 +295,17 @@ class EditGuardianAccount extends Component {
         <View style={{paddingBottom: 93}}>
           <TextInput
             style={{height: 50}}
-            name="displayName"
-            defaultValue={ this.state.displayName }
-            onChangeText={ (value) => this.handleChange(value, 'displayName') } />
+            name="title"
+            defaultValue={ this.state.title }
+            onChangeText={ (value) => this.handleChange(value, 'title') } />
+
+          <TextInput
+            style={{minHeight: 50}}
+            name="summary"
+            multiline={true}
+            numberOfLines={4}
+            defaultValue={ this.state.summary }
+            onChangeText={ (value) => this.handleChange(value, 'summary') } />
 
           <Text>Repeats</Text>
           {
@@ -315,6 +333,14 @@ class EditGuardianAccount extends Component {
               }
             })
           }
+          <View>
+            <Text>frequency</Text>
+            <RadioForm
+              radio_props={frequency_radio_props}
+              initial={2}
+              onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
+            />
+          </View>
 
           <Text>Repeats</Text>
           {
