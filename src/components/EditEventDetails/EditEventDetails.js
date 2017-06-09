@@ -43,15 +43,10 @@ class EditGuardianAccount extends Component {
     // event details
     let hostEvents = app.props.user.hostEvents[eventId];
 
-    console.log('thie is the APP data: ', app)
-    console.log('thie is the hostEvent: ', hostEvents)
-
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
             ageRange, startDate, finishDate, recurringDays, frequency 
           } = hostEvents || null;
-
-    console.log('hostEvents gid: ', gid)
 
     // build the state object with the key values in the props
     let newStateObject = {
@@ -88,9 +83,6 @@ class EditGuardianAccount extends Component {
       let formData = snapshot.val() || {};
 
     })
-
-    console.log('this is the state obj after the insertion: ', this.state);
-
     // bind functions
     this.handleSeatsAvailable=this.handleSeatsAvailable.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
@@ -133,9 +125,7 @@ class EditGuardianAccount extends Component {
 
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    console.log('this is the checkboxChange state: ', this.state)
-    const options = this.state.specialties;
-    console.log('This is the checkboxChange options: ', this.state.specialties);
+    const options = this.state[checkboxOptions];
     let index;
 
     // check if the check box is checked or unchecked
@@ -187,19 +177,21 @@ class EditGuardianAccount extends Component {
   submitForm() {
     console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
-    const { app } = props;
-    const data = {...this.state};
+    const { eventId, app } = props;
+    const eventData = {...this.state};
 
-    const currentUserObject = app.props.user;
-    console.log('here is the currentUserObject: ', currentUserObject)
-    const updatedUser = Object.assign(currentUserObject, data)
-    console.log('here is the updatedUser: ', updatedUser)
+    // set a timestamp for last updated
+    eventData.lastUpdated = (new Date()).getTime();
 
-    // pass the updated object to the store
-    store.dispatch(actions.userInfo(updatedUser));
+    // update the store's event contents with the newly added event
+    app.props.user.hostEvents[eventId] = eventData;
 
-    // update the database - path, data
-    updateProfile(`guardians/${data.gid}`, data);
+    // update the database
+    // 
+    // update the event in the guardian host branch - path, data
+    updateProfile(`guardians/${this.state.gid}/hostEvents/${eventId}`, eventData);
+    // update the event in the general hosts tree - path, data
+    updateProfile(`hostEvents/${this.state.gid}/${eventId}`, eventData);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -223,15 +215,10 @@ class EditGuardianAccount extends Component {
     // grab the form data set within the state
     let formData = this.state.formData || {};
 
-    console.log('formData: ', formData)
-    console.log('this is the RENDER STATE: ', this.state)
-
     const outputCheckboxes = () => {
       console.log('outputCheckboxes Called ');
       // skip this function if the state doesn't have basic info
-      console.log('this is the gid: ', gid);
       if (gid === null) { return }
-      console.log('guard PASSED')
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
@@ -239,9 +226,6 @@ class EditGuardianAccount extends Component {
             <Text>{category}</Text>
             {formData[category].map(item => {
               var checkbox = '';
-              console.log('output checkboxes this.state:: ', this.state)
-              console.log('output checkboxes category:: ', category)
-              console.log('output checkboxes this.state[`${category}`]:: ', this.state[`${category}`])
               // pre-check any items that were selected and saved
               if (this.state[`${category}`].indexOf(item) > -1) {
                 checkbox = 
@@ -286,8 +270,6 @@ class EditGuardianAccount extends Component {
       }
     })
 
-    console.log('this is frequencySelected: ', frequencySelected);
-
     // set the data structure for the recurringDays checkbox group
     const recurringDays_checkbox_props = [
       {label: 'Mon', value: 'M' },
@@ -298,8 +280,6 @@ class EditGuardianAccount extends Component {
       {label: 'Sat', value: 'S' },
       {label: 'Sun', value: 'Su' }
     ];
-
-    console.log('This is the image: ', image);
 
     // handle the output of the required image
     let eventImage = image != '../../../images/blank-profile-pic.png'

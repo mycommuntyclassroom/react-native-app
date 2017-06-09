@@ -52,7 +52,7 @@ class CreateEventForm extends Component {
       let categories = {
         gid: auth.uid,
         hostName: auth.displayName,
-        image: null,
+        image: '',
         title: '',
         summary: '',
         seatsAvailable: 0,
