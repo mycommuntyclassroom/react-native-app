@@ -252,9 +252,15 @@ class EditGuardianAccount extends Component {
     ];
 
     // get the index of the frequency
-    let frequencySelected = frequency_radio_props.map((option) => {
-      option.value
+    let frequencySelected;
+    frequency_radio_props.map((option, i) => {
+      // if there's a match, return the index of the matching item
+      if (this.state.frequency === option.value) {
+        frequencySelected = i;
+      }
     })
+
+    console.log('this is frequencySelected: ', frequencySelected);
 
     // set the data structure for the recurringDays checkbox group
     const recurringDays_checkbox_props = [
@@ -337,27 +343,10 @@ class EditGuardianAccount extends Component {
             <Text>frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
-              initial={2}
+              initial={frequencySelected}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
-
-          <Text>Repeats</Text>
-          {
-            /* custom checkbox output for the event form. This doesn't exist in the formData 
-            recurringDays_checkbox_props.map((item) =>{
-              let { label, value } = item;
-              return (
-                <CheckBox
-                  label={label}
-                  key={label}
-                  onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
-                />
-              )
-            })
-            */
-
-          }
 
           { outputCheckboxes() }
 
