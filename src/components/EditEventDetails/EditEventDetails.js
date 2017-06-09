@@ -64,8 +64,6 @@ class EditGuardianAccount extends Component {
     // update the state after the render
     this.state = newStateObject;
 
-    console.log('this is the newStateObject: ', newStateObject)
-
     // pull the formData tree and grab all of the checkboxes for the guardians
     // and save it in the state
     database
