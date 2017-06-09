@@ -53,7 +53,6 @@ class EditGuardianAccount extends Component {
       hostName,
       startDate,
       finishDate,
-      recurringDays,
       frequency,
       image,
       seatsAvailable,
@@ -114,7 +113,6 @@ class EditGuardianAccount extends Component {
    * @param e
    */
   handleChange(value, fieldName) {
-    console.log('handleChange CALLED| value and fieldName', `${value} | ${fieldName}`)
     let inputObj = {}
     inputObj[fieldName] = value;
     this.setState(inputObj);
@@ -367,10 +365,6 @@ class EditGuardianAccount extends Component {
             recurringDays_checkbox_props.map((item, i) =>{
               let { label, value } = item;
               let currentValue = recurringDays_checkbox_props[i].value;
-              console.log('recurringDays_checkbox_props value: ', value)
-              console.log('recurringDays_checkbox_props: ', recurringDays_checkbox_props[i].value)
-              console.log('this.state.recurringDays.indexOf(currentValue): ', this.state.recurringDays.indexOf(currentValue))
-
 
               // pre-check any items that were selected and saved
               if (this.state.recurringDays.indexOf(currentValue) > -1) {
