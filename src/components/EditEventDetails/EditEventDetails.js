@@ -222,14 +222,14 @@ class EditGuardianAccount extends Component {
                   <CheckBox
                     label={item}
                     checked={true}
-                    key={item}
+                    key={`${item}${category}`}
                     onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               } else {
                 checkbox = 
                   <CheckBox
                     label={item}
-                    key={item}
+                    key={`${item}${category}`}
                     onChange={(checked) => this.checkboxChange(item, category, checked) }
                   />;
               }
@@ -244,11 +244,15 @@ class EditGuardianAccount extends Component {
       console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
 
-
-    // set the data structure for the radio buttons
-    const radio_props = [
-      {label: 'Male', value: 'male' },
-      {label: 'Female', value: 'female' }
+    // set the data structure for the recurringDays checkbox group
+    const recurringDays_checkbox_props = [
+      {label: 'Mon', value: 'M' },
+      {label: 'Tue', value: 'T' },
+      {label: 'Wed', value: 'W' },
+      {label: 'Thu', value: 'Th' },
+      {label: 'Fri', value: 'F' },
+      {label: 'Sat', value: 'S' },
+      {label: 'Sun', value: 'Su' }
     ];
 
     let userGender = this.state.gender
@@ -285,13 +289,49 @@ class EditGuardianAccount extends Component {
             defaultValue={ this.state.displayName }
             onChangeText={ (value) => this.handleChange(value, 'displayName') } />
 
-          <View>
-            <RadioForm
-              radio_props={radio_props}
-              initial={userGender === 'male' ? 0 : 1 }
-              onPress={(value) => { this.radioButtonChange(value, 'gender') }}
-            />
-          </View>
+          <Text>Repeats</Text>
+          {
+            /* custom checkbox output for the event form. This doesn't exist in the formData */
+            recurringDays_checkbox_props.map((item) =>{
+              let { label, value } = item;
+              // pre-check any items that were selected and saved
+              if (recurringDays.indexOf(item) > -1) {
+                return (
+                  <CheckBox
+                    label={label}
+                    key={label}
+                    checked={true}
+                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                  />
+                ) 
+              } else {
+                return (
+                  <CheckBox
+                    label={label}
+                    key={label}
+                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                  />
+                )
+              }
+            })
+          }
+
+          <Text>Repeats</Text>
+          {
+            /* custom checkbox output for the event form. This doesn't exist in the formData 
+            recurringDays_checkbox_props.map((item) =>{
+              let { label, value } = item;
+              return (
+                <CheckBox
+                  label={label}
+                  key={label}
+                  onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                />
+              )
+            })
+            */
+
+          }
 
           { outputCheckboxes() }
 
