@@ -13,7 +13,6 @@ import store from '../redux/store';
 // on any change to the data, trigger an update the store
 // 
 export function getHostEvents () {
-  console.warn('getHostEvents CALLED*******')
   // grab all of the user's notifications and store them in the Redux store
   database
   .ref('hostEvents')
