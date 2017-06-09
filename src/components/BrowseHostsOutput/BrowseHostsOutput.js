@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Image,
-  Title
+  ScrollView
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -57,37 +57,38 @@ class BrowseHostsOutput extends Component {
                 // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
                 //   <FaChild/>
                 // </View>
+              // <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
               }
-              <Title>{title}</Title>
+              <Text>{title}</Text>
               <View className="tags">
                 { 
-                // ****** <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
-                  // ageRange.map((item) => {
-                  //   return <View className="tag-item" key={`${teaser}${item}`}>{item}</View>
-                  // })
+                  ageRange.map((item) => {
+                    return <Text className="tag-item" key={`${teaser}${item}`}>{item}</Text>
+                  })
                 }
               </View>
               <View className="days">
                 {
-                  // teaserData.recurringDays.map((item, index) => {
-                  //   // conditionals for handling the various output for the recurring days
-                  //   let daysArray = teaserData.recurringDays;
-                  //   if(daysArray.length === 1 && item === ' '){
-                  //     let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
-                  //     return <View key={`${teaser}${item}`}>{stringDate}</View>
-                  //   }
-                  //   else if(index === 0 || index === 1) {
-                  //     return <View key={`${teaser}${item}`}>{item}</View>
-                  //   } else{
-                  //     return <View key={`${teaser}${item}`}>/{item}</View>
-                  //   }
-                  // })
+                  teaserData.recurringDays.map((item, index) => {
+                    // conditionals for handling the various output for the recurring days
+                    let daysArray = teaserData.recurringDays;
+                    if(daysArray.length === 1 && item === ' '){
+                      let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
+                      return <Text key={`${teaser}${item}`}>{stringDate}</Text>
+                    }
+                    else if(index === 0 || index === 1) {
+                      return <Text key={`${teaser}${item}`}>{item}</Text>
+                    } else{
+                      return <Text key={`${teaser}${item}`}>/{item}</Text>
+                    }
+                  })
                 }
               </View>
-              <View className="time">{startTime} - {finishTime}</View>
+              <View className="time"><Text>{startTime} - {finishTime}</Text></View>
             </View>
           </View>
         teaserOutput.push(teaserElement);
+        console.log('here is the teaserOutput: ', teaserOutput)
       }
       // <Link to={`/guardian/${teaserGroup}`} className="host-name">{eventHostName}</Link> 
       hostEventsOutput.push(
@@ -103,6 +104,9 @@ class BrowseHostsOutput extends Component {
         </View>
       )
     }
+
+    console.log('this i the hostEventsOutput: ', hostEventsOutput)
+    console.log('this i the teaserOutput: ', teaserOutput)
     // if hostEventsOutput is empty after the array, fill it with an empty string value
     // this is to prevent the react-slick slider from throwing an undefined error
     hostEventsOutput = hostEventsOutput === [] ? [' '] : hostEventsOutput;
@@ -112,7 +116,9 @@ class BrowseHostsOutput extends Component {
     // 
     // 
     return (
-      { hostEventsOutput }
+      <ScrollView>
+        { hostEventsOutput }
+      </ScrollView>
     )
   }
 }
