@@ -15,6 +15,7 @@ import Button from './Button';
 import FooterNav from './FooterNav';
 import store from '../redux/store';
 
+import { getHostEvents } from '../helpers/events';
 import { startListeningForUsers } from '../redux/actions/user';
 import { startListeningToAuthChanges } from '../redux/actions/auth';
 import { startListeningForNotifications } from '../redux/actions/notifications';
@@ -94,6 +95,9 @@ class App extends Component {
     store.dispatch(startListeningForUsers(navigator));
     store.dispatch(startListeningToAuthChanges(navigator));
     store.dispatch(startListeningForNotifications(navigator));
+
+    // retrive event data
+    getHostEvents();
   }
 
   render() {

@@ -5,17 +5,13 @@ import {
   Text
 } from 'react-native';
 
+import BrowseHostsOutput from '../components/BrowseHostsOutput';
+
 class BrowseHosts extends Component {
 
   constructor() {
     super();
-
-    this.onPress = this.onPress.bind(this);
-  }
-
-  onPress() {
-    this.props.app.goToScene('loading', { sup: true });
-    // this.props.app.goToScene('BrowseHosts', { hostID: 123 });
+    console.log('BrowseHosts constructor');
   }
 
   componentDidMount() {
@@ -23,12 +19,12 @@ class BrowseHosts extends Component {
   }
 
   render() {
-    const { style, app } = this.props;
+    const props = this.props
+    const { style, app } = props;
+
     return (
-      <View style={[style.container, { backgroundColor: 'green' }]}>
-        <Text style={style.title}>
-          BrowseHosts
-        </Text>
+      <View style={style.container}>
+        <BrowseHostsOutput {...props} />
       </View>
     );
   };
@@ -36,3 +32,4 @@ class BrowseHosts extends Component {
 }
 
 export default BrowseHosts;
+

@@ -253,3 +253,44 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
     </div>
   )
 }
+
+// CHECK RELATIONSHIP STATUS
+// 
+// 
+export function checkRelationship (relationship, props, gid) {
+
+  console.log('checkRelationship CALled:: ')
+  console.log('checkRelationship CALled: relationship: ', relationship)
+  console.log('checkRelationship CALled: props: ', props)
+  console.log('checkRelationship CALled: gid: ', gid)
+
+  switch (relationship) {
+    case 'friend':
+      // check if the user is a friend
+      const friends = props.user.friends || {};
+      const friendsList = Object.keys(friends);
+      return friendsList.indexOf(gid) === 0 ? true : false;
+      break;
+    case 'incoming':
+      // check if the user is a friend
+      const incomingRequests = props.user.incomingRequests || {};
+      const requestsList = Object.keys(incomingRequests);
+      return requestsList.indexOf(gid) === 0 ? true : false;
+      break;
+    case 'pending':
+      // check if there is a pending request for the user 
+      let pendingResponce = '';
+      const pendingRequests = props.user.pendingRequests || {};
+      const pendingList = Object.keys(pendingRequests);
+      pendingList.map((pendingId) => {
+        pendingId === gid ? pendingResponce = 'pending' : '';
+      })
+      return pendingResponce;
+
+    break;
+    default :
+      // does nothing
+      break;
+  }
+
+}
