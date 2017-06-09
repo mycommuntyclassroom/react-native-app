@@ -6,24 +6,33 @@ import {
 } from 'react-native';
 
 import BrowseHostsOutput from '../components/BrowseHostsOutput';
-import { getHostEvents } from '../helpers/events';
 
 class BrowseHosts extends Component {
 
+  constructor() {
+    super();
+    console.log('BrowseHosts constructor');
+  }
+
   componentDidMount() {
     console.log('mounted BrowseHosts', this.props);
-
-    // gather all of the host events
-    getHostEvents()
   }
 
   render() {
-    const props = this.props;
+    const props = this.props
+    const { style, app } = props;
+
     return (
-      <BrowseHostsOutput {...props} />
+      <View style={[style.container, { backgroundColor: 'wheat' }]}>
+        <BrowseHostsOutput {...props} />
+        <Text style={style.title}>
+          BrowseHosts
+        </Text>
+      </View>
     );
   };
 
 }
 
 export default BrowseHosts;
+

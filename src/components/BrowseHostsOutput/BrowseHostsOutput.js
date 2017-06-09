@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
-  Image
+  Image,
+  Title
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -57,30 +58,30 @@ class BrowseHostsOutput extends Component {
                 //   <FaChild/>
                 // </View>
               }
-              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
-              <h2>{title}</h2>
+              <Title>{title}</Title>
               <View className="tags">
                 { 
-                  ageRange.map((item) => {
-                    return <View className="tag-item" key={`${teaser}${item}`}>{item}</View>
-                  })
+                // ****** <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
+                  // ageRange.map((item) => {
+                  //   return <View className="tag-item" key={`${teaser}${item}`}>{item}</View>
+                  // })
                 }
               </View>
               <View className="days">
                 {
-                  teaserData.recurringDays.map((item, index) => {
-                    // conditionals for handling the various output for the recurring days
-                    let daysArray = teaserData.recurringDays;
-                    if(daysArray.length === 1 && item === ' '){
-                      let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
-                      return <View key={`${teaser}${item}`}>{stringDate}</View>
-                    }
-                    else if(index === 0 || index === 1) {
-                      return <View key={`${teaser}${item}`}>{item}</View>
-                    } else{
-                      return <View key={`${teaser}${item}`}>/{item}</View>
-                    }
-                  })
+                  // teaserData.recurringDays.map((item, index) => {
+                  //   // conditionals for handling the various output for the recurring days
+                  //   let daysArray = teaserData.recurringDays;
+                  //   if(daysArray.length === 1 && item === ' '){
+                  //     let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
+                  //     return <View key={`${teaser}${item}`}>{stringDate}</View>
+                  //   }
+                  //   else if(index === 0 || index === 1) {
+                  //     return <View key={`${teaser}${item}`}>{item}</View>
+                  //   } else{
+                  //     return <View key={`${teaser}${item}`}>/{item}</View>
+                  //   }
+                  // })
                 }
               </View>
               <View className="time">{startTime} - {finishTime}</View>
