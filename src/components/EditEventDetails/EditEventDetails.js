@@ -8,6 +8,8 @@ import {
   Image
 } from 'react-native';
 
+import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 import CheckBox from '../CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../Button';
@@ -17,6 +19,13 @@ import { storage, database } from '../../helpers/firebase';
 import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
+
+// time/date values
+const now = moment().hour(0).minute(0);
+const nowFormat = now.format('YYYY-MM-DD')
+const today = now.format('YYYY-MM-DD');
+const priorDay = today.slice(-2) - 1;
+const yesterday = `${today.slice(0, 8)}${priorDay}`;
 
 class EditGuardianAccount extends Component {
 
@@ -83,6 +92,7 @@ class EditGuardianAccount extends Component {
     console.log('this is the state obj after the insertion: ', this.state);
 
     // bind functions
+    this.handleSeatsAvailable=this.handleSeatsAvailable.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -151,6 +161,22 @@ class EditGuardianAccount extends Component {
     // update the state with the new array of options
     this.setState(newState);
 
+  }
+
+  // HANDLE THE SEATS AVAILABLE
+  // 
+  // 
+  handleSeatsAvailable(option) {
+    // get the current seats available
+    let currentSeats = this.state.seatsAvailable;
+
+    option == 'add'
+      ? currentSeats++
+      : currentSeats--
+
+    if (currentSeats < 0)  currentSeats = 0;
+
+    this.setState({seatsAvailable: currentSeats});
   }
 
   /**
@@ -312,6 +338,51 @@ class EditGuardianAccount extends Component {
             numberOfLines={4}
             defaultValue={ this.state.summary }
             onChangeText={ (value) => this.handleChange(value, 'summary') } />
+
+
+          <View className="seats-available">
+            <Text>Seats Available</Text>
+            <View>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
+                <Text>Minus Icon</Text> 
+              </TouchableHighlight>
+              <Text>Chair Icon</Text>
+              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
+                <Text>Plus Icon</Text> 
+              </TouchableHighlight>
+              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
+            </View>
+          </View>
+
+          <Text> Start Date </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.startDate}
+            mode="datetime"
+            placeholder="Start Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            onDateChange={(date) => {this.setState({startDate: date});}}
+          />
+
+          <Text> Finish Date </Text>
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.finishDate}
+            mode="datetime"
+            placeholder="Finish Date"
+            format="MMMM Do YYYY, h:mm a"
+            minDate={`${yesterday}`}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            minuteInterval={5}
+            showIcon={false}
+            onDateChange={(date) => {this.setState({finishDate: date});}}
+          />
 
           <Text>Repeats</Text>
           {
