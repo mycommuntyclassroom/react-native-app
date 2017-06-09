@@ -23,11 +23,8 @@ class BrowseHosts extends Component {
     const { style, app } = props;
 
     return (
-      <View style={[style.container, { backgroundColor: 'wheat' }]}>
+      <View style={style.container}>
         <BrowseHostsOutput {...props} />
-        <Text style={style.title}>
-          BrowseHosts
-        </Text>
       </View>
     );
   };

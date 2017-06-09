@@ -57,8 +57,8 @@ class BrowseHostsOutput extends Component {
                 // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
                 //   <FaChild/>
                 // </View>
-              // <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
               }
+              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
               <Text>{title}</Text>
               <View className="tags">
                 { 
@@ -88,7 +88,6 @@ class BrowseHostsOutput extends Component {
             </View>
           </View>
         teaserOutput.push(teaserElement);
-        console.log('here is the teaserOutput: ', teaserOutput)
       }
       // <Link to={`/guardian/${teaserGroup}`} className="host-name">{eventHostName}</Link> 
       hostEventsOutput.push(
@@ -105,8 +104,6 @@ class BrowseHostsOutput extends Component {
       )
     }
 
-    console.log('this i the hostEventsOutput: ', hostEventsOutput)
-    console.log('this i the teaserOutput: ', teaserOutput)
     // if hostEventsOutput is empty after the array, fill it with an empty string value
     // this is to prevent the react-slick slider from throwing an undefined error
     hostEventsOutput = hostEventsOutput === [] ? [' '] : hostEventsOutput;
@@ -116,7 +113,7 @@ class BrowseHostsOutput extends Component {
     // 
     // 
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: 'wheat', paddingBottom: 91 }}>
         { hostEventsOutput }
       </ScrollView>
     )

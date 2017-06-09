@@ -28,7 +28,8 @@ class RequestFriendButton extends Component {
     }
 
     const props = this.props
-    const { requester } = props;
+    const { app } = props
+    const { requester } = app.props;
 
     console.log('RequestFriendButton CALLED, this is the requester: ', requester);
     let buttonOutput = ''
@@ -51,7 +52,7 @@ class RequestFriendButton extends Component {
       buttonOutput = 
         <View onClick={ () => requestFriend(props, props.gid, handlePending) } 
              className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}>
-          <View className="icon"><MdPersonAdd/></View>
+          <View className="icon"><Text> MdPersonAdd </Text></View>
         </View>;
     }
 
