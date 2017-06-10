@@ -1,13 +1,16 @@
 import React from 'react';
-import { FaAngleRight } from 'react-icons/lib/fa';
+import {
+  AsyncStorage,
+  View,
+  TouchableHighlight,
+  Text
+} from 'react-native'
+
 import { auth, database } from './firebase';
 import { createUserWithEmailAndPassword } from '../helpers/firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
-
-import {
-  AsyncStorage
-} from 'react-native'
+import Link from '../components/Link';
 
 export function signInHandler (provider, type, data) {
   // save a type within the AsyncStorage to use when we redirect to the app
@@ -223,34 +226,35 @@ export function denyInvite (userData, note) {
 // 
 // 
 export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends) {
+  console.log('chooseNotificationItem Called')
   let elements;
   let noteClass;
   let noteType = noteProp.noteType || '';
   switch( noteType ) {
     case 'friend':
       elements = 
-        <div className="action-items">
-          <div className="cta-buttons">
-            <div className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</div>
-            <div className="delete" onClick={() => handleInvite(userObj, noteProp, 'delete', note)}>Delete<FaAngleRight/></div>
-          </div>
-          <a to={`guardian/${noteProp.uid}`} className="profile-view">Click to view Profile</a>
-        </div>;
+        <View className="action-items">
+          <View className="cta-buttons">
+            <Link className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)} text='Connect' />
+            <Link className="delete" onClick={() => handleInvite(userObj, noteProp, 'delete', note)} text='Delete' />
+          </View>
+          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetail', {app})} text='Click to view Profile' />
+        </View>;
       break;
     default: 
-      elements = <div className="action-items"></div>;
+      elements = <View className="action-items"></View>;
       noteClass = 'standard'
   }
 
   return(
-    <div className="note" key={`${note}`} id={`${note}`}> 
-      <div className={`note-info ${noteClass}`}>
-        <div className={`switch ${seenSwitch}`}></div>
-        <h3>{noteProp.displayName}</h3>
-        <div className="message">{noteProp.message}</div>
-      </div>
+    <View className="note" key={`${note}`} id={`${note}`}> 
+      <View className={`note-info ${noteClass}`}>
+        <View className={`switch ${seenSwitch}`}></View>
+        <Text>{noteProp.displayName}</Text>
+        <View className="message"><Text>{noteProp.message}</Text></View>
+      </View>
       {elements}
-    </div>
+    </View>
   )
 }
 
