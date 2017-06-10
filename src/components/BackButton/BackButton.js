@@ -1,5 +1,9 @@
 import React from 'react';
-import { TiArrowLeft } from 'react-icons/lib/ti';
+import {
+  View,
+  TouchableHighlight,
+  Text
+} from 'react-native';
 
 const BackButton = (props) => {
 
@@ -8,13 +12,13 @@ const BackButton = (props) => {
   const { app } = props;
 
   props.path 
-    ? link = () => app.goToScene(props.path, {app})
-    : link = () => { console.log('default for the back button') }
+    ? link = () => app.goToScene(props.scene, {app})
+    : link = () => app.goToScene('Dashboard', {app}) 
 
   return(
     <View className="back-button"> 
       <TouchableHighlight onClick={link}>
-        <TiArrowLeft/>
+        <Text> TiArrowLeft </Text>
       </TouchableHighlight>
     </View>
   )
