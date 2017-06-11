@@ -78,7 +78,7 @@ class Header extends Component {
 
     // handle outputting the back button vs the nav button
     if(props.backOption) {
-      headerNav = <BackButton />
+      headerNav = <BackButton {...props} />
     } else {
       headerNav =
         <TouchableHighlight onPress={() => app.refs.navMenu.open()}>

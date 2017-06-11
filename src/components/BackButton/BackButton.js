@@ -11,13 +11,13 @@ const BackButton = (props) => {
   let link;
   const { app } = props;
 
-  props.path 
+  props.scene 
     ? link = () => app.goToScene(props.scene, {app})
     : link = () => app.goToScene('Dashboard', {app}) 
 
   return(
     <View className="back-button"> 
-      <TouchableHighlight onClick={link}>
+      <TouchableHighlight onPress={link}>
         <Text> TiArrowLeft </Text>
       </TouchableHighlight>
     </View>

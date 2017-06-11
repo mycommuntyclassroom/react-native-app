@@ -36,13 +36,18 @@ class BrowseHostsOutput extends Component {
 
       // set vars at this scope to be used in the hostEventsOutput
       let eventHostName;
+      let gid = '';
 
       // iterate through each host event within the current group
       for (let teaser in eventData[teaserGroup]) {
         
         let teaserData = eventData[teaserGroup][teaser];
         console.log('this is the teaserData: ', teaserData)
-        const { gid, hostName, title, image, startTime, finishTime } = teaserData;
+        const { hostName, title, image, startTime, finishTime } = teaserData;
+
+        // set the gid for the scope above
+        gid = teaserData.gid
+        console.log('This is the Browse Hosts gid: ', gid)
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
 
@@ -89,9 +94,9 @@ class BrowseHostsOutput extends Component {
           </View>
         teaserOutput.push(teaserElement);
       }
-      // <Link to={`/guardian/${teaserGroup}`} className="host-name">{eventHostName}</Link> 
       hostEventsOutput.push(
         <View className="event-container" key={`${teaserGroup}`}>
+          <Link onClick={() => app.goToScene('GuardianDetails', {app, gid})} className="host-name" text={eventHostName} /> 
           <Carousel
             className="host-events"
             ref={(carousel) => { this._carousel = carousel; }}
