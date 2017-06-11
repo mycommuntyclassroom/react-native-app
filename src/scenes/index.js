@@ -14,6 +14,7 @@ import WelcomeSearch from './WelcomeSearch';
 import Tutorial from './Tutorial';
 import Dashboard from './Dashboard';
 import EditGuardian from './EditGuardian';
+import GuardianDetails from './GuardianDetails';
 import CreateChild from './CreateChild';
 import EditChild from './EditChild';
 import CreateEvent from './CreateEvent';
@@ -38,6 +39,7 @@ export default {
   Tutorial,
   Dashboard,
   EditGuardian,
+  GuardianDetails,
   CreateChild,
   EditChild,
   CreateEvent,
