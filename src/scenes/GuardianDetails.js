@@ -21,7 +21,7 @@ class GuardianDetails extends Component {
 
     return (
       <View className="edit-view">
-        <Header { ...props } />
+        <Header {...props} backOption />
         <GuardianView { ...props } />
       </View>
     );
