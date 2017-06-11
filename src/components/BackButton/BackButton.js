@@ -10,7 +10,6 @@ const BackButton = (props) => {
   // if there is no path designated for this button, default to going back to the previous page
   let link;
   const { app } = props;
-  console.log('this is the BackButton app: ', app)
 
   props.scene 
     ? link = () => app.goToScene(props.scene, {app})
