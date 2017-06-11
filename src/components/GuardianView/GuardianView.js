@@ -17,12 +17,12 @@ class GuardianView extends Component {
 
   constructor(props) {
     super(props);
-    console.log('GuardianView constructor was called: ', props)
 
     this.state={
       gid: props.gid
     }
 
+    console.log('GuardianView constructor was called: ', props)
     const gid = this.state.gid;
 
     // GET THE GUARDIAN'S DATA
@@ -44,12 +44,10 @@ class GuardianView extends Component {
 
     return(
       <ScrollView className="guardian-view">
-        <Header {...props} backOption />
         <Hero guardianData={this.state} />
         <Summary guardianData={this.state} />
         <CirclesTeaser guardianData={this.state} circlesData={this.state.children || [' ']} title="Children" path="child" />
         <EventTeaser guardianData={this.state} />
-        <FooterNav {...props} />
       </ScrollView>
     )
   }
