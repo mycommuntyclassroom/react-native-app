@@ -19,6 +19,14 @@ STYLE.fullscreen = {
   flex: 1
 };
 
+STYLE.deviceWidth = {
+  width: deviceWidth
+}
+
+STYLE.deviceHeight = {
+  height: deviceHeight
+}
+
 STYLE.loader = {
   flex: 1,
   height: 80,

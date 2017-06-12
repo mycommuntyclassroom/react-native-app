@@ -2,7 +2,8 @@ const WelcomePage = {};
 
 
 WelcomePage.container = {
-  
+  justifyContent: 'flex-start',
+  alignItems: 'center'
 }
 
 
