@@ -1,40 +1,18 @@
 import React, { Component } from 'react';
 import {
-  View,
-  ActivityIndicator,
-  TouchableHighlight,
-  Text
+  View
 } from 'react-native';
+
+import LoadingSpinner from '../components/LoadingSpinner';
 
 class Loading extends Component {
 
-  constructor() {
-    super();
-
-    this.onPress = this.onPress.bind(this);
-  }
-
-  onPress() {
-    this.props.app.goToScene('welcome', { sup: true });
-    // this.props.app.goToScene('hosts', { hostID: 123 });
-  }
-
-  componentDidMount() {
-    console.log('mounted Loading', this.props);
-  }
-
   render() {
-    const { globalStyles, app } = this.props;
+    const { globalStyles } = this.props;
+
     return (
-      <View style={[globalStyles.container, { backgroundColor: 'aqua' }]}>
-        <Text style={globalStyles.title}>
-          Loading
-        </Text>
-        <ActivityIndicator
-          animating={true}
-          style={globalStyles.loader}
-          size="large"
-          color="purple" />
+      <View style={[globalStyles.container, {zIndex: 0} ]}>
+        <LoadingSpinner />
       </View>
     );
   };
