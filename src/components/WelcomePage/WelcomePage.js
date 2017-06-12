@@ -22,15 +22,11 @@ class WelcomePage extends Component {
 
     return (
       <View style={ style.container } >
-        <View>
-          <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{width: 80, height: 80}}/>
-        </View>
-        <View>
-          <Text> Welcome </Text>
-          <Text>
-            Easily connect with like minded families & manage everything homeschool in one place!
-          </Text>
-        </View>
+        <Image source={require('../../../images/logo.png')} resizeMode='contain' style={style.logo}/>
+        <Text style={[globalStyles.title]}> Welcome </Text>
+        <Text>
+          Easily connect with like minded families & manage everything homeschool in one place!
+        </Text>
         <Image source={require('../../../images/welcome-family-page.jpg')} resizeMode='cover' style={{ height: 200}}/>
         <Button 
           text='Search your area'

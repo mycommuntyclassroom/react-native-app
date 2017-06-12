@@ -40,8 +40,7 @@ STYLE.container = {
 };
 
 STYLE.title = {
-  fontSize: 30,
-  marginTop: -150
+  fontSize: 30
 };
 
 STYLE.text = {
