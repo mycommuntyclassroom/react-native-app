@@ -7,6 +7,7 @@ import {
   AsyncStorage
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import random from '../helpers/random';
 import scenes from '../scenes';
 import style from '../styles';
@@ -19,6 +20,8 @@ import { getHostEvents } from '../helpers/events';
 import { startListeningForUsers } from '../redux/actions/user';
 import { startListeningToAuthChanges } from '../redux/actions/auth';
 import { startListeningForNotifications } from '../redux/actions/notifications';
+
+import styleVariables from '../styles/variables'
 
 
 const ROUTES = Object.keys(scenes).map((scene, i) => ({ scene }));
@@ -58,7 +61,7 @@ class App extends Component {
 
   renderScene(route, navigator) {
     const Scene = scenes[route.scene];
-    return <Scene app={this} style={style} {...this.props} {...route.props}/>;
+    return <Scene app={this} globalStyles={style} {...this.props} {...route.props}/>;
   }
 
   configureScene(route, routeStack) {
@@ -109,7 +112,7 @@ class App extends Component {
     };
 
     return (
-      <View style={style.fullscreen}>
+      <LinearGradient colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} style={style.fullscreen}>
 
         <Navigator ref='navigator'
           style={style.fullscreen}
@@ -120,7 +123,7 @@ class App extends Component {
         <Nav ref='navMenu' app={this} style={style} />
         <FooterNav app={this} />
 
-      </View>
+      </LinearGradient>
     );
     
   }
