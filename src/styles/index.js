@@ -50,15 +50,16 @@ STYLE.text = {
 /* Components */
 
 STYLE.Button = {
-  backgroundColor: 'purple',
+  backgroundColor: 'rgba(255, 255, 255, 0.6)',
   padding: 10,
-  alignSelf: 'center'
+  borderRadius: 15
 };
 
 STYLE.ButtonText = {
   backgroundColor: 'transparent',
   color: 'white',
   textAlign: 'center',
+  fontWeight: '500'
 };
 
 STYLE.Nav = {
