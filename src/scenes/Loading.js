@@ -24,15 +24,15 @@ class Loading extends Component {
   }
 
   render() {
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
     return (
-      <View style={[style.container, { backgroundColor: 'aqua' }]}>
-        <Text style={style.title}>
+      <View style={[globalStyles.container, { backgroundColor: 'aqua' }]}>
+        <Text style={globalStyles.title}>
           Loading
         </Text>
         <ActivityIndicator
           animating={true}
-          style={style.loader}
+          style={globalStyles.loader}
           size="large"
           color="purple" />
       </View>

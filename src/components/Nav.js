@@ -87,6 +87,13 @@ class Nav extends Component {
     this.animate(-Dimensions.get('window').width);
   }
 
+  logout() {
+    // inform redux of a logout
+    store.dispatch(actions.signOut());
+    // close the nav menu
+    this.close();
+  }
+
   onPress(scene, props = {}) {
     const { app } = this.props;
     this.close();
@@ -101,7 +108,7 @@ class Nav extends Component {
       <Animated.View style={[style.Nav, { left: this.state.x }]}>
         <Button
           text='Logout'
-          onPress={ () => store.dispatch(actions.signOut()) }
+          onPress={ () => this.logout() }
           extraStyle={style.navLink} />
         {ROUTES.map((route, i) => {
           const { scene, props } = route;

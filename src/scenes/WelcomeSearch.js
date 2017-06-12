@@ -10,15 +10,15 @@ import {
 class WelcomeSearch extends Component {
 
   render() {
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
     return (
-      <View style={[style.container, { justifyContent: 'center', backgroundColor: 'pink' }]}>
+      <View style={[globalStyles.container, { justifyContent: 'center', backgroundColor: 'pink' }]}>
         <Text>WelcomeSearch</Text>
         <TouchableHighlight
           onPress={() => {
             app.goToScene('Login', {app});
           }}>
-          <Text style={style.navText}>
+          <Text style={globalStyles.navText}>
             Login
           </Text>
         </TouchableHighlight>
@@ -26,7 +26,7 @@ class WelcomeSearch extends Component {
           onPress={() => {
             app.goToScene('SignUp', {app});
           }}>
-          <Text style={style.navText}>
+          <Text style={globalStyles.navText}>
             Sign up
           </Text>
         </TouchableHighlight>
