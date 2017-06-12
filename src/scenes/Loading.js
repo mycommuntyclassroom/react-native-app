@@ -11,7 +11,7 @@ class Loading extends Component {
     const { globalStyles } = this.props;
 
     return (
-      <View style={[globalStyles.container]}>
+      <View style={[globalStyles.container, {zIndex: 0} ]}>
         <LoadingSpinner />
       </View>
     );
