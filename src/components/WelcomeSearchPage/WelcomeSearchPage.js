@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import Button from '../Button';
+import BackButton from '../BackButton';
 import Link from '../Link';
 // styles particular for the WelcomeSearchPage
 import style from './style';
@@ -15,10 +16,12 @@ import style from './style';
 class WelcomeSearchPage extends Component {
 
   render() {
-    const { globalStyles, app } = this.props;
+    const props = this.props
+    const { globalStyles, app } = props;
 
     return (
       <View style={ style.container } >
+        <BackButton scene='Welcome' {...props} />
         <Image 
           source={require('../../../images/mountain-icon.png')} 
           resizeMode='contain' 

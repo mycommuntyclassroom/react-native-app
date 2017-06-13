@@ -36,6 +36,7 @@ WelcomePage.copy = {
 WelcomePage.zipCode = {
   backgroundColor: 'rgba(0,0,0, 0.3)',
   padding: 20,
+  height: 20,
   textAlign: 'center',
   color: 'white',
   zIndex: 1
