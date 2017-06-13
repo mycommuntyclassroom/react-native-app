@@ -22,14 +22,14 @@ HEADER.menuIcon = {
 
 HEADER.link = {
   color: 'white',
-  fontWeight: '500'
+  fontSize: 16,
+  fontWeight: '500',
+  marginLeft: 15
 }
 
 HEADER.linkView = {
   display: 'flex',
   flexDirection: 'row',
-  marginLeft: 6,
-  paddingLeft: 6,
   paddingRight: 6 
 }
 
