@@ -6,7 +6,9 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
+
 import Link from '../Link';
+import style from './style';
 
 class Hero extends Component {
   static PropTypes={
@@ -32,7 +34,7 @@ class Hero extends Component {
     // };
 
     return(
-      <View className="hero">
+      <View style={style.container}>
         <View className="profile-image">
           <View className="main-info">
             <Text>{ displayName }</Text>

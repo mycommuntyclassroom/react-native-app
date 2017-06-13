@@ -5,6 +5,8 @@ import {
   Text,
   Image
 } from 'react-native';
+
+import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 import BackButton from '../BackButton';
 import Nav from '../Nav';
@@ -12,6 +14,7 @@ import Invite from '../Invite';
 import Link from '../Link';
 import style from './style';
 import globalStyles from '../../styles';
+import styleVariables from '../../styles/variables'
 
 class Header extends Component {
   static PropTypes={
@@ -67,9 +70,9 @@ class Header extends Component {
         </View>
     } else {
       headerLinks =
-        <View>
-          <Link onClick={ this.handleInvite } text='Invite' />
-          <Link text='Donate' />
+        <View style={style.linkView}>
+          <Link onClick={ this.handleInvite } text='Invite' textStyles={style.link} />
+          <Link text='Donate' textStyles={style.link} />
         </View>
     }
 
@@ -86,12 +89,16 @@ class Header extends Component {
     }
 
     return (
-      <View style={style.container}>
+      <LinearGradient 
+        start={{x: 1, y: 1}} end={{x: 0, y: 1}}
+        colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+        style={style.linearGradient}
+      >
         <View style={style.baseHeader}>
-          <View className="base-logo hamburger">
+          <View style={style.menuIcon}>
             { headerNav }
           </View>
-          <View className="invite-links">
+          <View style={style.linksContainer}>
             { headerLinks }
           </View>
           <View className="ad-box">
@@ -99,7 +106,7 @@ class Header extends Component {
           </View>
         </View>
         { this.state.inviteOpen ? renderInvite() : false }
-      </View>
+      </LinearGradient>
     )
   }
 
