@@ -1,17 +1,23 @@
+import variables from '../../styles/variables';
+
 const CheckBox = {};
 
 CheckBox.container = {
-  height: 50,
-  width: 100,
-  backgroundColor: 'yellow'
+  
+}
+
+CheckBox.text = {
+  color: 'white',
+  padding: 20,
+  borderRadius: 3
 }
 
 CheckBox.true = {
-  backgroundColor: 'blue'
+  backgroundColor: variables.mc2BlueElectric
 }
 
 CheckBox.false = {
-  backgroundColor: 'red'
+  backgroundColor: 'rgba(0, 0, 0, 0.3)'
 }
 
 export default CheckBox;

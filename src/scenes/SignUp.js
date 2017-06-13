@@ -18,11 +18,12 @@ class SignUp extends Component {
     const props = this.props;
     const { globalStyles, auth, app } = props;
     const { status } = auth;
-
+    // TODO Move in after styling 
+// <SignUpForm {...props} />
     return (
       <View style={[globalStyles.container]}>
         { status === 'SIGNED_IN' && app.goToScene('Dashboard', {app})}
-        { status === 'ANONYMOUS' && <SignUpForm {...props} /> }
+        { status === 'ANONYMOUS' && <CreateGuardianAccount auth={auth} {...props} /> }
         { status === 'CREATING_ACCOUNT' && <CreateGuardianAccount auth={auth} {...props} /> }
       </View>
     );

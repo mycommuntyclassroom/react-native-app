@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { updateProfile } from '../helpers/form';
-import { database } from '../helpers/firebase';
-import actions from '../redux/actions';
-import store from '../redux/store';
+import { updateProfile } from '../../helpers/form';
+import { database } from '../../helpers/firebase';
+import actions from '../../redux/actions';
+import store from '../../redux/store';
 
 import {
   View,
@@ -13,9 +13,10 @@ import {
   ScrollView
 } from 'react-native';
 
-import CheckBox from './CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import Button from '../components/Button';
+import style from './style';
+import CheckBox from '../CheckBox';
+import Button from '../Button';
 
 // import BackButton from '../components/BackButton';
 
@@ -143,6 +144,7 @@ class CreateGuardianAccount extends Component {
    */
   render() {
     const props = this.props
+    const { globalStyles } = props;
     let formData = this.state.formData || {};
     const { displayName } = props.auth
 
@@ -150,8 +152,8 @@ class CreateGuardianAccount extends Component {
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category}>
-            <Text>{category}</Text>
+          <View key={category} style={style.checkboxContainer}>
+            <Text style={style.subTitle}>{category}</Text>
             {formData[category].map(item => {
               return ( 
                 <View key={item}>
@@ -179,10 +181,11 @@ class CreateGuardianAccount extends Component {
 
     return(
       <ScrollView>
-        <Text> Help us get to know you... </Text>
-        <View>
+        <Text style={[style.title]}> Help us get to know you... </Text>
+        <View style={style.formContainer}>
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
+            placeholderTextColor='white'
             placeholder='Your Name'
             onChangeText={ (value) => this.handleChange(value, 'displayName') } 
           />
@@ -195,28 +198,32 @@ class CreateGuardianAccount extends Component {
             />
           </View>
 
-          <View className="address">
-            <Text>Address</Text>
+          <View>
+            <Text style={style.subTitle}>Address</Text>
             <TextInput 
-              style={{width: 200, height: 40}}
+              style={globalStyles.textInput}
+              placeholderTextColor='white'
               placeholder="Street Address"
               onChangeText={ (value) => this.handleChange(value, 'street') } />
             <View className="no-wrap">
               <View>
                 <TextInput
-                  style={{width: 200, height: 40}}
+                  style={globalStyles.textInput}
+                  placeholderTextColor='white'
                   placeholder="City"
                   onChangeText={ (value) => this.handleChange(value, 'city') } />
               </View>
               <View>
                 <TextInput
-                  style={{width: 200, height: 40}}
+                  style={globalStyles.textInput}
+                  placeholderTextColor='white'
                   placeholder="State"
                   onChangeText={ (value) => this.handleChange(value, 'state') } />
               </View>
               <View>
                 <TextInput name="zipCode"
-                  style={{width: 200, height: 40}}
+                  style={globalStyles.textInput}
+                  placeholderTextColor='white'
                   placeholder="Zipcode"
                   onChangeText={ (value) => this.handleChange(value, 'Zipcode') } />
               </View>
