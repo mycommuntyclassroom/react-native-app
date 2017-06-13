@@ -93,6 +93,7 @@ STYLE.textInput = {
   borderRadius: 3,
   fontSize: 12,
   padding: 10,
+  marginTop: 4,
   marginBottom: 4,
   color: 'white',
   backgroundColor: 'rgba(0, 0, 0, 0.3)'

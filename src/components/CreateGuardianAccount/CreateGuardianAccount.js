@@ -71,7 +71,7 @@ class CreateGuardianAccount extends Component {
 
     }) 
 
-    this.toTitleCase=this.toTitleCase.bind(this);
+    this.capitalizeWord=this.capitalizeWord.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -82,7 +82,6 @@ class CreateGuardianAccount extends Component {
    *
    * @param e
    */
-
 
   capitalizeWord(str) {
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -212,22 +211,22 @@ class CreateGuardianAccount extends Component {
               placeholderTextColor='white'
               placeholder="Street Address"
               onChangeText={ (value) => this.handleChange(value, 'street') } />
-            <View className="no-wrap">
-              <View>
+            <View style={style.address2ndRow}>
+              <View style={style.addressItem}>
                 <TextInput
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
                   placeholder="City"
                   onChangeText={ (value) => this.handleChange(value, 'city') } />
               </View>
-              <View>
+              <View style={[style.addressItem, style.centerPiece]}>
                 <TextInput
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
                   placeholder="State"
                   onChangeText={ (value) => this.handleChange(value, 'state') } />
               </View>
-              <View>
+              <View style={style.addressItem}>
                 <TextInput name="zipCode"
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
