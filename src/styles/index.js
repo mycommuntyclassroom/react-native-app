@@ -51,7 +51,7 @@ STYLE.text = {
 
 STYLE.Button = {
   backgroundColor: 'rgba(255, 255, 255, 0.6)',
-  padding: 10,
+  padding: 13,
   borderRadius: 15
 };
 

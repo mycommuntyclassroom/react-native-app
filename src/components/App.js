@@ -105,11 +105,9 @@ class App extends Component {
 
   render() {
 
-    const buttonStyle = {
-      position: 'absolute',
-      bottom: 50,
-      zIndex: 10
-    };
+    const props = this.props;
+    // get the status of the user authentication
+    let { status } = props.auth;
 
     return (
       <LinearGradient colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} style={style.fullscreen}>
@@ -121,7 +119,7 @@ class App extends Component {
           configureScene={this.configureScene} />
 
         <Nav ref='navMenu' app={this} style={style} />
-        <FooterNav app={this} />
+        { status === 'SIGNED_IN' && <FooterNav app={this} /> }
 
       </LinearGradient>
     );

@@ -11,14 +11,18 @@ WelcomePage.container = {
 }
 
 WelcomePage.logo = {
-  width: 80, 
-  height: 80,
-  marginTop: 20
+  width: 90, 
+  height: 130,
+  marginTop: 25,
+  marginBottom: 10,
+  shadowColor: 'rgba(51,51,112,.4)',
+  shadowOffset: { width: 0, height: 10 },
+  shadowOpacity: 1,
+  shadowRadius: 4
 }
 
 WelcomePage.title = {
-  color: 'white',
-  marginTop: 20
+  color: 'white'
 }
 
 WelcomePage.copy = {
@@ -44,14 +48,14 @@ WelcomePage.button = {
 WelcomePage.welcomeImage = {
   height: 200,
   width:'100%',
-  marginBottom: 40,
+  marginBottom: 50,
   marginTop: -40
 }
 
 WelcomePage.signIn = {
   display: 'flex',
   flexDirection: 'row',
-  marginTop: 30
+  marginTop: 60
 }
 
 WelcomePage.signInLink = {

@@ -24,7 +24,11 @@ class WelcomePage extends Component {
 
     return (
       <View style={ style.container } >
-        <Image source={require('../../../images/logo.png')} resizeMode='contain' style={style.logo}/>
+        <Image 
+          source={require('../../../images/logo.png')} 
+          resizeMode='contain' 
+          style={style.logo}
+        />
         <Text style={[globalStyles.title, style.title]}> Welcome </Text>
         <Text style={[style.copy]}>
           Easily connect with like minded families & manage everything homeschool in one place!
