@@ -4,7 +4,8 @@ import { FaPencil } from 'react-icons/lib/fa';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
 import Link from '../Link';
@@ -37,11 +38,12 @@ class Hero extends Component {
       <View style={style.container}>
         <View className="profile-image">
           <View className="main-info">
-            <Text>{ displayName }</Text>
+            <Text style={style.userName}>{ displayName }</Text>
+            <View style={style.hr}></View>
             <View className="address"> 
-              <Text>{street}, {city}, </Text> 
-              <Text className="caps">{state}</Text> 
-              <Text>{zipCode}</Text>
+              <Text style={style.address}>{street}, {city}, </Text> 
+              <Text style={style.address}>{state}</Text> 
+              <Text style={style.address}>{zipCode}</Text>
             </View>
           </View>
         </View>
