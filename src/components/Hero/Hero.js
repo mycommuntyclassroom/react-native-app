@@ -17,10 +17,8 @@ class Hero extends Component {
 
     const props = this.props
     const { app } = props
-    console.log('THIS IS THE HERO APP: ', app);
     let userData
 
-    console.log('props.user: ', props.user);
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
     props.guardianData ? userData = props.guardianData : userData = props.user

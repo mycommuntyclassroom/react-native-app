@@ -24,7 +24,6 @@ class CreateGuardianAccount extends Component {
   constructor(props) {
     super();
 
-    console.log('CreateGuardianAccount REndered')
     // 
     // STATE OBJECT
     // 
@@ -40,7 +39,6 @@ class CreateGuardianAccount extends Component {
     .ref('formData/guardians')
     .once('value')
     .then((snapshot) => {
-      console.log('Here is the Snapshot for the formData: ', snapshot.val())
       // setup the state properties
       let categories = {
         uid: auth.uid,
@@ -123,7 +121,6 @@ class CreateGuardianAccount extends Component {
    * @param e
    */
   submitForm() {
-    console.log('submitForm CALLED');
     const props = this.props;
     const { app } = props;
     const data = {...this.state};

@@ -23,19 +23,11 @@ class EditGuardianAccount extends Component {
   constructor(props) {
     super(props);
 
-    console.log('EditGuardianAccount CALLED!!!')
-
-    // console.log('componentWillReceiveProps called, nextProps: ', nextProps);
     const { app } = props;
-
-    console.log('thie is the APP data: ', app)
-
     const { 
             uid, displayName, profileImage, specialties, 
             street, city, zipCode, gender, state
           } = app.props.user;
-
-    console.log('displayName: ', displayName)
 
     // build the state object with the key values in the props
     let newStateObject = {
@@ -54,8 +46,6 @@ class EditGuardianAccount extends Component {
     // update the state after the render
     this.state = newStateObject;
 
-    console.log('this is the newStateObject: ', newStateObject)
-
     // pull the formData tree and grab all of the checkboxes for the guardians
     // and save it in the state
     database
@@ -63,28 +53,25 @@ class EditGuardianAccount extends Component {
     .once('value')
     .then((snapshot) => {
       // store the formData in the state
-      console.log('*!*!*!*!* firebase call returned *!*!*!*!')
       this.setState({formData: snapshot.val()});
 
       let formData = snapshot.val() || {}
 
       // gather all of the checkbox categories and pass them to the state (categories) object
-      console.log('componentWillReceiveProps checkBoxCategories Called')
       // for (var category in formData) {
-      //   console.log('formData within the checkBoxCategories func: ', formData);
-      //   console.log('this is the newStateObject WITHIN the checkBoxCategories func: ', newStateObject);
+    
+    
       //   // add a new property to the newStateObject
       //   // with the name of each checkbox group name and its checked fields
       //   let categoryArray = props.user[category] || [];
-      //   console.log('categoryArray: ', categoryArray)
+    
       //   let newCategoryArray = categoryArray.slice();
-      //   console.log('newCategoryArray: ', newCategoryArray)
+    
       //   newStateObject[category] = newCategoryArray;
       // }
     })
 
   
-    console.log('this is the state obj after the insertion: ', this.state);
 
     // const userImage = profileImage || photoURL;
 
@@ -121,7 +108,6 @@ class EditGuardianAccount extends Component {
    * @param e
    */
   handleChange(value, fieldName) {
-    console.log('handleChange CALLED| value and fieldName', `${value} | ${fieldName}`)
     let inputObj = {}
     inputObj[fieldName] = value;
     this.setState(inputObj);
@@ -129,9 +115,7 @@ class EditGuardianAccount extends Component {
 
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    console.log('this is the checkboxChange state: ', this.state)
     const options = this.state.specialties;
-    console.log('This is the checkboxChange options: ', this.state.specialties);
     let index;
 
     // check if the check box is checked or unchecked
@@ -165,15 +149,12 @@ class EditGuardianAccount extends Component {
    */
 
   submitForm() {
-    console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
     const { app } = props;
     const data = {...this.state};
 
     const currentUserObject = app.props.user;
-    console.log('here is the currentUserObject: ', currentUserObject)
     const updatedUser = Object.assign(currentUserObject, data)
-    console.log('here is the updatedUser: ', updatedUser)
 
     // pass the updated object to the store
     store.dispatch(actions.userInfo(updatedUser));
@@ -190,7 +171,6 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
     const userObj = app.props.user
@@ -201,15 +181,9 @@ class EditGuardianAccount extends Component {
     // grab the form data set within the state
     let formData = this.state.formData || {};
 
-    console.log('formData: ', formData)
-    console.log('this is the RENDER STATE: ', this.state)
-
     const outputCheckboxes = () => {
-      console.log('outputCheckboxes Called ');
       // skip this function if the state doesn't have basic info
-      console.log('this is the uid: ', uid);
       if (uid === null) { return }
-      console.log('guard PASSED')
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
@@ -236,15 +210,12 @@ class EditGuardianAccount extends Component {
               }
 
               return checkbox;
-              console.log('returned checkbox: ', checkbox);
             })}
           </View>
         )
       }
       return checkboxOutput
-      console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
-
 
     // set the data structure for the radio buttons
     const radio_props = [
@@ -253,8 +224,6 @@ class EditGuardianAccount extends Component {
     ];
 
     let userGender = this.state.gender
-    console.log('!!!!!!~~~~userGender: ', userGender)
-    console.log('This is the profileImage: ', profileImage);
 
     // handle the output of the required image
     let userImage = profileImage != '../../../images/blank-profile-pic.png'

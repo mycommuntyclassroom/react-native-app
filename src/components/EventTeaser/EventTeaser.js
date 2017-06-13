@@ -23,21 +23,14 @@ class EventTeaser extends Component {
     const { app } = this.props;
     let userData;
 
-    console.log('***&*&*These are the props&*&*&*: ', props)
-
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
     props.guardianData ? userData = props.guardianData : userData = app.props.user
 
     const teaserData = userData.hostEvents || [' '];
-
-    console.log('teaserData: ', teaserData)
     let teaserOutput = []
-
     let teaserElement;
     let nullClass = '';
-
-    console.log('THIS is the teaser data before: ', teaserData[0] === ' ');
 
     // if the teaserData is undefined, output a fallback element
     if (teaserData[0] === ' ') {
@@ -55,7 +48,6 @@ class EventTeaser extends Component {
     function generateTeasers() {
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
-        console.log('******EventTeaser teaser: ', teaser)
 
               // <Image source={require(image)} resizeMode='contain' />
         teaserElement =
@@ -107,7 +99,6 @@ class EventTeaser extends Component {
       teaserOutput = teaserOutput == [] ? [' '] : teaserOutput;
     }
 
-    console.log('***teaserOutput: ', teaserOutput)
 
     return(
       <View className={`event-teasers`}>

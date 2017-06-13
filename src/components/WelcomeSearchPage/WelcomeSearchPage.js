@@ -9,10 +9,10 @@ import {
 
 import Button from '../Button';
 import Link from '../Link';
-// styles particular for the WelcomePage
+// styles particular for the WelcomeSearchPage
 import style from './style';
 
-class WelcomePage extends Component {
+class WelcomeSearchPage extends Component {
 
   render() {
     const { globalStyles, app } = this.props;
@@ -20,24 +20,16 @@ class WelcomePage extends Component {
     return (
       <View style={ style.container } >
         <Image 
-          source={require('../../../images/logo.png')} 
+          source={require('../../../images/mountain-icon.png')} 
           resizeMode='contain' 
-          style={style.logo}
+          style={style.headerIcon}
         />
-        <Text style={[globalStyles.title, style.title]}> Welcome </Text>
-        <Text style={[style.copy]}>
-          Easily connect with like minded families & manage everything homeschool in one place!
-        </Text>
-        <TextInput
-          style={[style.zipCode]}
-          placeholder='Zip Code'
-          placeholderTextColor='white'
-        />
-        <Image source={require('../../../images/welcome-family-page.jpg')} resizeMode='cover' style={ style.welcomeImage }/>
+        <Text style={[globalStyles.title, style.title]}> Congratulations </Text>
+        <Image source={require('../../../images/sf-map.jpg')} resizeMode='cover' style={ style.welcomeImage }/>
         <Button 
-          text='Search your area'
+          text='Sign up'
           extraStyle={style.button}
-          onPress={() => app.goToScene('WelcomeSearch', {app}) }>
+          onPress={() => app.goToScene('SignUp', {app}) }>
         </Button>
         <View style={ style.signIn }>
           <Text style={ style.signInCopy }> Already have an account? </Text>
@@ -52,4 +44,4 @@ class WelcomePage extends Component {
 
 }
 
-export default WelcomePage;
+export default WelcomeSearchPage;

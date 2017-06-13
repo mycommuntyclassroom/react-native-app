@@ -16,7 +16,7 @@ class Notifications extends Component {
 
   render() {
     const props = this.props;
-    const { style, app } = props;
+    const { globalStyles, app } = props;
 
     console.log('these are the props: ', props);
     console.log('props.user.friends: ', app.props.user.friends);
@@ -68,7 +68,7 @@ class Notifications extends Component {
 
         // <NotificationsHeader {...props} />
     return (
-      <View style={[style.container, { backgroundColor: 'maroon' }]}>
+      <View style={[globalStyles.container, { backgroundColor: 'maroon' }]}>
         <View className="notes-group">
           { notesOutput }
         </View>

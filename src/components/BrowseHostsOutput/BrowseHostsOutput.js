@@ -16,9 +16,7 @@ class BrowseHostsOutput extends Component {
   render () {
 
     const props = this.props;
-    console.log('BrowseHostsOutput props: ', props)
     const { app } = props;
-    console.log('BrowseHostsOutput app: ', app);
     const eventData = app.props.events || [' '];
 
     // this array stores the template elements ex: the event post
@@ -42,12 +40,10 @@ class BrowseHostsOutput extends Component {
       for (let teaser in eventData[teaserGroup]) {
         
         let teaserData = eventData[teaserGroup][teaser];
-        console.log('this is the teaserData: ', teaserData)
         const { hostName, title, image, startTime, finishTime } = teaserData;
 
         // set the gid for the scope above
         gid = teaserData.gid
-        console.log('This is the Browse Hosts gid: ', gid)
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
 

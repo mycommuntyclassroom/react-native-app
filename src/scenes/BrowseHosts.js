@@ -20,10 +20,10 @@ class BrowseHosts extends Component {
 
   render() {
     const props = this.props
-    const { style, app } = props;
+    const { globalStyles, app } = props;
 
     return (
-      <View style={style.container}>
+      <View style={globalStyles.container}>
         <BrowseHostsOutput {...props} />
       </View>
     );

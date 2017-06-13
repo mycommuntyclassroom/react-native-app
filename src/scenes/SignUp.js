@@ -29,6 +29,7 @@ class SignUp extends Component {
 
     console.log('THESE are the props: ', this.props)
     const props = this.props;
+    const { globalStyles } = props;
     const { auth } = props.app.props;
     console.log('this.state in RENDER: ', this.state);
     // view for the sign up with your ('X') account
@@ -50,9 +51,9 @@ class SignUp extends Component {
       </View>
     );
 
-    const { style, app } = this.props;
+    const { style, app } = props;
     return (
-      <View style={[style.container, { justifyContent: 'flex-start', backgroundColor: 'green' }]}>
+      <View style={[globalStyles.container, { justifyContent: 'flex-start', backgroundColor: 'green' }]}>
         { auth.status === 'SIGNED_IN' && app.goToScene('Dashboard', {app})}
         { auth.status === 'ANONYMOUS' && signUpView }
         { auth.status === 'CREATING_ACCOUNT' && <CreateGuardianAccount auth={auth} {...props} /> }

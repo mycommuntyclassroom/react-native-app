@@ -15,7 +15,6 @@ class RequestFriendButton extends Component {
   constructor(props) {
     super(props)
 
-    console.log('props passed into the RequestFriendButton: ', props)
     this.state = {
       pending: ''
     }
@@ -32,22 +31,18 @@ class RequestFriendButton extends Component {
     const { app } = props
     const { requester } = app.props;
 
-    console.log('RequestFriendButton CALLED, this is the requester: ', requester);
     let buttonOutput = ''
           // <View className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</View>
 
     // check the relationship of the users are the same
     if (checkRelationship('friend', props, props.gid)){
-      console.log('FRIEND ENTERED::::((()')
       buttonOutput = <Text></Text>;
     } 
     else if (checkRelationship('incoming', props, props.gid)) {
-      console.log('THIS is the props.gid: ', props.gid)
       buttonOutput = 
         <View className="cta-buttons">
           <Link className="connect" onClick={() => handleInvite(app.props.auth, requester, 'accept')} text='Connect' />
         </View>
-      console.log('IS iS incoming!!!*!***: ');
     }
     else {
       buttonOutput = 

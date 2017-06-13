@@ -30,8 +30,6 @@ class Summary extends Component {
     const props = this.props
     let userData;
 
-    console.log('HERE are the PROPS for the Summary: ', props);
-
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
     props.guardianData ? userData = props.guardianData : userData = props.user

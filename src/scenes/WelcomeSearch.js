@@ -7,29 +7,16 @@ import {
   TextInput
 } from 'react-native';
 
+import WelcomeSearchPage from '../components/WelcomeSearchPage'
+
 class WelcomeSearch extends Component {
 
   render() {
-    const { globalStyles, app } = this.props;
+    const props = this.props;
+    const { globalStyles, app } = props;
     return (
-      <View style={[globalStyles.container, { justifyContent: 'center', backgroundColor: 'pink' }]}>
-        <Text>WelcomeSearch</Text>
-        <TouchableHighlight
-          onPress={() => {
-            app.goToScene('Login', {app});
-          }}>
-          <Text style={globalStyles.navText}>
-            Login
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => {
-            app.goToScene('SignUp', {app});
-          }}>
-          <Text style={globalStyles.navText}>
-            Sign up
-          </Text>
-        </TouchableHighlight>
+      <View style={globalStyles.container}>
+        <WelcomeSearchPage {...props} />
       </View>
     );
   };

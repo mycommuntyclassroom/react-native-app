@@ -23,10 +23,10 @@ class Inbox extends Component {
   }
 
   render() {
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
     return (
-      <View style={[style.container, { backgroundColor: 'cadetblue' }]}>
-        <Text style={style.title}>
+      <View style={[globalStyles.container, { backgroundColor: 'cadetblue' }]}>
+        <Text style={globalStyles.title}>
           Inbox
         </Text>
       </View>

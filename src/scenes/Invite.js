@@ -23,10 +23,10 @@ class Invite extends Component {
   }
 
   render() {
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
     return (
-      <View style={[style.container, { backgroundColor: 'violet' }]}>
-        <Text style={style.title}>
+      <View style={[globalStyles.container, { backgroundColor: 'violet' }]}>
+        <Text style={globalStyles.title}>
           Invite
         </Text>
       </View>

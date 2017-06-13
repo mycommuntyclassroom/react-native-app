@@ -23,10 +23,10 @@ class Friends extends Component {
   }
 
   render() {
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
     return (
-      <View style={[style.container, { backgroundColor: 'powderblue' }]}>
-        <Text style={style.title}>
+      <View style={[globalStyles.container, { backgroundColor: 'powderblue' }]}>
+        <Text style={globalStyles.title}>
           Friends
         </Text>
       </View>

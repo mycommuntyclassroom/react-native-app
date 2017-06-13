@@ -1,31 +1,27 @@
 import styleVariables from '../../styles/variables'
 
-const WelcomePage = {};
+const WelcomeSearch = {};
 
 
-WelcomePage.container = {
+WelcomeSearch.container = {
   justifyContent: 'flex-start',
   alignItems: 'center',
   paddingRight: 15,
   paddingLeft: 15
 }
 
-WelcomePage.logo = {
+WelcomeSearch.headerIcon = {
   width: 90, 
   height: 130,
-  marginTop: 25,
-  marginBottom: 10,
-  shadowColor: 'rgba(51,51,112,.4)',
-  shadowOffset: { width: 0, height: 10 },
-  shadowOpacity: 1,
-  shadowRadius: 4
+  marginTop: 25
 }
 
-WelcomePage.title = {
-  color: 'white'
+WelcomeSearch.title = {
+  color: 'white',
+  marginBottom: 10
 }
 
-WelcomePage.copy = {
+WelcomeSearch.copy = {
   display: 'flex',
   color: 'white',
   marginTop: 10,
@@ -33,7 +29,7 @@ WelcomePage.copy = {
   marginBottom: 30
 }
 
-WelcomePage.zipCode = {
+WelcomeSearch.zipCode = {
   backgroundColor: 'rgba(0,0,0, 0.3)',
   padding: 20,
   textAlign: 'center',
@@ -41,31 +37,30 @@ WelcomePage.zipCode = {
   zIndex: 1
 }
 
-WelcomePage.button = {
+WelcomeSearch.button = {
   width: '100%'
 }
 
-WelcomePage.welcomeImage = {
-  height: 200,
+WelcomeSearch.welcomeImage = {
+  height: 250,
   width:'100%',
-  marginBottom: 50,
-  marginTop: -40
+  marginBottom: 50
 }
 
-WelcomePage.signIn = {
+WelcomeSearch.signIn = {
   display: 'flex',
   flexDirection: 'row',
   marginTop: 40
 }
 
-WelcomePage.signInLink = {
+WelcomeSearch.signInLink = {
   marginLeft: 1,
   color: 'white'
 }
 
-WelcomePage.signInCopy = {
+WelcomeSearch.signInCopy = {
   color: styleVariables.mc2fontGray
 }
 
 
-export default WelcomePage;
+export default WelcomeSearch;

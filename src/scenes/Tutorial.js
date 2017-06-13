@@ -38,7 +38,7 @@ class Tutorial extends Component {
   render() {
 
     console.log('***TUT rendered***!!!: deviceDimensions: ', deviceDimensions)
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
 
     const getSlideIndex = (slideIndex) => {
       // update the state with the index of the slider
