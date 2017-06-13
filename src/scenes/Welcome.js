@@ -16,7 +16,7 @@ class Welcome extends Component {
 
   render() {
     const props = this.props;
-    const { globalStyles, app } = props;
+    const { globalStyles } = props;
     return (
       <View style={globalStyles.container}>
         <WelcomePage {...props} />

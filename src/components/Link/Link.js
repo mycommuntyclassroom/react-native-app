@@ -6,9 +6,9 @@ import {
 
 import style from '../../styles';
 
-const Link = ({ text, onClick, extraStyle }) => (
+const Link = ({ text, onClick, extraStyle, textStyles }) => (
   <TouchableHighlight style={[style.Link, extraStyle || {}]} onPress={onClick}>
-    <Text style={style.LinkText}>
+    <Text style={[style.LinkText, textStyles || {}]}>
       {text}
     </Text>
   </TouchableHighlight>

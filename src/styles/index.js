@@ -19,6 +19,14 @@ STYLE.fullscreen = {
   flex: 1
 };
 
+STYLE.deviceWidth = {
+  width: deviceWidth
+}
+
+STYLE.deviceHeight = {
+  height: deviceHeight
+}
+
 STYLE.loader = {
   flex: 1,
   height: 80,
@@ -32,8 +40,7 @@ STYLE.container = {
 };
 
 STYLE.title = {
-  fontSize: 30,
-  marginTop: -150
+  fontSize: 30
 };
 
 STYLE.text = {
@@ -43,15 +50,16 @@ STYLE.text = {
 /* Components */
 
 STYLE.Button = {
-  backgroundColor: 'purple',
-  padding: 10,
-  alignSelf: 'center'
+  backgroundColor: 'rgba(255, 255, 255, 0.6)',
+  padding: 13,
+  borderRadius: 15
 };
 
 STYLE.ButtonText = {
   backgroundColor: 'transparent',
   color: 'white',
   textAlign: 'center',
+  fontWeight: '500'
 };
 
 STYLE.Nav = {
