@@ -23,7 +23,6 @@ class SignUpForm extends Component {
   }
 
   submitForm(state) {
-    console.log('submitForm CALLED')
     signInHandler('manual', 'CREATING_ACCOUNT', state);
   }
 
