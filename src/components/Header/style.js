@@ -11,6 +11,36 @@ HEADER.container = {
   backgroundColor: variables.mc2PowderBlue
 }
 
+HEADER.linearGradient = {
+  paddingTop: 30,
+  paddingBottom: 10
+}
+
+HEADER.menuIcon = {
+  marginLeft: 15
+}
+
+HEADER.link = {
+  color: 'white',
+  fontSize: 16,
+  fontWeight: '500',
+  marginLeft: 15
+}
+
+HEADER.linkView = {
+  display: 'flex',
+  flexDirection: 'row',
+  paddingRight: 6 
+}
+
+HEADER.linksContainer = {
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'flex-end'
+}
+
 HEADER.baseHeader = {
   display: 'flex',
   flexDirection: 'row',
