@@ -36,7 +36,8 @@ STYLE.loader = {
 STYLE.container = {
   flex: 1,
   // justifyContent: 'space-between',
-  paddingTop: 20
+  padding: 20,
+  paddingBottom: 0
 };
 
 STYLE.title = {
@@ -81,5 +82,20 @@ STYLE.NavText = {
 STYLE.NavLink = {
   height: 50
 };
+
+
+// FORM Styles
+// 
+// bootstrap forms particular to forms
+// 
+STYLE.textInput = {
+  height: 40, 
+  borderRadius: 3,
+  fontSize: 12,
+  padding: 10,
+  marginBottom: 4,
+  color: 'white',
+  backgroundColor: 'rgba(0, 0, 0, 0.3)'
+}
 
 export default StyleSheet.create(STYLE);
