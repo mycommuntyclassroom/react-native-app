@@ -7,7 +7,6 @@ import store from '../../redux/store';
 import {
   View,
   Text,
-  TouchableHighlight,
   TextInput,
   AsyncStorage,
   ScrollView
@@ -15,7 +14,9 @@ import {
 
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import style from './style';
+import colorsVariables from '../../styles/variables';
 import CheckBox from '../CheckBox';
+import BackButton from '../BackButton';
 import Button from '../Button';
 
 // import BackButton from '../components/BackButton';
@@ -187,6 +188,7 @@ class CreateGuardianAccount extends Component {
 
     return(
       <ScrollView>
+        <BackButton scene='WelcomeSearch' {...props} />
         <Text style={[style.title]}> Help us get to know you... </Text>
         <View style={style.formContainer}>
           <TextInput
@@ -199,6 +201,9 @@ class CreateGuardianAccount extends Component {
           <View>
             <RadioForm
               radio_props={radio_props}
+              formHorizontal={true}
+              buttonColor={colorsVariables.mc2BlueElectric}
+              labelColor={'white'}
               initial={userGender === 'male' ? 0 : 1 }
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
