@@ -22,6 +22,9 @@ const VARIABLES = {
   mc2fontGray: '#6a6a6b',
   mc2fontBlue: '#4d606f',
 
+  // transparent
+  transparentBlack: 'rgba(0, 0, 0, 0.3)',
+
   // 
   // layout
   // 
