@@ -24,7 +24,6 @@ class CreateChildAccount extends Component {
   constructor(props) {
     super();
 
-    console.log('CreateChildAccount REndered')
     // 
     // STATE OBJECT
     // 
@@ -40,7 +39,6 @@ class CreateChildAccount extends Component {
     .ref('formData/children')
     .once('value')
     .then((snapshot) => {
-      console.log('Here is the Snapshot for the formData: ', snapshot.val())
       // setup the state properties
 
       let categories = {
@@ -121,7 +119,6 @@ class CreateChildAccount extends Component {
    * @param e
    */
   submitForm() {
-    console.log('submitForm CALLED');
     
     const props = this.props;
     const { app } = props;

@@ -14,11 +14,6 @@ import style from './style';
 
 class WelcomePage extends Component {
 
-
-  componentDidMount() {
-    console.log('mounted WelcomePage', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
 
@@ -49,7 +44,7 @@ class WelcomePage extends Component {
           <Link 
             text='Login'
             textStyles={style.signInLink}
-            onPress={() => app.goToScene('Login', {app}) } />
+            onClick={() => app.goToScene('Login', {app}) } />
         </View>
       </View>
     );

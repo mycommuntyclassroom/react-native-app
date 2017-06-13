@@ -26,10 +26,8 @@ class EditChildAccount extends Component {
     // child's id
     const { childId } = props;
     const { app } = props;
-    console.log('thie is the APP data: ', app)
     const child = app.props.user.children[childId];
 
-    console.log('This is the Child: ', child)
     const { 
             gid, fName, lName, profileImage, gender, allergies
           } = child;
@@ -48,7 +46,6 @@ class EditChildAccount extends Component {
     // set the state
     this.state = newStateObject;
 
-    console.log('this is the newStateObject: ', newStateObject)
 
     // pull the formData tree and grab all of the checkboxes for the children
     // and save it in the state
@@ -57,7 +54,6 @@ class EditChildAccount extends Component {
     .once('value')
     .then((snapshot) => {
       // store the formData in the state
-      console.log('*!*!*!*!* firebase call returned *!*!*!*!')
       this.setState({formData: snapshot.val()});
     })
 
@@ -94,7 +90,6 @@ class EditChildAccount extends Component {
    * @param e
    */
   handleChange(value, fieldName) {
-    console.log('handleChange CALLED| value and fieldName', `${value} | ${fieldName}`)
     let inputObj = {}
     inputObj[fieldName] = value;
     this.setState(inputObj);
@@ -102,9 +97,7 @@ class EditChildAccount extends Component {
 
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    console.log('this is the checkboxChange state: ', this.state)
     const options = this.state.allergies;
-    console.log('This is the checkboxChange options: ', this.state.allergies);
     let index;
 
     // check if the check box is checked or unchecked
@@ -135,7 +128,6 @@ class EditChildAccount extends Component {
   // 
   // 
   submitForm() {
-    console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
     const { childId } = props;
     const { app } = props;
@@ -145,18 +137,14 @@ class EditChildAccount extends Component {
     data.formData = null;
 
     // update the store, create a new user object with the profile info in it
-    console.log('this is the current user Obj: ', props.user);
-    console.log('this is the current state: ', data);
     const childProfile = app.props.user.children[childId];
     const userProfile = app.props.user;
 
     // update the child's profile with the data submitted
     const updatedChildProfile = Object.assign(childProfile, data);
-    console.log('here is the updatedChildProfile: ', updatedChildProfile);
     // update the user object with the updated child profile
     const updatedUser = Object.assign(userProfile, updatedChildProfile)
 
-    console.log('here is the updatedUser: ', updatedUser)
 
     // pass the updated user to the store
     store.dispatch(actions.userInfo(updatedUser));
@@ -173,19 +161,15 @@ class EditChildAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
     const currentChild = this.state
     const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
 
-    console.log('allergies: ', allergies)
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
 
-    console.log('formData: ', formData)
-    console.log('this is the RENDER STATE: ', this.state)
 
     const outputCheckboxes = () => {
       // skip this function if the state doesn't have basic info (id)
@@ -217,13 +201,11 @@ class EditChildAccount extends Component {
               }
 
               return checkbox;
-              console.log('returned checkbox: ', checkbox);
             })}
           </View>
         )
       }
       return checkboxOutput
-      console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
 
 

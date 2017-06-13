@@ -14,11 +14,6 @@ import style from './style';
 
 class WelcomeSearchPage extends Component {
 
-
-  componentDidMount() {
-    console.log('mounted WelcomeSearchPage', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
 
@@ -41,7 +36,7 @@ class WelcomeSearchPage extends Component {
           <Link 
             text='Login'
             textStyles={style.signInLink}
-            onPress={() => app.goToScene('Login', {app}) } />
+            onClick={() => app.goToScene('Login', {app}) } />
         </View>
       </View>
     );

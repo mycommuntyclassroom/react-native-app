@@ -49,11 +49,11 @@ class Login extends Component {
     );
 
     const props = this.props;
-    const { auth, app } = props;
+    const { globalStyles, auth, app } = props;
     const { status } = auth;
 
     return (
-      <View style={[style.container, { justifyContent: 'center', backgroundColor: 'gray' }]}>
+      <View style={[globalStyles.container, { justifyContent: 'center', backgroundColor: 'gray' }]}>
         { status === 'ANONYMOUS' && signUpView }
         { status === 'SIGNED_IN' && app.goToScene('Dashboard', {app}) } 
       </View>

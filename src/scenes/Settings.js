@@ -23,10 +23,10 @@ class Settings extends Component {
   }
 
   render() {
-    const { style, app } = this.props;
+    const { globalStyles, app } = this.props;
     return (
-      <View style={[style.container, { backgroundColor: 'darkturquoise' }]}>
-        <Text style={style.title}>
+      <View style={[globalStyles.container, { backgroundColor: 'darkturquoise' }]}>
+        <Text style={globalStyles.title}>
           Settings
         </Text>
       </View>

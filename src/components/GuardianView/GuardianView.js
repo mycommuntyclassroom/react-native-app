@@ -22,7 +22,6 @@ class GuardianView extends Component {
       gid: props.gid
     }
 
-    console.log('GuardianView constructor was called: ', props)
     const gid = this.state.gid;
 
     // GET THE GUARDIAN'S DATA
@@ -30,14 +29,12 @@ class GuardianView extends Component {
     // retrive the guardian data per the id passed
     // 
     getGuardianData(gid, (callbackData) => {
-      console.log('callbackData: ', callbackData)
       let newState = Object.assign(this.state, callbackData)
       this.setState(newState);
     });
   }
 
   render() { 
-    console.log('Render was called HERE IS THE STATE: ', this.state);
     const props = this.props;
     const { app } = props;
     const { auth, user, signOut } = app.props

@@ -13,12 +13,12 @@ WelcomeSearch.container = {
 WelcomeSearch.headerIcon = {
   width: 90, 
   height: 130,
-  marginTop: 25,
-  marginBottom: 10
+  marginTop: 25
 }
 
 WelcomeSearch.title = {
-  color: 'white'
+  color: 'white',
+  marginBottom: 10
 }
 
 WelcomeSearch.copy = {
@@ -42,10 +42,9 @@ WelcomeSearch.button = {
 }
 
 WelcomeSearch.welcomeImage = {
-  height: 200,
+  height: 250,
   width:'100%',
-  marginBottom: 50,
-  marginTop: -40
+  marginBottom: 50
 }
 
 WelcomeSearch.signIn = {

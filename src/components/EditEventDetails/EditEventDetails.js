@@ -32,7 +32,6 @@ class EditGuardianAccount extends Component {
   constructor(props) {
     super(props);
 
-    console.log('EditGuardianAccount CALLED!!!')
 
     const { eventId } = props;
     const { app } = props;
@@ -71,7 +70,6 @@ class EditGuardianAccount extends Component {
     .once('value')
     .then((snapshot) => {
       // store the formData in the state
-      console.log('*!*!*!*!* firebase call returned *!*!*!*!')
       this.setState({formData: snapshot.val()});
 
       let formData = snapshot.val() || {};
@@ -168,7 +166,6 @@ class EditGuardianAccount extends Component {
    */
 
   submitForm() {
-    console.log('*!*!*!*!*!*!submitForm CALLED');
     const props = this.props;
     const { eventId, app } = props;
     const eventData = {...this.state};
@@ -195,7 +192,6 @@ class EditGuardianAccount extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Reached the Edit event RENDER, state: ', this.state)
     const props = this.props;
     const { app } = props
 
@@ -209,7 +205,6 @@ class EditGuardianAccount extends Component {
     let formData = this.state.formData || {};
 
     const outputCheckboxes = () => {
-      console.log('outputCheckboxes Called ');
       // skip this function if the state doesn't have basic info
       if (gid === null) { return }
       let checkboxOutput = [];
@@ -238,13 +233,11 @@ class EditGuardianAccount extends Component {
               }
 
               return checkbox;
-              console.log('returned checkbox: ', checkbox);
             })}
           </View>
         )
       }
       return checkboxOutput
-      console.log('checkboxOutput AFTER: ', checkboxOutput);
     }
 
     // set the data structure for the frequency radio buttons group

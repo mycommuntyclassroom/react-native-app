@@ -15,7 +15,6 @@ import Link from "../Link";
 
 const FooterNav = (props) => {
 
-  console.log('FooterNav props: ', props)
   const {app} = props;
 
   return (

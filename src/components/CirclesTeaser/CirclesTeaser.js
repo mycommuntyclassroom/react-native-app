@@ -24,8 +24,6 @@ class CirclesTeaser extends Component {
     const props = this.props
     let circlesData = props.circlesData || [' '];
 
-    console.log('Here are the circlesData: ', circlesData)
-
     // array that stores the circle elements ex: the Children circles
     let circlesOutput = [];
     let circleElement;
@@ -35,7 +33,6 @@ class CirclesTeaser extends Component {
     // if the circlesData is undefined, output a null-circle element
     switch (props.circleType) {
       case 'myChildren':
-        console.log('got the null outPut for the circles')
         nullOutput = 
           <View>
             <Image 

@@ -49,7 +49,6 @@ class Header extends Component {
   render() {
 
     const props = this.props;
-    console.log('HEADER props: ', props)
     const { app } = props;
 
     const renderInvite = () => (

@@ -31,7 +31,6 @@ class CreateEventForm extends Component {
   constructor(props) {
     super();
 
-    console.log('CreateEventForm REndered')
     // 
     // STATE OBJECT
     // 
