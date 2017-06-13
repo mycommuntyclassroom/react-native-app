@@ -71,6 +71,7 @@ class CreateGuardianAccount extends Component {
 
     }) 
 
+    this.toTitleCase=this.toTitleCase.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -81,6 +82,12 @@ class CreateGuardianAccount extends Component {
    *
    * @param e
    */
+
+
+  capitalizeWord(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  }
+
   handleChange(value, fieldName) {
     let inputObj = {}
     inputObj[fieldName] = value;
@@ -153,7 +160,7 @@ class CreateGuardianAccount extends Component {
       for (var category in formData) {
         checkboxOutput.push(
           <View key={category} style={style.checkboxContainer}>
-            <Text style={style.subTitle}>{category}</Text>
+            <Text style={style.subTitle}>{this.capitalizeWord(category)}</Text>
             {formData[category].map(item => {
               return ( 
                 <View key={item}>
@@ -232,7 +239,7 @@ class CreateGuardianAccount extends Component {
 
           { outputCheckboxes() }
 
-          <Button text='Submit' onPress= { () => this.submitForm() }></Button>
+          <Button text='Submit' extraStyle={style.submit} onPress= { () => this.submitForm() }></Button>
         </View>
       </ScrollView>
     )

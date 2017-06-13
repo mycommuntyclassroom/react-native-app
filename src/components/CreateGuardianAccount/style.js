@@ -7,7 +7,8 @@ CreateGuardianAccount.formContainer = {
 CreateGuardianAccount.title = {
   color: 'white',
   fontSize: 25,
-  marginBottom: 10
+  marginBottom: 10,
+  textAlign: 'center'
 }
 
 CreateGuardianAccount.subTitle = {
@@ -20,7 +21,13 @@ CreateGuardianAccount.subTitle = {
 CreateGuardianAccount.checkboxContainer = {
   display: 'flex',
   flexDirection: 'row',
-  flexWrap: 'wrap'
+  flexWrap: 'wrap',
+  alignItems: 'stretch',
+  marginTop: 10
+}
+
+CreateGuardianAccount.submit = {
+  marginTop: 30
 }
 
 export default CreateGuardianAccount;
