@@ -4,11 +4,14 @@ import { FaPencil } from 'react-icons/lib/fa';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Link from '../Link';
 import style from './style';
+import styleVariables from '../../styles/variables'
 
 class Hero extends Component {
   static PropTypes={
@@ -18,7 +21,7 @@ class Hero extends Component {
   render() {
 
     const props = this.props
-    const { app } = props
+    const { globalStyles, app } = props
     let userData
 
     // if guardianData is passed in the props, then show guardian data 
@@ -36,20 +39,34 @@ class Hero extends Component {
     return(
       <View style={style.container}>
         <View className="profile-image">
-          <View className="main-info">
-            <Text>{ displayName }</Text>
-            <View className="address"> 
-              <Text>{street}, {city}, </Text> 
-              <Text className="caps">{state}</Text> 
-              <Text>{zipCode}</Text>
+          <Image 
+            source={require('../../../images/blank-profile-pic.png')} 
+            resizeMode='cover' 
+            style={ globalStyles.deviceWidth, {height: 320}} />
+          <LinearGradient 
+            style={style.mainInfo}
+            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+          >
+            <Text style={style.userName}>{ displayName }</Text>
+            <View style={style.hr}></View>
+            <View style={style.addressContainer}> 
+              <Text style={style.address}>{street}, {city}, </Text> 
+              <Text style={style.address}>{state}</Text> 
+              <Text style={style.address}> {zipCode}</Text>
             </View>
-          </View>
+          </LinearGradient>
         </View>
         { !props.guardianData && 
+          <LinearGradient
+            colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+            style={style.edit}
+          >
             <TouchableHighlight onPress={() => app.goToScene('EditGuardian', {app})} className="add-item-button edit-profile-button">
-              <Text>FaPencil</Text>
+              <Text style={style.editText}>edit</Text>
             </TouchableHighlight>
+          </LinearGradient>
         }
+        <View style={style.decoClip}></View>
       </View>
     )
   }

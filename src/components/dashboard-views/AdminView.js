@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
+  ScrollView,
   TouchableHighlight,
   Text
 } from 'react-native';
@@ -25,13 +26,13 @@ class AdminView extends Component {
     const { user } = app.props;
 
     return(
-      <View>
+      <ScrollView>
         <Header { ...props } />
         <Hero {...props} user={user} />
         <Summary {...props} />
         <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} {...props} />
         <EventTeaser {...props} />
-      </View>
+      </ScrollView>
     )
   }
 }
