@@ -12,8 +12,8 @@ hero.container = {
 hero.mainInfo = {
   position: 'absolute',
   paddingLeft: 15,
+  paddingBottom: 15,
   bottom: 0,
-  backgroundColor: 'white',
   width: deviceWidth
 }
 
@@ -60,12 +60,19 @@ hero.edit = {
   height: 45,
   width: 45,
   right: 10, 
-  bottom: 0,
+  bottom: 50,
   padding: 10,
+  zIndex: 2
 }
 
 hero.editText = {
   color: 'white'
+}
+
+hero.decoClip = {
+  height: 70,
+  width: deviceWidth,
+  backgroundColor: 'white'
 }
 
 export default hero;

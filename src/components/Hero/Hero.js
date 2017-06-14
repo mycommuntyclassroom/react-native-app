@@ -43,7 +43,10 @@ class Hero extends Component {
             source={require('../../../images/blank-profile-pic.png')} 
             resizeMode='cover' 
             style={ globalStyles.deviceWidth, {height: 300}} />
-          <View style={style.mainInfo}>
+          <LinearGradient 
+            style={style.mainInfo}
+            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+          >
             <Text style={style.userName}>{ displayName }</Text>
             <View style={style.hr}></View>
             <View style={style.addressContainer}> 
@@ -51,11 +54,10 @@ class Hero extends Component {
               <Text style={style.address}>{state}</Text> 
               <Text style={style.address}> {zipCode}</Text>
             </View>
-          </View>
+          </LinearGradient>
         </View>
         { !props.guardianData && 
-          <LinearGradient 
-            start={{x: 1, y: 1}} end={{x: 0, y: 1}}
+          <LinearGradient
             colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
             style={style.edit}
           >
@@ -64,6 +66,7 @@ class Hero extends Component {
             </TouchableHighlight>
           </LinearGradient>
         }
+        <View style={style.decoClip}></View>
       </View>
     )
   }
