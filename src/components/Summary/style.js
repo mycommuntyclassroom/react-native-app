@@ -43,7 +43,7 @@ summary.tagItem = {
 }
 
 summary.tagItemCopy = {
-  color: 'black'
+  color: 'white'
 }
 
 export default summary;
