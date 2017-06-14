@@ -42,7 +42,7 @@ class Hero extends Component {
           <Image 
             source={require('../../../images/blank-profile-pic.png')} 
             resizeMode='cover' 
-            style={ globalStyles.deviceWidth, {height: 300}} />
+            style={ globalStyles.deviceWidth, {height: 320}} />
           <LinearGradient 
             style={style.mainInfo}
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 

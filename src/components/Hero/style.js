@@ -12,7 +12,7 @@ hero.container = {
 hero.mainInfo = {
   position: 'absolute',
   paddingLeft: 15,
-  paddingBottom: 15,
+  paddingBottom: 40,
   bottom: 0,
   width: deviceWidth
 }
@@ -33,7 +33,7 @@ hero.hr = {
   marginBottom: 13,
   marginLeft: 10,
   backgroundColor: styleVariables.mc2BlueElectric,
-  shadowColor: 'rgba(51,51,112,.4)',
+  shadowColor: 'rgba(51, 51, 112, 0.4)',
   shadowOffset: { width: 0, height: 1 },
   shadowOpacity: 1,
 }
@@ -60,8 +60,11 @@ hero.edit = {
   height: 45,
   width: 45,
   right: 10, 
-  bottom: 50,
+  bottom: 19,
   padding: 10,
+  shadowColor: 'rgba(51, 51, 112, 0.6)',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 1,
   zIndex: 2
 }
 
@@ -71,8 +74,12 @@ hero.editText = {
 
 hero.decoClip = {
   height: 70,
-  width: deviceWidth,
-  backgroundColor: 'white'
+  width: deviceWidth + 20,
+  backgroundColor: 'white',
+  transform: [{ rotate: '-6deg'}],
+  marginTop: -20,
+  marginLeft: -2,
+  marginBottom: -45
 }
 
 export default hero;
