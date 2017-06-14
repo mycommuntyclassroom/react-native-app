@@ -62,28 +62,37 @@ class EventTeaser extends Component {
                 resizeMode='cover' 
                 style={style.teaserImage} />
             </TouchableHighlight>
-            <View>
+            <View style={style.addEventContainer}>
               <LinearGradient
                 colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-                style={[globalStyles.addItem, style.addItem]}
+                style={[globalStyles.addItem, style.editItem]}
               >
                 <Link textStyles={style.addCopy} onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='edit' />
               </LinearGradient>
-            </View>
-            <View className="event-View">
               {
                !props.guardianData &&
-                  <Link onClick={ () => app.goToScene('CreateEvent') } text='FaPlus' />
+                <LinearGradient
+                  colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                  style={[globalStyles.addItem, style.addItem]}
+                >
+                  <Link textStyles={style.addCopy} onClick={ () => app.goToScene('CreateEvent') } text='+' />
+                </LinearGradient>
               }
-              <Text>{title}</Text>
-              <View className="tags">
+            </View>
+            <View style={style.eventView}>
+              <Text style={style.eventTitle}>{title}</Text>
+              <View style={style.eventTags}>
                 { 
                   teaserData[teaser].ageRange.map((item) => {
-                    return <View className="tag-item" key={`${teaser}${item}`}><Text>{item}</Text></View>
+                    return (
+                      <View className="tag-item" key={`${teaser}${item}`}>
+                        <Text style={style.tagItemCopy}>{item}</Text>
+                      </View>
+                    )
                   })
                 }
               </View>
-              <View className="days">
+              <View style={style.eventDays}>
                 {
                   // develop the view for recurring days ex: M/W/F
                   // if there are no recurring days, show the date of the event
@@ -92,12 +101,12 @@ class EventTeaser extends Component {
 
                     if(daysArray.length === 1 && item === ' ') {
                       let stringDate = teaserData[teaser].startDate.split(' ').slice(0,3).join(' ')
-                      return <View key={`${teaser}${item}`}><Text>{stringDate}</Text></View>
+                      return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{stringDate}</Text></View>
                     }
                     else if(index === 0 || index === 1) {
-                      return <View key={`${teaser}${item}`}><Text>{item}</Text></View>
+                      return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{item}</Text></View>
                     } else {
-                      return <View key={`${teaser}${item}`}><Text>/{item}</Text></View>
+                      return <View key={`${teaser}${item}`}><Text style={style.eventDay}>/{item}</Text></View>
                     }
                   })
                 }

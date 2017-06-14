@@ -16,7 +16,7 @@ CirclesTeaser.container = {
   paddingTop: 15,
   paddingBottom: 15,
   borderBottomWidth: 1,
-  borderColor: styleVariables.mc2medGray
+  borderColor: styleVariables.mc2medLightGray
 }
 
 CirclesTeaser.circleGroup = {
