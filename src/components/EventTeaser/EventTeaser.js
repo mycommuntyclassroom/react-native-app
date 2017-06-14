@@ -7,8 +7,8 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 import Link from '../Link';
-// import style from './style';
 import { deviceDimensions } from '../../styles';
+import style from './style';
 
 class EventTeaser extends Component {
 

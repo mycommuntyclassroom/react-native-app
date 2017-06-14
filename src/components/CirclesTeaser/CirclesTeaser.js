@@ -8,9 +8,11 @@ import {
 
 import PropTypes from 'prop-types';
 import Carousel from 'react-native-snap-carousel';
+import LinearGradient from 'react-native-linear-gradient';
+import { deviceDimensions } from '../../styles';
 import Link from '../Link';
 import style from './style';
-import { deviceDimensions } from '../../styles';
+import styleVariables from '../../styles/variables'
 
 class CirclesTeaser extends Component {
   static PropTypes={
@@ -72,7 +74,7 @@ class CirclesTeaser extends Component {
 
         circleElement = 
           <TouchableHighlight key={circle} onPress={ () => app.goToScene('EditChild', {app, childId: circle})} >
-            <Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={{width: 50, height: 50}} />
+            <Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={style.teaserElement} />
           </TouchableHighlight>
 
         circlesOutput.push(circleElement);
@@ -86,19 +88,25 @@ class CirclesTeaser extends Component {
     const { title, path, app } = props
 
     return(
-      <View className="circles-teaser">
-        { title && <Text className="title">{title}</Text> }
-        <View className="circle-group">
+      <View style={style.container}>
+        { title && <Text style={style.title}>{title}</Text> }
+        <View style={style.circleGroup}>
           <Carousel
             ref={(carousel) => { this._carousel = carousel; }}
-            sliderWidth={deviceDimensions.deviceWidth}
-            itemWidth={50}
+            sliderWidth={35}
+            itemWidth={35}
+            inactiveSlideScale={1}
           >
             {circlesOutput}
           </Carousel>
           {
             props.hasAddButton &&
-              <Link className="add-item-button add-circle" onClick={ () => app.goToScene('CreateChild', {app})} text='TiPlus' />
+              <LinearGradient
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                style={style.addItem}
+              >
+                <Link textStyles={[style.addItemText]} onClick={ () => app.goToScene('CreateChild', {app})} text='+' />
+              </LinearGradient>
           }
         </View>
       </View>
