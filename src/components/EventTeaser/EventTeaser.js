@@ -128,8 +128,8 @@ class EventTeaser extends Component {
 
         <Carousel
           ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={deviceWidth - 40}
-          itemWidth={deviceWidth - 40}
+          sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
+          itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
         >
           { teaserOutput }
         </Carousel>

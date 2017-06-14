@@ -12,10 +12,6 @@ EventTeaser.teaserContainer = {
   backgroundColor: 'white'
 }
 
-EventTeaser.teaserElement = {
-  
-}
-
 EventTeaser.teaserImage = {
   width: deviceWidth - 40,
   height: 200
