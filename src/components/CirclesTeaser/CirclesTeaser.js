@@ -23,7 +23,8 @@ class CirclesTeaser extends Component {
 
   render(){ 
 
-    const props = this.props
+    const props = this.props;
+    const { globalStyles } = props;
     let circlesData = props.circlesData || [' '];
 
     // array that stores the circle elements ex: the Children circles
@@ -103,7 +104,7 @@ class CirclesTeaser extends Component {
             props.hasAddButton &&
               <LinearGradient
                 colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-                style={style.addItem}
+                style={[globalStyles.addItem, style.addItem]}
               >
                 <Link textStyles={[style.addItemText]} onClick={ () => app.goToScene('CreateChild', {app})} text='+' />
               </LinearGradient>

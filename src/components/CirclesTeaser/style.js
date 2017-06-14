@@ -40,19 +40,9 @@ CirclesTeaser.teaserElement = {
 }
 
 CirclesTeaser.addItem = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'absolute', 
-  borderRadius: 22.5,
-  height: 35,
-  width: 35,
+  position: 'absolute',
   right: 10, 
   bottom: 30,
-  padding: 10,
-  shadowColor: 'rgba(51, 51, 112, 0.6)',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 1,
   zIndex: 2
 }
 

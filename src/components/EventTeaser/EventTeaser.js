@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import Link from '../Link';
 import { deviceDimensions } from '../../styles';
 import style from './style';
+import styleVariables from '../../styles/variables'
 
 class EventTeaser extends Component {
 
@@ -20,7 +23,8 @@ class EventTeaser extends Component {
   render(){ 
 
     const props = this.props
-    const { app } = this.props;
+    const { globalStyles, app } = this.props;
+    const { deviceWidth, deviceHeight } = deviceDimensions;
     let userData;
 
     // if guardianData is passed in the props, then show guardian data 
@@ -51,12 +55,22 @@ class EventTeaser extends Component {
 
               // <Image source={require(image)} resizeMode='contain' />
         teaserElement =
-          <View className="teaser-container" key={teaser}>
+          <View style={style.teaserElement} key={teaser}>
             <TouchableHighlight className="event-image" onPress={ () => app.goToScene('EventDetails') }>
-              <Text>IMAGE</Text>
+              <Image 
+                source={require('../../../images/blank-profile-pic.png')} 
+                resizeMode='cover' 
+                style={style.teaserImage} />
             </TouchableHighlight>
+            <View>
+              <LinearGradient
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                style={[globalStyles.addItem, style.addItem]}
+              >
+                <Link textStyles={style.addCopy} onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='edit' />
+              </LinearGradient>
+            </View>
             <View className="event-View">
-              <Link onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='FaPencil' />
               {
                !props.guardianData &&
                   <Link onClick={ () => app.goToScene('CreateEvent') } text='FaPlus' />
@@ -101,12 +115,12 @@ class EventTeaser extends Component {
 
 
     return(
-      <View className={`event-teasers`}>
+      <View style={style.teaserContainer}>
 
         <Carousel
           ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={deviceDimensions.deviceWidth}
-          itemWidth={250}
+          sliderWidth={deviceWidth - 40}
+          itemWidth={deviceWidth - 40}
         >
           { teaserOutput }
         </Carousel>
