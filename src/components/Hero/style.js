@@ -1,9 +1,20 @@
 import styleVariables from '../../styles/variables';
+import { deviceDimensions } from '../../styles';
+
+const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const hero = {};
 
 hero.container = {
-  backgroundColor: 'white'
+  position: 'relative'
+}
+
+hero.mainInfo = {
+  position: 'absolute',
+  paddingLeft: 15,
+  bottom: 0,
+  backgroundColor: 'white',
+  width: deviceWidth
 }
 
 hero.userName = {
@@ -27,12 +38,34 @@ hero.hr = {
   shadowOpacity: 1,
 }
 
+hero.addressContainer = {
+  display: 'flex',
+  flexDirection: 'row'
+}
+
 hero.address = {
   color: 'white',
   fontSize: 12,
   textShadowOffset: {width: 1, height: 1}, 
   textShadowRadius: 3, 
   textShadowColor: 'rgba(0, 0, 0, 0.6)',
+}
+
+hero.edit = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute', 
+  borderRadius: 22.5,
+  height: 45,
+  width: 45,
+  right: 10, 
+  bottom: 0,
+  padding: 10,
+}
+
+hero.editText = {
+  color: 'white'
 }
 
 export default hero;

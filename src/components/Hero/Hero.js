@@ -8,8 +8,10 @@ import {
   Image
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Link from '../Link';
 import style from './style';
+import styleVariables from '../../styles/variables'
 
 class Hero extends Component {
   static PropTypes={
@@ -19,7 +21,7 @@ class Hero extends Component {
   render() {
 
     const props = this.props
-    const { app } = props
+    const { globalStyles, app } = props
     let userData
 
     // if guardianData is passed in the props, then show guardian data 
@@ -37,20 +39,30 @@ class Hero extends Component {
     return(
       <View style={style.container}>
         <View className="profile-image">
-          <View className="main-info">
+          <Image 
+            source={require('../../../images/blank-profile-pic.png')} 
+            resizeMode='cover' 
+            style={ globalStyles.deviceWidth, {height: 300}} />
+          <View style={style.mainInfo}>
             <Text style={style.userName}>{ displayName }</Text>
             <View style={style.hr}></View>
-            <View className="address"> 
+            <View style={style.addressContainer}> 
               <Text style={style.address}>{street}, {city}, </Text> 
               <Text style={style.address}>{state}</Text> 
-              <Text style={style.address}>{zipCode}</Text>
+              <Text style={style.address}> {zipCode}</Text>
             </View>
           </View>
         </View>
         { !props.guardianData && 
+          <LinearGradient 
+            start={{x: 1, y: 1}} end={{x: 0, y: 1}}
+            colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+            style={style.edit}
+          >
             <TouchableHighlight onPress={() => app.goToScene('EditGuardian', {app})} className="add-item-button edit-profile-button">
-              <Text>FaPencil</Text>
+              <Text style={style.editText}>edit</Text>
             </TouchableHighlight>
+          </LinearGradient>
         }
       </View>
     )
