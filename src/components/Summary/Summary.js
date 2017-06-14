@@ -67,7 +67,7 @@ class Summary extends Component {
     // check if the user wrote a greeting
     const greetingCopy = greeting 
       ? <Text>greeting</Text>
-      : <Text style={style.summaryCopy} >It looks like you don't have a summary bio yet, you can add one by clicking the edit button (which you don't see yet, because we're developing it).</Text>
+      : <Text style={[style.summaryCopy, style.summaryBodyCopy]} >It looks like you don't have a summary bio yet, you can add one by clicking the edit button (which you don't see yet, because we're developing it).</Text>
 
     return(
       <View style={style.container}>

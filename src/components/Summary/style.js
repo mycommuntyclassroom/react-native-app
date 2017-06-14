@@ -4,14 +4,13 @@ const summary = {};
 
 summary.container = {
   backgroundColor: 'white',
-  paddingLeft: 16,
-  paddingRight: 16
 }
 
 summary.raitingsAndComments = {
   display: 'flex',
   flexDirection: 'row',
-  marginBottom: 6
+  marginBottom: 1,
+  paddingLeft: 16,
 }
 
 summary.raitings = {
@@ -25,7 +24,14 @@ summary.comments = {
 }
 
 summary.summaryCopy = {
-  color: styleVariables.mc2fontGray
+  color: styleVariables.mc2fontGray,
+  paddingLeft: 16,
+  paddingRight: 16,
+  marginBottom: 9
+}
+
+summary.summaryBodyCopy = {
+  marginBottom: 12
 }
 
 summary.tagItem = {
