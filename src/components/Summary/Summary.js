@@ -55,7 +55,11 @@ class Summary extends Component {
       return (
         items.map( (item, i) => {
           let keyId=`${cat}${item}${i}`
-          return <View className="tag-item" key={keyId}><Text>{item}</Text></View>
+          return (
+            <View style={style.tagItem} key={keyId}>
+              <Text style={style.tagItemCopy}>{item}</Text>
+            </View>
+          )
         })
       );
     }
@@ -63,25 +67,25 @@ class Summary extends Component {
     // check if the user wrote a greeting
     const greetingCopy = greeting 
       ? <Text>greeting</Text>
-      : <Text>It looks like you don't have a summary bio yet, you can add one by clicking the edit button (which you don't see yet, because we're developing it).</Text>
+      : <Text style={style.summaryCopy} >It looks like you don't have a summary bio yet, you can add one by clicking the edit button (which you don't see yet, because we're developing it).</Text>
 
     return(
       <View style={style.container}>
-        <View className="raitings-and-comments"> 
-          <View className="raitings">
+        <View style={style.raitingsAndComments}> 
+          <View style={style.raitings}>
             <View className="star-icon">
               <Text>MdStar</Text> 
             </View>
             <View className="count">
-              <Text>4.8</Text>
+              <Text style={style.summaryCopy}>4.8</Text>
             </View>
           </View>
-          <View className="comments-teaser">
+          <View style={style.comments}>
             <View className="comments-icon">
               <Text>FaCommentsO</Text>
             </View>
             <View className="count">
-              <Text>12</Text>
+              <Text style={style.summaryCopy}>12</Text>
             </View>
           </View>
         </View>

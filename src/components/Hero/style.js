@@ -60,7 +60,7 @@ hero.edit = {
   height: 45,
   width: 45,
   right: 10, 
-  bottom: 19,
+  bottom: 30,
   padding: 10,
   shadowColor: 'rgba(51, 51, 112, 0.6)',
   shadowOffset: { width: 0, height: 2 },
@@ -79,7 +79,7 @@ hero.decoClip = {
   transform: [{ rotate: '-6deg'}],
   marginTop: -20,
   marginLeft: -2,
-  marginBottom: -45
+  marginBottom: -35
 }
 
 export default hero;
