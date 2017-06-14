@@ -39,11 +39,14 @@ summary.tagItem = {
   padding: 8,
   paddingLeft: 15,
   paddingRight: 15,
-  borderRadius: 16
+  borderRadius: 16,
+  marginRight: 7,
+  marginLeft: 13
 }
 
 summary.tagItemCopy = {
-  color: 'white'
+  color: 'white',
+  fontWeight: '500'
 }
 
 export default summary;

@@ -92,8 +92,9 @@ class Summary extends Component {
         <View className="greeting-copy">{ greetingCopy }</View>
         <Carousel
           ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={deviceDimensions.deviceWidth}
+          sliderWidth={50}
           itemWidth={50}
+          inactiveSlideScale={1}
         >
           {languageTags}
           {specialtyTags}

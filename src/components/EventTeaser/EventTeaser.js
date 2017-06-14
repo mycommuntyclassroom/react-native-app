@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import Link from '../Link';
-// import style from './style';
 import { deviceDimensions } from '../../styles';
+import style from './style';
+import styleVariables from '../../styles/variables'
 
 class EventTeaser extends Component {
 
@@ -20,7 +23,8 @@ class EventTeaser extends Component {
   render(){ 
 
     const props = this.props
-    const { app } = this.props;
+    const { globalStyles, app } = this.props;
+    const { deviceWidth, deviceHeight } = deviceDimensions;
     let userData;
 
     // if guardianData is passed in the props, then show guardian data 
@@ -51,25 +55,44 @@ class EventTeaser extends Component {
 
               // <Image source={require(image)} resizeMode='contain' />
         teaserElement =
-          <View className="teaser-container" key={teaser}>
+          <View style={style.teaserElement} key={teaser}>
             <TouchableHighlight className="event-image" onPress={ () => app.goToScene('EventDetails') }>
-              <Text>IMAGE</Text>
+              <Image 
+                source={require('../../../images/blank-profile-pic.png')} 
+                resizeMode='cover' 
+                style={style.teaserImage} />
             </TouchableHighlight>
-            <View className="event-View">
-              <Link onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='FaPencil' />
+            <View style={style.addEventContainer}>
+              <LinearGradient
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                style={[globalStyles.addItem, style.editItem]}
+              >
+                <Link textStyles={style.addCopy} onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='edit' />
+              </LinearGradient>
               {
                !props.guardianData &&
-                  <Link onClick={ () => app.goToScene('CreateEvent') } text='FaPlus' />
+                <LinearGradient
+                  colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                  style={[globalStyles.addItem, style.addItem]}
+                >
+                  <Link textStyles={style.addCopy} onClick={ () => app.goToScene('CreateEvent') } text='+' />
+                </LinearGradient>
               }
-              <Text>{title}</Text>
-              <View className="tags">
+            </View>
+            <View style={style.eventView}>
+              <Text style={style.eventTitle}>{title}</Text>
+              <View style={style.eventTags}>
                 { 
                   teaserData[teaser].ageRange.map((item) => {
-                    return <View className="tag-item" key={`${teaser}${item}`}><Text>{item}</Text></View>
+                    return (
+                      <View className="tag-item" key={`${teaser}${item}`}>
+                        <Text style={style.tagItemCopy}>{item}</Text>
+                      </View>
+                    )
                   })
                 }
               </View>
-              <View className="days">
+              <View style={style.eventDays}>
                 {
                   // develop the view for recurring days ex: M/W/F
                   // if there are no recurring days, show the date of the event
@@ -78,12 +101,12 @@ class EventTeaser extends Component {
 
                     if(daysArray.length === 1 && item === ' ') {
                       let stringDate = teaserData[teaser].startDate.split(' ').slice(0,3).join(' ')
-                      return <View key={`${teaser}${item}`}><Text>{stringDate}</Text></View>
+                      return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{stringDate}</Text></View>
                     }
                     else if(index === 0 || index === 1) {
-                      return <View key={`${teaser}${item}`}><Text>{item}</Text></View>
+                      return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{item}</Text></View>
                     } else {
-                      return <View key={`${teaser}${item}`}><Text>/{item}</Text></View>
+                      return <View key={`${teaser}${item}`}><Text style={style.eventDay}>/{item}</Text></View>
                     }
                   })
                 }
@@ -101,12 +124,12 @@ class EventTeaser extends Component {
 
 
     return(
-      <View className={`event-teasers`}>
+      <View style={style.teaserContainer}>
 
         <Carousel
           ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={deviceDimensions.deviceWidth}
-          itemWidth={250}
+          sliderWidth={deviceWidth - 40}
+          itemWidth={deviceWidth - 40}
         >
           { teaserOutput }
         </Carousel>

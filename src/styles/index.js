@@ -48,6 +48,19 @@ STYLE.text = {
   fontSize: 16
 };
 
+STYLE.addItem = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: 22.5,
+  height: 35,
+  width: 35,
+  padding: 10,
+  shadowColor: 'rgba(51, 51, 112, 0.6)',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 1
+}
+
 /* Components */
 
 STYLE.Button = {
