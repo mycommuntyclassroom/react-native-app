@@ -7,7 +7,9 @@ import {
 } from 'react-native';
 
 import Link from '../Link'
+import LinearGradient from 'react-native-linear-gradient';
 import { requestFriend, checkRelationship, handleInvite } from '../../helpers/user';
+import styleVariables from '../../styles/variables'
 
 class RequestFriendButton extends Component {
 
@@ -46,12 +48,17 @@ class RequestFriendButton extends Component {
     }
     else {
       buttonOutput = 
-        <View 
-          onClick={ () => requestFriend(props, props.gid, handlePending) } 
+        <LinearGradient
           style={[browseHostsStyle, globalStyles.addItem]}
-          className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}>
-          <View style={{}}><Text> add </Text></View>
-        </View>;
+          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+          colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+          onClick={ () => requestFriend(props, props.gid, handlePending) } 
+          className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}
+        >
+          <View style={{}}>
+            <Text> + </Text>
+          </View>
+        </LinearGradient>;
     }
 
     return(
