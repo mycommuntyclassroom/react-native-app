@@ -9,7 +9,8 @@ import {
 import Link from '../Link'
 import LinearGradient from 'react-native-linear-gradient';
 import { requestFriend, checkRelationship, handleInvite } from '../../helpers/user';
-import styleVariables from '../../styles/variables'
+import styleVariables from '../../styles/variables';
+import style from './style';
 
 class RequestFriendButton extends Component {
 
@@ -29,9 +30,11 @@ class RequestFriendButton extends Component {
       this.setState({pending: 'pending'})
     }
 
-    const props = this.props
-    const { app, browseHostsStyle, globalStyles } = props
-    const { requester } = app.props;
+    const props = this.props;
+    const { app, browseHostsStyle, globalStyles, requester } = props;
+
+    console.log('*****this is the data for the PROPS requester: ', props);
+    console.log('*****this is the data for the requester: ', requester);
 
     let buttonOutput = ''
           // <View className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</View>
@@ -40,13 +43,19 @@ class RequestFriendButton extends Component {
     if (checkRelationship('friend', props, props.gid)){
       buttonOutput = <Text></Text>;
     } 
+    // check if they have an incoming friend request
     else if (checkRelationship('incoming', props, props.gid)) {
-      buttonOutput = 
-        <View className="cta-buttons">
-          <Link className="connect" onClick={() => handleInvite(app.props.auth, requester, 'accept')} text='Connect' />
-        </View>
+      buttonOutput =
+        <LinearGradient
+          style={[browseHostsStyle, style.connect]}
+          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+          colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
+        >
+          <Link textStyles={style.connectText} onClick={() => handleInvite(app.props.auth, requester, 'accept')} text='Connect' />
+        </LinearGradient>
     }
     else {
+      // default to outputting the requrst friend icon
       buttonOutput = 
         <LinearGradient
           style={[browseHostsStyle, globalStyles.addItem]}
@@ -56,9 +65,9 @@ class RequestFriendButton extends Component {
           className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}
         >
           <View style={{}}>
-            <Text> + </Text>
+            <Link text='+' />
           </View>
-        </LinearGradient>;
+        </LinearGradient>
     }
 
     return(

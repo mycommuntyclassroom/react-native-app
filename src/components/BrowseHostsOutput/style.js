@@ -48,7 +48,8 @@ BrosweHosts.bullet = {
 }
 
 BrosweHosts.tagItem = {
-  color: 'white'
+  color: 'white',
+  fontSize: 12
 }
 
 BrosweHosts.dayAndTime = {
