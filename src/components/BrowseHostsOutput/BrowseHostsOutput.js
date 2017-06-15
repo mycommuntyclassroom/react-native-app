@@ -10,6 +10,7 @@ import Carousel from 'react-native-snap-carousel';
 import RequestFriendButton from '../RequestFriendButton';
 import Link from '../Link';
 import { deviceDimensions } from '../../styles';
+import style from './style'
 
 class BrowseHostsOutput extends Component {
 
@@ -17,6 +18,7 @@ class BrowseHostsOutput extends Component {
 
     const props = this.props;
     const { app } = props;
+    const { deviceWidth, deviceHeight } = deviceDimensions;
     const eventData = app.props.events || [' '];
 
     // this array stores the template elements ex: the event post
@@ -50,8 +52,14 @@ class BrowseHostsOutput extends Component {
               // <img src={image} alt={title} />
         teaserElement =
           <View className="teaser-container" id={teaser} key={teaser}>
-            <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
+            <View 
+              className="event-image" 
+              onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
             </View>
+            <Image 
+              source={require('../../../images/blank-profile-pic.png')} 
+              resizeMode='cover' 
+              style={style.teaserImage} />
             <View className="event-View">
               { 
                 // toggleSeatBooking && 
@@ -96,8 +104,8 @@ class BrowseHostsOutput extends Component {
           <Carousel
             className="host-events"
             ref={(carousel) => { this._carousel = carousel; }}
-            sliderWidth={deviceDimensions.deviceWidth}
-            itemWidth={50}
+            sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
+            itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
           >
             {teaserOutput}
           </Carousel>
