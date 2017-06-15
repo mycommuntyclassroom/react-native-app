@@ -4,20 +4,30 @@ import {
   Text
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../BackButton';
 import NotificationsCounter from '../NotificationsCounter';
+import styleVariables from '../../styles/variables'
+import style from './style';
 
 class NotificationsHeader extends Component {
 
   render() {
+
+    const props = this.props;
+
     return (
-      <View className="notifications-header">
+      <LinearGradient 
+        start={{x: 1, y: 1}} end={{x: 0, y: 1}}
+        colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+        style={style.container}
+      >
         <BackButton {...props} />
-        <View className="menu-nav">
-          <Text>Notifications</Text>
+        <View style={style.headerTabs}>
+          <Text style={style.notificationsText}>Notifications</Text>
           <NotificationsCounter {...this.props} />
         </View>
-      </View>
+      </LinearGradient>
     )
   }
 }
