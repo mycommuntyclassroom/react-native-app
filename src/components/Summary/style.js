@@ -40,8 +40,8 @@ summary.tagItem = {
   paddingLeft: 15,
   paddingRight: 15,
   borderRadius: 16,
-  marginRight: 7,
-  marginLeft: 13
+  marginRight: 4,
+  marginLeft: 4
 }
 
 summary.tagItemCopy = {
