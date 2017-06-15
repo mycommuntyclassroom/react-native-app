@@ -8,7 +8,10 @@ import {
   ScrollView
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Link from "../Link";
+import styleVariables from '../../styles/variables'
+import style from './style';
 // import NotificationsCounter from './NotificationsCounter';
 // <NotificationsCounter {...props} />
 
@@ -18,14 +21,25 @@ const FooterNav = (props) => {
   const {app} = props;
 
   return (
-    <View className="footer-nav">
-      <View className="fixed-container">
-        <Link onClick={ () => app.goToScene('Dashboard', {app}) } text='Dashboard' />
-        <Link onClick={ () => app.goToScene('Calendar', {app}) } text='Calendar' />
-        <Link onClick={ () => app.goToScene('BrowseHosts', {app}) } text='BrowseHosts' />
-        <Link onClick={ () => app.goToScene('Notifications', {app}) } text='Notifications' />
-        <Link onClick={ () => app.goToScene('Feedback', {app}) } text='Feedback' />
-      </View>
+    <View style={style.container}>
+      <LinearGradient
+        colors={['white', '#dbdbdb']} 
+        style={[style.footerNav]}
+      >
+        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Dashboard', {app}) } text='HOME' />
+        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Calendar', {app}) } text='CALENDAR' />
+        <View style={style.footerLink, style.browseHostsLink}>
+          <Link extraStyle={[style.browseHostsButton]} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('BrowseHosts', {app}) } text='BROWSE HOSTS' />
+          <LinearGradient
+            colors={['rgba(255, 255, 255, 0)', '#dbdbdb']}
+            style={style.decoCurve}
+            locations={[0.28, 1]}
+          >
+          </LinearGradient>
+        </View>
+        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Notifications', {app}) } text='NOTIFICATIONS' />
+        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Feedback', {app}) } text='FEEDBACK' />
+      </LinearGradient>
     </View>
   )
 }

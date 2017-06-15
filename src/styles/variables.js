@@ -18,7 +18,8 @@ const VARIABLES = {
   mc2medLightGray: '#d7dce0',
   mc2lightGray: '#e6e6e6',
 
-  // font colors 
+  // font colors
+  mc2fontLightGray: '#b3b3b3',
   mc2fontGray: '#6a6a6b',
   mc2fontBlue: '#4d606f',
 
