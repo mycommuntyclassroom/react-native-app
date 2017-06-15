@@ -35,9 +35,9 @@ const FooterNav = (props) => {
         <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Feedback', {app}) } text='FEEDBACK' />
       </LinearGradient>
       <LinearGradient
-        colors={['rgba(255, 255, 255, 0)', '#dbdbdb']}
+        colors={['rgba(255, 255, 255, 1)', 'white']}
         style={style.decoCurve}
-        locations={[0.28, 1]}
+        locations={[1, 1]}
       >
       </LinearGradient>
     </View>
