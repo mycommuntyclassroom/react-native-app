@@ -29,7 +29,7 @@ const FooterNav = (props) => {
         <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Dashboard', {app}) } text='HOME' />
         <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Calendar', {app}) } text='CALENDAR' />
         <View style={style.footerLink, style.browseHostsLink}>
-          <Link extraStyle={[style.browseHostsButton]} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('BrowseHosts', {app}) } text='BROWSE HOSTS' />
+          <Link extraStyle={style.browseHostsButton} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('BrowseHosts', {app}) } text='BROWSE HOSTS' />
         </View>
         <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Notifications', {app}) } text='NOTIFICATIONS' />
         <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Feedback', {app}) } text='FEEDBACK' />

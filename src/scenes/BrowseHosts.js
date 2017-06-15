@@ -5,6 +5,7 @@ import {
   Text
 } from 'react-native';
 
+import Header from '../components/Header';
 import BrowseHostsOutput from '../components/BrowseHostsOutput';
 
 class BrowseHosts extends Component {
@@ -23,7 +24,8 @@ class BrowseHosts extends Component {
     const { globalStyles, app } = props;
 
     return (
-      <View style={globalStyles.container}>
+      <View style={{marginBottom: 90, backgroundColor: 'white'}}>
+        <Header { ...props } />
         <BrowseHostsOutput {...props} />
       </View>
     );

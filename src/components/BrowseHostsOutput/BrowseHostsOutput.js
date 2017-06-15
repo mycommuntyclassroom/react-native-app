@@ -7,9 +7,12 @@ import {
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
+import LinearGradient from 'react-native-linear-gradient';
 import RequestFriendButton from '../RequestFriendButton';
 import Link from '../Link';
 import { deviceDimensions } from '../../styles';
+import styleVariables from '../../styles/variables'
+import style from './style'
 
 class BrowseHostsOutput extends Component {
 
@@ -17,6 +20,7 @@ class BrowseHostsOutput extends Component {
 
     const props = this.props;
     const { app } = props;
+    const { deviceWidth, deviceHeight } = deviceDimensions;
     const eventData = app.props.events || [' '];
 
     // this array stores the template elements ex: the event post
@@ -47,57 +51,76 @@ class BrowseHostsOutput extends Component {
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
 
-              // <img src={image} alt={title} />
         teaserElement =
-          <View className="teaser-container" id={teaser} key={teaser}>
-            <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
+          <View style={style.teaserContainer} id={teaser} key={teaser}>
+            <View 
+              className="event-image" 
+              onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
             </View>
-            <View className="event-View">
+            <Image 
+              source={require('../../../images/blank-profile-pic.png')} 
+              resizeMode='cover' 
+              style={style.teaserImage} />
+            <LinearGradient 
+              style={style.eventView}
+              colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+            >
               { 
                 // toggleSeatBooking && 
                 // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
                 //   <FaChild/>
                 // </View>
               }
-              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
-              <Text>{title}</Text>
-              <View className="tags">
+              <Text style={style.title}>{title}</Text>
+              <View style={style.tags}>
                 { 
                   ageRange.map((item) => {
-                    return <Text className="tag-item" key={`${teaser}${item}`}>{item}</Text>
+                    return (
+                      <View style={style.bulletAndTagItem} key={`${teaser}${item}`}>
+                        <View style={style.bullet} />
+                        <Text style={style.tagItem}>{item}</Text>
+                      </View>
+                    )
                   })
                 }
               </View>
-              <View className="days">
-                {
-                  teaserData.recurringDays.map((item, index) => {
-                    // conditionals for handling the various output for the recurring days
-                    let daysArray = teaserData.recurringDays;
-                    if(daysArray.length === 1 && item === ' '){
-                      let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
-                      return <Text key={`${teaser}${item}`}>{stringDate}</Text>
-                    }
-                    else if(index === 0 || index === 1) {
-                      return <Text key={`${teaser}${item}`}>{item}</Text>
-                    } else{
-                      return <Text key={`${teaser}${item}`}>/{item}</Text>
-                    }
-                  })
-                }
+              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={style.requestFriendButton} />
+              <View style={style.dayAndTime}>
+                <View style={style.days}>
+                  {
+                    teaserData.recurringDays.map((item, index) => {
+                      // conditionals for handling the various output for the recurring days
+                      let daysArray = teaserData.recurringDays;
+                      if(daysArray.length === 1 && item === ' '){
+                        let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
+                        return <Text style={style.dayText} key={`${teaser}${item}`}>{stringDate}</Text>
+                      }
+                      else if(index === 0 || index === 1) {
+                        return <Text style={style.dayText} key={`${teaser}${item}`}>{item}</Text>
+                      } else{
+                        return <Text style={style.dayText} key={`${teaser}${item}`}>/{item}</Text>
+                      }
+                    })
+                  }
+                </View>
+                <View style={style.time}><Text style={style.timeText}>{startTime} - {finishTime}</Text></View>
               </View>
-              <View className="time"><Text>{startTime} - {finishTime}</Text></View>
-            </View>
+            </LinearGradient>
           </View>
         teaserOutput.push(teaserElement);
       }
       hostEventsOutput.push(
         <View className="event-container" key={`${teaserGroup}`}>
-          <Link onClick={() => app.goToScene('GuardianDetails', {app, gid})} className="host-name" text={eventHostName} /> 
+          <Link 
+            onClick={() => app.goToScene('GuardianDetails', {app, gid})} 
+            extraStyle={style.hostName}
+            textStyles={style.hostNameText}
+            text={eventHostName} /> 
           <Carousel
             className="host-events"
             ref={(carousel) => { this._carousel = carousel; }}
-            sliderWidth={deviceDimensions.deviceWidth}
-            itemWidth={50}
+            sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
+            itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
           >
             {teaserOutput}
           </Carousel>
@@ -114,7 +137,7 @@ class BrowseHostsOutput extends Component {
     // 
     // 
     return (
-      <ScrollView style={{ backgroundColor: 'wheat', paddingBottom: 91 }}>
+      <ScrollView style={ style.container }>
         { hostEventsOutput }
       </ScrollView>
     )
