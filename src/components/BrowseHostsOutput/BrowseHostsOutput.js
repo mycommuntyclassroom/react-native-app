@@ -7,9 +7,11 @@ import {
 } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
+import LinearGradient from 'react-native-linear-gradient';
 import RequestFriendButton from '../RequestFriendButton';
 import Link from '../Link';
 import { deviceDimensions } from '../../styles';
+import styleVariables from '../../styles/variables'
 import style from './style'
 
 class BrowseHostsOutput extends Component {
@@ -60,7 +62,10 @@ class BrowseHostsOutput extends Component {
               source={require('../../../images/blank-profile-pic.png')} 
               resizeMode='cover' 
               style={style.teaserImage} />
-            <View style={style.eventView}>
+            <LinearGradient 
+              style={style.eventView}
+              colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+            >
               { 
                 // toggleSeatBooking && 
                 // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
@@ -69,10 +74,15 @@ class BrowseHostsOutput extends Component {
               }
               <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
               <Text style={style.title}>{title}</Text>
-              <View className="tags">
+              <View style={style.tags}>
                 { 
                   ageRange.map((item) => {
-                    return <Text className="tag-item" key={`${teaser}${item}`}>{item}</Text>
+                    return (
+                      <View style={style.bulletAndTagItem}>
+                        <View style={style.bullet}></View>
+                        <Text style={style.tagItem} key={`${teaser}${item}`}>{item}</Text>
+                      </View>
+                    )
                   })
                 }
               </View>
@@ -96,7 +106,7 @@ class BrowseHostsOutput extends Component {
                 </View>
                 <View style={style.time}><Text style={style.timeText}>{startTime} - {finishTime}</Text></View>
               </View>
-            </View>
+            </LinearGradient>
           </View>
         teaserOutput.push(teaserElement);
       }

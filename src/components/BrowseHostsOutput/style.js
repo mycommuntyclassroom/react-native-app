@@ -22,6 +22,34 @@ BrosweHosts.eventView = {
   bottom: 0
 }
 
+BrosweHosts.title = {
+  color: 'white'
+}
+
+BrosweHosts.tags = {
+  display: 'flex',
+  flexDirection: 'row',
+}
+
+BrosweHosts.bulletAndTagItem = {
+  display: 'flex',
+  marginRight: 18,
+  flexDirection: 'row',
+  alignItems: 'center'
+}
+
+BrosweHosts.bullet = {
+  width: 5,
+  height: 5,
+  borderRadius: 2.5,
+  marginRight: 3,
+  backgroundColor: 'white'
+}
+
+BrosweHosts.tagItem = {
+  color: 'white'
+}
+
 BrosweHosts.dayAndTime = {
   display: 'flex',
   flexDirection: 'row'
