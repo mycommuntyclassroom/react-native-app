@@ -33,9 +33,6 @@ class RequestFriendButton extends Component {
     const props = this.props;
     const { app, browseHostsStyle, globalStyles, requester } = props;
 
-    console.log('*****this is the data for the PROPS requester: ', props);
-    console.log('*****this is the data for the requester: ', requester);
-
     let buttonOutput = ''
           // <View className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</View>
 
