@@ -24,8 +24,8 @@ class BrowseHosts extends Component {
     const { globalStyles, app } = props;
 
     return (
-      <View>
-        <Header { ...props } editMode={ true } />
+      <View style={{marginBottom: 90, backgroundColor: 'white'}}>
+        <Header { ...props } />
         <BrowseHostsOutput {...props} />
       </View>
     );

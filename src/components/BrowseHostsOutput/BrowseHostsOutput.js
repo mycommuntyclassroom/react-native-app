@@ -51,7 +51,6 @@ class BrowseHostsOutput extends Component {
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
 
-              // <img src={image} alt={title} />
         teaserElement =
           <View style={style.teaserContainer} id={teaser} key={teaser}>
             <View 
@@ -72,20 +71,20 @@ class BrowseHostsOutput extends Component {
                 //   <FaChild/>
                 // </View>
               }
-              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
               <Text style={style.title}>{title}</Text>
               <View style={style.tags}>
                 { 
                   ageRange.map((item) => {
                     return (
-                      <View style={style.bulletAndTagItem}>
-                        <View style={style.bullet}></View>
-                        <Text style={style.tagItem} key={`${teaser}${item}`}>{item}</Text>
+                      <View style={style.bulletAndTagItem} key={`${teaser}${item}`}>
+                        <View style={style.bullet} />
+                        <Text style={style.tagItem}>{item}</Text>
                       </View>
                     )
                   })
                 }
               </View>
+              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={style.requestFriendButton} />
               <View style={style.dayAndTime}>
                 <View style={style.days}>
                   {

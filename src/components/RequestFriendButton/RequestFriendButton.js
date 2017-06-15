@@ -28,13 +28,13 @@ class RequestFriendButton extends Component {
     }
 
     const props = this.props
-    const { app } = props
+    const { app, browseHostsStyle, globalStyles } = props
     const { requester } = app.props;
 
     let buttonOutput = ''
           // <View className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</View>
 
-    // check the relationship of the users are the same
+    // check if the users are already friends
     if (checkRelationship('friend', props, props.gid)){
       buttonOutput = <Text></Text>;
     } 
@@ -46,9 +46,11 @@ class RequestFriendButton extends Component {
     }
     else {
       buttonOutput = 
-        <View onClick={ () => requestFriend(props, props.gid, handlePending) } 
-             className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}>
-          <View className="icon"><Text> MdPersonAdd </Text></View>
+        <View 
+          onClick={ () => requestFriend(props, props.gid, handlePending) } 
+          style={[browseHostsStyle, globalStyles.addItem]}
+          className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}>
+          <View style={{}}><Text> add </Text></View>
         </View>;
     }
 

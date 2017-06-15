@@ -5,8 +5,7 @@ const { deviceWidth, deviceHeight } = deviceDimensions;
 const BrosweHosts = {};
 
 BrosweHosts.container = {
-  backgroundColor: 'white',
-  paddingBottom: 91 
+  backgroundColor: 'white'
   }
 
 BrosweHosts.teaserContainer = {
@@ -23,7 +22,9 @@ BrosweHosts.eventView = {
 }
 
 BrosweHosts.title = {
-  color: 'white'
+  color: 'white',
+  fontSize: 16,
+  fontWeight: '500'
 }
 
 BrosweHosts.tags = {
@@ -96,6 +97,13 @@ BrosweHosts.hostNameText = {
 BrosweHosts.teaserImage = {
   width: deviceWidth - 40,
   height: 200
+}
+
+BrosweHosts.requestFriendButton = {
+  position: 'absolute',
+  right: 9,
+  bottom: 0,
+  zIndex: 1
 }
 
 export default BrosweHosts;
