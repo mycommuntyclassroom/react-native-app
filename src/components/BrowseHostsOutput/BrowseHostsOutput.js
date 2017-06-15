@@ -51,7 +51,7 @@ class BrowseHostsOutput extends Component {
 
               // <img src={image} alt={title} />
         teaserElement =
-          <View className="teaser-container" id={teaser} key={teaser}>
+          <View style={style.teaserContainer} id={teaser} key={teaser}>
             <View 
               className="event-image" 
               onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
@@ -68,7 +68,7 @@ class BrowseHostsOutput extends Component {
                 // </View>
               }
               <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
-              <Text>{title}</Text>
+              <Text style={style.title}>{title}</Text>
               <View className="tags">
                 { 
                   ageRange.map((item) => {
@@ -100,7 +100,11 @@ class BrowseHostsOutput extends Component {
       }
       hostEventsOutput.push(
         <View className="event-container" key={`${teaserGroup}`}>
-          <Link onClick={() => app.goToScene('GuardianDetails', {app, gid})} className="host-name" text={eventHostName} /> 
+          <Link 
+            onClick={() => app.goToScene('GuardianDetails', {app, gid})} 
+            extraStyle={style.hostName}
+            textStyles={style.hostNameText}
+            text={eventHostName} /> 
           <Carousel
             className="host-events"
             ref={(carousel) => { this._carousel = carousel; }}
@@ -122,7 +126,7 @@ class BrowseHostsOutput extends Component {
     // 
     // 
     return (
-      <ScrollView style={{ backgroundColor: 'wheat', paddingBottom: 91 }}>
+      <ScrollView style={ style.container }>
         { hostEventsOutput }
       </ScrollView>
     )
