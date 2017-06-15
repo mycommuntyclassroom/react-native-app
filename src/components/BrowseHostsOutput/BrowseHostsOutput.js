@@ -60,7 +60,7 @@ class BrowseHostsOutput extends Component {
               source={require('../../../images/blank-profile-pic.png')} 
               resizeMode='cover' 
               style={style.teaserImage} />
-            <View className="event-View">
+            <View style={style.eventView}>
               { 
                 // toggleSeatBooking && 
                 // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
@@ -76,24 +76,26 @@ class BrowseHostsOutput extends Component {
                   })
                 }
               </View>
-              <View className="days">
-                {
-                  teaserData.recurringDays.map((item, index) => {
-                    // conditionals for handling the various output for the recurring days
-                    let daysArray = teaserData.recurringDays;
-                    if(daysArray.length === 1 && item === ' '){
-                      let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
-                      return <Text key={`${teaser}${item}`}>{stringDate}</Text>
-                    }
-                    else if(index === 0 || index === 1) {
-                      return <Text key={`${teaser}${item}`}>{item}</Text>
-                    } else{
-                      return <Text key={`${teaser}${item}`}>/{item}</Text>
-                    }
-                  })
-                }
+              <View style={style.dayAndTime}>
+                <View style={style.days}>
+                  {
+                    teaserData.recurringDays.map((item, index) => {
+                      // conditionals for handling the various output for the recurring days
+                      let daysArray = teaserData.recurringDays;
+                      if(daysArray.length === 1 && item === ' '){
+                        let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
+                        return <Text style={style.dayText} key={`${teaser}${item}`}>{stringDate}</Text>
+                      }
+                      else if(index === 0 || index === 1) {
+                        return <Text style={style.dayText} key={`${teaser}${item}`}>{item}</Text>
+                      } else{
+                        return <Text style={style.dayText} key={`${teaser}${item}`}>/{item}</Text>
+                      }
+                    })
+                  }
+                </View>
+                <View style={style.time}><Text style={style.timeText}>{startTime} - {finishTime}</Text></View>
               </View>
-              <View className="time"><Text>{startTime} - {finishTime}</Text></View>
             </View>
           </View>
         teaserOutput.push(teaserElement);

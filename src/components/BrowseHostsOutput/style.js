@@ -13,6 +13,43 @@ BrosweHosts.teaserContainer = {
   position: 'relative'
 }
 
+BrosweHosts.eventView = {
+  position: 'absolute',
+  width: '100%',
+  paddingLeft: 4,
+  paddingBottom: 2,
+  backgroundColor: 'transparent',
+  bottom: 0
+}
+
+BrosweHosts.dayAndTime = {
+  display: 'flex',
+  flexDirection: 'row'
+}
+
+BrosweHosts.days = {
+  display: 'flex',
+  flexDirection: 'row',
+  marginRight: 3
+}
+
+BrosweHosts.dayText = {
+  color: styleVariables.mc2LightBlue,
+  fontWeight: '500',
+  lineHeight: 16,
+  fontSize: 16
+}
+
+BrosweHosts.time = {
+  alignItems: "flex-end",
+  justifyContent: "flex-end"
+}
+
+BrosweHosts.timeText = {
+  color: 'white',
+  fontSize: 12
+}
+
 BrosweHosts.hostName = {
   position: 'absolute',
   top: 5,
