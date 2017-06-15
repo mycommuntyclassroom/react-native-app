@@ -18,8 +18,8 @@ NotificationsHeader.headerTabs = {
   left: deviceDimensions.deviceWidth / 15,
   backgroundColor: styleVariables.transparentBlack,
   padding: 4,
-  paddingLeft: 13,
-  paddingRight: 13,
+  paddingLeft: 12,
+  paddingRight: 12,
   borderRadius: 15,
   alignItems: 'center',
   justifyContent: 'center'

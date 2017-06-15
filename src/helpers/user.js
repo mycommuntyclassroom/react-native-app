@@ -12,6 +12,10 @@ import actions from '../redux/actions';
 import store from '../redux/store';
 import Link from '../components/Link';
 
+import styleVariables from '../styles/variables';
+// styles from the notifications (as NS)
+import NS from '../components/NotificationsOutput/style';
+
 export function signInHandler (provider, type, data) {
   // save a type within the AsyncStorage to use when we redirect to the app
   switch(type) {
@@ -247,7 +251,7 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
   }
 
   return(
-    <View className="note" key={`${note}`} id={`${note}`}> 
+    <View style={NS.note} key={`${note}`} id={`${note}`}> 
       <View className={`note-info ${noteClass}`}>
         <View className={`switch ${seenSwitch}`}></View>
         <Text>{noteProp.displayName}</Text>
