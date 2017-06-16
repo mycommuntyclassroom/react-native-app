@@ -5,12 +5,15 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Image
+  Image,
+  CameraRoll
 } from 'react-native';
 
-import CheckBox from '../CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import CameraRollPicker from 'react-native-camera-roll-picker';
+import CheckBox from '../CheckBox';
 import Button from '../Button';
+import Link from '../Link';
 
 import { updateProfile, capitalizeWord } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
@@ -41,7 +44,8 @@ class EditGuardianAccount extends Component {
       gender: gender || '',
       specialties,
       state,
-      uploadProgress: null
+      uploadProgress: null,
+      imageModal: false
     };
 
     // update the state after the render
@@ -81,6 +85,7 @@ class EditGuardianAccount extends Component {
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
     this.submitForm=this.submitForm.bind(this);
+    this.handleImageSelector=this.handleImageSelector.bind(this);
   }
 
   handleFileUpload(event) {
@@ -102,6 +107,24 @@ class EditGuardianAccount extends Component {
     //     profileImage: snapshot.downloadURL
     //   });
     // });
+  }
+
+  handleImageSelector() {
+    console.log('******handleImageSelector CALLED')
+    this.setState({imageModal: !this.state.imageModal})
+  }
+
+
+  getSelectedImages(images, current) {
+    var num = images.length;
+
+    this.setState({
+      num: num,
+      selected: images,
+    });
+    console.log('images: ', images)
+    console.log(current);
+    console.log(this.state.selected);
   }
 
   /**
@@ -233,7 +256,30 @@ class EditGuardianAccount extends Component {
 
     return(
       <ScrollView style={globalStyles.formContainer}>
+        {
+          /* page overlay for the image selection
+             rendered based on the state per the open/close */
 
+          this.state.imageModal &&
+            // if true, render the imageModal
+            <View style={style.imageModal}>
+              <Text>IMAGE MODAL </Text>
+              <Link text='Close' onClick={() => this.handleImageSelector() }> </Link>
+              <CameraRollPicker
+                scrollRenderAheadDistance={500}
+                initialListSize={1}
+                pageSize={3}
+                removeClippedSubviews={false}
+                groupTypes='SavedPhotos'
+                batchSize={5}
+                maximum={3}
+                selected={this.state.selected}
+                assetType='Photos'
+                imagesPerRow={3}
+                imageMargin={5}
+                callback={this.getSelectedImages.bind(this)} />
+            </View>
+        }
         <Text style={[globalStyles.formTitle, style.title]}> Editing Profile </Text>
 
         <View className="image-uploader">
@@ -244,7 +290,7 @@ class EditGuardianAccount extends Component {
               resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Text style={globalStyles.formSubTitle}>File Input</Text>
+            <Link text='File Input' onClick={() => this.handleImageSelector()} style={globalStyles.formSubTitle}></Link>
           </View>
         </View>
 
