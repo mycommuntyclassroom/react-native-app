@@ -6,7 +6,8 @@ import {
   TextInput,
   ScrollView,
   Image,
-  CameraRoll
+  CameraRoll,
+  Platform
 } from 'react-native';
 
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -83,7 +84,10 @@ class EditGuardianAccount extends Component {
 
     // FILE UPLOAD
 
-    // this.userRef = database.ref(`guardians/${app.props.auth.uid}`);
+
+    console.log('this is the uid Loaded: ', app.props.auth.uid);
+
+    this.userRef = database.ref(`guardians/${app.props.auth.uid}`);
     this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/guardian`);
     this.handleFileUpload = this.handleFileUpload.bind(this);
 
@@ -96,25 +100,75 @@ class EditGuardianAccount extends Component {
     this.selectImage=this.selectImage.bind(this);
   }
 
-  handleFileUpload(event) {
-    // const file = event.target.files[0];
-    // const uploadTask = this.storageRef.child(file.name)
-    //                                   .put(file, { contentType: file.type });
+  // handleFileUpload() {
+    // const { selectedImage } = this.state;
+    // const imageFile = selectedImage.uri;
 
-    // uploadTask.on('state_changed', (snapshot) => {
-    //   const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //   this.setState({ uploadProgress });
-    // });
 
-    // uploadTask.then((snapshot) => {
-    //   this.userRef.update({
-    //     profileImage: snapshot.downloadURL
+    // console.log('SUBMIT::: imageFile: ', imageFile);
+
+    // RNFetchBlob.fs.readFile(imageFile, 'base64')
+    // .then((data) => {
+    //   // handle the data ..
+    //   console.log('RNFetchBlob data: ', data);
+    //   let base64Image = `data:image/jpeg;base64,${data}`;
+    //   // push the image to the database
+    //   const uploadTask = 
+    //     this.storageRef
+    //         .child(selectedImage.filename)
+    //         .put(base64Image);
+
+    //   uploadTask.on('state_changed', (snapshot) => {
+    //     // const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //     // this.setState({ uploadProgress });
     //   });
-    //   this.setState({ 
-    //     uploadProgress: null,
-    //     profileImage: snapshot.downloadURL
+
+    //   uploadTask.then((snapshot) => {
+    //     this.userRef.update({
+    //       profileImage: snapshot.downloadURL
+    //     });
+    //     this.setState({ 
+    //       uploadProgress: null,
+    //       profileImage: snapshot.downloadURL
+    //     });
     //   });
-    // });
+    // })
+
+  handleFileUpload(uri = this.state.selectedImage.uri, mime = 'application/octet-stream') {
+
+
+    // Prepare Blob support
+    const Blob = RNFetchBlob.polyfill.Blob
+    const fs = RNFetchBlob.fs
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+    window.Blob = Blob
+
+    console.log('thie is the handleFileUpload uri: ', uri );
+    return new Promise((resolve, reject) => {
+      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+      let uploadBlob = null
+
+      const imageRef = storage.ref('images').child('image_001')
+
+      fs.readFile(uploadUri, 'base64')
+        .then((data) => {
+          return Blob.build(data, { type: `${mime};BASE64` })
+        })
+        .then((blob) => {
+          uploadBlob = blob
+          return imageRef.put(blob, { contentType: mime })
+        })
+        .then(() => {
+          uploadBlob.close()
+          return imageRef.getDownloadURL()
+        })
+        .then((url) => {
+          resolve(url)
+        })
+        .catch((error) => {
+          reject(error)
+      })
+    })
   }
 
   handleImageSelector() {
@@ -185,24 +239,11 @@ class EditGuardianAccount extends Component {
     const props = this.props;
     const { app } = props;
     const data = {...this.state};
-    const { selectedImage } = this.state;
-    const imageFile = selectedImage.uri;
-
-    console.log('SUBMIT::: imageFile: ', imageFile);
-
-    RNFetchBlob.fs.readFile(imageFile, 'base64')
-    .then((data) => {
-      // handle the data ..
-      console.log('RNFetchBlob data: ', data);
-    })
-
-    // push the image to the database
-    this.storageRef
-        .child(selectedImage.filename)
-        .put(imageFile);
-
     const currentUserObject = app.props.user;
     const updatedUser = Object.assign(currentUserObject, data)
+
+    // upload the profile image 
+    this.handleFileUpload();
 
     // pass the updated object to the store
     store.dispatch(actions.userInfo(updatedUser));
