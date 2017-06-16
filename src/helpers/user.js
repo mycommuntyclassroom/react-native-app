@@ -228,8 +228,6 @@ export function denyInvite (userData, note) {
 // 
 
 export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style) {
-  console.log('chooseNotificationItem Called');
-  console.log('these are the styles: ', style);
   let elements;
   let noteClass;
   let noteType = noteProp.noteType || '';

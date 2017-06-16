@@ -11,10 +11,6 @@ import style from './style';
 
 class NotificationsOutput extends Component {
 
-  componentDidMount() {
-    console.log('---------------mounted NotificationsOutput------------------', this.props);
-  }
-
   render() {
     const props = this.props;
     const { globalStyles, app } = props;

@@ -80,7 +80,7 @@ class App extends Component {
 
     // if the user is signed in, take them to the dashboard
     if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome')) {
-      this.goToScene('Notifications') //Dashboard
+      this.goToScene('Dashboard')
     } 
     // if the user is anonymous, take them to the welcome screen
     else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene === 'Loading') {
