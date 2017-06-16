@@ -9,5 +9,4 @@ EditGuardianAccount.submit = {
   marginBottom: 30
 }
 
-
 export default EditGuardianAccount;
