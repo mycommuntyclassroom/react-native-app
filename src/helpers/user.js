@@ -11,6 +11,7 @@ import { createUserWithEmailAndPassword } from '../helpers/firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
 import Link from '../components/Link';
+import styleVariables from '../styles/variables';
 
 export function signInHandler (provider, type, data) {
   // save a type within the AsyncStorage to use when we redirect to the app
@@ -225,8 +226,8 @@ export function denyInvite (userData, note) {
 // NOTIFICATION OUTPUT
 // 
 // 
-export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends) {
-  console.log('chooseNotificationItem Called')
+
+export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style) {
   let elements;
   let noteClass;
   let noteType = noteProp.noteType || '';
@@ -247,11 +248,13 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
   }
 
   return(
-    <View className="note" key={`${note}`} id={`${note}`}> 
-      <View className={`note-info ${noteClass}`}>
-        <View className={`switch ${seenSwitch}`}></View>
+    <View style={style.note} key={`${note}`} id={`${note}`}> 
+      <View style={[style.noteInfo, style[noteClass]]}>
+        <View style={[style.switch, style[seenSwitch]]}>
+          <View style={style.decoCircle} />
+        </View>
         <Text>{noteProp.displayName}</Text>
-        <View className="message"><Text>{noteProp.message}</Text></View>
+        <View><Text style={style.message}>{noteProp.message}</Text></View>
       </View>
       {elements}
     </View>
@@ -262,11 +265,6 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
 // 
 // 
 export function checkRelationship (relationship, props, gid) {
-
-  console.log('checkRelationship CALled:: ')
-  console.log('checkRelationship CALled: relationship: ', relationship)
-  console.log('checkRelationship CALled: props: ', props)
-  console.log('checkRelationship CALled: gid: ', gid)
 
   switch (relationship) {
     case 'friend':

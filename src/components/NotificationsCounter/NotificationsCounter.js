@@ -4,6 +4,8 @@ import {
   Text
 } from 'react-native';
 
+import style from './style';
+
 class NotificationsCounter extends Component {
 
   render() {
@@ -22,7 +24,7 @@ class NotificationsCounter extends Component {
       }
     }
 
-    return <View className="notification-bubble"><Text>{ newNotifications }</Text></View>
+    return <View style={style.notificationBubble}><Text style={style.notificationBubbleText}>{ newNotifications }</Text></View>
   }
 }
 
