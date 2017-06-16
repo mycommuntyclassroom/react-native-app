@@ -17,6 +17,7 @@ import { storage, database } from '../../helpers/firebase';
 import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
+import style from './style';
 
 class EditGuardianAccount extends Component {
 
@@ -172,7 +173,7 @@ class EditGuardianAccount extends Component {
    */
   render() {
     const props = this.props;
-    const { app } = props
+    const { globalStyles, app } = props
     const userObj = app.props.user
     const { uid, displayName, profileImage } = userObj;
     const { uploadProgress } = this.state;
@@ -187,8 +188,8 @@ class EditGuardianAccount extends Component {
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category}>
-            <Text>{category}</Text>
+          <View style={globalStyles.checkboxContainer} key={category}>
+            <Text style={globalStyles.checkboxSubTitle}>{category}</Text>
             {formData[category].map(item => {
               var checkbox = '';
               // pre-check any items that were selected and saved
@@ -231,26 +232,25 @@ class EditGuardianAccount extends Component {
       : require('../../../images/blank-profile-pic.png');
 
     return(
-      <ScrollView className="create-account">
+      <ScrollView style={globalStyles.formContainer}>
 
-        <Text> Editing Profile </Text>
+        <Text style={[globalStyles.formTitle, style.title]}> Editing Profile </Text>
 
         <View className="image-uploader">
-          <View className="image-uploader--image-container">
+          <View style={globalStyles.formImageContainer}>
             <Image 
               source={userImage} 
-              className="image-uploader--photo"
-              resizeMode='contain' 
-              style={{width: 100, height: 100}} />
+              style={globalStyles.formImage}
+              resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Text>File Input</Text>
+            <Text style={style.subTitle}>File Input</Text>
           </View>
         </View>
 
         <View style={{paddingBottom: 93}}>
           <TextInput
-            style={{height: 50}}
+            style={globalStyles.textInput}
             name="displayName"
             defaultValue={ this.state.displayName }
             onChangeText={ (value) => this.handleChange(value, 'displayName') } />
@@ -264,9 +264,9 @@ class EditGuardianAccount extends Component {
           </View>
 
           <View className="address">
-            <Text>Address</Text>
+            <Text style={style.subTitle}>Address</Text>
             <TextInput
-              style={{height: 50}}
+              style={globalStyles.textInput}
               type="text"
               placeholder="Street Address"
               defaultValue={ this.state.street }
@@ -275,7 +275,7 @@ class EditGuardianAccount extends Component {
             <View className="no-wrap">
               <View>
                 <TextInput
-                  style={{height: 50}}
+                  style={globalStyles.textInput}
                   name="city"
                   type="text"
                   placeholder="City"
@@ -285,7 +285,7 @@ class EditGuardianAccount extends Component {
               </View>
               <View>
                 <TextInput
-                  style={{height: 50}}
+                  style={globalStyles.textInput}
                   className="state-field"
                   name="state"
                   placeholder="State"
@@ -295,7 +295,7 @@ class EditGuardianAccount extends Component {
               </View>
               <View>
                 <TextInput
-                  style={{height: 50}}
+                  style={globalStyles.textInput}
                   name="zipCode"
                   type="text"
                   placeholder="Zipcode"
@@ -308,7 +308,7 @@ class EditGuardianAccount extends Component {
 
           { outputCheckboxes() }
 
-          <Button text='Submit' onPress= { () => this.submitForm() }></Button>
+          <Button extraStyle={style.submit} text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>
       </ScrollView>
     )

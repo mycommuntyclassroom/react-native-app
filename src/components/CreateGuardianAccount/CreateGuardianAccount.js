@@ -159,8 +159,8 @@ class CreateGuardianAccount extends Component {
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category} style={style.checkboxContainer}>
-            <Text style={style.subTitle}>{this.capitalizeWord(category)}</Text>
+          <View key={category} style={[globalStyles.checkboxContainer, style.checkboxContainer]}>
+            <Text style={globalStyles.checkboxSubTitle}>{this.capitalizeWord(category)}</Text>
             {formData[category].map(item => {
               return ( 
                 <View key={item}>
@@ -189,7 +189,7 @@ class CreateGuardianAccount extends Component {
     return(
       <ScrollView>
         <BackButton scene='WelcomeSearch' {...props} />
-        <Text style={[style.title]}> Help us get to know you... </Text>
+        <Text style={[globalStyles.formTitle]}> Help us get to know you... </Text>
         <View style={style.formContainer}>
           <TextInput
             style={globalStyles.textInput}

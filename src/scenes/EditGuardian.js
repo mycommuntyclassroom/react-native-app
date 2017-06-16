@@ -7,7 +7,7 @@ import {
 
 
 import Header from '../components/Header';
-import EditGuardianAccount from '../components/dashboard-views/EditGuardianAccount';
+import EditGuardianAccount from '../components/EditGuardianAccount';
 
 class EditGuardian extends Component {
 
