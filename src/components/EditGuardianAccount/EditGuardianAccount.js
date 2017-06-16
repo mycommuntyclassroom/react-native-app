@@ -9,6 +9,7 @@ import {
   CameraRoll
 } from 'react-native';
 
+import RNFetchBlob from 'react-native-fetch-blob';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 import CheckBox from '../CheckBox';
@@ -80,6 +81,12 @@ class EditGuardianAccount extends Component {
 
     // const userImage = profileImage || photoURL;
 
+    // FILE UPLOAD
+
+    // this.userRef = database.ref(`guardians/${app.props.auth.uid}`);
+    this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/guardian`);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
+
     // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
@@ -117,7 +124,7 @@ class EditGuardianAccount extends Component {
 
   selectImage() {
     console.log('selectImage CALLED')
-    this.setState({ profileImage: this.state.selectedImage});
+    this.setState({ profileImage: this.state.selectedImage.uri});
   }
 
 
@@ -125,8 +132,8 @@ class EditGuardianAccount extends Component {
     var num = images.length;
 
     console.log('images: ', images)
-    console.log('current.uri: ', current.uri);
-    this.setState({selectedImage: current.uri})
+    console.log('current: ', current);
+    this.setState({selectedImage: current})
   }
 
   /**
@@ -178,6 +185,21 @@ class EditGuardianAccount extends Component {
     const props = this.props;
     const { app } = props;
     const data = {...this.state};
+    const { selectedImage } = this.state;
+    const imageFile = selectedImage.uri;
+
+    console.log('SUBMIT::: imageFile: ', imageFile);
+
+    RNFetchBlob.fs.readFile(imageFile, 'base64')
+    .then((data) => {
+      // handle the data ..
+      console.log('RNFetchBlob data: ', data);
+    })
+
+    // push the image to the database
+    this.storageRef
+        .child(selectedImage.filename)
+        .put(imageFile);
 
     const currentUserObject = app.props.user;
     const updatedUser = Object.assign(currentUserObject, data)
