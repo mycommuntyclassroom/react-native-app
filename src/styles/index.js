@@ -114,6 +114,12 @@ STYLE.formTitle = {
   textAlign: 'center'
 }
 
+STYLE.formSubTitle = {
+  color: 'white',
+  textAlign: 'center',
+  fontWeight: '500'
+}
+
 STYLE.formImageContainer = {
   display: 'flex',
   alignItems: 'center',
@@ -160,7 +166,8 @@ STYLE.checkboxContainer = {
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  alignItems: 'stretch'
+  alignItems: 'stretch',
+  marginTop: 20
 }
 STYLE.checkboxSubTitle = {
   color: 'white',

@@ -12,7 +12,7 @@ import CheckBox from '../CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import Button from '../Button';
 
-import { updateProfile } from '../../helpers/form';
+import { updateProfile, capitalizeWord } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
 import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
@@ -189,7 +189,7 @@ class EditGuardianAccount extends Component {
       for (var category in formData) {
         checkboxOutput.push(
           <View style={globalStyles.checkboxContainer} key={category}>
-            <Text style={globalStyles.checkboxSubTitle}>{category}</Text>
+            <Text style={globalStyles.checkboxSubTitle}>{capitalizeWord(category)}</Text>
             {formData[category].map(item => {
               var checkbox = '';
               // pre-check any items that were selected and saved
@@ -244,7 +244,7 @@ class EditGuardianAccount extends Component {
               resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Text style={style.subTitle}>File Input</Text>
+            <Text style={globalStyles.formSubTitle}>File Input</Text>
           </View>
         </View>
 
@@ -264,7 +264,7 @@ class EditGuardianAccount extends Component {
           </View>
 
           <View className="address">
-            <Text style={style.subTitle}>Address</Text>
+            <Text style={globalStyles.formSubTitle}>Address</Text>
             <TextInput
               style={globalStyles.textInput}
               type="text"

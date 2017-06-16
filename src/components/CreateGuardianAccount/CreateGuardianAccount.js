@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateProfile } from '../../helpers/form';
+import { updateProfile, capitalizeWord } from '../../helpers/form';
 import { database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -72,7 +72,6 @@ class CreateGuardianAccount extends Component {
 
     }) 
 
-    this.capitalizeWord=this.capitalizeWord.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -83,10 +82,6 @@ class CreateGuardianAccount extends Component {
    *
    * @param e
    */
-
-  capitalizeWord(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-  }
 
   handleChange(value, fieldName) {
     let inputObj = {}
@@ -160,7 +155,7 @@ class CreateGuardianAccount extends Component {
       for (var category in formData) {
         checkboxOutput.push(
           <View key={category} style={[globalStyles.checkboxContainer, style.checkboxContainer]}>
-            <Text style={globalStyles.checkboxSubTitle}>{this.capitalizeWord(category)}</Text>
+            <Text style={globalStyles.checkboxSubTitle}>{capitalizeWord(category)}</Text>
             {formData[category].map(item => {
               return ( 
                 <View key={item}>
@@ -210,7 +205,7 @@ class CreateGuardianAccount extends Component {
           </View>
 
           <View>
-            <Text style={style.subTitle}>Address</Text>
+            <Text style={globalStyles.formSubTitle}>Address</Text>
             <TextInput 
               style={globalStyles.textInput}
               placeholderTextColor='white'

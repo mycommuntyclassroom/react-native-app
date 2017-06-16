@@ -36,3 +36,7 @@ export function updateHostEventsTable (formData) {
   database.ref(`hostEvents/${formData.gid}`)
           .push(formData);
 }
+
+export function capitalizeWord (str) {
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
