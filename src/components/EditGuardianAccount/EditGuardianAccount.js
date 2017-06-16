@@ -134,8 +134,7 @@ class EditGuardianAccount extends Component {
     //   });
     // })
 
-  handleFileUpload(uri = this.state.selectedImage.uri, mime = 'application/octet-stream') {
-
+  handleFileUpload(uri = this.state.selectedImage.uri, mime = 'image/jpeg') {
 
     // Prepare Blob support
     const Blob = RNFetchBlob.polyfill.Blob
