@@ -136,22 +136,40 @@ class EditGuardianAccount extends Component {
 
   handleFileUpload(uri = this.state.selectedImage.uri, mime = 'image/jpeg') {
 
+    const { selectedImage } = this.state;
+
     // Prepare Blob support
-    const Blob = RNFetchBlob.polyfill.Blob
-    const fs = RNFetchBlob.fs
-    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-    window.Blob = Blob
+    const Blob = RNFetchBlob.polyfill.Blob;
+    const fs = RNFetchBlob.fs;
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+    window.Blob = Blob;
 
     console.log('thie is the handleFileUpload uri: ', uri );
     return new Promise((resolve, reject) => {
-      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
-      let uploadBlob = null
+      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+      let uploadBlob = null;
 
-      const imageRef = storage.ref('images').child('image_001')
+      const imageRef = this.storageRef.child(selectedImage.filename);
 
+      imageRef.on('state_changed', (snapshot) => {
+        // const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        // this.setState({ uploadProgress });
+      });
+
+      imageRef.then((snapshot) => {
+        this.userRef.update({
+          profileImage: snapshot.downloadURL
+        });
+        this.setState({ 
+          uploadProgress: null,
+          profileImage: snapshot.downloadURL
+        });
+      });
+
+      // convert the image to jpeg blob data, then upload it to firebase
       fs.readFile(uploadUri, 'base64')
         .then((data) => {
-          return Blob.build(data, { type: `${mime};BASE64` })
+          return Blob.build(data, { type: `${mime};BASE64` });
         })
         .then((blob) => {
           uploadBlob = blob
@@ -180,10 +198,8 @@ class EditGuardianAccount extends Component {
     this.setState({ profileImage: this.state.selectedImage.uri});
   }
 
-
   getSelectedImages(images, current) {
     var num = images.length;
-
     console.log('images: ', images)
     console.log('current: ', current);
     this.setState({selectedImage: current})
