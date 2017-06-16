@@ -216,22 +216,22 @@ class CreateGuardianAccount extends Component {
               placeholderTextColor='white'
               placeholder="Street Address"
               onChangeText={ (value) => this.handleChange(value, 'street') } />
-            <View style={style.address2ndRow}>
-              <View style={style.addressItem}>
+            <View style={style.formAddress2ndRow}>
+              <View style={globalStyles.formAddressItem}>
                 <TextInput
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
                   placeholder="City"
                   onChangeText={ (value) => this.handleChange(value, 'city') } />
               </View>
-              <View style={[style.addressItem, style.centerPiece]}>
+              <View style={[globalStyles.formAddressItem, globalStyles.formAddressCenterPiece]}>
                 <TextInput
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
                   placeholder="State"
                   onChangeText={ (value) => this.handleChange(value, 'state') } />
               </View>
-              <View style={style.addressItem}>
+              <View style={globalStyles.formAddressItem}>
                 <TextInput name="zipCode"
                   style={globalStyles.textInput}
                   placeholderTextColor='white'

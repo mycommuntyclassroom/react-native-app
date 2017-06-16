@@ -272,8 +272,8 @@ class EditGuardianAccount extends Component {
               defaultValue={ this.state.street }
               onChangeText={ (value) => this.handleChange(value, 'street') }
             />
-            <View className="no-wrap">
-              <View>
+            <View style={globalStyles.formAddress2ndRow}>
+              <View style={globalStyles.formAddressItem}>
                 <TextInput
                   style={globalStyles.textInput}
                   name="city"
@@ -283,7 +283,7 @@ class EditGuardianAccount extends Component {
                   onChangeText={ (value) => this.handleChange(value, 'city') } 
                 />
               </View>
-              <View>
+              <View style={[globalStyles.formAddressItem, globalStyles.formAddressCenterPiece]}>
                 <TextInput
                   style={globalStyles.textInput}
                   className="state-field"
@@ -293,7 +293,7 @@ class EditGuardianAccount extends Component {
                   onChangeText={ (value) => this.handleChange(value, 'state') } 
                 />
               </View>
-              <View>
+              <View style={globalStyles.formAddressItem}>
                 <TextInput
                   style={globalStyles.textInput}
                   name="zipCode"

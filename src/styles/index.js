@@ -124,7 +124,7 @@ STYLE.formImage = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: deviceWidth - (pagePadding * 2),
+  width: deviceWidth - (pagePadding * 2 ),
   height: 320
 }
 
@@ -137,6 +137,21 @@ STYLE.textInput = {
   marginBottom: 4,
   color: 'white',
   backgroundColor: 'rgba(0, 0, 0, 0.3)'
+}
+
+STYLE.formAddress2ndRow = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'stretch'
+}
+
+STYLE.formAddressItem = {
+  width: '32%'
+}
+
+STYLE.formAddressCenterPiece = {
+  marginLeft: '2%',
+  marginRight: '2%'
 }
 
 // CHECKBOX
