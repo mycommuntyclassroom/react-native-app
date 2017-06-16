@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateProfile } from '../../helpers/form';
+import { updateProfile, capitalizeWord } from '../../helpers/form';
 import { database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -72,7 +72,6 @@ class CreateGuardianAccount extends Component {
 
     }) 
 
-    this.capitalizeWord=this.capitalizeWord.bind(this);
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -83,10 +82,6 @@ class CreateGuardianAccount extends Component {
    *
    * @param e
    */
-
-  capitalizeWord(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-  }
 
   handleChange(value, fieldName) {
     let inputObj = {}
@@ -159,8 +154,8 @@ class CreateGuardianAccount extends Component {
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category} style={style.checkboxContainer}>
-            <Text style={style.subTitle}>{this.capitalizeWord(category)}</Text>
+          <View key={category} style={[globalStyles.checkboxContainer, style.checkboxContainer]}>
+            <Text style={globalStyles.checkboxSubTitle}>{capitalizeWord(category)}</Text>
             {formData[category].map(item => {
               return ( 
                 <View key={item}>
@@ -189,7 +184,7 @@ class CreateGuardianAccount extends Component {
     return(
       <ScrollView>
         <BackButton scene='WelcomeSearch' {...props} />
-        <Text style={[style.title]}> Help us get to know you... </Text>
+        <Text style={[globalStyles.formTitle]}> Help us get to know you... </Text>
         <View style={style.formContainer}>
           <TextInput
             style={globalStyles.textInput}
@@ -210,28 +205,28 @@ class CreateGuardianAccount extends Component {
           </View>
 
           <View>
-            <Text style={style.subTitle}>Address</Text>
+            <Text style={globalStyles.formSubTitle}>Address</Text>
             <TextInput 
               style={globalStyles.textInput}
               placeholderTextColor='white'
               placeholder="Street Address"
               onChangeText={ (value) => this.handleChange(value, 'street') } />
-            <View style={style.address2ndRow}>
-              <View style={style.addressItem}>
+            <View style={style.formAddress2ndRow}>
+              <View style={globalStyles.formAddressItem}>
                 <TextInput
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
                   placeholder="City"
                   onChangeText={ (value) => this.handleChange(value, 'city') } />
               </View>
-              <View style={[style.addressItem, style.centerPiece]}>
+              <View style={[globalStyles.formAddressItem, globalStyles.formAddressCenterPiece]}>
                 <TextInput
                   style={globalStyles.textInput}
                   placeholderTextColor='white'
                   placeholder="State"
                   onChangeText={ (value) => this.handleChange(value, 'state') } />
               </View>
-              <View style={style.addressItem}>
+              <View style={globalStyles.formAddressItem}>
                 <TextInput name="zipCode"
                   style={globalStyles.textInput}
                   placeholderTextColor='white'

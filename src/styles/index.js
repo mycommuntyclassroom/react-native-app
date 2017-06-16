@@ -5,6 +5,7 @@ import variables from './variables';
 // save device dimensions
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
+const pagePadding = 15;
 
 export const deviceDimensions = {
   deviceWidth,
@@ -84,8 +85,7 @@ STYLE.Nav = {
   zIndex: 100,
   height: '100%',
   width: '75%',
-  top: 0,
-  backgroundColor: 'blue'
+  top: 0
 };
 
 STYLE.NavText = {
@@ -101,6 +101,39 @@ STYLE.NavLink = {
 // 
 // bootstrap forms particular to forms
 // 
+
+STYLE.formContainer = {
+  paddingLeft: pagePadding,
+  paddingRight: pagePadding
+}
+
+STYLE.formTitle = {
+  color: 'white',
+  fontSize: 25,
+  marginBottom: 10,
+  textAlign: 'center'
+}
+
+STYLE.formSubTitle = {
+  color: 'white',
+  textAlign: 'center',
+  fontWeight: '500'
+}
+
+STYLE.formImageContainer = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+}
+
+STYLE.formImage = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: deviceWidth - (pagePadding * 2 ),
+  height: 320
+}
+
 STYLE.textInput = {
   height: 40, 
   borderRadius: 3,
@@ -110,6 +143,37 @@ STYLE.textInput = {
   marginBottom: 4,
   color: 'white',
   backgroundColor: 'rgba(0, 0, 0, 0.3)'
+}
+
+STYLE.formAddress2ndRow = {
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'stretch'
+}
+
+STYLE.formAddressItem = {
+  width: '32%'
+}
+
+STYLE.formAddressCenterPiece = {
+  marginLeft: '2%',
+  marginRight: '2%'
+}
+
+// CHECKBOX
+// 
+STYLE.checkboxContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  alignItems: 'stretch',
+  marginTop: 20
+}
+STYLE.checkboxSubTitle = {
+  color: 'white',
+  textAlign: 'center',
+  width: '100%',
+  fontWeight: '500'
 }
 
 export default StyleSheet.create(STYLE);
