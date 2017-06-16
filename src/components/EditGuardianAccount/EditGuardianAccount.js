@@ -86,6 +86,7 @@ class EditGuardianAccount extends Component {
     this.handleChange=this.handleChange.bind(this);
     this.submitForm=this.submitForm.bind(this);
     this.handleImageSelector=this.handleImageSelector.bind(this);
+    this.selectImage=this.selectImage.bind(this);
   }
 
   handleFileUpload(event) {
@@ -111,20 +112,21 @@ class EditGuardianAccount extends Component {
 
   handleImageSelector() {
     console.log('******handleImageSelector CALLED')
-    this.setState({imageModal: !this.state.imageModal})
+    this.setState({imageModal: !this.state.imageModal});
+  }
+
+  selectImage() {
+    console.log('selectImage CALLED')
+    this.setState({ profileImage: this.state.selectedImage});
   }
 
 
   getSelectedImages(images, current) {
     var num = images.length;
 
-    this.setState({
-      num: num,
-      selected: images,
-    });
     console.log('images: ', images)
-    console.log(current);
-    console.log(this.state.selected);
+    console.log('current.uri: ', current.uri);
+    this.setState({selectedImage: current.uri})
   }
 
   /**
@@ -198,8 +200,8 @@ class EditGuardianAccount extends Component {
     const props = this.props;
     const { globalStyles, app } = props
     const userObj = app.props.user
-    const { uid, displayName, profileImage } = userObj;
-    const { uploadProgress } = this.state;
+    const { uid, displayName } = userObj;
+    const { uploadProgress, profileImage } = this.state;
     const userSpecialties = userObj.specialties
 
     // grab the form data set within the state
@@ -264,7 +266,10 @@ class EditGuardianAccount extends Component {
             // if true, render the imageModal
             <View style={style.imageModal}>
               <Text>IMAGE MODAL </Text>
-              <Link text='Close' onClick={() => this.handleImageSelector() }> </Link>
+              <Link text='Close' onClick={() => this.handleImageSelector()}> </Link>
+              <Link text='Select' onClick={() => this.selectImage()}> </Link>
+
+              {/* image handler */}
               <CameraRollPicker
                 scrollRenderAheadDistance={500}
                 initialListSize={1}
