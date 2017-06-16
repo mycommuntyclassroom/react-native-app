@@ -16,7 +16,7 @@ NotificationsHeader.headerTabs = {
   display: 'flex',
   flexDirection: 'row',
   left: deviceDimensions.deviceWidth / 15,
-  backgroundColor: styleVariables.transparentBlack,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
   padding: 4,
   paddingLeft: 12,
   paddingRight: 12,
