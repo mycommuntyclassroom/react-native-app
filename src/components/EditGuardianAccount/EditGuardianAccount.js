@@ -5,12 +5,17 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Image
+  Image,
+  CameraRoll,
+  Platform
 } from 'react-native';
 
-import CheckBox from '../CheckBox';
+import RNFetchBlob from 'react-native-fetch-blob';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import CameraRollPicker from 'react-native-camera-roll-picker';
+import CheckBox from '../CheckBox';
 import Button from '../Button';
+import Link from '../Link';
 
 import { updateProfile, capitalizeWord } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
@@ -41,7 +46,8 @@ class EditGuardianAccount extends Component {
       gender: gender || '',
       specialties,
       state,
-      uploadProgress: null
+      uploadProgress: null,
+      imageModal: false
     };
 
     // update the state after the render
@@ -72,36 +78,79 @@ class EditGuardianAccount extends Component {
       // }
     })
 
-  
-
-    // const userImage = profileImage || photoURL;
+    // FILE UPLOAD
+    this.userRef = database.ref(`guardians/${app.props.auth.uid}`);
+    this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/guardian`);
+    this.handleFileUpload = this.handleFileUpload.bind(this);
 
     // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
     this.submitForm=this.submitForm.bind(this);
+    this.handleImageSelector=this.handleImageSelector.bind(this);
+    this.selectImage=this.selectImage.bind(this);
   }
 
-  handleFileUpload(event) {
-    // const file = event.target.files[0];
-    // const uploadTask = this.storageRef.child(file.name)
-    //                                   .put(file, { contentType: file.type });
+  handleFileUpload(uri = this.state.selectedImage.uri, mime = 'image/jpeg') {
 
-    // uploadTask.on('state_changed', (snapshot) => {
-    //   const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //   this.setState({ uploadProgress });
-    // });
+    // grab the selected image
+    const { selectedImage } = this.state;
 
-    // uploadTask.then((snapshot) => {
-    //   this.userRef.update({
-    //     profileImage: snapshot.downloadURL
-    //   });
-    //   this.setState({ 
-    //     uploadProgress: null,
-    //     profileImage: snapshot.downloadURL
-    //   });
-    // });
+    // Prepare Blob support
+    const Blob = RNFetchBlob.polyfill.Blob
+    const fs = RNFetchBlob.fs
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
+    window.Blob = Blob
+
+    return new Promise((resolve, reject) => {
+      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+      let uploadBlob = null
+
+      const imageRef = this.storageRef.child(selectedImage.filename);
+
+      fs.readFile(uploadUri, 'base64')
+        .then((data) => {
+          return Blob.build(data, { type: `${mime};BASE64` });
+        })
+        .then((blob) => {
+          uploadBlob = blob
+          return imageRef.put(blob, { contentType: mime })
+        })
+        .then(() => {
+          uploadBlob.close()
+          return imageRef.getDownloadURL()
+        })
+        .then((url) => {
+          this.userRef.update({
+            profileImage: url
+          });
+          resolve(url)
+        })
+        .catch((error) => {
+          reject(error)
+      })
+    })
+  }
+
+  handleImageSelector() {
+    console.log('******handleImageSelector CALLED')
+    this.setState({imageModal: !this.state.imageModal});
+  }
+
+  selectImage() {
+    console.log('selectImage CALLED')
+    this.setState({ profileImage: this.state.selectedImage.uri});
+    console.log('this is the state: ', this.state)
+  }
+
+
+  getSelectedImages(images, current) {
+    var num = images.length;
+
+    console.log('images: ', images)
+    console.log('current: ', current);
+    this.setState({selectedImage: current})
   }
 
   /**
@@ -154,8 +203,12 @@ class EditGuardianAccount extends Component {
     const { app } = props;
     const data = {...this.state};
 
+    console.log('this is the submitform data: ', data);
     const currentUserObject = app.props.user;
     const updatedUser = Object.assign(currentUserObject, data)
+
+    // upload the profile image 
+    this.handleFileUpload();
 
     // pass the updated object to the store
     store.dispatch(actions.userInfo(updatedUser));
@@ -175,8 +228,8 @@ class EditGuardianAccount extends Component {
     const props = this.props;
     const { globalStyles, app } = props
     const userObj = app.props.user
-    const { uid, displayName, profileImage } = userObj;
-    const { uploadProgress } = this.state;
+    const { uid, displayName } = userObj;
+    const { uploadProgress, profileImage } = this.state;
     const userSpecialties = userObj.specialties
 
     // grab the form data set within the state
@@ -233,7 +286,33 @@ class EditGuardianAccount extends Component {
 
     return(
       <ScrollView style={globalStyles.formContainer}>
+        {
+          /* page overlay for the image selection
+             rendered based on the state per the open/close */
 
+          this.state.imageModal &&
+            // if true, render the imageModal
+            <View style={style.imageModal}>
+              <Text>IMAGE MODAL </Text>
+              <Link text='Close' onClick={() => this.handleImageSelector()}> </Link>
+              <Link text='Select' onClick={() => this.selectImage()}> </Link>
+
+              {/* image handler */}
+              <CameraRollPicker
+                scrollRenderAheadDistance={500}
+                initialListSize={1}
+                pageSize={3}
+                removeClippedSubviews={false}
+                groupTypes='SavedPhotos'
+                batchSize={5}
+                maximum={3}
+                selected={this.state.selected}
+                assetType='Photos'
+                imagesPerRow={3}
+                imageMargin={5}
+                callback={this.getSelectedImages.bind(this)} />
+            </View>
+        }
         <Text style={[globalStyles.formTitle, style.title]}> Editing Profile </Text>
 
         <View className="image-uploader">
@@ -244,7 +323,7 @@ class EditGuardianAccount extends Component {
               resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Text style={globalStyles.formSubTitle}>File Input</Text>
+            <Link text='File Input' onClick={() => this.handleImageSelector()} style={globalStyles.formSubTitle}></Link>
           </View>
         </View>
 
