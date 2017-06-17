@@ -66,8 +66,15 @@ class App extends Component {
 
   configureScene(route, routeStack) {
     const transition = TRANSITIONS[random(0, TRANSITIONS.length - 1)];
-    // const transition = 'VerticalUpSwipeJump';
-    return Navigator.SceneConfigs[transition];
+    // remove the gesture navigation
+    return(
+      {
+        ...Navigator.SceneConfigs.HorizontalSwipeJump,
+          gestures: {
+            pop: {},
+          }
+      }
+    )
   }
 
   componentDidUpdate(prevProps, prevState) {
