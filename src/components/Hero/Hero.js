@@ -29,7 +29,12 @@ class Hero extends Component {
     props.guardianData ? userData = props.guardianData : userData = props.user
     const { profileImage, photoURL, displayName, street, city, state, zipCode } = userData;
 
-    let userImg = profileImage || photoURL;
+    console.log('this is the hero profileImage: ', profileImage);
+
+    // handle the output of the required image
+    let userImage = profileImage != '../../../images/blank-profile-pic.png'
+      ? {uri: profileImage} 
+      : require('../../../images/blank-profile-pic.png');
 
     // let ImageStyles = {
     //   backgroundImage: `url('${userImg}')`,
@@ -40,7 +45,7 @@ class Hero extends Component {
       <View style={style.container}>
         <View className="profile-image">
           <Image 
-            source={require('../../../images/blank-profile-pic.png')} 
+            source={userImage}
             resizeMode='cover' 
             style={ globalStyles.deviceWidth, {height: 320}} />
           <LinearGradient 

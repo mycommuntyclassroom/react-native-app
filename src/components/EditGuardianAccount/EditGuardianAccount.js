@@ -144,27 +144,11 @@ class EditGuardianAccount extends Component {
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
     window.Blob = Blob
 
-    console.log('thie is the handleFileUpload uri: ', uri );
     return new Promise((resolve, reject) => {
       const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
       let uploadBlob = null
 
       const imageRef = this.storageRef.child(selectedImage.filename);
-
-      //   uploadTask.on('state_changed', (snapshot) => {
-    //     // const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //     // this.setState({ uploadProgress });
-    //   });
-
-    //   uploadTask.then((snapshot) => {
-    //     this.userRef.update({
-    //       profileImage: snapshot.downloadURL
-    //     });
-    //     this.setState({ 
-    //       uploadProgress: null,
-    //       profileImage: snapshot.downloadURL
-    //     });
-    //   });
 
       fs.readFile(uploadUri, 'base64')
         .then((data) => {
@@ -179,6 +163,9 @@ class EditGuardianAccount extends Component {
           return imageRef.getDownloadURL()
         })
         .then((url) => {
+          this.userRef.update({
+            profileImage: url
+          });
           resolve(url)
         })
         .catch((error) => {
@@ -195,6 +182,7 @@ class EditGuardianAccount extends Component {
   selectImage() {
     console.log('selectImage CALLED')
     this.setState({ profileImage: this.state.selectedImage.uri});
+    console.log('this is the state: ', this.state)
   }
 
 
@@ -255,6 +243,8 @@ class EditGuardianAccount extends Component {
     const props = this.props;
     const { app } = props;
     const data = {...this.state};
+
+    console.log('this is the submitform data: ', data);
     const currentUserObject = app.props.user;
     const updatedUser = Object.assign(currentUserObject, data)
 
