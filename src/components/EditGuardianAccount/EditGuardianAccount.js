@@ -78,15 +78,7 @@ class EditGuardianAccount extends Component {
       // }
     })
 
-  
-
-    // const userImage = profileImage || photoURL;
-
     // FILE UPLOAD
-
-
-    console.log('this is the uid Loaded: ', app.props.auth.uid);
-
     this.userRef = database.ref(`guardians/${app.props.auth.uid}`);
     this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/guardian`);
     this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -100,42 +92,9 @@ class EditGuardianAccount extends Component {
     this.selectImage=this.selectImage.bind(this);
   }
 
-  // handleFileUpload() {
-    // const { selectedImage } = this.state;
-    // const imageFile = selectedImage.uri;
-
-
-    // console.log('SUBMIT::: imageFile: ', imageFile);
-
-    // RNFetchBlob.fs.readFile(imageFile, 'base64')
-    // .then((data) => {
-    //   // handle the data ..
-    //   console.log('RNFetchBlob data: ', data);
-    //   let base64Image = `data:image/jpeg;base64,${data}`;
-    //   // push the image to the database
-    //   const uploadTask = 
-    //     this.storageRef
-    //         .child(selectedImage.filename)
-    //         .put(base64Image);
-
-    //   uploadTask.on('state_changed', (snapshot) => {
-    //     // const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //     // this.setState({ uploadProgress });
-    //   });
-
-    //   uploadTask.then((snapshot) => {
-    //     this.userRef.update({
-    //       profileImage: snapshot.downloadURL
-    //     });
-    //     this.setState({ 
-    //       uploadProgress: null,
-    //       profileImage: snapshot.downloadURL
-    //     });
-    //   });
-    // })
-
   handleFileUpload(uri = this.state.selectedImage.uri, mime = 'image/jpeg') {
 
+    // grab the selected image
     const { selectedImage } = this.state;
 
     // Prepare Blob support
