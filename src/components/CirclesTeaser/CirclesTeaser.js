@@ -50,7 +50,7 @@ class CirclesTeaser extends Component {
           <View className="no-child-booked">
             There are no children booked for this event
           </View>;
-        circlesData = circlesData.students || [' ']
+        circlesData = circlesData.students || []
         customClassName = 'children-event-bubble'
         break;
       default:
@@ -73,9 +73,14 @@ class CirclesTeaser extends Component {
           backgroundSize: 'cover'
         };
 
+        // handle the output of the image
+        let elementImage = profileImage != '../../../images/blank-profile-pic.png'
+          ? {uri: profileImage} 
+          : require('../../../images/blank-profile-pic.png');
+
         circleElement = 
           <TouchableHighlight key={circle} onPress={ () => app.goToScene('EditChild', {app, childId: circle})} >
-            <Image source={require('../../../images/blank-profile-pic.png')} resizeMode='contain' style={style.teaserElement} />
+            <Image source={elementImage} resizeMode='contain' style={style.teaserElement} />
           </TouchableHighlight>
 
         circlesOutput.push(circleElement);
@@ -83,7 +88,7 @@ class CirclesTeaser extends Component {
 
       // if circlesOutput is empty after the array, fill it with a value
       // this is to prevent the react-slick slider from throwing an undefined error
-      circlesOutput = circlesOutput == [] ? [' '] : circlesOutput;
+      circlesOutput = circlesOutput == [] ? [] : circlesOutput;
     }
 
     const { title, path, app } = props

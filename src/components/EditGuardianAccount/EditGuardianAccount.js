@@ -10,14 +10,13 @@ import {
   Platform
 } from 'react-native';
 
-import RNFetchBlob from 'react-native-fetch-blob';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import CameraRollPicker from 'react-native-camera-roll-picker';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import CheckBox from '../CheckBox';
 import Button from '../Button';
 import Link from '../Link';
 
-import { updateProfile, capitalizeWord } from '../../helpers/form';
+import { updateProfile, capitalizeWord, handleFileUpload } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
 import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
@@ -81,7 +80,6 @@ class EditGuardianAccount extends Component {
     // FILE UPLOAD
     this.userRef = database.ref(`guardians/${app.props.auth.uid}`);
     this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/guardian`);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
 
     // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
@@ -92,64 +90,17 @@ class EditGuardianAccount extends Component {
     this.selectImage=this.selectImage.bind(this);
   }
 
-  handleFileUpload(uri = this.state.selectedImage.uri, mime = 'image/jpeg') {
-
-    // grab the selected image
-    const { selectedImage } = this.state;
-
-    // Prepare Blob support
-    const Blob = RNFetchBlob.polyfill.Blob
-    const fs = RNFetchBlob.fs
-    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-    window.Blob = Blob
-
-    return new Promise((resolve, reject) => {
-      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
-      let uploadBlob = null
-
-      const imageRef = this.storageRef.child(selectedImage.filename);
-
-      fs.readFile(uploadUri, 'base64')
-        .then((data) => {
-          return Blob.build(data, { type: `${mime};BASE64` });
-        })
-        .then((blob) => {
-          uploadBlob = blob
-          return imageRef.put(blob, { contentType: mime })
-        })
-        .then(() => {
-          uploadBlob.close()
-          return imageRef.getDownloadURL()
-        })
-        .then((url) => {
-          this.userRef.update({
-            profileImage: url
-          });
-          resolve(url)
-        })
-        .catch((error) => {
-          reject(error)
-      })
-    })
-  }
-
   handleImageSelector() {
-    console.log('******handleImageSelector CALLED')
     this.setState({imageModal: !this.state.imageModal});
   }
 
   selectImage() {
     console.log('selectImage CALLED')
     this.setState({ profileImage: this.state.selectedImage.uri});
-    console.log('this is the state: ', this.state)
   }
-
 
   getSelectedImages(images, current) {
     var num = images.length;
-
-    console.log('images: ', images)
-    console.log('current: ', current);
     this.setState({selectedImage: current})
   }
 
@@ -207,8 +158,11 @@ class EditGuardianAccount extends Component {
     const currentUserObject = app.props.user;
     const updatedUser = Object.assign(currentUserObject, data)
 
+    // store the selected image's url
+    const { selectedImage } = this.state;
+    let imageUri = selectedImage.uri;
     // upload the profile image 
-    this.handleFileUpload();
+    handleFileUpload(imageUri, selectedImage, this.storageRef, this.userRef);
 
     // pass the updated object to the store
     store.dispatch(actions.userInfo(updatedUser));

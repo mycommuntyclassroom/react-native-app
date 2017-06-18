@@ -51,6 +51,11 @@ class BrowseHostsOutput extends Component {
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
 
+        // handle the output of the image
+        let eventImage = image != '../../../images/blank-profile-pic.png'
+          ? {uri: image} 
+          : require('../../../images/blank-profile-pic.png');
+
         teaserElement =
           <View style={style.teaserContainer} id={teaser} key={teaser}>
             <View 
@@ -58,7 +63,7 @@ class BrowseHostsOutput extends Component {
               onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
             </View>
             <Image 
-              source={require('../../../images/blank-profile-pic.png')} 
+              source={eventImage} 
               resizeMode='cover' 
               style={style.teaserImage} />
             <LinearGradient 

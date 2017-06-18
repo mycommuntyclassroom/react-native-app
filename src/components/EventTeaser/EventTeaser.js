@@ -54,11 +54,17 @@ class EventTeaser extends Component {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
 
               // <Image source={require(image)} resizeMode='contain' />
+
+        // handle the output of the image
+        let eventImage = image != '../../../images/blank-profile-pic.png'
+          ? {uri: image} 
+          : require('../../../images/blank-profile-pic.png');
+
         teaserElement =
           <View style={style.teaserElement} key={teaser}>
             <TouchableHighlight className="event-image" onPress={ () => app.goToScene('EventDetails') }>
               <Image 
-                source={require('../../../images/blank-profile-pic.png')} 
+                source={eventImage} 
                 resizeMode='cover' 
                 style={style.teaserImage} />
             </TouchableHighlight>
