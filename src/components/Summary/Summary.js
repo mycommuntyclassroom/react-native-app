@@ -29,12 +29,13 @@ class Summary extends Component {
 
   render(){ 
 
-    const props = this.props
+    const props = this.props;
+    const { app } = props;
     let userData;
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    props.guardianData ? userData = props.guardianData : userData = props.user
+    app.props.guardianData ? userData = app.props.guardianData : userData = app.props.user
 
     // if showAllTags becomes true, update its value
     let showAllTagsClass = this.state.showAllTagsView ? "show-all-tags" : ""
@@ -45,8 +46,8 @@ class Summary extends Component {
       : <Text>FaCircle FaCircle FaCircle</Text>
 
     const { greeting } = userData;
-    const languages = userData['languages spoken'] || [' '];
-    const specialties = userData.specialties || [' '];
+    const languages = userData['languages spoken'] || [];
+    const specialties = userData.specialties || [];
 
     let languageTags = dataToTag(languages, 'languages');
     let specialtyTags = dataToTag(specialties, 'specialties');
@@ -99,9 +100,11 @@ class Summary extends Component {
           {languageTags}
           {specialtyTags}
         </Carousel>
+        {/*
+        TODO: discuss the asthetics of adding in this feature
         <View className="show-all-tags-button" onClick={this.showAllTags}>
           <View className="icon-group">{iconGroupClass}</View>
-        </View>
+        </View>*/}
       </View>
     )
   } 
