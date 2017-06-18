@@ -5,18 +5,23 @@ import {
   Text,
   TextInput,
   ScrollView,
+  CameraRoll,
   Image
 } from 'react-native';
 
-import CheckBox from '../CheckBox';
+import CameraRollPicker from 'react-native-camera-roll-picker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import CheckBox from '../CheckBox';
 import Button from '../Button';
+import Link from '../Link';
 
-import { updateProfile } from '../../helpers/form';
+import { updateProfile, handleFileUpload } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
 import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
+
+import style from './style';
 
 class EditChildAccount extends Component {
 
@@ -40,12 +45,12 @@ class EditChildAccount extends Component {
       profileImage,
       gender,
       allergies,
-      uploadProgress: null
+      uploadProgress: null,
+      imageModal: false
     }
 
     // set the state
     this.state = newStateObject;
-
 
     // pull the formData tree and grab all of the checkboxes for the children
     // and save it in the state
@@ -57,32 +62,33 @@ class EditChildAccount extends Component {
       this.setState({formData: snapshot.val()});
     })
 
+    // FILE UPLOAD
+    this.childRef = database.ref(`guardians/${gid}/children/${childId}`);
+    this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/children`);
+
     // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
     this.submitForm=this.submitForm.bind(this);
+    this.handleImageSelector=this.handleImageSelector.bind(this);
+    this.selectImage=this.selectImage.bind(this);
   }
 
-  handleFileUpload(event) {
-    // const file = event.target.files[0];
-    // const uploadTask = this.storageRef.child(file.name)
-    //                                   .put(file, { contentType: file.type });
+  handleImageSelector() {
+    console.log('******handleImageSelector CALLED')
+    this.setState({imageModal: !this.state.imageModal});
+  }
 
-    // uploadTask.on('state_changed', (snapshot) => {
-    //   const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //   this.setState({ uploadProgress });
-    // });
+  selectImage() {
+    console.log('selectImage CALLED')
+    this.setState({ profileImage: this.state.selectedImage.uri});
+    console.log('this is the state: ', this.state)
+  }
 
-    // uploadTask.then((snapshot) => {
-    //   this.userRef.update({
-    //     profileImage: snapshot.downloadURL
-    //   });
-    //   this.setState({ 
-    //     uploadProgress: null,
-    //     profileImage: snapshot.downloadURL
-    //   });
-    // });
+  getSelectedImages(images, current) {
+    var num = images.length;
+    this.setState({selectedImage: current})
   }
 
   /**
@@ -133,6 +139,12 @@ class EditChildAccount extends Component {
     const { app } = props;
     const data = {...this.state};
 
+    // store the selected image's url
+    const { selectedImage } = this.state;
+    let imageUri = selectedImage.uri;
+    // upload the profile image 
+    handleFileUpload(imageUri, selectedImage, this.storageRef, this.childRef);
+
     // remove the values from the formData prop
     data.formData = null;
 
@@ -162,7 +174,7 @@ class EditChildAccount extends Component {
    */
   render() {
     const props = this.props;
-    const { app } = props
+    const { app, globalStyles } = props
     const currentChild = this.state
     const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
 
@@ -225,6 +237,34 @@ class EditChildAccount extends Component {
 
         <Text> {`Updating ${fName}'s Profile`} </Text>
 
+        {
+          /* page overlay for the image selection
+             rendered based on the state per the open/close */
+
+          this.state.imageModal &&
+            // if true, render the imageModal
+            <View style={style.imageModal}>
+              <Text>IMAGE MODAL </Text>
+              <Link text='Close' onClick={() => this.handleImageSelector()}> </Link>
+              <Link text='Select' onClick={() => this.selectImage()}> </Link>
+
+              {/* image handler */}
+              <CameraRollPicker
+                scrollRenderAheadDistance={500}
+                initialListSize={1}
+                pageSize={3}
+                removeClippedSubviews={false}
+                groupTypes='SavedPhotos'
+                batchSize={5}
+                maximum={3}
+                selected={this.state.selected}
+                assetType='Photos'
+                imagesPerRow={3}
+                imageMargin={5}
+                callback={this.getSelectedImages.bind(this)} />
+            </View>
+        }
+
         <View className="image-uploader">
           <View className="image-uploader--image-container">
             <Image 
@@ -234,7 +274,7 @@ class EditChildAccount extends Component {
               style={{width: 100, height: 100}} />
           </View>
           <View className="image-uploader--identification">
-            <Text>File Input</Text>
+            <Link text='File Input' onClick={() => this.handleImageSelector()} style={globalStyles.formSubTitle}></Link>
           </View>
         </View>
 

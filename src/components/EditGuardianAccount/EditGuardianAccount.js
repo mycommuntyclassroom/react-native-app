@@ -10,7 +10,6 @@ import {
   Platform
 } from 'react-native';
 
-import RNFetchBlob from 'react-native-fetch-blob';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import CheckBox from '../CheckBox';
@@ -91,64 +90,17 @@ class EditGuardianAccount extends Component {
     this.selectImage=this.selectImage.bind(this);
   }
 
-  // handleFileUpload(uri = this.state.selectedImage.uri, mime = 'image/jpeg') {
-
-  //   // grab the selected image
-  //   const { selectedImage } = this.state;
-
-  //   // Prepare Blob support
-  //   const Blob = RNFetchBlob.polyfill.Blob
-  //   const fs = RNFetchBlob.fs
-  //   window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
-  //   window.Blob = Blob
-
-  //   return new Promise((resolve, reject) => {
-  //     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
-  //     let uploadBlob = null
-
-  //     const imageRef = this.storageRef.child(selectedImage.filename);
-
-  //     fs.readFile(uploadUri, 'base64')
-  //       .then((data) => {
-  //         return Blob.build(data, { type: `${mime};BASE64` });
-  //       })
-  //       .then((blob) => {
-  //         uploadBlob = blob
-  //         return imageRef.put(blob, { contentType: mime })
-  //       })
-  //       .then(() => {
-  //         uploadBlob.close()
-  //         return imageRef.getDownloadURL()
-  //       })
-  //       .then((url) => {
-  //         this.userRef.update({
-  //           profileImage: url
-  //         });
-  //         resolve(url)
-  //       })
-  //       .catch((error) => {
-  //         reject(error)
-  //     })
-  //   })
-  // }
-
   handleImageSelector() {
-    console.log('******handleImageSelector CALLED')
     this.setState({imageModal: !this.state.imageModal});
   }
 
   selectImage() {
     console.log('selectImage CALLED')
     this.setState({ profileImage: this.state.selectedImage.uri});
-    console.log('this is the state: ', this.state)
   }
-
 
   getSelectedImages(images, current) {
     var num = images.length;
-
-    console.log('images: ', images)
-    console.log('current: ', current);
     this.setState({selectedImage: current})
   }
 
