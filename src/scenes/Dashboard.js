@@ -4,7 +4,7 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
-import AdminView from '../components/dashboard-views/AdminView';
+import AdminView from '../components/AdminView';
 
 class Dashboard extends Component {
 

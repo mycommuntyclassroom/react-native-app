@@ -11,7 +11,6 @@ import Hero from '../Hero';
 import Summary from '../Summary';
 import CirclesTeaser from '../CirclesTeaser';
 import EventTeaser from '../EventTeaser';
-// import FooterNav from '../FooterNav';
 
 class AdminView extends Component {
 
@@ -19,7 +18,6 @@ class AdminView extends Component {
     console.log('mounted Dashboard: ADMIN VIEW', this.props);
   }
 
-        // <FooterNav { ...props } />
   render() {
     const props = this.props;
     const { app } = props;
