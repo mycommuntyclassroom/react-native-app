@@ -21,7 +21,9 @@ class Hero extends Component {
   render() {
 
     const props = this.props
-    const { globalStyles, app } = props
+
+    console.log('hero PROPS: ', props);
+    const { globalStyles, app } = props;
     let userData
 
     // if guardianData is passed in the props, then show guardian data 

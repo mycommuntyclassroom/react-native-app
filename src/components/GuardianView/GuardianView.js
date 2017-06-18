@@ -39,12 +39,12 @@ class GuardianView extends Component {
     const { app } = props;
     const { auth, user, signOut } = app.props
 
-        // <EventTeaser guardianData={this.state} />
     return(
       <ScrollView className="guardian-view">
-        <Hero guardianData={this.state} />
-        <Summary guardianData={this.state} />
-        <CirclesTeaser guardianData={this.state} circlesData={this.state.children || [' ']} title="Children" path="child" />
+        <Hero {...props} guardianData={this.state} />
+        <Summary {...props} guardianData={this.state} />
+        <CirclesTeaser {...props} guardianData={this.state} circlesData={this.state.children || [' ']} title="Children" path="child" />
+        <EventTeaser {...props} guardianData={this.state} />
       </ScrollView>
     )
   }
