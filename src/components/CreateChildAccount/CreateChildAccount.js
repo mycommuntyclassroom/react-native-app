@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { addChildProfile, removeItem } from '../helpers/form';
-import { database } from '../helpers/firebase';
-import actions from '../redux/actions';
-import store from '../redux/store';
+import { addChildProfile, removeItem } from '../../helpers/form';
+import { database } from '../../helpers/firebase';
+import actions from '../../redux/actions';
+import store from '../../redux/store';
 
 import {
   View,
@@ -13,9 +13,11 @@ import {
   ScrollView
 } from 'react-native';
 
-import CheckBox from './CheckBox';
+import CameraRollPicker from 'react-native-camera-roll-picker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import Button from '../components/Button';
+import CheckBox from '../CheckBox';
+import Button from '../Button';
+import Link from '../Link';
 
 // import BackButton from '../components/BackButton';
 
@@ -47,7 +49,8 @@ class CreateChildAccount extends Component {
         lName: '',
         profileImage: '../../../images/blank-profile-pic.png',
         gender: null,
-        uploadProgress: null
+        uploadProgress: null,
+        imageModal: false
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
@@ -72,6 +75,18 @@ class CreateChildAccount extends Component {
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
     this.submitForm=this.submitForm.bind(this);
+  }
+
+  handleImageSelector() {
+    this.setState({imageModal: !this.state.imageModal});
+  }
+
+  selectImage() {
+    this.setState({ profileImage: this.state.selectedImage.uri});
+  }
+
+  getSelectedImages(images, current) {
+    this.setState({selectedImage: current})
   }
 
   /**

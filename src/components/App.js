@@ -115,6 +115,7 @@ class App extends Component {
     const props = this.props;
     // get the status of the user authentication
     let { status } = props.auth;
+    console.log('THIS IS THE status: ', status);
 
     return (
       <LinearGradient colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} style={style.fullscreen}>
