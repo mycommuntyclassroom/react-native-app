@@ -17,7 +17,6 @@ import Link from '../Link';
 
 import { updateProfile, handleFileUpload } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
-import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
@@ -76,18 +75,14 @@ class EditChildAccount extends Component {
   }
 
   handleImageSelector() {
-    console.log('******handleImageSelector CALLED')
     this.setState({imageModal: !this.state.imageModal});
   }
 
   selectImage() {
-    console.log('selectImage CALLED')
     this.setState({ profileImage: this.state.selectedImage.uri});
-    console.log('this is the state: ', this.state)
   }
 
   getSelectedImages(images, current) {
-    var num = images.length;
     this.setState({selectedImage: current})
   }
 

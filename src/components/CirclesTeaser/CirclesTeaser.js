@@ -40,8 +40,8 @@ class CirclesTeaser extends Component {
           <View>
             <Image 
               source={require('../../../images/blank-profile-pic.png')} 
-              resizeMode='contain' 
-              style={{borderRadius:25, width: 50, height: 50}} 
+              resizeMode='cover' 
+              style={style.teaserElement}
             />
           </View>
         break;
@@ -80,7 +80,7 @@ class CirclesTeaser extends Component {
 
         circleElement = 
           <TouchableHighlight key={circle} onPress={ () => app.goToScene('EditChild', {app, childId: circle})} >
-            <Image source={elementImage} resizeMode='contain' style={style.teaserElement} />
+            <Image source={elementImage} resizeMode='cover' style={style.teaserElement} />
           </TouchableHighlight>
 
         circlesOutput.push(circleElement);

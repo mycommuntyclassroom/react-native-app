@@ -67,7 +67,11 @@ class Hero extends Component {
             style={style.edit}
           >
             <TouchableHighlight onPress={() => app.goToScene('EditGuardian', {app})} className="add-item-button edit-profile-button">
-              <Text style={style.editText}>edit</Text>
+              
+              <Image 
+                source={require('../../../images/edit.png')}
+                resizeMode='cover' 
+                style={{width: 60, height: 60}} />
             </TouchableHighlight>
           </LinearGradient>
         }

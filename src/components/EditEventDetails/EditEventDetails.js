@@ -8,15 +8,17 @@ import {
   Image
 } from 'react-native';
 
-import moment from 'moment';
-import DatePicker from 'react-native-datepicker';
-import CheckBox from '../CheckBox';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import Button from '../Button';
+import CameraRollPicker from 'react-native-camera-roll-picker';
+import DatePicker from 'react-native-datepicker';
+import moment from 'moment';
 
-import { updateProfile } from '../../helpers/form';
+import CheckBox from '../CheckBox';
+import Button from '../Button';
+import Link from '../Link';
+
+import { updateProfile, handleFileUpload } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
-import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
