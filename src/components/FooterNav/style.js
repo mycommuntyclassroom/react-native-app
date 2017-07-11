@@ -33,6 +33,10 @@ FooterNav.footerLinkCopy = {
 
 FooterNav.browseHostsButton = {
   position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: 'green',
   zIndex: 2
 }
 
