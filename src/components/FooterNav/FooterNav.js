@@ -19,20 +19,48 @@ import style from './style';
 const FooterNav = (props) => {
 
   const {app} = props;
+  const iconDimensions = {width: 50, height: 50};
 
   return (
-    <View style={style.container}>
+    <View>
       <LinearGradient
         colors={['white', '#dbdbdb']} 
         style={[style.footerNav]}
       >
-        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Dashboard', {app}) } text='HOME' />
-        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Calendar', {app}) } text='CALENDAR' />
+        <Link 
+          extraStyle={style.footerLink} 
+          textStyles={style.footerLinkCopy} 
+          onClick={ () => app.goToScene('Dashboard', {app}) }
+          iconTop={{url: require('../../../images/home.png'), dimensions: iconDimensions }}
+          text='HOME' />
+        <Link 
+          extraStyle={style.footerLink} 
+          textStyles={style.footerLinkCopy} 
+          onClick={ () => app.goToScene('Calendar', {app}) }
+          iconTop={{url: require('../../../images/calendar.png'), dimensions: iconDimensions }}
+          text='CALENDAR' />
+
         <View style={style.footerLink, style.browseHostsLink}>
-          <Link extraStyle={style.browseHostsButton} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('BrowseHosts', {app}) } text='BROWSE HOSTS' />
+          <Link 
+            extraStyle={style.browseHostsButton} 
+            textStyles={style.footerLinkCopy} 
+            onClick={ () => app.goToScene('BrowseHosts', {app}) }
+            iconTop={{url: require('../../../images/globe.png'), dimensions: iconDimensions }}
+            text='BROWSE HOSTS' />
         </View>
-        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Notifications', {app}) } text='NOTIFICATIONS' />
-        <Link extraStyle={style.footerLink} textStyles={style.footerLinkCopy} onClick={ () => app.goToScene('Feedback', {app}) } text='FEEDBACK' />
+
+        <Link 
+          extraStyle={style.footerLink} 
+          textStyles={style.footerLinkCopy} 
+          onClick={ () => app.goToScene('Notifications', {app}) }
+          iconTop={{url: require('../../../images/bell.png'), dimensions: iconDimensions }}
+          text='NOTIFICATIONS' />
+        <Link 
+          extraStyle={style.footerLink}
+          textStyles={style.footerLinkCopy} 
+          onClick={ () => app.goToScene('Feedback', {app}) }
+          iconTop={{url: require('../../../images/feedback.png'), dimensions: iconDimensions }}
+          text='FEEDBACK' />
       </LinearGradient>
       <LinearGradient
         colors={['rgba(255, 255, 255, 1)', 'white']}
