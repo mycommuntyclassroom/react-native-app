@@ -24,7 +24,7 @@
     "react-native-fetch-blob": "^0.10.5",
     "react-native-linear-gradient": "^2.0.0",
     "react-native-simple-radio-button": "^2.5.0-alpha.1",
-    "react-native-snap-carousel": "^2.1.4",
+    "react-native-snap-carousel": "2.1.4",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"

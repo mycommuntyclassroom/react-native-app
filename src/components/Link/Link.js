@@ -1,16 +1,27 @@
 import React from 'react';
 import {
+  View,
   TouchableHighlight,
-  Text
+  Text,
+  Image,
 } from 'react-native';
 
 import style from '../../styles';
 
-const Link = ({ text, onClick, extraStyle, textStyles }) => (
+const Link = ({ text, onClick, extraStyle, textStyles, iconTop }) => (
   <TouchableHighlight style={[style.Link, extraStyle || {}]} onPress={onClick}>
-    <Text style={[style.LinkText, textStyles || {}]}>
-      {text}
-    </Text>
+    <View>
+      { 
+        iconTop &&
+        <Image 
+          source={iconTop.url}
+          resizeMode='cover' 
+          style={iconTop.dimensions} />
+      }
+      <Text style={[style.LinkText, textStyles || {}]}>
+        {text}
+      </Text>
+    </View>
   </TouchableHighlight>
 );
 
