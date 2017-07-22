@@ -20,7 +20,7 @@ const FooterNav = (props) => {
 
   const {app} = props;
   const iconStyles = {width: 100, height: 60, marginBottom: -15, marginTop: -10};
-  const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -5, marginTop: -18, position: 'relative', top: 5};
+  const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -8, marginTop: -20, position: 'relative', top: -5};
 
   return (
     <View>
