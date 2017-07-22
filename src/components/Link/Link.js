@@ -15,7 +15,7 @@ const Link = ({ text, onClick, extraStyle, textStyles, iconTop }) => (
         iconTop &&
         <Image 
           source={iconTop.url}
-          resizeMode='cover' 
+          resizeMode='contain' 
           style={iconTop.dimensions} />
       }
       <Text style={[style.LinkText, textStyles || {}]}>
