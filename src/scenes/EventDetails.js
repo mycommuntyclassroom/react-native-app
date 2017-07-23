@@ -25,7 +25,7 @@ class EventDetails extends Component {
 
     return (
       <View style={{marginBottom: 90, backgroundColor: 'white'}}>
-        <Header backOption={true} { ...props } />
+        <Header backOption={true} scene="BrowseHosts" { ...props } />
         <EventDetailsView {...props} />
       </View>
     );

@@ -79,7 +79,7 @@ class EventDetailsView extends Component {
     } else {
       // Generate the event teasers
       console.log('HERE ** IS THE eventData: ', eventData[0]);
-      hostEventsOutput = generateTeasers(eventData, app.props, (index) => this.handleEventIndex(index), () => this.toggleSeatBooking());
+      hostEventsOutput = generateTeasers(eventData, props, (index) => this.handleEventIndex(index), () => this.toggleSeatBooking());
     }
 
     return(

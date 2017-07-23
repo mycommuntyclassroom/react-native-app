@@ -39,7 +39,10 @@ export function getHostEvents () {
 // 
 export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBooking) {
 
+
   console.log('generateTeasers called')
+  console.log('here is the eventData: ', eventData)
+  console.log('here are the generateTeasers props: ', props)
 
   // this array stores the template elements ex: the event post
   let hostEventsOutput = [];
@@ -112,7 +115,9 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
     }
     hostEventsOutput.push(
       <View className="event-container" key={`${teaserGroup}`}>
-        <Link to={`/guardian/${teaserGroup}`} className="host-name">{eventHostName}</Link>
+        <Link 
+          onClick={() => app.goToScene('GuardianDetails', {app, gid})}
+          text={eventHostName} /> 
         <Carousel
           className="host-events"
           ref={(carousel) => { this._carousel = carousel; }}
