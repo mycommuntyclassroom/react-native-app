@@ -47,7 +47,7 @@ const FooterNav = (props) => {
           iconTop={{url: require('../../../images/globe-blue.png'), dimensions: browseHostsIconStyles }}
           text='BROWSE HOSTS' />
         <Link 
-          extraStyle={[style.footerLink]} 
+          extraStyle={style.footerLink} 
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Notifications', {app}) }
           iconTop={{url: require('../../../images/bell-blue.png'), dimensions: iconStyles }}

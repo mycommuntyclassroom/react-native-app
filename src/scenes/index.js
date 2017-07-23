@@ -19,6 +19,7 @@ import CreateChild from './CreateChild';
 import EditChild from './EditChild';
 import CreateEvent from './CreateEvent';
 import EditEvent from './EditEvent';
+import EventDetails from './EventDetails';
 import BrowseHosts from './BrowseHosts';
 import Notifications from './Notifications';
 
@@ -44,6 +45,7 @@ export default {
   EditChild,
   CreateEvent,
   EditEvent,
+  EventDetails,
   BrowseHosts,
   Notifications
 };

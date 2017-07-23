@@ -3,6 +3,7 @@ import {
   View,
   Text,
   Image,
+  TouchableHighlight,
   ScrollView
 } from 'react-native';
 
@@ -58,14 +59,14 @@ class BrowseHostsOutput extends Component {
 
         teaserElement =
           <View style={style.teaserContainer} id={teaser} key={teaser}>
-            <View 
-              className="event-image" 
-              onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
-            </View>
-            <Image 
-              source={eventImage} 
-              resizeMode='cover' 
-              style={style.teaserImage} />
+            <TouchableHighlight
+              onPress={() => app.goToScene('EventDetails', {app, gid})} 
+            >
+              <Image 
+                source={eventImage} 
+                resizeMode='cover' 
+                style={style.teaserImage} />
+            </TouchableHighlight>
             <LinearGradient 
               style={style.eventView}
               colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
