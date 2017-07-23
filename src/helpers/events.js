@@ -68,7 +68,6 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
       teaserElement =
         <View className="teaser-container" id={teaser} key={teaser}>
           <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
-            <img src={image} alt={title} />
             {/*<Image 
                           source={eventImage} 
                           resizeMode='cover' 
@@ -85,7 +84,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             <View className="tags">
               { 
                 ageRange.map((item) => {
-                  return <View className="tag-item" key={`${teaser}${item}`}>{item}</View>
+                  return <Text className="tag-item" key={`${teaser}${item}`}>{item}</Text>
                 })
               }
             </View>
@@ -96,17 +95,17 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
                   let daysArray = teaserData.recurringDays;
                   if(daysArray.length === 1 && item === ' '){
                     let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
-                    return <View key={`${teaser}${item}`}>{stringDate}</View>
+                    return <Text key={`${teaser}${item}`}>{stringDate}</Text>
                   }
                   else if(index === 0 || index === 1) {
-                    return <View key={`${teaser}${item}`}>{item}</View>
+                    return <Text key={`${teaser}${item}`}>{item}</Text>
                   } else{
-                    return <View key={`${teaser}${item}`}>/{item}</View>
+                    return <Text key={`${teaser}${item}`}>/{item}</Text>
                   }
                 })
               }
             </View>
-            <View className="time">{startTime} - {finishTime}</View>
+            <Text className="time">{startTime} - {finishTime}</Text>
           </View>
         </View>
       teaserOutput.push(teaserElement);

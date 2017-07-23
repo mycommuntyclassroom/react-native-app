@@ -84,9 +84,8 @@ class EventDetailsView extends Component {
 
     return(
       <View style={style.browseHosts, style.eventDetails}>
-        {/*<Header backOption={true} { ...props } />
         { hostEventsOutput }
-        <Text>{ summary }</Text>
+        {/*<Text>{ summary }</Text>
         <CirclesTeaser 
             circlesData={selectedEventDetails} 
             circleType="eventDetail" />
@@ -96,7 +95,6 @@ class EventDetailsView extends Component {
                     {...props} 
                     selectedEventDetails={selectedEventDetails}
                     currentEventIndex={currentEventIndex} />*/}
-        <FooterNav { ...props } />
       </View>
     )
   }
