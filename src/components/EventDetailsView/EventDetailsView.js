@@ -35,13 +35,13 @@ class EventDetailsView extends Component {
   }
 
   handleEventIndex (index) {
-    // this.setState({ eventIndex: index })
+    this.setState({ eventIndex: index })
   }
 
   toggleSeatBooking () {
     let visibilityStatus = this.state.visibility;
     let visibility = visibilityStatus == 'hidden' ? '' : 'hidden';
-    // this.setState({ visibility })
+    this.setState({ visibility })
   }
 
   render() {
@@ -66,6 +66,7 @@ class EventDetailsView extends Component {
     }
     
     const eventData = eventGroup || [' '];
+    console.log('eventData: ', eventData);
 
     // // this array stores the template elements ex: the event posts
     let hostEventsOutput = [];
@@ -78,7 +79,7 @@ class EventDetailsView extends Component {
     } else {
       // Generate the event teasers
       console.log('HERE ** IS THE eventData: ', eventData[0]);
-      hostEventsOutput 
+      hostEventsOutput = generateTeasers(eventData, app.props, (index) => this.handleEventIndex(index), () => this.toggleSeatBooking());
     }
 
     return(

@@ -29,9 +29,9 @@ class Tutorial extends Component {
   next(slideIndex) {
     const { app } = this.props;
     this.state.slideIndex === 4 
-      // progress the slider by the index value
-      ? app.goToScene('Dashboard', {app})
       // go to the dashboard scene
+      ? app.goToScene('Dashboard', {app})
+      // progress the slider by the index value
       : this._carousel.snapToNext()
   }
 

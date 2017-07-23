@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
-import { database } from './firebase';
+import {
+  View,
+  TouchableHighlight,
+  Text
+} from 'react-native';
 
-import RequestFriendButton from '../components/RequestFriendButton';
+import { database } from './firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
+
+import Carousel from 'react-native-snap-carousel';
+import Link from '../components/Link';
+import RequestFriendButton from '../components/RequestFriendButton';
+import { deviceDimensions } from '../styles';
+
+const { deviceWidth, deviceHeight } = deviceDimensions;
 
 
 // GET ALL CLASSROOM EVENTS
@@ -22,84 +33,104 @@ export function getHostEvents () {
 }
 
 
-// generate teaser based on the data passed to this function
-function generateTeasers() {
-  for (let teaser in teaserData) {
-    const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
+// BROWSE HOSTS TEASERS
+// 
+// generate event teasers based on the data passed to this function
+// 
+export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBooking) {
 
-          // <Image source={require(image)} resizeMode='contain' />
+  console.log('generateTeasers called')
 
-    // handle the output of the image
-    let eventImage = image != '../../../images/blank-profile-pic.png'
-      ? {uri: image} 
-      : require('../../../images/blank-profile-pic.png');
+  // this array stores the template elements ex: the event post
+  let hostEventsOutput = [];
+  let teaserOutput = [];
+  let teaserElement;
 
-    teaserElement =
-      <View style={style.teaserElement} key={teaser}>
-        <TouchableHighlight className="event-image" onPress={ () => app.goToScene('EventDetails') }>
-          <Image 
-            source={eventImage} 
-            resizeMode='cover' 
-            style={style.teaserImage} />
-        </TouchableHighlight>
-        <View style={style.addEventContainer}>
-          <LinearGradient
-            colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-            style={[globalStyles.addItem, style.editItem]}
-          >
-            <Link textStyles={style.addCopy} onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='edit' />
-          </LinearGradient>
-          {
-           !props.guardianData &&
-            <LinearGradient
-              colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-              style={[globalStyles.addItem, style.addItem]}
-            >
-              <Link textStyles={style.addCopy} onClick={ () => app.goToScene('CreateEvent') } text='+' />
-            </LinearGradient>
-          }
-        </View>
-        <View style={style.eventView}>
-          <Text style={style.eventTitle}>{title}</Text>
-          <View style={style.eventTags}>
-            { 
-              teaserData[teaser].ageRange.map((item) => {
-                return (
-                  <View className="tag-item" key={`${teaser}${item}`}>
-                    <Text style={style.tagItemCopy}>{item}</Text>
-                  </View>
-                )
-              })
-            }
-          </View>
-          <View style={style.eventDays}>
-            {
-              // develop the view for recurring days ex: M/W/F
-              // if there are no recurring days, show the date of the event
-              teaserData[teaser].recurringDays.map((item, index) => {
-                let daysArray = teaserData[teaser].recurringDays;
-
-                if(daysArray.length === 1 && item === ' ') {
-                  let stringDate = teaserData[teaser].startDate.split(' ').slice(0,3).join(' ')
-                  return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{stringDate}</Text></View>
-                }
-                else if(index === 0 || index === 1) {
-                  return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{item}</Text></View>
-                } else {
-                  return <View key={`${teaser}${item}`}><Text style={style.eventDay}>/{item}</Text></View>
-                }
-              })
-            }
-          </View>
-          <View className="time"><Text>{startTime} - {finishTime}</Text></View>
-        </View>
-      </View>
-    teaserOutput.push(teaserElement);
+  function slideChange (index) {
+    return handleEventIndex(index)
   }
 
-  // if teaserOutput is empty after the array, fill it with an empty string value
+  // loop through each guardian group of events
+  for (let teaserGroup in eventData) {
+    teaserOutput = [];
+
+    // set vars at this scope to be used in the hostEventsOutput
+    let eventHostName;
+
+    // iterate through each host event within the current group
+    for (let teaser in eventData[teaserGroup]) {
+      
+      let teaserData = eventData[teaserGroup][teaser];
+      const { gid, hostName, title, image, startTime, finishTime } = teaserData;
+      const ageRange = teaserData.ageRange || [];
+      eventHostName = hostName;
+
+      teaserElement =
+        <View className="teaser-container" id={teaser} key={teaser}>
+          <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
+            <img src={image} alt={title} />
+            {/*<Image 
+                          source={eventImage} 
+                          resizeMode='cover' 
+                          style={style.teaserImage} />*/}
+          </View>
+          <View className="event-View">
+            { toggleSeatBooking && 
+              <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
+                <Text>FaChild</Text>
+              </View>
+            }
+            <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
+            <Text>{title}</Text>
+            <View className="tags">
+              { 
+                ageRange.map((item) => {
+                  return <View className="tag-item" key={`${teaser}${item}`}>{item}</View>
+                })
+              }
+            </View>
+            <View className="days">
+              {
+                teaserData.recurringDays.map((item, index) => {
+                  // conditionals for handling the various output for the recurring days
+                  let daysArray = teaserData.recurringDays;
+                  if(daysArray.length === 1 && item === ' '){
+                    let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
+                    return <View key={`${teaser}${item}`}>{stringDate}</View>
+                  }
+                  else if(index === 0 || index === 1) {
+                    return <View key={`${teaser}${item}`}>{item}</View>
+                  } else{
+                    return <View key={`${teaser}${item}`}>/{item}</View>
+                  }
+                })
+              }
+            </View>
+            <View className="time">{startTime} - {finishTime}</View>
+          </View>
+        </View>
+      teaserOutput.push(teaserElement);
+    }
+    hostEventsOutput.push(
+      <View className="event-container" key={`${teaserGroup}`}>
+        <Link to={`/guardian/${teaserGroup}`} className="host-name">{eventHostName}</Link>
+        <Carousel
+          className="host-events"
+          ref={(carousel) => { this._carousel = carousel; }}
+          sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
+          itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
+          onSnapToItem={(slideIndex) => { slideChange(slideIndex) }}
+        >
+          {teaserOutput}
+        </Carousel>
+      </View>
+    )
+  }
+  // if hostEventsOutput is empty after the array, fill it with an empty string value
   // this is to prevent the react-slick slider from throwing an undefined error
-  teaserOutput = teaserOutput == [] ? [' '] : teaserOutput;
+  hostEventsOutput = hostEventsOutput === [] ? [' '] : hostEventsOutput;
+
+  return hostEventsOutput;
 }
 
 // CHILD DROP-OFF
