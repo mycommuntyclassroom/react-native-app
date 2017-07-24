@@ -18,7 +18,7 @@ const BackButton = (props) => {
     : link = () => app.goToScene('Dashboard', {app}) 
 
   return(
-    <View className="back-button" style={{position: 'absolute', top:0, left: 0}}> 
+    <View className="back-button"> 
       <TouchableHighlight onPress={link}>
         <Image 
           source={require('../../../images/back-arrow.png')}
