@@ -2,7 +2,8 @@ import React from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 
 const BackButton = (props) => {
@@ -17,9 +18,12 @@ const BackButton = (props) => {
     : link = () => app.goToScene('Dashboard', {app}) 
 
   return(
-    <View className="back-button"> 
+    <View className="back-button" style={{position: 'absolute', top:0, left: 0}}> 
       <TouchableHighlight onPress={link}>
-        <Text> TiArrowLeft </Text>
+        <Image 
+          source={require('../../../images/back-arrow.png')}
+          resizeMode='contain' 
+          style={{width:60, height: 30}} />
       </TouchableHighlight>
     </View>
   )

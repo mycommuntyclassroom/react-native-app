@@ -56,7 +56,7 @@ const FooterNav = (props) => {
           extraStyle={style.footerLink}
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Feedback', {app}) }
-          iconTop={{url: require('../../../images/bell-blue.png'), dimensions: iconStyles }}
+          iconTop={{url: require('../../../images/feedback-blue.png'), dimensions: iconStyles }}
           text='FEEDBACK' />
       </LinearGradient>
       <LinearGradient
