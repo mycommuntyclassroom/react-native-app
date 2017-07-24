@@ -78,7 +78,7 @@ class Header extends Component {
 
     let headerNav;
 
-    // handle outputting the back button vs the nav button
+    // handle output of the back button vs the nav button
     if(props.backOption) {
       headerNav = <BackButton {...props} />
     } else {

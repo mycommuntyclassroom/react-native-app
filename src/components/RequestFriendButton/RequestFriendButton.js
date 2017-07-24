@@ -31,7 +31,9 @@ class RequestFriendButton extends Component {
     }
 
     const props = this.props;
+    console.log('Here are the RequestFriendButton props: ', props)
     const { app, browseHostsStyle, globalStyles, requester } = props;
+    console.log('globalStyles: ', globalStyles)
 
     let buttonOutput = ''
           // <View className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</View>
@@ -52,7 +54,7 @@ class RequestFriendButton extends Component {
         </LinearGradient>
     }
     else {
-      // default to outputting the requrst friend icon
+      // default to outputting the request friend icon
       buttonOutput = 
         <LinearGradient
           style={[browseHostsStyle, globalStyles.addItem]}

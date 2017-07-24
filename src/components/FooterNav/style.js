@@ -32,10 +32,10 @@ FooterNav.footerLinkCopy = {
 }
 
 FooterNav.browseHostsButton = {
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  // position: 'relative',
+  // display: 'flex',
+  // alignItems: 'center',
+  // justifyContent: 'center',
   backgroundColor: 'green',
   zIndex: 2
 }
@@ -46,21 +46,21 @@ FooterNav.browseHostsLink = {
   borderColor: styleVariables.mc2lightGray,
   borderRightWidth: 1,
   position: 'relative',
-  top: -3,
+  top: -4,
   borderTopColor: '#fdfdfd',
-  borderTopWidth: 5,
+  borderTopWidth: 10,
   zIndex: 2
 }
 
 FooterNav.decoCurve = {
   position: 'absolute',
-  height: 75,
-  top: -27,
+  height: 65,
+  top: -20,
   shadowColor: 'rgba(51, 51, 112, 0.6)',
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 1,
-  width: 84,
-  left: 145,
+  width: 87,
+  left: 144,
   borderRadius: 30,
   zIndex: -1
 }

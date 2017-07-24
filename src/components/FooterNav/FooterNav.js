@@ -19,7 +19,8 @@ import style from './style';
 const FooterNav = (props) => {
 
   const {app} = props;
-  const iconDimensions = {width: 50, height: 50};
+  const iconStyles = {width: 100, height: 60, marginBottom: -15, marginTop: -10};
+  const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -8, marginTop: -20, position: 'relative', top: -5};
 
   return (
     <View>
@@ -31,35 +32,31 @@ const FooterNav = (props) => {
           extraStyle={style.footerLink} 
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Dashboard', {app}) }
-          iconTop={{url: require('../../../images/home.png'), dimensions: iconDimensions }}
+          iconTop={{url: require('../../../images/home-blue.png'), dimensions: iconStyles }}
           text='HOME' />
         <Link 
           extraStyle={style.footerLink} 
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Calendar', {app}) }
-          iconTop={{url: require('../../../images/calendar.png'), dimensions: iconDimensions }}
+          iconTop={{url: require('../../../images/calander-blue.png'), dimensions: iconStyles }}
           text='CALENDAR' />
-
-        <View style={style.footerLink, style.browseHostsLink}>
-          <Link 
-            extraStyle={style.browseHostsButton} 
-            textStyles={style.footerLinkCopy} 
-            onClick={ () => app.goToScene('BrowseHosts', {app}) }
-            iconTop={{url: require('../../../images/globe.png'), dimensions: iconDimensions }}
-            text='BROWSE HOSTS' />
-        </View>
-
+        <Link 
+          extraStyle={style.footerLink, style.browseHostsLink} 
+          textStyles={style.footerLinkCopy} 
+          onClick={ () => app.goToScene('BrowseHosts', {app}) }
+          iconTop={{url: require('../../../images/globe-blue.png'), dimensions: browseHostsIconStyles }}
+          text='BROWSE HOSTS' />
         <Link 
           extraStyle={style.footerLink} 
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Notifications', {app}) }
-          iconTop={{url: require('../../../images/bell.png'), dimensions: iconDimensions }}
+          iconTop={{url: require('../../../images/bell-blue.png'), dimensions: iconStyles }}
           text='NOTIFICATIONS' />
         <Link 
           extraStyle={style.footerLink}
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Feedback', {app}) }
-          iconTop={{url: require('../../../images/feedback.png'), dimensions: iconDimensions }}
+          iconTop={{url: require('../../../images/bell-blue.png'), dimensions: iconStyles }}
           text='FEEDBACK' />
       </LinearGradient>
       <LinearGradient
