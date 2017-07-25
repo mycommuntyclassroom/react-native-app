@@ -47,6 +47,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   console.log('generateTeasers called')
   console.log('here is the eventData: ', eventData)
   console.log('here are the generateTeasers props: ', props)
+  const { app } = props;
 
   // this array stores the template elements ex: the event post
   let hostEventsOutput = [];
@@ -82,14 +83,10 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 
       teaserElement =
         <View style={EventStyles.teaserContainer} id={teaser} key={teaser}>
-          <TouchableHighlight
-            onPress={() => app.goToScene('EventDetails', {app, gid})} 
-          >
-            <Image 
-              source={eventImage} 
-              resizeMode='cover' 
-              style={EventStyles.teaserImage} />
-          </TouchableHighlight>
+          <Image 
+            source={eventImage} 
+            resizeMode='cover' 
+            style={EventStyles.teaserImage} />
           <LinearGradient 
             style={EventStyles.eventView}
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
@@ -141,7 +138,9 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
     hostEventsOutput.push(
       <View className="event-container" key={`${teaserGroup}`}>
         <Link 
-          onClick={() => app.goToScene('GuardianDetails', {app, gid})}
+          onClick={() => app.goToScene('GuardianDetails', {app, gid})} 
+          extraStyle={EventStyles.hostName}
+          textStyles={EventStyles.hostNameText}
           text={eventHostName} /> 
         <Carousel
           className="host-events"

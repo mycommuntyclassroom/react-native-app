@@ -48,16 +48,19 @@ class CirclesTeaser extends Component {
       case 'eventDetail':
         nullOutput = 
           <View className="no-child-booked">
-            There are no children booked for this event
+            <Text>There are no children booked for this event</Text>
           </View>;
-        circlesData = circlesData.students || []
+        circlesData = circlesData.students || false
         customClassName = 'children-event-bubble'
         break;
       default:
         // statements_def
         break;
     }
-    circlesData[0] === ' '
+
+    // if there is no data for the circlesData, assign it a null output,
+    // otherwise, output the circles
+    !circlesData
       ? circlesOutput = nullOutput
       : generateCircles();
 
