@@ -16,7 +16,6 @@ import style from './style';
 class EventDetailsView extends Component {
 
   constructor(props){
-    console.log('constructor for the event details reached')
     super();
 
     this.state = {
@@ -55,8 +54,6 @@ class EventDetailsView extends Component {
     let summary = selectedEventDetails ? selectedEventDetails.summary : '';
     let eventGroup = {};
 
-    console.log('eventDetails: ', eventDetails)
-
     // filter by the selected host 
     for(let hostId in app.props.events) {
       if (hostId === gid) {
@@ -66,7 +63,6 @@ class EventDetailsView extends Component {
     }
     
     const eventData = eventGroup || [' '];
-    console.log('eventData: ', eventData);
 
     // // this array stores the template elements ex: the event posts
     let hostEventsOutput = [];
@@ -78,14 +74,13 @@ class EventDetailsView extends Component {
         <View style={style.eventTeaserElement, style.nullTeaser}></View>;
     } else {
       // Generate the event teasers
-      console.log('HERE ** IS THE eventData: ', eventData[0]);
       hostEventsOutput = generateTeasers(eventData, props, (index) => this.handleEventIndex(index), () => this.toggleSeatBooking());
     }
 
     return(
-      <View style={style.browseHosts, style.eventDetails}>
+      <View style={style.eventDetails}>
         { hostEventsOutput }
-        <Text>{ summary }</Text>
+        <Text style={style.eventSummary}>{ summary }</Text>
         <CirclesTeaser 
           circlesData={selectedEventDetails} 
           circleType="eventDetail" />

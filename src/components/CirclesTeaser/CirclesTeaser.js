@@ -47,7 +47,7 @@ class CirclesTeaser extends Component {
         break;
       case 'eventDetail':
         nullOutput = 
-          <View className="no-child-booked">
+          <View style={style.noChildBooked}>
             <Text>There are no children booked for this event</Text>
           </View>;
         circlesData = circlesData.students || false
@@ -97,7 +97,7 @@ class CirclesTeaser extends Component {
     const { title, path, app } = props
 
     return(
-      <View style={style.container}>
+      <View style={[style.container, props.customStyles || {}] }>
         { title && <Text style={style.title}>{title}</Text> }
         <View style={style.circleGroup}>
           <Carousel

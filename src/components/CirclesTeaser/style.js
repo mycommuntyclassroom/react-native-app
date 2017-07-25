@@ -14,9 +14,7 @@ CirclesTeaser.container = {
   justifyContent: 'flex-start',
   backgroundColor: 'white',
   paddingTop: 15,
-  paddingBottom: 15,
-  borderBottomWidth: 1,
-  borderColor: styleVariables.mc2medLightGray
+  paddingBottom: 15
 }
 
 CirclesTeaser.circleGroup = {
@@ -49,6 +47,10 @@ CirclesTeaser.addItem = {
 CirclesTeaser.addItemText = {
   color: 'white',
   fontSize: 26
+}
+
+CirclesTeaser.noChildBooked = {
+  padding: 10
 }
 
 export default CirclesTeaser;
