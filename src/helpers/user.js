@@ -18,14 +18,12 @@ export function signInHandler (provider, type, data) {
   switch(type) {
     case 'CREATING_ACCOUNT':
       AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
-      console.log('CURRENTLY Creating an ACCOUNT, AsyncStorage.type: ', AsyncStorage.getItem('type'))
       AsyncStorage.setItem('status', 'COLLECTING_USER_PROFILE');
       break;
     case 'SIGNING_IN':
       AsyncStorage.setItem('type', 'SIGNING_IN');
       break;
   }
-  console.log('sign in handler called, COLLECTING_USER_PROFILE is SET AsyncStorage.status: ', AsyncStorage.status );
   switch (provider) {
     case 'google':
       auth.signInWithRedirect(googleAuthProvider);
@@ -35,7 +33,6 @@ export function signInHandler (provider, type, data) {
       break;
     case 'manual':
       const { email, password } = data;
-      console.log('***Email and PW called: ', data);
       createUserWithEmailAndPassword(email, password);
       break;
     default:
@@ -142,9 +139,13 @@ export function requestFriend (props, hostId, handlePending) {
           .update(friendRequestObj);
 
   // update the store with a pending status
-  const pendingGroup = props.pendingRequests || {}
+  //
+  // create a new instance of the current user object, add the new pending requests object
+  const currentUserObj = props.user;
+  const newUserObj = Object.assign({}, currentUserObj);
+  const pendingGroup = props.user.pendingRequests || {}
   const newPendingGroup = Object.assign(pendingGroup, friendRequestObj);
-  console.log('newPendingGroup: ', newPendingGroup);
+  newUserObj['pendingRequests'] = newPendingGroup;
 
   // add a pending class to the add friend button
   return handlePending();
@@ -288,6 +289,8 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
 // 
 // 
 export function checkRelationship (relationship, props, gid) {
+
+  console.log('checkRelationship props: ', props)
 
   switch (relationship) {
     case 'friend':
