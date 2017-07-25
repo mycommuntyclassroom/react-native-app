@@ -101,6 +101,8 @@ export function authenticateUser (user, navigator) {
 // 
 export function requestFriend (userData, hostId) {
 
+  console.log('requestFriend called')
+
   const { displayName, uid } = userData;
   let message = 'would like to connect.';
   let timestamp = (new Date()).getTime();
