@@ -308,17 +308,26 @@ class EditGuardianAccount extends Component {
             onChangeText={ (value) => this.handleChange(value, 'summary') } />
 
 
-          <View className="seats-available">
+          <View style={{ position: 'relative' }}>
             <Text>Seats Available</Text>
-            <View>
+            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
               <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
-                <Text>Minus Icon</Text> 
+                <Image 
+                  source={require('../../../images/minus-white.png')}
+                  resizeMode='contain'
+                  style={{width: 40, height: 40}} />
               </TouchableHighlight>
-              <Text>Chair Icon</Text>
-              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
-                <Text>Plus Icon</Text> 
+              <Image 
+                source={require('../../../images/chair-white.png')}
+                resizeMode='cover'
+                style={{width:100, height: 120}} />
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('add')}> 
+                <Image 
+                  source={require('../../../images/plus-sign-white.png')}
+                  resizeMode='contain' 
+                  style={{width:40, height: 40}} />
               </TouchableHighlight>
-              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
+              <View style={{ position: 'absolute' }}><Text>{ this.state.seatsAvailable }</Text></View>
             </View>
           </View>
 
