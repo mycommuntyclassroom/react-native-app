@@ -21,6 +21,11 @@ export default function userReducer(state = initialState.auth, action) {
         status: 'FRIEND_ADDED',
         ...action.friendObj
       };
+    case 'FRIEND_REQUEST':
+      return {
+        status: 'FRIEND_REQUEST',
+        ...action.pendingRequests
+      };
     default:
       return state;
   }

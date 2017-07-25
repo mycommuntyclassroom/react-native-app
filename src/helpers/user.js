@@ -98,12 +98,19 @@ export function authenticateUser (user, navigator) {
 
 // REQUEST A FRIEND
 // 
+// Handle the event of making a friend request.
+// prevent users from making multiple friend requests
+// trigger a notification for the request when its made
 // 
-export function requestFriend (userData, hostId) {
+export function requestFriend (props, hostId, handlePending) {
+  
+  console.log('requestFriend Called: ')
+  // EXIT this function if the friend request is pending
+  if (checkRelationship('pending', props, hostId) === 'pending') return;
 
-  console.log('requestFriend called')
+  console.log('requestFriend Called NOT PENDING: ')
 
-  const { displayName, uid } = userData;
+  const { displayName, uid } = props.auth;
   let message = 'would like to connect.';
   let timestamp = (new Date()).getTime();
   
@@ -116,17 +123,31 @@ export function requestFriend (userData, hostId) {
     seen: false,
     timestamp
   }
-  // send the request to the notifications tree
+  // send the request to the guardian's notifications branch
   database.ref(`guardians/${hostId}/notifications`)
           .push(userObj);
+
   // add the requested user's id to the requester's [pendingRequests] tree
-  // first set the object that will go into the update method
+  // first build the object that will go into the update method and the store
   let emptyObj = {};
   emptyObj[`${hostId}`] = uid;
-  let passedId = emptyObj;
+  let friendRequestObj = emptyObj;
   
   database.ref(`guardians/${uid}/pendingRequests`)
-          .update(passedId);
+          .update(friendRequestObj);
+
+  // send the request to the guardian's incomingRequests branch
+  // so we can use its data to deliniate the output of a request
+  database.ref(`guardians/${hostId}/incomingRequests`)
+          .update(friendRequestObj);
+
+  // update the store with a pending status
+  const pendingGroup = props.pendingRequests || {}
+  const newPendingGroup = Object.assign(pendingGroup, friendRequestObj);
+  console.log('newPendingGroup: ', newPendingGroup);
+
+  // add a pending class to the add friend button
+  return handlePending();
 
 }
 
