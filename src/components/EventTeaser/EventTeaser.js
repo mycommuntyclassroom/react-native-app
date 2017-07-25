@@ -73,7 +73,12 @@ class EventTeaser extends Component {
                 colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
                 style={[globalStyles.addItem, style.editItem]}
               >
-                <Link textStyles={style.addCopy} onClick={ () => app.goToScene('EditEvent', {app, eventId: teaser}) } text='edit' />
+                <TouchableHighlight onPress={ () => app.goToScene('EditEvent', {app, eventId: teaser}) }>
+                  <Image
+                    source={require('../../../images/edit.png')}
+                    resizeMode='cover' 
+                    style={{width: 40, height: 40}} />
+                </TouchableHighlight>
               </LinearGradient>
               {
                !props.guardianData &&
@@ -81,7 +86,12 @@ class EventTeaser extends Component {
                   colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
                   style={[globalStyles.addItem, style.addItem]}
                 >
-                  <Link textStyles={style.addCopy} onClick={ () => app.goToScene('CreateEvent') } text='+' />
+                  <TouchableHighlight onPress={ () => app.goToScene('CreateEvent') }>
+                    <Image
+                      source={require('../../../images/plus-sign-white.png')}
+                      resizeMode='cover' 
+                      style={{position: 'relative', top: 2, left: 1, width: 35, height: 30}} />
+                  </TouchableHighlight>
                 </LinearGradient>
               }
             </View>

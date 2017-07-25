@@ -2,16 +2,20 @@ import React, {Component} from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
+
+import Carousel from 'react-native-snap-carousel';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { database } from './firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
 
-import Carousel from 'react-native-snap-carousel';
 import Link from '../components/Link';
 import RequestFriendButton from '../components/RequestFriendButton';
+import EventStyles from '../components/BrowseHostsOutput/style';
 import { deviceDimensions } from '../styles';
 
 const { deviceWidth, deviceHeight } = deviceDimensions;
@@ -64,52 +68,73 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
     for (let teaser in eventData[teaserGroup]) {
       
       let teaserData = eventData[teaserGroup][teaser];
-      const { gid, hostName, title, image, startTime, finishTime } = teaserData;
+      const { hostName, title, image, startTime, finishTime } = teaserData;
+
+      // set the gid for the scope above
+      gid = teaserData.gid
       const ageRange = teaserData.ageRange || [];
       eventHostName = hostName;
 
+      // handle the output of the image
+      let eventImage = image != '../../images/blank-profile-pic.png'
+        ? {uri: image} 
+        : require('../../images/blank-profile-pic.png');
+
       teaserElement =
-        <View className="teaser-container" id={teaser} key={teaser}>
-          <View className="event-image" onClick={ () => browserHistory.push(`/event-details/${gid}/${teaser}`) }>
-            {/*<Image 
-                          source={eventImage} 
-                          resizeMode='cover' 
-                          style={style.teaserImage} />*/}
-          </View>
-          <View className="event-View">
-            { toggleSeatBooking && 
-              <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
-                <Text>FaChild</Text>
-              </View>
+        <View style={EventStyles.teaserContainer} id={teaser} key={teaser}>
+          <TouchableHighlight
+            onPress={() => app.goToScene('EventDetails', {app, gid})} 
+          >
+            <Image 
+              source={eventImage} 
+              resizeMode='cover' 
+              style={EventStyles.teaserImage} />
+          </TouchableHighlight>
+          <LinearGradient 
+            style={EventStyles.eventView}
+            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
+          >
+            { 
+              // toggleSeatBooking && 
+              // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
+              //   <FaChild/>
+              // </View>
             }
-            <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} />
-            <Text>{title}</Text>
-            <View className="tags">
+            <Text style={EventStyles.title}>{title}</Text>
+            <View style={EventStyles.tags}>
               { 
                 ageRange.map((item) => {
-                  return <Text className="tag-item" key={`${teaser}${item}`}>{item}</Text>
+                  return (
+                    <View style={EventStyles.bulletAndTagItem} key={`${teaser}${item}`}>
+                      <View style={EventStyles.bullet} />
+                      <Text style={EventStyles.tagItem}>{item}</Text>
+                    </View>
+                  )
                 })
               }
             </View>
-            <View className="days">
-              {
-                teaserData.recurringDays.map((item, index) => {
-                  // conditionals for handling the various output for the recurring days
-                  let daysArray = teaserData.recurringDays;
-                  if(daysArray.length === 1 && item === ' '){
-                    let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
-                    return <Text key={`${teaser}${item}`}>{stringDate}</Text>
-                  }
-                  else if(index === 0 || index === 1) {
-                    return <Text key={`${teaser}${item}`}>{item}</Text>
-                  } else{
-                    return <Text key={`${teaser}${item}`}>/{item}</Text>
-                  }
-                })
-              }
+            <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={EventStyles.requestFriendButton} />
+            <View style={EventStyles.dayAndTime}>
+              <View style={EventStyles.days}>
+                {
+                  teaserData.recurringDays.map((item, index) => {
+                    // conditionals for handling the various output for the recurring days
+                    let daysArray = teaserData.recurringDays;
+                    if(daysArray.length === 1 && item === ' '){
+                      let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
+                      return <Text style={EventStyles.dayText} key={`${teaser}${item}`}>{stringDate}</Text>
+                    }
+                    else if(index === 0 || index === 1) {
+                      return <Text style={EventStyles.dayText} key={`${teaser}${item}`}>{item}</Text>
+                    } else{
+                      return <Text style={EventStyles.dayText} key={`${teaser}${item}`}>/{item}</Text>
+                    }
+                  })
+                }
+              </View>
+              <View style={EventStyles.time}><Text style={EventStyles.timeText}>{startTime} - {finishTime}</Text></View>
             </View>
-            <Text className="time">{startTime} - {finishTime}</Text>
-          </View>
+          </LinearGradient>
         </View>
       teaserOutput.push(teaserElement);
     }

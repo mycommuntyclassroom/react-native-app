@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { deviceDimensions } from '../../styles';
@@ -75,15 +76,21 @@ class Summary extends Component {
         <View style={style.raitingsAndComments}> 
           <View style={style.raitings}>
             <View className="star-icon">
-              <Text>MdStar</Text> 
+              <Image 
+                source={require('../../../images/ratings-purp.png')}
+                resizeMode='cover' 
+                style={{width: 30, height: 30}} />
             </View>
             <View className="count">
-              <Text style={style.summaryCopy}>4.8</Text>
+              <Text style={style.summaryCopy}>5</Text>
             </View>
           </View>
           <View style={style.comments}>
             <View className="comments-icon">
-              <Text>FaCommentsO</Text>
+              <Image 
+                source={require('../../../images/reviews-purp.png')}
+                resizeMode='cover' 
+                style={{width: 30, height: 30}} />
             </View>
             <View className="count">
               <Text style={style.summaryCopy}>12</Text>

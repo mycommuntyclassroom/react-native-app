@@ -159,8 +159,14 @@ class EditGuardianAccount extends Component {
     const updatedUser = Object.assign(currentUserObject, data)
 
     // store the selected image's url
-    const { selectedImage } = this.state;
-    let imageUri = selectedImage.uri;
+    const { selectedImage, profileImage } = this.state;
+    console.log('selectedImage: ', selectedImage)
+    let imageUri
+    selectedImage
+      ? imageUri = selectedImage.uri
+      : imageUri = profileImage
+    // let imageUri = selectedImage.uri || profileImage;
+
     // upload the profile image 
     handleFileUpload(imageUri, selectedImage, this.storageRef, this.userRef);
 

@@ -29,17 +29,10 @@ class Hero extends Component {
     props.guardianData ? userData = props.guardianData : userData = props.user
     const { profileImage, photoURL, displayName, street, city, state, zipCode } = userData;
 
-    console.log('this is the hero profileImage: ', profileImage);
-
     // handle the output of the required image
     let userImage = profileImage != '../../../images/blank-profile-pic.png'
       ? {uri: profileImage} 
       : require('../../../images/blank-profile-pic.png');
-
-    // let ImageStyles = {
-    //   backgroundImage: `url('${userImg}')`,
-    //   backgroundSize: 'cover'
-    // };
 
     return(
       <View style={style.container}>
