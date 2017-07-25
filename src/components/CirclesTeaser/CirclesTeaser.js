@@ -47,17 +47,20 @@ class CirclesTeaser extends Component {
         break;
       case 'eventDetail':
         nullOutput = 
-          <View className="no-child-booked">
-            There are no children booked for this event
+          <View style={style.noChildBooked}>
+            <Text>There are no children booked for this event</Text>
           </View>;
-        circlesData = circlesData.students || []
+        circlesData = circlesData.students || false
         customClassName = 'children-event-bubble'
         break;
       default:
         // statements_def
         break;
     }
-    circlesData[0] === ' '
+
+    // if there is no data for the circlesData, assign it a null output,
+    // otherwise, output the circles
+    !circlesData
       ? circlesOutput = nullOutput
       : generateCircles();
 
@@ -94,7 +97,7 @@ class CirclesTeaser extends Component {
     const { title, path, app } = props
 
     return(
-      <View style={style.container}>
+      <View style={[style.container, props.customStyles || {}] }>
         { title && <Text style={style.title}>{title}</Text> }
         <View style={style.circleGroup}>
           <Carousel

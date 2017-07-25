@@ -11,4 +11,9 @@ RequestFriendButton.connect = {
   borderRadius: 13
 }
 
+RequestFriendButton.requestFriendIcon = {
+  width: 50,
+  height: 50
+}
+
 export default RequestFriendButton;

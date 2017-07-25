@@ -56,17 +56,19 @@ class RequestFriendButton extends Component {
     else {
       // default to outputting the request friend icon
       buttonOutput = 
+      <TouchableHighlight onPress={ () => requestFriend(props, props.gid, handlePending) }>
         <LinearGradient
           style={[browseHostsStyle, globalStyles.addItem]}
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
-          colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-          onClick={ () => requestFriend(props, props.gid, handlePending) } 
+          colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
           className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}
         >
-          <View style={{}}>
-            <Link text='+' />
-          </View>
+          <Image 
+            source={require('../../../images/friend-request.png')} 
+            resizeMode='cover' 
+            style={style.requestFriendIcon} />
         </LinearGradient>
+      </TouchableHighlight>
     }
 
     return(

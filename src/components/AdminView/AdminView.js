@@ -11,6 +11,7 @@ import Hero from '../Hero';
 import Summary from '../Summary';
 import CirclesTeaser from '../CirclesTeaser';
 import EventTeaser from '../EventTeaser';
+import styleVariables from '../../styles/variables';
 
 class AdminView extends Component {
 
@@ -28,7 +29,13 @@ class AdminView extends Component {
         <Header { ...props } />
         <Hero {...props} user={user} />
         <Summary {...props} />
-        <CirclesTeaser circlesData={user.children} circleType="myChildren" title="Children:" path="child" hasAddButton={true} {...props} />
+        <CirclesTeaser 
+          circlesData={user.children} 
+          customStyles={{borderBottomWidth: 1, borderColor: styleVariables.mc2medLightGray}} 
+          circleType="myChildren" 
+          title="Children:" 
+          path="child" 
+          hasAddButton={true} {...props} />
         <EventTeaser {...props} />
       </ScrollView>
     )
