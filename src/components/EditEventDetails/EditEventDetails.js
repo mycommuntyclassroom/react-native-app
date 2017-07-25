@@ -311,21 +311,21 @@ class EditGuardianAccount extends Component {
           <View style={{ position: 'relative' }}>
             <Text>Seats Available</Text>
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
+              <TouchableHighlight style={{backgroundColor: 'gray', borderRadius: 20}} onPress={() => this.handleSeatsAvailable('minus')}> 
                 <Image 
                   source={require('../../../images/minus-white.png')}
                   resizeMode='contain'
-                  style={{backgroundColor: 'gray', borderRadius: 20, width: 40, height: 40}} />
+                  style={{width: 40, height: 40}} />
               </TouchableHighlight>
               <Image 
                 source={require('../../../images/chair-white.png')}
                 resizeMode='cover'
                 style={{width: 80, height: 120}} />
-              <TouchableHighlight onPress={() => this.handleSeatsAvailable('add')}> 
+              <TouchableHighlight style={{backgroundColor: 'gray', borderRadius: 20}} onPress={() => this.handleSeatsAvailable('add')}> 
                 <Image 
                   source={require('../../../images/plus-sign-white.png')}
                   resizeMode='contain' 
-                  style={{backgroundColor: 'gray', borderRadius: 20, width: 40, height: 40}} />
+                  style={{width: 40, height: 40}} />
               </TouchableHighlight>
               <View style={{ position: 'absolute' }}>
                 <Text style={{ fontWeight: 'bold' }}>{ this.state.seatsAvailable }</Text>
