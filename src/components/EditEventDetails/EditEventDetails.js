@@ -275,7 +275,7 @@ class EditGuardianAccount extends Component {
       : require('../../../images/blank-profile-pic.png');
 
     return(
-      <ScrollView className="create-account">
+      <ScrollView>
 
         <Text> { `Editing ${title}` }  </Text>
 
@@ -315,19 +315,21 @@ class EditGuardianAccount extends Component {
                 <Image 
                   source={require('../../../images/minus-white.png')}
                   resizeMode='contain'
-                  style={{width: 40, height: 40}} />
+                  style={{backgroundColor: 'gray', borderRadius: 20, width: 40, height: 40}} />
               </TouchableHighlight>
               <Image 
                 source={require('../../../images/chair-white.png')}
                 resizeMode='cover'
-                style={{width:100, height: 120}} />
+                style={{width: 80, height: 120}} />
               <TouchableHighlight onPress={() => this.handleSeatsAvailable('add')}> 
                 <Image 
                   source={require('../../../images/plus-sign-white.png')}
                   resizeMode='contain' 
-                  style={{width:40, height: 40}} />
+                  style={{backgroundColor: 'gray', borderRadius: 20, width: 40, height: 40}} />
               </TouchableHighlight>
-              <View style={{ position: 'absolute' }}><Text>{ this.state.seatsAvailable }</Text></View>
+              <View style={{ position: 'absolute' }}>
+                <Text style={{ fontWeight: 'bold' }}>{ this.state.seatsAvailable }</Text>
+              </View>
             </View>
           </View>
 
