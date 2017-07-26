@@ -11,7 +11,6 @@ export const updateUserInfo = () => {
 };
 
 export const userInfo = (userData) => {
-  console.log('userInfo called, heres the data: ', userData);
   return (dispatch) => {
     dispatch({ 
       type: 'LOGGED_IN',
@@ -20,8 +19,17 @@ export const userInfo = (userData) => {
   };
 };
 
+export const friendRequest = (friendRequestObj) => {
+  console.log('friendRequest called, heres the friendRequestObj: ', friendRequestObj);
+  return (dispatch) => {
+    dispatch({ 
+      type: 'FRIEND_REQUEST',
+      friendRequestObj 
+    });
+  };
+};
+
 export function handleChildProfile(formData) {
-  console.log('this is the handleChildProfile data: ', formData);
   return {
     type: 'CHILD_ACCOUNT_SET',
     formData
@@ -55,7 +63,6 @@ export function acceptFriendRequest(friendObj) {
     });
   };
 }
-
 
 // 
 // 

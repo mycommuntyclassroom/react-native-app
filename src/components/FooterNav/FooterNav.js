@@ -21,6 +21,7 @@ const FooterNav = (props) => {
   const {app} = props;
   const iconStyles = {width: 100, height: 60, marginBottom: -15, marginTop: -10};
   const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -8, marginTop: -20, position: 'relative', top: -5};
+  const feedbackIcon = {height: 45, width: 60};
 
   return (
     <View>
@@ -56,7 +57,7 @@ const FooterNav = (props) => {
           extraStyle={style.footerLink}
           textStyles={style.footerLinkCopy} 
           onClick={ () => app.goToScene('Feedback', {app}) }
-          iconTop={{url: require('../../../images/feedback-blue.png'), dimensions: iconStyles }}
+          iconTop={{url: require('../../../images/feedback-blue.png'), dimensions: feedbackIcon }}
           text='FEEDBACK' />
       </LinearGradient>
       <LinearGradient

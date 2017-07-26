@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Link from '../Link';
 import style from './style';
 import styleVariables from '../../styles/variables'
+import { checkRelationship } from '../../helpers/user';
 
 class Hero extends Component {
   static PropTypes={
@@ -20,13 +21,20 @@ class Hero extends Component {
 
   render() {
 
-    const props = this.props
+    const props = this.props;
     const { globalStyles, app } = props;
-    let userData
+    let userData;
+    let friendStatus = true;
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    props.guardianData ? userData = props.guardianData : userData = props.user
+    if (props.guardianData) {
+      userData = props.guardianData
+      friendStatus = checkRelationship('friend', app.props, props.gid);
+    } else {
+      userData = props.user 
+    }
+
     const { profileImage, photoURL, displayName, street, city, state, zipCode } = userData;
 
     // handle the output of the required image
@@ -34,6 +42,23 @@ class Hero extends Component {
       ? {uri: profileImage} 
       : require('../../../images/blank-profile-pic.png');
 
+    // handle address output based on permissions
+    let addressOutput;
+    // check if the page's gid matches the user's uid
+    if(friendStatus || props.gid === app.props.auth.uid || !props.guardianData){
+      addressOutput = 
+        <View style={style.addressContainer}> 
+          <Text style={style.address}>{street}, {city}, </Text> 
+          <Text style={style.address}>{state}</Text> 
+          <Text style={style.address}> {zipCode}</Text>
+        </View>
+    } else {
+      addressOutput =
+        <View style={style.addressContainer}> 
+          <Text style={style.address}>{city}, {state} </Text>
+        </View>
+    }
+    
     return(
       <View style={style.container}>
         <View className="profile-image">
@@ -47,11 +72,7 @@ class Hero extends Component {
           >
             <Text style={style.userName}>{ displayName }</Text>
             <View style={style.hr}></View>
-            <View style={style.addressContainer}> 
-              <Text style={style.address}>{street}, {city}, </Text> 
-              <Text style={style.address}>{state}</Text> 
-              <Text style={style.address}> {zipCode}</Text>
-            </View>
+            { addressOutput }
           </LinearGradient>
         </View>
         { !props.guardianData && 

@@ -18,14 +18,12 @@ export function signInHandler (provider, type, data) {
   switch(type) {
     case 'CREATING_ACCOUNT':
       AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
-      console.log('CURRENTLY Creating an ACCOUNT, AsyncStorage.type: ', AsyncStorage.getItem('type'))
       AsyncStorage.setItem('status', 'COLLECTING_USER_PROFILE');
       break;
     case 'SIGNING_IN':
       AsyncStorage.setItem('type', 'SIGNING_IN');
       break;
   }
-  console.log('sign in handler called, COLLECTING_USER_PROFILE is SET AsyncStorage.status: ', AsyncStorage.status );
   switch (provider) {
     case 'google':
       auth.signInWithRedirect(googleAuthProvider);
@@ -35,7 +33,6 @@ export function signInHandler (provider, type, data) {
       break;
     case 'manual':
       const { email, password } = data;
-      console.log('***Email and PW called: ', data);
       createUserWithEmailAndPassword(email, password);
       break;
     default:
@@ -98,12 +95,19 @@ export function authenticateUser (user, navigator) {
 
 // REQUEST A FRIEND
 // 
+// Handle the event of making a friend request.
+// prevent users from making multiple friend requests
+// trigger a notification for the request when its made
 // 
-export function requestFriend (userData, hostId) {
+export function requestFriend (props, hostId, handlePending) {
+  
+  console.log('requestFriend Called: ')
+  // EXIT this function if the friend request is pending
+  if (checkRelationship('pending', props, hostId) === 'pending') return;
 
-  console.log('requestFriend called')
+  console.log('requestFriend Called NOT PENDING: ')
 
-  const { displayName, uid } = userData;
+  const { displayName, uid } = props.auth;
   let message = 'would like to connect.';
   let timestamp = (new Date()).getTime();
   
@@ -116,17 +120,35 @@ export function requestFriend (userData, hostId) {
     seen: false,
     timestamp
   }
-  // send the request to the notifications tree
+  // send the request to the guardian's notifications branch
   database.ref(`guardians/${hostId}/notifications`)
           .push(userObj);
+
   // add the requested user's id to the requester's [pendingRequests] tree
-  // first set the object that will go into the update method
+  // first build the object that will go into the update method and the store
   let emptyObj = {};
   emptyObj[`${hostId}`] = uid;
-  let passedId = emptyObj;
+  let friendRequestObj = emptyObj;
   
   database.ref(`guardians/${uid}/pendingRequests`)
-          .update(passedId);
+          .update(friendRequestObj);
+
+  // send the request to the guardian's incomingRequests branch
+  // so we can use its data to deliniate the output of a request
+  database.ref(`guardians/${hostId}/incomingRequests`)
+          .update(friendRequestObj);
+
+  // update the store with a pending status
+  //
+  // create a new instance of the current user object, add the new pending requests object
+  const currentUserObj = props.user;
+  const newUserObj = Object.assign({}, currentUserObj);
+  const pendingGroup = props.user.pendingRequests || {}
+  const newPendingGroup = Object.assign(pendingGroup, friendRequestObj);
+  newUserObj['pendingRequests'] = newPendingGroup;
+
+  // add a pending class to the add friend button
+  return handlePending();
 
 }
 
@@ -273,13 +295,13 @@ export function checkRelationship (relationship, props, gid) {
       // check if the user is a friend
       const friends = props.user.friends || {};
       const friendsList = Object.keys(friends);
-      return friendsList.indexOf(gid) === 0 ? true : false;
+      return friendsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'incoming':
       // check if the user is a friend
       const incomingRequests = props.user.incomingRequests || {};
       const requestsList = Object.keys(incomingRequests);
-      return requestsList.indexOf(gid) === 0 ? true : false;
+      return requestsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'pending':
       // check if there is a pending request for the user 

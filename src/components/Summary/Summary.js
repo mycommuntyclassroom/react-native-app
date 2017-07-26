@@ -82,7 +82,7 @@ class Summary extends Component {
                 style={{width: 30, height: 30}} />
             </View>
             <View className="count">
-              <Text style={style.summaryCopy}>5</Text>
+              <Text style={style.summaryCopy}>4.9</Text>
             </View>
           </View>
           <View style={style.comments}>

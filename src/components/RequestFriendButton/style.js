@@ -16,4 +16,8 @@ RequestFriendButton.requestFriendIcon = {
   height: 50
 }
 
+RequestFriendButton.disabledRequestButton = {
+  backgroundColor: 'gray'
+}
+
 export default RequestFriendButton;

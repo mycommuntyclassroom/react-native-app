@@ -19,7 +19,7 @@ class RequestFriendButton extends Component {
     super(props)
 
     this.state = {
-      pending: ''
+      pending: false
     }
 
   }
@@ -27,7 +27,7 @@ class RequestFriendButton extends Component {
   render() {
 
     const handlePending = () => {
-      this.setState({pending: 'pending'})
+      this.setState({pending: true}) // 1 for true; is pending (also used for array pointing)
     }
 
     const props = this.props;
@@ -55,16 +55,26 @@ class RequestFriendButton extends Component {
     }
     else {
       // default to outputting the request friend icon
+      let requestFriendIcon;
+      let gradientColor;
+
+      if (this.state.pending) {
+        requestFriendIcon = require('../../../images/blank-profile-pic.png')
+        gradientColor = ['gray', 'gray'];
+      } else {
+        requestFriendIcon = require('../../../images/friend-request.png')
+        gradientColor = [styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]
+      }
+
+
       buttonOutput = 
       <TouchableHighlight onPress={ () => requestFriend(props, props.gid, handlePending) }>
         <LinearGradient
           style={[browseHostsStyle, globalStyles.addItem]}
-          colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
-          colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
-          className={`add-item-button friend-request ${this.state.pending} ${checkRelationship('pending', props, props.gid)}`}
+          colors={gradientColor}
         >
           <Image 
-            source={require('../../../images/friend-request.png')} 
+            source={requestFriendIcon} 
             resizeMode='cover' 
             style={style.requestFriendIcon} />
         </LinearGradient>
