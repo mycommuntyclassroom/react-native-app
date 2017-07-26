@@ -9,7 +9,12 @@ BrosweHosts.container = {
   }
 
 BrosweHosts.teaserContainer = {
-  position: 'relative'
+  position: 'relative',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: styleVariables.mc2purpleElectric,
+  width: deviceWidth - 40,
+  height: 200
 }
 
 BrosweHosts.eventView = {

@@ -42,7 +42,7 @@ class NotificationsOutput extends Component {
 
         // pass the notificationItem into the notesOutput array
         // noteType, userObj, noteProp, note, viewed
-        notesOutput.unshift(chooseNotificationItem(app.props.auth, noteProp, note, seenSwitch, friends, style));
+        notesOutput.unshift(chooseNotificationItem(app.props.auth, noteProp, note, seenSwitch, friends, style, app));
 
         // pass the note notifications to the 
         viewedNotifications[`${note}/seen`] = true;

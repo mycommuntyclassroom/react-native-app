@@ -251,7 +251,7 @@ export function denyInvite (userData, note) {
 // 
 // 
 
-export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style) {
+export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style, app) {
   let elements;
   let noteClass;
   let noteType = noteProp.noteType || '';
@@ -263,7 +263,7 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
             <Link className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)} text='Connect' />
             <Link className="delete" onClick={() => handleInvite(userObj, noteProp, 'delete', note)} text='Delete' />
           </View>
-          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetail', {app})} text='Click to view Profile' />
+          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
         </View>;
       break;
     default: 
