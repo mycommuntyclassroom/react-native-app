@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Link from '../Link';
 import style from './style';
 import styleVariables from '../../styles/variables'
+import { checkRelationship } from '../../helpers/user';
 
 class Hero extends Component {
   static PropTypes={
@@ -20,7 +21,8 @@ class Hero extends Component {
 
   render() {
 
-    const props = this.props
+    const props = this.props;
+    console.log('Hero Props: ', props)
     const { globalStyles, app } = props;
     let userData
 
@@ -33,6 +35,21 @@ class Hero extends Component {
     let userImage = profileImage != '../../../images/blank-profile-pic.png'
       ? {uri: profileImage} 
       : require('../../../images/blank-profile-pic.png');
+
+    // handle address output based on permissions
+    let addressOutput;
+    // check if the page's gid matches the user's uid
+    if(props.gid === app.props.auth.uid){
+      addressOutput = 
+        <View style={style.addressContainer}> 
+          <Text style={style.address}>{street}, {city}, </Text> 
+          <Text style={style.address}>{state}</Text> 
+          <Text style={style.address}> {zipCode}</Text>
+        </View>
+    } else {
+      addressOutput = <Text></Text>
+    }
+    // checkRelationship('friend', props, )
 
     return(
       <View style={style.container}>
@@ -47,11 +64,7 @@ class Hero extends Component {
           >
             <Text style={style.userName}>{ displayName }</Text>
             <View style={style.hr}></View>
-            <View style={style.addressContainer}> 
-              <Text style={style.address}>{street}, {city}, </Text> 
-              <Text style={style.address}>{state}</Text> 
-              <Text style={style.address}> {zipCode}</Text>
-            </View>
+            { addressOutput }
           </LinearGradient>
         </View>
         { !props.guardianData && 
