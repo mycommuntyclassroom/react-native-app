@@ -45,7 +45,6 @@ class EventDetailsView extends Component {
 
   render() {
     const props = this.props;
-    console.log('here are the props: ', props);
     const { app, gid } = props;
     let eventDetails = app.props.events[gid] || {}; 
     let eventIndices = Object.keys(eventDetails);

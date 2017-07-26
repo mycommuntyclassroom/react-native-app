@@ -43,10 +43,6 @@ export function getHostEvents () {
 // 
 export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBooking) {
 
-
-  console.log('generateTeasers called')
-  console.log('here is the eventData: ', eventData)
-  console.log('here are the generateTeasers props: ', props)
   const { app } = props;
 
   // this array stores the template elements ex: the event post

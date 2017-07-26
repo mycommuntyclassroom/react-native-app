@@ -9,11 +9,7 @@ import {
 import WelcomePage from '../components/WelcomePage'
 
 class Welcome extends Component {
-
-  componentDidMount() {
-    console.log('mounted Welcome', this.props);
-  }
-
+  
   render() {
     const props = this.props;
     const { globalStyles } = props;

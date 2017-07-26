@@ -12,11 +12,6 @@ class BrowseHosts extends Component {
 
   constructor() {
     super();
-    console.log('BrowseHosts constructor');
-  }
-
-  componentDidMount() {
-    console.log('mounted BrowseHosts', this.props);
   }
 
   render() {

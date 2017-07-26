@@ -11,10 +11,6 @@ import GuardianView from '../components/GuardianView';
 
 class GuardianDetails extends Component {
 
-  componentDidMount() {
-    console.log('mounted GuardianDetails', this.props);
-  }
-
   render() {
     const props = this.props;
     const { app } = props;

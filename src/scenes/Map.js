@@ -17,11 +17,7 @@ class Map extends Component {
     this.props.app.goToScene('loading', { sup: true });
     // this.props.app.goToScene('Map', { hostID: 123 });
   }
-
-  componentDidMount() {
-    console.log('mounted Map', this.props);
-  }
-
+  
   render() {
     const { globalStyles, app } = this.props;
     return (

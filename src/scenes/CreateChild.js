@@ -10,11 +10,7 @@ import Header from '../components/Header';
 import CreateChildAccount from '../components/CreateChildAccount';
 
 class CreateChild extends Component {
-
-  componentDidMount() {
-    console.log('mounted CreateChild', this.props);
-  }
-
+  
   render() {
     const props = this.props;
     const { app } = props;

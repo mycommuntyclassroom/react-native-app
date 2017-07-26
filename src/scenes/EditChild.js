@@ -11,10 +11,6 @@ import EditChildAccount from '../components/EditChildAccount';
 
 class EditChild extends Component {
 
-  componentDidMount() {
-    console.log('mounted EditChild', this.props);
-  }
-
   render() {
     const props = this.props;
     const { app } = props;

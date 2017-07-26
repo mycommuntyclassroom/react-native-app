@@ -95,7 +95,6 @@ class EditGuardianAccount extends Component {
   }
 
   selectImage() {
-    console.log('selectImage CALLED')
     this.setState({ profileImage: this.state.selectedImage.uri});
   }
 
@@ -154,13 +153,11 @@ class EditGuardianAccount extends Component {
     const { app } = props;
     const data = {...this.state};
 
-    console.log('this is the submitform data: ', data);
     const currentUserObject = app.props.user;
     const updatedUser = Object.assign(currentUserObject, data)
 
     // store the selected image's url
     const { selectedImage, profileImage } = this.state;
-    console.log('selectedImage: ', selectedImage)
     let imageUri
     selectedImage
       ? imageUri = selectedImage.uri

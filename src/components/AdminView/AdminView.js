@@ -15,10 +15,6 @@ import styleVariables from '../../styles/variables';
 
 class AdminView extends Component {
 
-  componentDidMount() {
-    console.log('mounted Dashboard: ADMIN VIEW', this.props);
-  }
-
   render() {
     const props = this.props;
     const { app } = props;

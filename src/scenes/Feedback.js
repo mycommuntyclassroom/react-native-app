@@ -18,10 +18,6 @@ class Feedback extends Component {
     // this.props.app.goToScene('Feedback', { hostID: 123 });
   }
 
-  componentDidMount() {
-    console.log('mounted Feedback', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
 

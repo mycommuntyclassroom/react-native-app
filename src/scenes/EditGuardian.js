@@ -11,10 +11,6 @@ import EditGuardianAccount from '../components/EditGuardianAccount';
 
 class EditGuardian extends Component {
 
-  componentDidMount() {
-    console.log('mounted EditGuardian', this.props);
-  }
-
   render() {
     const props = this.props;
     const { app } = props;

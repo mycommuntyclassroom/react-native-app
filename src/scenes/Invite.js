@@ -18,10 +18,6 @@ class Invite extends Component {
     // this.props.app.goToScene('Invite', { hostID: 123 });
   }
 
-  componentDidMount() {
-    console.log('mounted Invite', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
     return (

@@ -47,8 +47,6 @@ class BrowseHostsOutput extends Component {
         let teaserData = eventData[teaserGroup][teaser];
         const { hostName, title, image, startTime, finishTime } = teaserData;
 
-        console.log('image === :  ',  image === '')
-
         // set the gid for the scope above
         gid = teaserData.gid
         const ageRange = teaserData.ageRange || [];
