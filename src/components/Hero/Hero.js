@@ -22,7 +22,6 @@ class Hero extends Component {
   render() {
 
     const props = this.props;
-    console.log('Hero Props: ', props)
     const { globalStyles, app } = props;
     let userData;
     let friendStatus = true;
@@ -59,8 +58,7 @@ class Hero extends Component {
           <Text style={style.address}>{city}, {state} </Text>
         </View>
     }
-    // checkRelationship('friend', props, )
-
+    
     return(
       <View style={style.container}>
         <View className="profile-image">

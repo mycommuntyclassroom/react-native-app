@@ -290,9 +290,6 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
 // 
 export function checkRelationship (relationship, props, gid) {
 
-  console.log('checkRelationship props: ', props)
-  console.log('checkRelationship gid: ', gid)
-
   switch (relationship) {
     case 'friend':
       // check if the user is a friend
