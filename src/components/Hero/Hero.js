@@ -24,11 +24,18 @@ class Hero extends Component {
     const props = this.props;
     console.log('Hero Props: ', props)
     const { globalStyles, app } = props;
-    let userData
+    let userData;
+    let friendStatus = true;
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    props.guardianData ? userData = props.guardianData : userData = props.user
+    if (props.guardianData) {
+      userData = props.guardianData
+      friendStatus = checkRelationship('friend', app.props, props.gid);
+    } else {
+      userData = props.user 
+    }
+
     const { profileImage, photoURL, displayName, street, city, state, zipCode } = userData;
 
     // handle the output of the required image
@@ -39,7 +46,7 @@ class Hero extends Component {
     // handle address output based on permissions
     let addressOutput;
     // check if the page's gid matches the user's uid
-    if(props.gid === app.props.auth.uid){
+    if(friendStatus || props.gid === app.props.auth.uid || !props.guardianData){
       addressOutput = 
         <View style={style.addressContainer}> 
           <Text style={style.address}>{street}, {city}, </Text> 
@@ -47,7 +54,10 @@ class Hero extends Component {
           <Text style={style.address}> {zipCode}</Text>
         </View>
     } else {
-      addressOutput = <Text></Text>
+      addressOutput =
+        <View style={style.addressContainer}> 
+          <Text style={style.address}>{city}, {state} </Text>
+        </View>
     }
     // checkRelationship('friend', props, )
 

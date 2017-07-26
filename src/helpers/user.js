@@ -291,19 +291,20 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
 export function checkRelationship (relationship, props, gid) {
 
   console.log('checkRelationship props: ', props)
+  console.log('checkRelationship gid: ', gid)
 
   switch (relationship) {
     case 'friend':
       // check if the user is a friend
       const friends = props.user.friends || {};
       const friendsList = Object.keys(friends);
-      return friendsList.indexOf(gid) === 0 ? true : false;
+      return friendsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'incoming':
       // check if the user is a friend
       const incomingRequests = props.user.incomingRequests || {};
       const requestsList = Object.keys(incomingRequests);
-      return requestsList.indexOf(gid) === 0 ? true : false;
+      return requestsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'pending':
       // check if there is a pending request for the user 
