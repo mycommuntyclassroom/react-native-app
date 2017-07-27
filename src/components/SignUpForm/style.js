@@ -17,10 +17,4 @@ SignUpForm.header= {
   marginBottom: 20
 }
 
-SignUpForm.errorText= {
-  color: 'red',
-  marginTop: 10,
-  marginBottom: 10
-}
-
 export default SignUpForm;

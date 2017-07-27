@@ -18,22 +18,8 @@ class SignUpForm extends Component {
 
     this.state = {
       email: '',
-      password: '',
-      confirmPassword: '',
-      passwordMismatch: false
+      password: ''
     }
-  }
-
-  verifyPasswordMatch(state){
-     if(state.password == state.confirmPassword)
-     {
-       this.setState({passwordMismatch:false});
-       this.submitForm(state);
-     }
-     else
-     {
-       this.setState({passwordMismatch:true})
-     }
   }
 
   submitForm(state) {
@@ -53,21 +39,12 @@ class SignUpForm extends Component {
           placeholder="Email"
           onChangeText={(email) => this.setState({email})}
         />
-         <TextInput
+        <TextInput
           style={globalStyles.textInput}
           placeholder="Password"
-          secureTextEntry={true}
           onChangeText={(password) => this.setState({password})}
         />
-         <TextInput
-           style={globalStyles.textInput}
-           placeholder="Confirm Password"
-           secureTextEntry={true}
-           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
-         />
-         <Text style={style.errorText}>{this.state.passwordMismatch ? 'The passwords that you entered do not match' : '' }</Text>
-
-         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.verifyPasswordMatch(this.state) }> </Button>
+        <Button extraStyle={style.submit} text='Submit' onPress={ () => this.submitForm(this.state) }> </Button>
       </View>
     );
   };
