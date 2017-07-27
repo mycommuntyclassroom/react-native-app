@@ -27,9 +27,13 @@ class CirclesTeaser extends Component {
     const props = this.props;
     const { globalStyles, app, title, path } = props;
     let circlesData = props.circlesData || [' '];
+
+    console.log('props for the circlesTeaser: ', props)
+
+    // check the viewer is a friend
     friendStatus = checkRelationship('friend', app.props, props.gid);
 
-    console.log('this is the friendStatus')
+    console.log('this is the friendStatus: ', friendStatus)
 
     // array that stores the circle elements ex: the Children circles
     let circlesOutput = [];
@@ -64,12 +68,13 @@ class CirclesTeaser extends Component {
 
     // if there is no data for the circlesData, assign it a null output,
     // otherwise, output the circles
-    if (circlesData && friendStatus) 
+    if (circlesData && friendStatus || props.gid === app.props.auth.uid) 
     {
       generateCircles();   
     } 
     else 
     {
+      console.log('Triggering the Null output')
       circlesOutput = nullOutput
     }
 
@@ -105,7 +110,7 @@ class CirclesTeaser extends Component {
 
     return(
       <View style={[style.container, props.customStyles || {}] }>
-        { title && <Text style={style.title}>{title}</Text> }
+        { (title && friendStatus) && <Text style={style.title}>{title}</Text> }
         <View style={style.circleGroup}>
           <Carousel
             ref={(carousel) => { this._carousel = carousel; }}

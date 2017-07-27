@@ -281,6 +281,8 @@ export function checkRelationship (relationship, props, gid) {
 
   switch (relationship) {
     case 'friend':
+      // all admin users are considered friends to themselves
+      if (gid === props.auth.uid) return true
       // check if the user is a friend
       const friends = props.user.friends || {};
       const friendsList = Object.keys(friends);

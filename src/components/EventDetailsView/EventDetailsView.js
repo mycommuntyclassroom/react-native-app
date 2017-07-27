@@ -81,6 +81,7 @@ class EventDetailsView extends Component {
         { hostEventsOutput }
         <Text style={style.eventSummary}>{ summary }</Text>
         <CirclesTeaser 
+          {...props}
           circlesData={selectedEventDetails} 
           circleType="eventDetail" />
         {/*<SeatBooking 
