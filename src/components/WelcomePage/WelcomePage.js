@@ -28,16 +28,11 @@ class WelcomePage extends Component {
         <Text style={[style.copy]}>
           Easily connect with like minded families & manage everything homeschool in one place!
         </Text>
-        <TextInput
-          style={[style.zipCode]}
-          placeholder='Zip Code'
-          placeholderTextColor='white'
-        />
         <Image source={require('../../../images/welcome-family-page.jpg')} resizeMode='cover' style={ style.welcomeImage }/>
         <Button 
-          text='Search your area'
+          text='Sign Up'
           extraStyle={style.button}
-          onPress={() => app.goToScene('WelcomeSearch', {app}) }>
+          onPress={() => app.goToScene('SignUp', {app}) }>
         </Button>
         <View style={ style.signIn }>
           <Text style={ style.signInCopy }> Already have an account? </Text>
