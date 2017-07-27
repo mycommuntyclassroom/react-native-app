@@ -49,7 +49,7 @@ class Tutorial extends Component {
     const imageDimensions = { width: deviceDimensions.deviceWidth, height: 500 };
 
     return (
-      <View style={{ height:'100%', backgroundColor: '#74bcf7' }}>
+      <View style={{ height:'100%', backgroundColor: '#74bcf7', paddingTop:20, paddingBottom:20}}>
         <Carousel
           ref={(carousel) => { this._carousel = carousel; }}
           sliderWidth={deviceDimensions.deviceWidth}
