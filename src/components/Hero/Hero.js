@@ -24,7 +24,7 @@ class Hero extends Component {
     const props = this.props;
     const { globalStyles, app } = props;
     let userData;
-    let friendStatus = true;
+    let friendStatus = false; // default to non-friend until validated
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
@@ -42,9 +42,8 @@ class Hero extends Component {
       ? {uri: profileImage} 
       : require('../../../images/blank-profile-pic.png');
 
-    // handle address output based on permissions
+    // handle address output based on permissions (friends/admin only)
     let addressOutput;
-    // check if the page's gid matches the user's uid
     if(friendStatus || props.gid === app.props.auth.uid || !props.guardianData){
       addressOutput = 
         <View style={style.addressContainer}> 

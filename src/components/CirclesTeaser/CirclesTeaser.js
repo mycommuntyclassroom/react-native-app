@@ -13,6 +13,7 @@ import { deviceDimensions } from '../../styles';
 import Link from '../Link';
 import style from './style';
 import styleVariables from '../../styles/variables'
+import { checkRelationship } from '../../helpers/user';
 
 class CirclesTeaser extends Component {
   static PropTypes={
@@ -24,8 +25,11 @@ class CirclesTeaser extends Component {
   render(){ 
 
     const props = this.props;
-    const { globalStyles } = props;
+    const { globalStyles, app, title, path } = props;
     let circlesData = props.circlesData || [' '];
+    friendStatus = checkRelationship('friend', app.props, props.gid);
+
+    console.log('this is the friendStatus')
 
     // array that stores the circle elements ex: the Children circles
     let circlesOutput = [];
@@ -60,9 +64,14 @@ class CirclesTeaser extends Component {
 
     // if there is no data for the circlesData, assign it a null output,
     // otherwise, output the circles
-    !circlesData
-      ? circlesOutput = nullOutput
-      : generateCircles();
+    if (circlesData && friendStatus) 
+    {
+      generateCircles();   
+    } 
+    else 
+    {
+      circlesOutput = nullOutput
+    }
 
     // generate circles based on the data passed to this function
     function generateCircles() {
@@ -93,8 +102,6 @@ class CirclesTeaser extends Component {
       // this is to prevent the react-slick slider from throwing an undefined error
       circlesOutput = circlesOutput == [] ? [] : circlesOutput;
     }
-
-    const { title, path, app } = props
 
     return(
       <View style={[style.container, props.customStyles || {}] }>
