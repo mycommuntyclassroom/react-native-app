@@ -21,6 +21,7 @@ SeatBooking.innerContainer = {
 }
 
 SeatBooking.studentBubble = {
+  position: 'relative',
   width: 80,
   height: 80,
   overflow: 'hidden',

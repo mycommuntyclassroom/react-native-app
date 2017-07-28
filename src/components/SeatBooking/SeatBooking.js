@@ -82,6 +82,7 @@ class SeatBooking extends Component {
             key={childEventId}
             imageSrc={studentImage}
             extraStyles={style.studentBubble}
+            customLabel={true}
             onChange={(checked) => this.checkboxChange(child, checked) }
           />
 

@@ -3,6 +3,7 @@ import variables from '../../styles/variables';
 const CheckBox = {};
 
 CheckBox.container = {
+  position: 'relative',
   borderRadius: 3,
   margin: 4
 }
