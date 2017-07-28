@@ -34,13 +34,13 @@ class CheckBox extends Component {
 
   render() {
     const props = this.props;
-    const imageSrc = props.imageSrc
+    const { imageSrc, label, extraStyles } = props;
 
     return (
-      <TouchableHighlight onPress={this.handleCheckbox} style={[ style.container, style[this.state.checked]]} >
+      <TouchableHighlight onPress={this.handleCheckbox} style={[ style.container, style[this.state.checked], extraStyles || {}]} >
         <View>
-          { imageSrc && <Image source={imageSrc} style={ props.imageStyles || {width: 60, height: 60} } /> }
-          <Text style={style.text}>{props.label}</Text>
+          { imageSrc && <Image source={imageSrc} style={ props.imageStyles || {width: 80, height: 80} } /> }
+          { label && <Text style={style.text}>{label}</Text> }
         </View>
       </TouchableHighlight>
     )

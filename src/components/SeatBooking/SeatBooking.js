@@ -5,7 +5,8 @@ import {
   Text
 } from 'react-native';
 import { childDropOff } from '../../helpers/events';
-import CheckBox from '../CheckBox'
+import CheckBox from '../CheckBox';
+import style from './style';
 
 class SeatBooking extends Component {
 
@@ -54,9 +55,11 @@ class SeatBooking extends Component {
   }
 
   render() {
-    const props = this.props
-    
-    const { toggleSeatBooking, selectedEventDetails, currentEventIndex } = props;
+    const props = this.props;
+    const { toggleSeatBooking, selectedEventDetails, currentEventIndex, visibility } = props;
+
+    // handle the style that toggles the modal's visibility
+    let isVisible = visibility ? style.isVisible : {}
 
     const childrenOutput = () => {
       const children = props.user.children || [];
@@ -78,6 +81,7 @@ class SeatBooking extends Component {
           <CheckBox
             key={childEventId}
             imageSrc={studentImage}
+            extraStyles={style.studentBubble}
             onChange={(checked) => this.checkboxChange(child, checked) }
           />
 
@@ -102,15 +106,17 @@ class SeatBooking extends Component {
     }
 
     return(
-      <View className={`seat-booking ${props.visibility}`}>
-        <View className="inner-container">
+      <View style={style.container}>
+        <View style={style.innerContainer}>
           <TouchableHighlight 
             className="close-icon" 
             onClick={ () => toggleSeatBooking() }>
             <Text>X</Text>
           </TouchableHighlight>
           <Text>Please select which of your children will be attending</Text>
-          { childrenOutput() }
+          <View style={style.studentGroup}>
+            { childrenOutput() }
+          </View>
             {/*<Button className="button"
                                type="submit"
                                name="submit"

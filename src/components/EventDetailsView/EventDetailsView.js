@@ -20,7 +20,7 @@ class EventDetailsView extends Component {
 
     this.state = {
       eventIndex: 0,
-      visibility: 'hidden'
+      visibility: false
     }
 
     // bind methods at the constructor level
@@ -38,9 +38,7 @@ class EventDetailsView extends Component {
   }
 
   toggleSeatBooking () {
-    let visibilityStatus = this.state.visibility;
-    let visibility = visibilityStatus == 'hidden' ? '' : 'hidden';
-    this.setState({ visibility })
+    this.setState({ visibility: !this.stat.visibility })
   }
 
   render() {
