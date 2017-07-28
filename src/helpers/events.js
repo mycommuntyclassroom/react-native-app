@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { database } from './firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
+import { checkRelationship } from './user';
 
 import Link from '../components/Link';
 import RequestFriendButton from '../components/RequestFriendButton';
@@ -50,6 +51,8 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   let hostEventsOutput = [];
   let teaserOutput = [];
   let teaserElement;
+
+  let isFriend = checkRelationship('friend', props, props.gid);
 
   function slideChange (index) {
     return handleEventIndex(index)
@@ -102,7 +105,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
               }
             </View>
             { 
-              toggleSeatBooking &&
+              (toggleSeatBooking && isFriend) &&
               <LinearGradient 
                 colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
                 style={EventStyles.childDropOff}> 
