@@ -28,12 +28,8 @@ class CirclesTeaser extends Component {
     const { globalStyles, app, title, path } = props;
     let circlesData = props.circlesData || [' '];
 
-    console.log('props for the circlesTeaser: ', props)
-
     // check the viewer is a friend
     friendStatus = checkRelationship('friend', app.props, props.gid);
-
-    console.log('this is the friendStatus: ', friendStatus)
 
     // array that stores the circle elements ex: the Children circles
     let circlesOutput = [];
@@ -74,7 +70,6 @@ class CirclesTeaser extends Component {
     } 
     else 
     {
-      console.log('Triggering the Null output')
       circlesOutput = nullOutput
     }
 
