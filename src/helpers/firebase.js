@@ -61,9 +61,13 @@ export const database = firebase.database();
 
 export function createUserWithEmailAndPassword(email, password, callback) {
   firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then((message) => {
+    console.log('message: ', message)
+    callback(true)
+  })
   .catch((error) => {
     let theError = error;
-    callback(theError, false);
+    callback(theError);
   })
 }
 

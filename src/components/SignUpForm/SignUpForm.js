@@ -21,9 +21,9 @@ class SignUpForm extends Component {
       password: '',
       confirmPassword: '',
       invalidEmail: false,
+      invalidPassword: false,
       passwordMismatch: false
     }
-
   }
 
   verifyPasswordMatch(state) {
@@ -39,25 +39,22 @@ class SignUpForm extends Component {
   }
 
 
-  formValidation(error) {
-    console.log('formCheck called error: ', error)
-    // determine the type of error
-    switch (error.code) {
-      case 'auth/invalid-email':
-        console.log('Invalid email address')
-        break;
-      case 'auth/weak-password':
-        console.log('Password should be at least 6 characters')
-        break;
-      default:
-        // no action
+  formValidation(result) {
+    console.log('formCheck called result: ', result)
+    const { code } = result;
 
-    }
+    code === 'auth/invalid-email'
+      ? this.setState({invalidEmail:true})
+      : this.setState({invalidEmail:false})
+
+    code === 'auth/weak-password'
+      ? this.setState({invalidPassword:true})
+      : this.setState({invalidPassword:false})
+        
   }
 
   submitForm(state) {
-    const formResult = signInHandler('manual', 'CREATING_ACCOUNT', state, this.formValidation)
-    console.log('formResult: ', formResult)
+    signInHandler('manual', 'CREATING_ACCOUNT', state, this.formValidation.bind(this))
   }
 
   render() {
@@ -85,7 +82,8 @@ class SignUpForm extends Component {
           secureTextEntry={true}
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
         />
-        <Text style={style.errorText}>{this.state.invalidEmail ? 'Invalid email' : '' }</Text>
+        <Text style={style.errorText}>{this.state.invalidEmail ? 'Invalid email address' : '' }</Text>
+        <Text style={style.errorText}>{this.state.invalidPassword ? 'Password should be at least 6 characters' : '' }</Text>
         <Text style={style.errorText}>{this.state.passwordMismatch ? 'The passwords that you entered do not match' : '' }</Text>
 
         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.verifyPasswordMatch(this.state) }> </Button>
