@@ -4,7 +4,7 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
-import { getHostEvents, childDropOff } from '../helpers/events';
+import { childDropOff } from '../helpers/events';
 
 class SeatBooking extends Component {
 
@@ -23,20 +23,21 @@ class SeatBooking extends Component {
     this.setState({students: nextProps.selectedEventDetails.students});
   }
 
-  checkboxChange(checkbox, checkboxOptions, checked) {
-    // current array of options
-    const options = this.state[ checkboxOptions ];
-    let index;
+  checkboxChange(checked) {
+    const children = this.props.user.children;
+    let checkbox = e.target.value;
+    const studentsCopy = Object.assign({}, this.state.students);
 
-    // check if the check box is checked or unchecked
+    // check if the checkbox is checked or unchecked
     if (checked) {
-      // add the value of the checkbox to options array
-      options.push(checkbox)
+      // add the childDetails to the studentsCopy object
+      studentsCopy[checkbox]=children[checkbox];
     } else {
-      // or remove the value from the unchecked checkbox from the array
-      index = options.indexOf(checkbox)
-      options.splice(index, 1)
+      // remove the value from the unchecked checkbox from the array
+      delete studentsCopy[checkbox]
     }
+    // update the state object with the new students selection
+    this.setState({students: studentsCopy});
   }
 
   submitForm(e) {
@@ -74,7 +75,6 @@ class SeatBooking extends Component {
         let eventStudents = selectedEventDetails.students || {};
         let eventStudentsId = Object.keys(eventStudents);
         let childEventId = `${child}-${currentEventIndex}`
-        let input = <CheckBox type="checkbox" id={childEventId} name="students" value={child} />
         let input =
           <CheckBox
             label={child}
