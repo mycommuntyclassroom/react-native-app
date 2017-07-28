@@ -12,11 +12,6 @@ class EventDetails extends Component {
 
   constructor() {
     super();
-    console.log('EventDetails constructor');
-  }
-
-  componentDidMount() {
-    console.log('mounted EventDetails', this.props);
   }
 
   render() {

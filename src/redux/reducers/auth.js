@@ -1,7 +1,6 @@
 import initialState from '../../initial-state.js';
 
 export default function authReducer(state = initialState.auth, action) {
-  console.log('CREATING_ACCOUNT Reducer called: ', action)
   switch(action.type) {
     case 'ATTEMPTING_LOGIN':
       return {
@@ -24,7 +23,6 @@ export default function authReducer(state = initialState.auth, action) {
         photoURL: action.user.photoURL
       };
     case 'NEW_ACCOUNT_CREATED':
-      console.log('newAccountCreated in AUTH REDUCER CALLED');
       return {
         status: 'NEW_ACCOUNT_CREATED',
         uid: action.formData.uid,

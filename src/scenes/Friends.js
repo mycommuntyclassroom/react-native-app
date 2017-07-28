@@ -18,10 +18,6 @@ class Friends extends Component {
     // this.props.app.goToScene('Friends', { hostID: 123 });
   }
 
-  componentDidMount() {
-    console.log('mounted Friends', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
     return (

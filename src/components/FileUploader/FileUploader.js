@@ -30,7 +30,6 @@ class FileUploader extends Component {
     //     />
 
   render() {
-    console.log('this is the FileUploader state: ', this.state);
     const props = this.props;
     const { globalStyles, imageModal } = props;
 

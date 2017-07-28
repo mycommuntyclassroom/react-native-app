@@ -18,10 +18,6 @@ class Inbox extends Component {
     // this.props.app.goToScene('Inbox', { hostID: 123 });
   }
 
-  componentDidMount() {
-    console.log('mounted Inbox', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
     return (

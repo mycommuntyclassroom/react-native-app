@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 const BackButton = (props) => {
-  console.log('BackButton props: ',  props)
   // if there is no path designated for this button, default to going to the Dashboard
   let link;
 

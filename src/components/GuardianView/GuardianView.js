@@ -36,6 +36,8 @@ class GuardianView extends Component {
 
   render() { 
     const props = this.props;
+
+    console.log('guardian View called: here are the props: ', props)
     const { app } = props;
     const { auth, user, signOut } = app.props
 

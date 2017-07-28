@@ -18,10 +18,6 @@ class Settings extends Component {
     // this.props.app.goToScene('Settings', { hostID: 123 });
   }
 
-  componentDidMount() {
-    console.log('mounted Settings', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
     return (

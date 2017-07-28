@@ -43,10 +43,6 @@ export function getHostEvents () {
 // 
 export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBooking) {
 
-
-  console.log('generateTeasers called')
-  console.log('here is the eventData: ', eventData)
-  console.log('here are the generateTeasers props: ', props)
   const { app } = props;
 
   // this array stores the template elements ex: the event post
@@ -92,10 +88,10 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
           >
             { 
-              // toggleSeatBooking && 
-              // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
-              //   <FaChild/>
-              // </View>
+              toggleSeatBooking && 
+              <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
+                <Text>Book seat</Text>
+              </View>
             }
             <Text style={EventStyles.title}>{title}</Text>
             <View style={EventStyles.tags}>

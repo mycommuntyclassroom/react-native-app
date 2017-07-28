@@ -11,10 +11,6 @@ import CreateEventForm from '../components/CreateEventForm';
 
 class CreateEvent extends Component {
 
-  componentDidMount() {
-    console.log('mounted CreateEvent', this.props);
-  }
-
   render() {
     const props = this.props;
     const { app } = props;

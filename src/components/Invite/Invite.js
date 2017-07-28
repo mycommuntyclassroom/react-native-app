@@ -17,7 +17,6 @@ class Invite extends Component {
    * @returns {XML}
    */
   render() {
-    console.log('Here are the invite Props: ', this.props);
     return(
       <View className="invite">
         <Text>Invite</Text>

@@ -18,10 +18,6 @@ class Hosts extends Component {
     // this.props.app.goToScene('hosts', { hostID: 123 });
   }
 
-  componentDidMount() {
-    console.log('mounted Hosts', this.props);
-  }
-
   render() {
     const { globalStyles, app } = this.props;
 

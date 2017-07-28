@@ -45,11 +45,8 @@ export function signInHandler (provider, type, data) {
 // validate the user against the DB
 // 
 export function authenticateUser (user, navigator) {
-  console.log('authenticateUser CALLED')
-  console.log('THIS IS THE navigator PASSED: ', navigator)
   // get the current scene
   let currentRoute = navigator.getCurrentRoutes().pop().scene;
-  console.log('HERE** is the currentRoute: ', currentRoute)
   const { uid } = user;
   database
   .ref(`guardians/${uid}`)
@@ -57,11 +54,9 @@ export function authenticateUser (user, navigator) {
   .then((snapshot) => {
     // if the user exists within our DB log them in, otherwise redirect them
     if(snapshot.val() ){
-      console.log('is a valid user')
       switch (currentRoute) {
         case '/sign-up':
-          // take the user to the sign in or signup with a different account
-          console.log('YOU ARE**** ALREADY A MEMBER***')
+          // take the user to the sign in or signup with a different account   
           break;
         default:
           // update the redux store with the user's data
@@ -71,16 +66,13 @@ export function authenticateUser (user, navigator) {
     } 
     else {
       switch (currentRoute) {
-        case 'Welcome':
-          console.log('this is a non-user')
+        case 'Welcome':    
           // Do nothing, its likely a non-user, visiting for the first time
           break;
         case 'Login': 
-          // take the user to the sign up or sign in with a different account
-          console.log('you are not a member foo! Sign up')
+          // take the user to the sign up or sign in with a different account    
           break;
-        case 'SignUp':
-          console.log('authenticateUser SIGN-UP CALLED')
+        case 'SignUp':    
           store.dispatch(actions.createGuardianAccount(user));
           AsyncStorage.removeItem('status');
           break;
@@ -101,11 +93,8 @@ export function authenticateUser (user, navigator) {
 // 
 export function requestFriend (props, hostId, handlePending) {
   
-  console.log('requestFriend Called: ')
   // EXIT this function if the friend request is pending
   if (checkRelationship('pending', props, hostId) === 'pending') return;
-
-  console.log('requestFriend Called NOT PENDING: ')
 
   const { displayName, uid } = props.auth;
   let message = 'would like to connect.';
@@ -251,7 +240,7 @@ export function denyInvite (userData, note) {
 // 
 // 
 
-export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style) {
+export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style, app) {
   let elements;
   let noteClass;
   let noteType = noteProp.noteType || '';
@@ -263,7 +252,7 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
             <Link className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)} text='Connect' />
             <Link className="delete" onClick={() => handleInvite(userObj, noteProp, 'delete', note)} text='Delete' />
           </View>
-          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetail', {app})} text='Click to view Profile' />
+          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
         </View>;
       break;
     default: 
@@ -292,6 +281,8 @@ export function checkRelationship (relationship, props, gid) {
 
   switch (relationship) {
     case 'friend':
+      // all admin users are considered friends to themselves
+      if (gid === props.auth.uid) return true
       // check if the user is a friend
       const friends = props.user.friends || {};
       const friendsList = Object.keys(friends);

@@ -10,7 +10,7 @@ import { getHostEvents, generateTeasers } from '../../helpers/events';
 import Header from '../Header';
 import FooterNav from '../FooterNav';
 import CirclesTeaser from '../CirclesTeaser';
-// import SeatBooking from '../SeatBooking';
+import SeatBooking from '../SeatBooking';
 import style from './style';
 
 class EventDetailsView extends Component {
@@ -20,7 +20,7 @@ class EventDetailsView extends Component {
 
     this.state = {
       eventIndex: 0,
-      visibility: 'hidden'
+      visibility: false
     }
 
     // bind methods at the constructor level
@@ -38,14 +38,11 @@ class EventDetailsView extends Component {
   }
 
   toggleSeatBooking () {
-    let visibilityStatus = this.state.visibility;
-    let visibility = visibilityStatus == 'hidden' ? '' : 'hidden';
-    this.setState({ visibility })
+    this.setState({ visibility: !this.stat.visibility })
   }
 
   render() {
     const props = this.props;
-    console.log('here are the props: ', props);
     const { app, gid } = props;
     let eventDetails = app.props.events[gid] || {}; 
     let eventIndices = Object.keys(eventDetails);
@@ -82,14 +79,15 @@ class EventDetailsView extends Component {
         { hostEventsOutput }
         <Text style={style.eventSummary}>{ summary }</Text>
         <CirclesTeaser 
+          {...props}
           circlesData={selectedEventDetails} 
           circleType="eventDetail" />
-        {/*<SeatBooking 
+        <SeatBooking 
           visibility={this.state.visibility} 
           toggleSeatBooking={this.toggleSeatBooking} 
           {...props} 
           selectedEventDetails={selectedEventDetails}
-          currentEventIndex={currentEventIndex} /> */}
+          currentEventIndex={currentEventIndex} />
       </View>
     )
   }

@@ -20,7 +20,6 @@ export const userInfo = (userData) => {
 };
 
 export const friendRequest = (friendRequestObj) => {
-  console.log('friendRequest called, heres the friendRequestObj: ', friendRequestObj);
   return (dispatch) => {
     dispatch({ 
       type: 'FRIEND_REQUEST',
@@ -55,7 +54,6 @@ const createNewUser = (user) => {
 };
 
 export function acceptFriendRequest(friendObj) {
-  console.log('acceptFriendRequest CALLED')
   return (dispatch) => {
     dispatch({ 
       type: 'FRIEND_ADDED',
@@ -70,7 +68,6 @@ export const startListeningForUsers = (navigator) => {
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
 
-      console.log('this is the AsyncStorage.type: ', AsyncStorage.type)
       if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
         
         // pull the user's tree from the DB

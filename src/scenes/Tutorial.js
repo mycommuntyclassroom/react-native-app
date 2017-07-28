@@ -21,11 +21,6 @@ class Tutorial extends Component {
     this.next = this.next.bind(this)
   }
 
-  componentDidMount() {
-    // console for sanity check troubleshooting
-    console.log('mounted Tutorial', this.props);
-  }
-
   next(slideIndex) {
     const { app } = this.props;
     this.state.slideIndex === 4 
@@ -36,8 +31,6 @@ class Tutorial extends Component {
   }
 
   render() {
-
-    console.log('***TUT rendered***!!!: deviceDimensions: ', deviceDimensions)
     const { globalStyles, app } = this.props;
 
     const getSlideIndex = (slideIndex) => {

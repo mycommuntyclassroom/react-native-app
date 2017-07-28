@@ -53,19 +53,26 @@ class BrowseHostsOutput extends Component {
         eventHostName = hostName;
 
         // handle the output of the image
-        let eventImage = image != '../../../images/blank-profile-pic.png'
-          ? {uri: image} 
-          : require('../../../images/blank-profile-pic.png');
+        let eventImage;
+        let imageStyle;
+
+          if (image === '../../../images/blank-profile-pic.png' || image === '') {
+           eventImage = require('../../../images/logo.png'); 
+           imageStyle = {width: 150, height: 150}
+          } else {
+            eventImage = {uri: image}
+            imageStyle = style.teaserImage
+          }
 
         teaserElement =
           <View style={style.teaserContainer} id={teaser} key={teaser}>
             <TouchableHighlight
-              onPress={() => app.goToScene('EventDetails', {app, gid})} 
+              onPress={() => app.goToScene('EventDetails', {app, gid})}
             >
               <Image 
                 source={eventImage} 
                 resizeMode='cover' 
-                style={style.teaserImage} />
+                style={imageStyle} />
             </TouchableHighlight>
             <LinearGradient 
               style={style.eventView}
