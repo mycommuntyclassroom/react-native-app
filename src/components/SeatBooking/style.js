@@ -1,4 +1,5 @@
 import { deviceDimensions } from '../../styles';
+import styleVariables from '../../styles/variables'
 const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const SeatBooking = {};
@@ -49,6 +50,13 @@ SeatBooking.text = {
 
 SeatBooking.isVisible = {
   opacity: 1
+}
+
+SeatBooking.submit = {
+  padding: 10,
+  marginTop: 10,
+  marginBottom: 15,
+  backgroundColor: styleVariables.mc2medGray
 }
 
 export default SeatBooking;

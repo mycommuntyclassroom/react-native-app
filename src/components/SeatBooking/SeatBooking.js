@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { childDropOff } from '../../helpers/events';
 import CheckBox from '../CheckBox';
+import Button from '../Button';
 import style from './style';
 
 class SeatBooking extends Component {
@@ -43,8 +44,7 @@ class SeatBooking extends Component {
     this.setState({students: studentsCopy});
   }
 
-  submitForm(e) {
-    e.preventDefault();
+  submitForm() {
     const props = this.props;
     // gather the students that are registered for the class
     const data = this.state.students;
@@ -120,10 +120,11 @@ class SeatBooking extends Component {
           <View style={style.studentGroup}>
             { childrenOutput() }
           </View>
-            {/*<Button className="button"
-                               type="submit"
-                               name="submit"
-                               value="Request a seat" />*/}
+          <Button 
+            text='Request a seat' 
+            extraStyle={style.submit} 
+            onPress= { () => this.submitForm() }>
+          </Button>
         </View>
       </View>
     )
