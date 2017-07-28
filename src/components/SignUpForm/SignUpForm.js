@@ -20,11 +20,13 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      invalidEmail: false,
       passwordMismatch: false
     }
+
   }
 
-  verifyPasswordMatch(state){
+  verifyPasswordMatch(state) {
     if(state.password == state.confirmPassword)
     {
       this.setState({passwordMismatch:false});
@@ -36,8 +38,26 @@ class SignUpForm extends Component {
     }
   }
 
+
+  formValidation(error) {
+    console.log('formCheck called error: ', error)
+    // determine the type of error
+    switch (error.code) {
+      case 'auth/invalid-email':
+        console.log('Invalid email address')
+        break;
+      case 'auth/weak-password':
+        console.log('Password should be at least 6 characters')
+        break;
+      default:
+        // no action
+
+    }
+  }
+
   submitForm(state) {
-    signInHandler('manual', 'CREATING_ACCOUNT', state);
+    const formResult = signInHandler('manual', 'CREATING_ACCOUNT', state, this.formValidation)
+    console.log('formResult: ', formResult)
   }
 
   render() {
@@ -65,6 +85,7 @@ class SignUpForm extends Component {
           secureTextEntry={true}
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
         />
+        <Text style={style.errorText}>{this.state.invalidEmail ? 'Invalid email' : '' }</Text>
         <Text style={style.errorText}>{this.state.passwordMismatch ? 'The passwords that you entered do not match' : '' }</Text>
 
         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.verifyPasswordMatch(this.state) }> </Button>
