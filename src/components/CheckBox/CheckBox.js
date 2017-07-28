@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   TouchableHighlight,
   Text,
+  Image,
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -33,10 +34,14 @@ class CheckBox extends Component {
 
   render() {
     const props = this.props;
+    const imageSrc = props.imageSrc
 
     return (
       <TouchableHighlight onPress={this.handleCheckbox} style={[ style.container, style[this.state.checked]]} >
-        <Text style={style.text}>{props.label}</Text>
+        <View>
+          { imageSrc && <Image source={imageSrc} style={ props.imageStyles || {width: 60, height: 60} } /> }
+          <Text style={style.text}>{props.label}</Text>
+        </View>
       </TouchableHighlight>
     )
   }

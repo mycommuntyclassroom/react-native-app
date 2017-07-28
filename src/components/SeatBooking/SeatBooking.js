@@ -67,20 +67,17 @@ class SeatBooking extends Component {
         // grab the profileImage from the child obj
         const { profileImage } = children[child];
 
-        // setup inline styles for the BG image
-        var ImageStyles = {
-          backgroundImage: `url('${profileImage}')`,
-          backgroundSize: 'cover'
-        };
-
         //
         let eventStudents = selectedEventDetails.students || {};
         let eventStudentsId = Object.keys(eventStudents);
         let childEventId = `${child}-${currentEventIndex}`
+        let studentImage = profileImage != '../../../images/blank-profile-pic.png'
+          ? {uri: profileImage}
+          : require('../../../images/blank-profile-pic.png');
         let input =
           <CheckBox
-            label={child}
             key={childEventId}
+            imageSrc={studentImage}
             onChange={(checked) => this.checkboxChange(child, checked) }
           />
 
