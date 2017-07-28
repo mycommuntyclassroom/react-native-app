@@ -34,12 +34,12 @@ class CheckBox extends Component {
 
   render() {
     const props = this.props;
-    const { imageSrc, label, extraStyles, customLabel } = props;
+    const { imageSrc, label, extraStyles, checkMark } = props;
 
     return (
       <TouchableHighlight onPress={this.handleCheckbox} style={[ style.container, style[this.state.checked], extraStyles || {}]} >
         <View style={{position: 'relative'}}>
-          { customLabel && <Text style={ [{ position: 'absolute', opacity: 0, fontSize: 40, top: 20, left: 20, zIndex: 1 }, this.state.checked && style.visible]}>✔</Text> }
+          { checkMark && <Text style={ [style.checkMark, this.state.checked && style.visible]}>{`\u2713`}</Text> }
           { imageSrc && <Image source={imageSrc} style={ props.imageStyles || {width: 80, height: 80} } /> }
           { label && <Text style={style.text}>{label}</Text> }
         </View>

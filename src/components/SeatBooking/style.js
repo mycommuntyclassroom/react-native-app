@@ -25,7 +25,8 @@ SeatBooking.studentBubble = {
   width: 80,
   height: 80,
   overflow: 'hidden',
-  borderRadius: 40
+  borderRadius: 40,
+  backgroundColor: 'transparent'
 }
 
 SeatBooking.studentGroup = {
