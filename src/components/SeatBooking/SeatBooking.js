@@ -90,7 +90,15 @@ class SeatBooking extends Component {
           // check if the admin's child is enrolled for the class being viewed
           // if they are, default the checkbox to checked
           if(child === student){
-            // input = <input type="checkbox" id={childEventId} name="students" value={child} defaultChecked />
+            input = 
+              <CheckBox
+                key={childEventId}
+                imageSrc={studentImage}
+                extraStyles={style.studentBubble}
+                checkMark={true}
+                checked={true}
+                onChange={(checked) => this.checkboxChange(child, checked) }
+              />
           }
         })
 

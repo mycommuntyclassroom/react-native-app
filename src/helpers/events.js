@@ -172,11 +172,11 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // 
 // 
 export function childDropOff (data, props) {
-
-  const { gId } = props.params
+  console.log('childDropOff props: ', props)
+  const { gid } = props
 
   // set the new data on the students tree
-  database.ref(`hostEvents/${gId}/${props.currentEventIndex}/students`)
+  database.ref(`hostEvents/${gid}/${props.currentEventIndex}/students`)
           .set(data);
 
   let timestamp = (new Date()).getTime();
@@ -188,6 +188,6 @@ export function childDropOff (data, props) {
   }
 
   // send the confirmation to the host's notifications tree
-  database.ref(`guardians/${gId}/notifications`)
+  database.ref(`guardians/${gid}/notifications`)
           .push(studentObj);
 }
