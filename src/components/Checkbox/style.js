@@ -23,4 +23,8 @@ CheckBox.false = {
   backgroundColor: 'rgba(0, 0, 0, 0.3)'
 }
 
+CheckBox.visible = {
+  opacity: 1
+}
+
 export default CheckBox;
