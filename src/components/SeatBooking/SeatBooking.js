@@ -4,7 +4,8 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
-import { childDropOff } from '../helpers/events';
+import { childDropOff } from '../../helpers/events';
+import CheckBox from '../CheckBox'
 
 class SeatBooking extends Component {
 
@@ -23,18 +24,19 @@ class SeatBooking extends Component {
     this.setState({students: nextProps.selectedEventDetails.students});
   }
 
-  checkboxChange(checked) {
+  checkboxChange(child, checked) {
     const children = this.props.user.children;
-    let checkbox = e.target.value;
+    console.log('Here are the children: ', children)
+    // let checkbox = e.target.value;
     const studentsCopy = Object.assign({}, this.state.students);
 
     // check if the checkbox is checked or unchecked
     if (checked) {
       // add the childDetails to the studentsCopy object
-      studentsCopy[checkbox]=children[checkbox];
+      studentsCopy[child]=children[child];
     } else {
       // remove the value from the unchecked checkbox from the array
-      delete studentsCopy[checkbox]
+      delete studentsCopy[child]
     }
     // update the state object with the new students selection
     this.setState({students: studentsCopy});
@@ -56,7 +58,7 @@ class SeatBooking extends Component {
     
     const { toggleSeatBooking, selectedEventDetails, currentEventIndex } = props;
 
-    function childrenOutput() {
+    const childrenOutput = () => {
       const children = props.user.children || [];
       let output = [];
       if (children[0] == [' ']) return "You haven't added any of your children yet."
@@ -79,23 +81,22 @@ class SeatBooking extends Component {
           <CheckBox
             label={child}
             key={childEventId}
-            onChange={(checked) => this.checkboxChange(item, category, checked) }
+            onChange={(checked) => this.checkboxChange(child, checked) }
           />
 
         eventStudentsId.map((student) => {
           // check if the admin's child is enrolled for the class being viewed
           // if they are, default the checkbox to checked
           if(child === student){
-            input = <input type="checkbox" id={childEventId} name="students" value={child} defaultChecked />
+            // input = <input type="checkbox" id={childEventId} name="students" value={child} defaultChecked />
           }
         })
 
         // template for the students
         let childIcon = 
-          <span key={childEventId}>
+          <View key={childEventId}>
             { input }
-            <label htmlFor={childEventId} style={ImageStyles}></label>
-          </span>
+          </View>
 
         // move the childIcon into the output array
         output.push(childIcon);
@@ -104,21 +105,21 @@ class SeatBooking extends Component {
     }
 
     return(
-      <div className={`seat-booking ${props.visibility}`}>
-        <div className="inner-container">
-          <div className="close-icon" onClick={ () => toggleSeatBooking() }>X</div>
-          <h3>Please select which of your children will be attending</h3>
-          <form onSubmit={ this.submitForm } >
-            <section className="child-group" onChange={ this.checkboxChange }>
-              { childrenOutput() }
-            </section>
-            <input className="button"
-                   type="submit"
-                   name="submit"
-                   value="Request a seat" />
-          </form>
-        </div>
-      </div>
+      <View className={`seat-booking ${props.visibility}`}>
+        <View className="inner-container">
+          <TouchableHighlight 
+            className="close-icon" 
+            onClick={ () => toggleSeatBooking() }>
+            <Text>X</Text>
+          </TouchableHighlight>
+          <Text>Please select which of your children will be attending</Text>
+          { childrenOutput() }
+            {/*<Button className="button"
+                               type="submit"
+                               name="submit"
+                               value="Request a seat" />*/}
+        </View>
+      </View>
     )
   }
 }

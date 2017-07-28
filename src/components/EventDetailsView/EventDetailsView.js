@@ -10,7 +10,7 @@ import { getHostEvents, generateTeasers } from '../../helpers/events';
 import Header from '../Header';
 import FooterNav from '../FooterNav';
 import CirclesTeaser from '../CirclesTeaser';
-// import SeatBooking from '../SeatBooking';
+import SeatBooking from '../SeatBooking';
 import style from './style';
 
 class EventDetailsView extends Component {
@@ -84,12 +84,12 @@ class EventDetailsView extends Component {
           {...props}
           circlesData={selectedEventDetails} 
           circleType="eventDetail" />
-        {/*<SeatBooking 
+        <SeatBooking 
           visibility={this.state.visibility} 
           toggleSeatBooking={this.toggleSeatBooking} 
           {...props} 
           selectedEventDetails={selectedEventDetails}
-          currentEventIndex={currentEventIndex} /> */}
+          currentEventIndex={currentEventIndex} />
       </View>
     )
   }

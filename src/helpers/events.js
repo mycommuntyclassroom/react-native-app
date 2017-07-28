@@ -88,10 +88,10 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
           >
             { 
-              // toggleSeatBooking && 
-              // <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
-              //   <FaChild/>
-              // </View>
+              toggleSeatBooking && 
+              <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
+                <Text>Book seat</Text>
+              </View>
             }
             <Text style={EventStyles.title}>{title}</Text>
             <View style={EventStyles.tags}>
