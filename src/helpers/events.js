@@ -12,10 +12,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import { database } from './firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
+import { checkRelationship } from './user';
 
 import Link from '../components/Link';
 import RequestFriendButton from '../components/RequestFriendButton';
 import EventStyles from '../components/BrowseHostsOutput/style';
+import styleVariables from '../styles/variables';
 import { deviceDimensions } from '../styles';
 
 const { deviceWidth, deviceHeight } = deviceDimensions;
@@ -49,6 +51,8 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   let hostEventsOutput = [];
   let teaserOutput = [];
   let teaserElement;
+
+  let isFriend = checkRelationship('friend', props, props.gid);
 
   function slideChange (index) {
     return handleEventIndex(index)
@@ -87,12 +91,6 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             style={EventStyles.eventView}
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
           >
-            { 
-              toggleSeatBooking && 
-              <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
-                <Text>Book seat</Text>
-              </View>
-            }
             <Text style={EventStyles.title}>{title}</Text>
             <View style={EventStyles.tags}>
               { 
@@ -106,6 +104,19 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
                 })
               }
             </View>
+            { 
+              (toggleSeatBooking && isFriend) &&
+              <LinearGradient 
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
+                style={EventStyles.childDropOff}> 
+                <TouchableHighlight onPress={ () => toggleSeatBooking() }>
+                  <Image
+                    source={require('../../images/drop-off-color.png')}
+                    resizeMode='cover' 
+                    style={{width: 37, height: 37}} />
+                </TouchableHighlight>
+              </LinearGradient>
+            }
             <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={EventStyles.requestFriendButton} />
             <View style={EventStyles.dayAndTime}>
               <View style={EventStyles.days}>
@@ -161,11 +172,11 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // 
 // 
 export function childDropOff (data, props) {
-
-  const { gId } = props.params
+  console.log('childDropOff props: ', props)
+  const { gid } = props
 
   // set the new data on the students tree
-  database.ref(`hostEvents/${gId}/${props.currentEventIndex}/students`)
+  database.ref(`hostEvents/${gid}/${props.currentEventIndex}/students`)
           .set(data);
 
   let timestamp = (new Date()).getTime();
@@ -177,6 +188,6 @@ export function childDropOff (data, props) {
   }
 
   // send the confirmation to the host's notifications tree
-  database.ref(`guardians/${gId}/notifications`)
+  database.ref(`guardians/${gid}/notifications`)
           .push(studentObj);
 }

@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { childDropOff } from '../../helpers/events';
 import CheckBox from '../CheckBox';
+import Button from '../Button';
 import style from './style';
 
 class SeatBooking extends Component {
@@ -43,8 +44,7 @@ class SeatBooking extends Component {
     this.setState({students: studentsCopy});
   }
 
-  submitForm(e) {
-    e.preventDefault();
+  submitForm() {
     const props = this.props;
     // gather the students that are registered for the class
     const data = this.state.students;
@@ -90,7 +90,15 @@ class SeatBooking extends Component {
           // check if the admin's child is enrolled for the class being viewed
           // if they are, default the checkbox to checked
           if(child === student){
-            // input = <input type="checkbox" id={childEventId} name="students" value={child} defaultChecked />
+            input = 
+              <CheckBox
+                key={childEventId}
+                imageSrc={studentImage}
+                extraStyles={style.studentBubble}
+                checkMark={true}
+                checked={true}
+                onChange={(checked) => this.checkboxChange(child, checked) }
+              />
           }
         })
 
@@ -107,21 +115,24 @@ class SeatBooking extends Component {
     }
 
     return(
-      <View style={style.container}>
+      <View style={[style.container, isVisible]}>
         <View style={style.innerContainer}>
           <TouchableHighlight 
             className="close-icon" 
-            onClick={ () => toggleSeatBooking() }>
+            onPress={ () => toggleSeatBooking() }>
             <Text>X</Text>
           </TouchableHighlight>
-          <Text>Please select which of your children will be attending</Text>
+          <View style={style.copy}>
+            <Text style={style.text}>Please select which of your children will be attending</Text>
+          </View>
           <View style={style.studentGroup}>
             { childrenOutput() }
           </View>
-            {/*<Button className="button"
-                               type="submit"
-                               name="submit"
-                               value="Request a seat" />*/}
+          <Button 
+            text='Request a seat' 
+            extraStyle={style.submit} 
+            onPress= { () => this.submitForm() }>
+          </Button>
         </View>
       </View>
     )

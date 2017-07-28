@@ -64,7 +64,6 @@ class RequestFriendButton extends Component {
         gradientColor = [styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]
       }
 
-
       buttonOutput = 
       <TouchableHighlight onPress={ () => requestFriend(props, props.gid, handlePending) }>
         <LinearGradient
