@@ -112,4 +112,13 @@ BrosweHosts.requestFriendButton = {
   zIndex: 1
 }
 
+BrosweHosts.childDropOff = {
+  position: 'absolute',
+  borderRadius: 25,
+  right: 55,
+  bottom: 17,
+  zIndex: 1
+}
+
+
 export default BrosweHosts;

@@ -107,14 +107,16 @@ class SeatBooking extends Component {
     }
 
     return(
-      <View style={style.container}>
+      <View style={[style.container, isVisible]}>
         <View style={style.innerContainer}>
           <TouchableHighlight 
             className="close-icon" 
-            onClick={ () => toggleSeatBooking() }>
+            onPress={ () => toggleSeatBooking() }>
             <Text>X</Text>
           </TouchableHighlight>
-          <Text>Please select which of your children will be attending</Text>
+          <View style={style.copy}>
+            <Text style={style.text}>Please select which of your children will be attending</Text>
+          </View>
           <View style={style.studentGroup}>
             { childrenOutput() }
           </View>

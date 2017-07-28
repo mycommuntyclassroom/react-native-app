@@ -16,6 +16,7 @@ import store from '../redux/store';
 import Link from '../components/Link';
 import RequestFriendButton from '../components/RequestFriendButton';
 import EventStyles from '../components/BrowseHostsOutput/style';
+import styleVariables from '../styles/variables';
 import { deviceDimensions } from '../styles';
 
 const { deviceWidth, deviceHeight } = deviceDimensions;
@@ -87,12 +88,6 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             style={EventStyles.eventView}
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
           >
-            { 
-              toggleSeatBooking && 
-              <View onClick={ () => toggleSeatBooking() } className="add-item-button drop-off">
-                <Text>Book seat</Text>
-              </View>
-            }
             <Text style={EventStyles.title}>{title}</Text>
             <View style={EventStyles.tags}>
               { 
@@ -106,6 +101,19 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
                 })
               }
             </View>
+            { 
+              toggleSeatBooking &&
+              <LinearGradient 
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
+                style={EventStyles.childDropOff}> 
+                <TouchableHighlight onPress={ () => toggleSeatBooking() }>
+                  <Image
+                    source={require('../../images/drop-off-color.png')}
+                    resizeMode='cover' 
+                    style={{width: 37, height: 37}} />
+                </TouchableHighlight>
+              </LinearGradient>
+            }
             <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={EventStyles.requestFriendButton} />
             <View style={EventStyles.dayAndTime}>
               <View style={EventStyles.days}>

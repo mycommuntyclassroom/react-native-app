@@ -38,7 +38,7 @@ class EventDetailsView extends Component {
   }
 
   toggleSeatBooking () {
-    this.setState({ visibility: !this.stat.visibility })
+    this.setState({ visibility: !this.state.visibility })
   }
 
   render() {
