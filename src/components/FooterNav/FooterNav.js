@@ -18,25 +18,16 @@ import style from './style';
 
 class FooterNav extends Component {
 
-  componentRecievedProps() {
-    console.log('Yup!!!')
-  }
-
   render () {
 
-    console.log('footer props: ', this.props)
     const iconStyles = {width: 100, height: 60, marginBottom: -15, marginTop: -10};
     const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -8, marginTop: -20, position: 'relative', top: -5};
     const feedbackIcon = {height: 45, width: 60};
     
     // get the current scene
     const {app} = this.props;
-    console.log('footer props: ', this.props)
-    console.log('footer app: ', app)
     const { navigator } = app.refs
     let currentScene = navigator.getCurrentRoutes().pop().scene;
-    console.log('currentScene: ', currentScene)
-
 
     function checkScene (scene) {
       let chosenIcon;
