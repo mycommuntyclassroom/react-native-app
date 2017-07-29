@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addChildProfile, removeItem } from '../../helpers/form';
+import { addChildProfile, removeItem, handleFileUpload } from '../../helpers/form';
 import { database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -10,7 +10,8 @@ import {
   TouchableHighlight,
   TextInput,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 
 import CameraRollPicker from 'react-native-camera-roll-picker';
@@ -18,6 +19,7 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-
 import CheckBox from '../CheckBox';
 import Button from '../Button';
 import Link from '../Link';
+import style from './style';
 
 // import BackButton from '../components/BackButton';
 
@@ -71,6 +73,10 @@ class CreateChildAccount extends Component {
 
     }) 
 
+    // FILE UPLOAD
+    this.storageRef = storage.ref(`user-images/${app.props.auth.uid}/children`);
+
+    // bind functions
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
     this.handleChange=this.handleChange.bind(this);
@@ -82,7 +88,12 @@ class CreateChildAccount extends Component {
   }
 
   selectImage() {
+    // if the user didn't select an image, skip this
+    if (!this.state.selectedImage) return;
+
+    // set the image uri to the profile image and close the modal
     this.setState({ profileImage: this.state.selectedImage.uri});
+    this.handleImageSelector();
   }
 
   getSelectedImages(images, current) {
@@ -137,11 +148,17 @@ class CreateChildAccount extends Component {
     
     const props = this.props;
     const { app } = props;
-    const { fName, lName } = this.state;
+    // store the selected image's url
+    const { fName, lName, selectedImage, profileImage } = this.state;
     // gather the child's info from the state
     const newChild = {...this.state};
     // create a temporary id for the new child
     const tempNewChildID = `${fName}${lName}`;
+
+    let imageUri
+    selectedImage
+      ? imageUri = selectedImage.uri
+      : imageUri = profileImage
 
     // get the user
     let parent = app.props.user;
@@ -156,6 +173,7 @@ class CreateChildAccount extends Component {
       delete userChildren['0'];
     }
 
+
     // create a copy of the user's children
     const updatedUserChildren = Object.assign(userChildren);
 
@@ -168,6 +186,9 @@ class CreateChildAccount extends Component {
 
     // update the database
     addChildProfile(newChild);
+    
+    // upload the profile image 
+    handleFileUpload(imageUri, selectedImage, this.storageRef, this.userRef);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
@@ -179,8 +200,10 @@ class CreateChildAccount extends Component {
    */
   render() {
     const props = this.props
+    const { globalStyles, app } = props
     let formData = this.state.formData || {};
     const { displayName, email, imageName } = this.props.auth;
+    const { uploadProgress, profileImage } = this.state;
 
     const outputCheckboxes = () => {
       let checkboxOutput = []
@@ -211,11 +234,68 @@ class CreateChildAccount extends Component {
       {label: 'Female', value: 'female' }
     ];
     let userGender = this.state.gender
-        // <BackButton path="/welcome-search" />
+
+    // handle the output of the required image
+    let userImage = profileImage != '../../../images/blank-profile-pic.png'
+      ? {uri: profileImage} 
+      : require('../../../images/blank-profile-pic.png');
 
     return(
       <ScrollView>
-        <Text> Add your child here! </Text>
+        {
+          /* page overlay for the image selection
+             rendered based on the state per the open/close */
+
+          this.state.imageModal &&
+            // if true, render the imageModal
+            <View style={style.imageModal}>
+              <Text style={globalStyles.imagePickerTitle}>
+                Select an image for your profile 
+              </Text>
+              <Link 
+                text='Cancel'
+                extraStyle={[globalStyles.chooseImage, {backgroundColor: 'maroon'}]}
+                textStyles={{color: 'white'}}
+                onClick={() => this.handleImageSelector()}/>
+              <Link 
+                text='Select'
+                extraStyle={globalStyles.chooseImage}
+                onClick={() => this.selectImage()}/>
+
+              {/* image handler */}
+              <CameraRollPicker
+                scrollRenderAheadDistance={500}
+                initialListSize={1}
+                pageSize={3}
+                removeClippedSubviews={false}
+                groupTypes='SavedPhotos'
+                batchSize={5}
+                maximum={1}
+                selected={this.state.selected}
+                assetType='Photos'
+                imagesPerRow={3}
+                imageMargin={5}
+                callback={this.getSelectedImages.bind(this)} />
+            </View>
+        }
+        <Text style={[globalStyles.formTitle, style.title]}> Add your child here! </Text>
+
+        <View className="image-uploader">
+          <View style={globalStyles.formImageContainer}>
+            <Image 
+              source={userImage} 
+              style={globalStyles.formImage}
+              resizeMode='cover' />
+          </View>
+          <View className="image-uploader--identification">
+            <Link 
+              text='Add a profile image' 
+              onClick={() => this.handleImageSelector()}
+              extraStyle={globalStyles.uploadImageButton}
+            />
+          </View>
+        </View>
+
         <View>
           <TextInput
             style={{width: 200, height: 40}}
@@ -239,7 +319,10 @@ class CreateChildAccount extends Component {
 
           { outputCheckboxes() }
 
-          <Button text='Submit' onPress= { () => this.submitForm() }></Button>
+          <Button 
+            text='Submit'
+            extraStyle={{marginTop: 20, marginBottom: 120}}
+            onPress= { () => this.submitForm() }></Button>
         </View>
       </ScrollView>
     )
