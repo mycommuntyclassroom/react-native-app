@@ -13,7 +13,7 @@ import store from '../redux/store';
 import Link from '../components/Link';
 import styleVariables from '../styles/variables';
 
-export function signInHandler (provider, type, data) {
+export function signInHandler (provider, type, data, callback) {
   // save a type within the AsyncStorage to use when we redirect to the app
   switch(type) {
     case 'CREATING_ACCOUNT':
@@ -24,6 +24,7 @@ export function signInHandler (provider, type, data) {
       AsyncStorage.setItem('type', 'SIGNING_IN');
       break;
   }
+  // method of logging in
   switch (provider) {
     case 'google':
       auth.signInWithRedirect(googleAuthProvider);
@@ -33,7 +34,7 @@ export function signInHandler (provider, type, data) {
       break;
     case 'manual':
       const { email, password } = data;
-      createUserWithEmailAndPassword(email, password);
+      return createUserWithEmailAndPassword(email, password, callback);
       break;
     default:
       // no action

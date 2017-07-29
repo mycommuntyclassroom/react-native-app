@@ -9,6 +9,7 @@ import {
 
 import Button from '../Button'
 import BackButton from '../BackButton'
+import Link from '../Link'
 import style from './style';
 
 class SignUpForm extends Component {
@@ -20,11 +21,14 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      invalidEmail: false,
+      emailInUse: false,
+      invalidPassword: false,
       passwordMismatch: false
     }
   }
 
-  verifyPasswordMatch(state){
+  verifyPasswordMatch(state) {
     if(state.password == state.confirmPassword)
     {
       this.setState({passwordMismatch:false});
@@ -36,8 +40,26 @@ class SignUpForm extends Component {
     }
   }
 
+
+  formValidation(result) {
+    const { code } = result;
+
+    code === 'auth/invalid-email'
+      ? this.setState({invalidEmail:true})
+      : this.setState({invalidEmail:false})
+
+    code === 'auth/weak-password'
+      ? this.setState({invalidPassword:true})
+      : this.setState({invalidPassword:false})
+
+    code === 'auth/email-already-in-use'
+      ? this.setState({emailInUse:true})
+      : this.setState({emailInUse:false})
+  
+  }
+
   submitForm(state) {
-    signInHandler('manual', 'CREATING_ACCOUNT', state);
+    signInHandler('manual', 'CREATING_ACCOUNT', state, this.formValidation.bind(this))
   }
 
   render() {
@@ -65,6 +87,20 @@ class SignUpForm extends Component {
           secureTextEntry={true}
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
         />
+        {
+          this.state.emailInUse &&
+            <View style={{flexDirection: 'row'}}>
+              <Text style={[style.errorText]}>This email address is already in use by another account. 
+              <Link 
+                onPress={() => app.goToScene('SignIn', {app})}
+                extraStyle={{width: 80, height: 15}}
+                textStyles={{textDecorationLine: 'underline'}}
+                text=' Sign in?' /></Text>      
+            </View>
+        }
+
+        <Text style={style.errorText}>{this.state.invalidEmail ? 'Invalid email address' : '' }</Text>
+        <Text style={style.errorText}>{this.state.invalidPassword ? 'Password should be at least 6 characters' : '' }</Text>
         <Text style={style.errorText}>{this.state.passwordMismatch ? 'The passwords that you entered do not match' : '' }</Text>
 
         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.verifyPasswordMatch(this.state) }> </Button>
