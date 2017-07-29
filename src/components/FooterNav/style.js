@@ -61,8 +61,8 @@ FooterNav.decoCurve = {
   shadowColor: 'rgba(51, 51, 112, 0.6)',
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 1,
-  width: 87,
-  left: (deviceWidth / 2) - 43.5,
+  width: '23.15%',
+  left: (deviceWidth / 2) - ((deviceWidth * 0.2315) / 2),
   borderRadius: 30,
   zIndex: -1
 }
