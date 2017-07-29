@@ -42,7 +42,6 @@ class SignUpForm extends Component {
 
 
   formValidation(result) {
-    console.log('formCheck called result: ', result)
     const { code } = result;
 
     code === 'auth/invalid-email'
@@ -91,12 +90,12 @@ class SignUpForm extends Component {
         {
           this.state.emailInUse &&
             <View style={{flexDirection: 'row'}}>
-              <Text style={[style.errorText]}>This email address is already in use by another account. <Link 
+              <Text style={[style.errorText]}>This email address is already in use by another account. 
+              <Link 
                 onPress={() => app.goToScene('SignIn', {app})}
                 extraStyle={{width: 80, height: 15}}
                 textStyles={{textDecorationLine: 'underline'}}
-                text='Sign in?' /></Text>
-              
+                text=' Sign in?' /></Text>      
             </View>
         }
 
