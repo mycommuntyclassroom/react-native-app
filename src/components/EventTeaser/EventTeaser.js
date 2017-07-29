@@ -101,13 +101,14 @@ class EventTeaser extends Component {
               <Text style={style.eventTitle}>{title}</Text>
               <View style={style.eventTags}>
                 { 
-                  teaserData[teaser].ageRange.map((item) => {
-                    return (
-                      <View className="tag-item" key={`${teaser}${item}`}>
-                        <Text style={style.tagItemCopy}>{item}</Text>
-                      </View>
-                    )
-                  })
+                  teaserData[teaser].ageRange &&
+                    teaserData[teaser].ageRange.map((item) => {
+                      return (
+                        <View className="tag-item" key={`${teaser}${item}`}>
+                          <Text style={style.tagItemCopy}>{item}</Text>
+                        </View>
+                      )
+                    })
                 }
               </View>
               <View style={style.eventDays}>
