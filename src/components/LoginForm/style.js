@@ -3,7 +3,6 @@ const LoginForm = {};
 LoginForm.container = {
   display: 'flex',
   flex: 1,
-  justifyContent: 'center',
   alignItems: 'center'
 }
 
@@ -12,9 +11,13 @@ LoginForm.submit = {
   marginTop: 15
 }
 
-LoginForm.header= {
+LoginForm.header = {
   color: 'white',
   marginBottom: 20
+}
+
+LoginForm.errorText = {
+  color: 'red'
 }
 
 export default LoginForm;

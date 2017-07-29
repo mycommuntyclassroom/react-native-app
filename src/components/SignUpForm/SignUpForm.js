@@ -40,7 +40,6 @@ class SignUpForm extends Component {
     }
   }
 
-
   formValidation(result) {
     const { code } = result;
 
@@ -55,7 +54,6 @@ class SignUpForm extends Component {
     code === 'auth/email-already-in-use'
       ? this.setState({emailInUse:true})
       : this.setState({emailInUse:false})
-  
   }
 
   submitForm(state) {

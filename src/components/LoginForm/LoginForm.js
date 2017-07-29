@@ -18,13 +18,38 @@ class Login extends Component {
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      invalidEmail: false,
+      invalidPassword: false,
+      incorrectPassword: false,
+      noMatch: false
     }
+  }
+
+  formValidation(result) {
+    const { code } = result;
+
+    code === 'auth/invalid-email'
+      ? this.setState({invalidEmail:true})
+      : this.setState({invalidEmail:false})
+
+    code === 'auth/weak-password'
+      ? this.setState({invalidPassword:true})
+      : this.setState({invalidPassword:false})
+
+    code === 'auth/wrong-password'
+      ? this.setState({incorrectPassword:true})
+      : this.setState({incorrectPassword:false})
+
+    code === 'auth/user-not-found'
+      ? this.setState({noMatch:true})
+      : this.setState({noMatch:false})
+
   }
 
   submitForm(state) {
     const { email, password } = state;
-    signInWithEmailAndPassword(email, password);
+    signInWithEmailAndPassword(email, password, this.formValidation.bind(this));
   }
 
   render() {
@@ -43,8 +68,15 @@ class Login extends Component {
         <TextInput
           style={globalStyles.textInput}
           placeholder="Password"
+          secureTextEntry={true}
           onChangeText={(password) => this.setState({password})}
         />
+
+        { this.state.invalidEmail && <Text style={style.errorText}>Invalid email address </Text> }
+        { this.state.invalidPassword && <Text style={style.errorText}>Password should be at least 6 characters </Text> }
+        { this.state.incorrectPassword && <Text style={style.errorText}>The password is invalid  </Text> }
+        { this.state.noMatch && <Text style={style.errorText}>The email and password do not match, please recheck your email and password  </Text> }
+
         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.submitForm(this.state) }> </Button>
       </View>
     );
