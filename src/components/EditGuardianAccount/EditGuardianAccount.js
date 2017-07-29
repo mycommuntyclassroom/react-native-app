@@ -95,7 +95,12 @@ class EditGuardianAccount extends Component {
   }
 
   selectImage() {
+    // if the user didn't select an image, skip this
+    if (!this.state.selectedImage) return;
+
+    // set the image uri to the profile image and close the modal
     this.setState({ profileImage: this.state.selectedImage.uri});
+    this.handleImageSelector();
   }
 
   getSelectedImages(images, current) {
@@ -250,9 +255,18 @@ class EditGuardianAccount extends Component {
           this.state.imageModal &&
             // if true, render the imageModal
             <View style={style.imageModal}>
-              <Text>IMAGE MODAL </Text>
-              <Link text='Close' onClick={() => this.handleImageSelector()}> </Link>
-              <Link text='Select' onClick={() => this.selectImage()}> </Link>
+              <Text style={globalStyles.imagePickerTitle}>
+                Select an image for your profile 
+              </Text>
+              <Link 
+                text='Cancel'
+                extraStyle={[globalStyles.chooseImage, {backgroundColor: 'maroon'}]}
+                textStyles={{color: 'white'}}
+                onClick={() => this.handleImageSelector()}/>
+              <Link 
+                text='Select'
+                extraStyle={globalStyles.chooseImage}
+                onClick={() => this.selectImage()}/>
 
               {/* image handler */}
               <CameraRollPicker
@@ -262,7 +276,7 @@ class EditGuardianAccount extends Component {
                 removeClippedSubviews={false}
                 groupTypes='SavedPhotos'
                 batchSize={5}
-                maximum={3}
+                maximum={1}
                 selected={this.state.selected}
                 assetType='Photos'
                 imagesPerRow={3}
@@ -280,7 +294,11 @@ class EditGuardianAccount extends Component {
               resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Link text='File Input' onClick={() => this.handleImageSelector()} style={globalStyles.formSubTitle}></Link>
+            <Link 
+              text='Add a profile image' 
+              onClick={() => this.handleImageSelector()}
+              extraStyle={globalStyles.uploadImageButton}
+            />
           </View>
         </View>
 
@@ -291,10 +309,14 @@ class EditGuardianAccount extends Component {
             defaultValue={ this.state.displayName }
             onChangeText={ (value) => this.handleChange(value, 'displayName') } />
 
-          <View>
+          <View style={{alignItems: 'center'}}>
             <RadioForm
               radio_props={radio_props}
               initial={userGender === 'male' ? 0 : 1 }
+              style={{padding: 30, marginRight: 10}}
+              buttonWrapStyle={{padding: 30, marginRight: 10}}
+              labelStyle={{marginRight: 30}}
+              formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>

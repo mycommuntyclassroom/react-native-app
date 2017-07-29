@@ -134,6 +134,36 @@ STYLE.formImage = {
   height: 320
 }
 
+STYLE.uploadImageButton = {
+  backgroundColor: 'white',
+  padding: 20,
+  alignItems: 'center',
+  marginTop: 10,
+  marginBottom: 10
+}
+
+STYLE.imagePickerTitle = {
+  fontSize: 20,
+  color: 'white',
+  textAlign: 'center'
+}
+
+STYLE.closeImagePicker = {
+  backgroundColor: 'maroon',
+  padding: 10,
+  alignItems: 'center',
+  marginTop: 5,
+  marginBottom: 5
+}
+
+STYLE.chooseImage = {
+  backgroundColor: 'white',
+  padding: 10,
+  alignItems: 'center',
+  marginTop: 5,
+  marginBottom: 5
+}
+
 STYLE.textInput = {
   height: 40, 
   borderRadius: 3,

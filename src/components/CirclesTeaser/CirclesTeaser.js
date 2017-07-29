@@ -117,12 +117,17 @@ class CirclesTeaser extends Component {
           </Carousel>
           {
             props.hasAddButton &&
-              <LinearGradient
-                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-                style={[globalStyles.addItem, style.addItem]}
-              >
-                <Link textStyles={[style.addItemText]} onClick={ () => app.goToScene('CreateChild', {app})} text='+' />
-              </LinearGradient>
+              <TouchableHighlight onPress={ () => app.goToScene('CreateChild', {app})}>
+                <LinearGradient
+                  colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                  style={[globalStyles.addItem, style.addItem]}
+                >
+                  <Image 
+                    source={require('../../../images/plus-sign-white.png')}
+                    resizeMode='cover' 
+                    style={{top: 2, left: 1, width: 40, height: 40}} />
+                </LinearGradient>
+              </TouchableHighlight>
           }
         </View>
       </View>

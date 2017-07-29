@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  Image
 } from 'react-native';
+
+import { deviceDimensions } from '../styles';
+import Header from '../components/Header';
 
 class Feedback extends Component {
 
@@ -19,13 +23,17 @@ class Feedback extends Component {
   }
 
   render() {
+    const props = this.props
     const { globalStyles, app } = this.props;
+    const { deviceWidth, deviceHeight } = deviceDimensions;
 
     return (
-      <View style={[globalStyles.container, { backgroundColor: 'hotpink' }]}>
-        <Text style={globalStyles.title}>
-          Feedback
-        </Text>
+      <View style={{marginBottom: 90, backgroundColor: 'white'}}>
+        <Header { ...props } />
+        <Image 
+          source={require('../../images/feedback-screenshot.jpg')} 
+          resizeMode='cover' 
+          style={{width: deviceWidth, height: deviceHeight}} />
       </View>
     );
   };

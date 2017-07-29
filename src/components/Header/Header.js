@@ -38,8 +38,7 @@ class Header extends Component {
    * @param e
    */
 
-  handleInvite(e) {
-    e.preventDefault();
+  handleInvite() {
     this.setState({
       inviteOpen: !this.state.inviteOpen
     })
@@ -68,24 +67,33 @@ class Header extends Component {
 
     const renderInvite = () => (
       <View className = "invite-holder" onClick={ this.handleInvite } >
-        <Invite { ...this.props } handleInvite={ (e) => this.handleInvite(e) } />
+        {/*<Invite { ...this.props } handleInvite={ () => this.handleInvite() } />*/}
       </View>
     );
 
     let headerLinks;
+    let headerColor;
 
     // determine if the user is editing/viewing a profile, and output the appropriate view
     if(props.editMode) {
       headerLinks =
         <View>
-          <Link onClick={ () => app.goToScene('Dashboard', {app}) } text='Cancel' />
+          <Link 
+            onClick={ () => app.goToScene('Dashboard', {app}) }
+            textStyles={{color: 'white', fontWeight: '500', marginRight: 15 }}
+            text='Cancel' />
         </View>
+
+      headerColor=['#673ab7', '#673ab7']
+
     } else {
       headerLinks =
         <View style={style.linkView}>
           <Link onClick={ this.handleInvite } text='Invite' textStyles={style.link} />
           <Link text='Donate' textStyles={style.link} />
         </View>
+
+      headerColor=[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]
     }
 
     let headerNav;
@@ -103,7 +111,7 @@ class Header extends Component {
     return (
       <LinearGradient 
         start={{x: 1, y: 1}} end={{x: 0, y: 1}}
-        colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+        colors={headerColor} 
         style={style.linearGradient}
       >
         <View style={style.baseHeader}>

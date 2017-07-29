@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+import {
+  View,
+  TouchableHighlight,
+  Text,
+  Image
+} from 'react-native';
 import Link from '../Link';
 import { FaEnvelopeO, FaUser, FaMailForward } from 'react-icons/lib/fa';
 
@@ -26,7 +32,7 @@ class Invite extends Component {
               <FaEnvelopeO />
             </View>
             <View className="cell">
-              <Link onClick={ this.sendEmail } text={Email} />
+              <Link onClick={ this.sendEmail } text='Email' />
               <Text>The easiest way to quickly invite someone</Text>
             </View>
           </View>
