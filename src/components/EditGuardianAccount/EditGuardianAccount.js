@@ -260,7 +260,8 @@ class EditGuardianAccount extends Component {
               </Text>
               <Link 
                 text='Cancel'
-                extraStyle={globalStyles.chooseImage}
+                extraStyle={[globalStyles.chooseImage, {backgroundColor: 'maroon'}]}
+                textStyles={{color: 'white'}}
                 onClick={() => this.handleImageSelector()}/>
               <Link 
                 text='Select'

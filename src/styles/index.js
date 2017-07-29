@@ -144,7 +144,8 @@ STYLE.uploadImageButton = {
 
 STYLE.imagePickerTitle = {
   fontSize: 20,
-  color: 'white'
+  color: 'white',
+  textAlign: 'center'
 }
 
 STYLE.closeImagePicker = {
