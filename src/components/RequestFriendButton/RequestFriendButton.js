@@ -57,7 +57,7 @@ class RequestFriendButton extends Component {
       let gradientColor;
 
       if (this.state.pending) {
-        requestFriendIcon = require('../../../images/blank-profile-pic.png')
+        requestFriendIcon = require('../../../images/friend-request-greyed-out.png')
         gradientColor = ['gray', 'gray'];
       } else {
         requestFriendIcon = require('../../../images/friend-request.png')
