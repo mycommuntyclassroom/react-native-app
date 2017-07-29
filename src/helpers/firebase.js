@@ -76,7 +76,6 @@ export function signInWithEmailAndPassword(email, password, callback) {
     callback(true)
   })
   .catch((error) => {
-    console.log('error: ', error)
     let theError = error;
     callback(theError);
   })

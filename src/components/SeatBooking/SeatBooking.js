@@ -28,8 +28,6 @@ class SeatBooking extends Component {
 
   checkboxChange(child, checked) {
     const children = this.props.user.children;
-    console.log('Here are the children: ', children)
-    // let checkbox = e.target.value;
     const studentsCopy = Object.assign({}, this.state.students);
 
     // check if the checkbox is checked or unchecked
