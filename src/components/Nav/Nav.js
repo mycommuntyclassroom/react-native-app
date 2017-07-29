@@ -6,22 +6,24 @@ import {
   Text
 } from 'react-native';
 
-import actions from '../redux/actions';
-import store from '../redux/store';
+import actions from '../../redux/actions';
+import store from '../../redux/store';
 
 import Dimensions from 'Dimensions';
 import Easing from 'Easing';
-import Button from './Button';
+import Button from '../Button';
 
-const inbox = {
-  scene: 'Inbox',
-  props: {
-    filter: 'unread'
-  }
-};
+import style from './style';
 
-const friends = {
-  scene: 'Friends',
+// const inbox = {
+//   scene: 'Inbox',
+//   props: {
+//     filter: 'unread'
+//   }
+// };
+
+const dashboard = {
+  scene: 'Dashboard',
   props: {}
 };
 
@@ -30,15 +32,15 @@ const calendar = {
   props: {}
 };
 
-const map = {
-  scene: 'Map',
-  props: {}
-};
+// const map = {
+//   scene: 'Map',
+//   props: {}
+// };
 
-const settings = {
-  scene: 'Settings',
-  props: {}
-};
+// const settings = {
+//   scene: 'Settings',
+//   props: {}
+// };
 
 const feedback = {
   scene: 'Feedback',
@@ -46,11 +48,12 @@ const feedback = {
 };
 
 const ROUTES = [
-  inbox,
-  friends,
+  // inbox,
+  // friends,
+  dashboard,
   calendar,
-  map,
-  settings,
+  // map,
+  // settings,
   feedback
 ];
 
@@ -102,9 +105,8 @@ class Nav extends Component {
   }
 
   render() {
-    const { style } = this.props;
     return (
-      <Animated.View style={[style.Nav, { left: this.state.x }]}>
+      <Animated.View style={[style.container, { left: this.state.x }]}>
         <Button
           text='Logout'
           onPress={ () => this.logout() }
@@ -112,13 +114,19 @@ class Nav extends Component {
         {ROUTES.map((route, i) => {
           const { scene, props } = route;
           return (
-            <View key={i} style={style.NavLink}>
-              <Button text={scene} onPress={() => this.onPress(scene, props)} />
+            <View key={i}>
+              <Button 
+                text={scene}
+                extraStyle={style.navLink}
+                onPress={() => this.onPress(scene, props)} />
             </View>
           );
         })}
 
-        <Button text='close' onPress={this.close} />
+        <Button 
+          text='close'
+          extraStyle={style.navLink}
+          onPress={this.close} />
 
       </Animated.View>
     );

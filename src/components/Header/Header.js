@@ -45,6 +45,18 @@ class Header extends Component {
     })
   }
 
+  toggleNav() {
+
+    const props = this.props;
+    const { app } = props;
+    
+    this.setState({navOpen: !this.state.navOpen})
+
+    this.state.navOpen 
+      ? app.refs.navMenu.close() 
+      : app.refs.navMenu.open()
+  }
+
   /**
    *
    * @returns {XML}
@@ -83,7 +95,7 @@ class Header extends Component {
       headerNav = <BackButton {...props} />
     } else {
       headerNav =
-        <TouchableHighlight onPress={() => app.refs.navMenu.open()}>
+        <TouchableHighlight onPress={() => this.toggleNav()}>
           <Image source={require('../../../images/logo.png')} resizeMode='contain' style={{ width: 50, height: 50}}/>
         </TouchableHighlight>
     }
