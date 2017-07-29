@@ -1,4 +1,6 @@
 import styleVariables from '../../styles/variables';
+import { deviceDimensions } from '../../styles';
+const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const FooterNav = {};
 
@@ -60,7 +62,7 @@ FooterNav.decoCurve = {
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 1,
   width: 87,
-  left: 144,
+  left: (deviceWidth / 2) - 87,
   borderRadius: 30,
   zIndex: -1
 }

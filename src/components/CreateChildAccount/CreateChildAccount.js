@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { addChildProfile, removeItem, handleFileUpload, generateKey } from '../../helpers/form';
-import { storage, database } from '../../helpers/firebase';
+import { addChildProfile, removeItem, handleFileUpload } from '../../helpers/form';
+import { database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
@@ -36,8 +36,7 @@ class CreateChildAccount extends Component {
     // clear the old formData
     AsyncStorage.removeItem('formData');
 
-    const { app } = props 
-    const { auth } = app.props;
+    const { auth } = props.app.props;
 
     // pull the formData tree from the DB and grab all of the checkboxes for the guardians
     database
@@ -174,6 +173,7 @@ class CreateChildAccount extends Component {
       delete userChildren['0'];
     }
 
+
     // create a copy of the user's children
     const updatedUserChildren = Object.assign(userChildren);
 
@@ -184,17 +184,11 @@ class CreateChildAccount extends Component {
     const updatedUser = Object.assign(parent, updatedUserChildren);
     store.dispatch(actions.handleChildProfile(updatedUser));
 
-    const newKey = generateKey()
-    console.log('newKey: ', newKey)
-
     // update the database
-    const generatedId = addChildProfile(newChild);
-    console.log('generatedId: ', generatedId)
-
-    let userRef = database.ref(`guardians/${generatedId}`);
-
+    addChildProfile(newChild);
+    
     // upload the profile image 
-    handleFileUpload(imageUri, selectedImage, this.storageRef, userRef);
+    handleFileUpload(imageUri, selectedImage, this.storageRef, this.userRef);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})

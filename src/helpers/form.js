@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { database, storage } from './firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
-import firebase from 'firebase';
 
 
 export function updateProfile (path, formData) {
@@ -22,13 +21,9 @@ export function addItem (path, formData) {
           .push(formData);
 }
 
-export function generateKey () {
-  return firebase.database().ref().push().key();
-}
-
 export function addChildProfile (formData) {
   database.ref(`guardians/${formData.gid}/children`)
-          .push(formData).key();
+          .push(formData);
 }
 
 // FILE UPLOAD
