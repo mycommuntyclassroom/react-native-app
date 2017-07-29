@@ -7,6 +7,7 @@ import {
 
 import Header from '../components/Header';
 import BrowseHostsOutput from '../components/BrowseHostsOutput';
+import FooterNav from '../components/FooterNav';
 
 class BrowseHosts extends Component {
 
@@ -22,6 +23,7 @@ class BrowseHosts extends Component {
       <View style={{marginBottom: 90, backgroundColor: 'white'}}>
         <Header { ...props } />
         <BrowseHostsOutput {...props} />
+        <FooterNav {...props} />
       </View>
     );
   };

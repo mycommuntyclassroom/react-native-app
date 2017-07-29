@@ -8,6 +8,7 @@ import {
 
 import { deviceDimensions } from '../styles';
 import Header from '../components/Header';
+import FooterNav from '../components/FooterNav';
 
 class Feedback extends Component {
 
@@ -33,7 +34,8 @@ class Feedback extends Component {
         <Image 
           source={require('../../images/feedback-screenshot.jpg')} 
           resizeMode='cover' 
-          style={{width: deviceWidth, height: deviceHeight}} />
+          style={{width: deviceWidth, height: deviceHeight - 90}} />
+        <FooterNav {...props} />
       </View>
     );
   };

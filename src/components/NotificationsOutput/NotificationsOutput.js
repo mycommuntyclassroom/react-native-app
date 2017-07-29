@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   View,
   TouchableHighlight,
-  Text
+  Text,
+  ScrollView
 } from 'react-native';
 
 import NotificationsHeader from '../NotificationsHeader';
@@ -51,9 +52,9 @@ class NotificationsOutput extends Component {
     buildNotifications()
 
     return (
-      <View style={style.container}>
+      <ScrollView style={style.container}>
         { notesOutput }
-      </View>
+      </ScrollView>
     )
   };
 

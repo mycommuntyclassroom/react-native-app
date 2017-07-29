@@ -4,12 +4,18 @@ const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const FooterNav = {};
 
+FooterNav.container = {
+  position: 'absolute',
+  bottom: 0,
+  shadowColor: 'rgba(51, 51, 112, 0.2)',
+  shadowOffset: { width: 0, height: -2 },
+  shadowOpacity: 1,
+  zIndex: 2
+}
+
 FooterNav.footerNav = {
   display: 'flex',
   flexDirection: 'row',
-  shadowColor: 'rgba(51, 51, 112, 0.2)',
-  shadowOffset: { width: 0, height: 0 },
-  shadowOpacity: 1
 }
 
 FooterNav.footerLink = {
@@ -58,7 +64,7 @@ FooterNav.decoCurve = {
   position: 'absolute',
   height: 65,
   top: -20,
-  shadowColor: 'rgba(51, 51, 112, 0.6)',
+  shadowColor: 'rgba(51, 51, 112, 0.2)',
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 1,
   width: '23.15%',

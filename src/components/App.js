@@ -126,7 +126,7 @@ class App extends Component {
           configureScene={this.configureScene} />
 
         <Nav ref='navMenu' app={this} style={style} />
-        { status === 'SIGNED_IN' && <FooterNav app={this} /> }
+        {/* status === 'SIGNED_IN' && <FooterNav app={this} /> */}
 
       </LinearGradient>
     );

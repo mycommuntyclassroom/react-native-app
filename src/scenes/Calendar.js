@@ -8,6 +8,7 @@ import {
 
 import { deviceDimensions } from '../styles';
 import Header from '../components/Header';
+import FooterNav from '../components/FooterNav';
 
 class Calendar extends Component {
 
@@ -22,7 +23,8 @@ class Calendar extends Component {
         <Image 
           source={require('../../images/calender-screen-shot.jpg')} 
           resizeMode='cover' 
-          style={{width: deviceWidth, height: deviceHeight}} />
+          style={{width: deviceWidth, height: deviceHeight - 90}} />
+        <FooterNav {...props} />
       </View>
     );
   };
