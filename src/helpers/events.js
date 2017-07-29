@@ -172,7 +172,6 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // 
 // 
 export function childDropOff (data, props) {
-  console.log('childDropOff props: ', props)
   const { gid } = props
 
   // set the new data on the students tree

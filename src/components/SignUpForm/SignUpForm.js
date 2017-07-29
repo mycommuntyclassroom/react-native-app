@@ -40,7 +40,6 @@ class SignUpForm extends Component {
     }
   }
 
-
   formValidation(result) {
     const { code } = result;
 
@@ -55,7 +54,6 @@ class SignUpForm extends Component {
     code === 'auth/email-already-in-use'
       ? this.setState({emailInUse:true})
       : this.setState({emailInUse:false})
-  
   }
 
   submitForm(state) {
@@ -92,16 +90,16 @@ class SignUpForm extends Component {
             <View style={{flexDirection: 'row'}}>
               <Text style={[style.errorText]}>This email address is already in use by another account. 
               <Link 
-                onPress={() => app.goToScene('SignIn', {app})}
+                onClick={() => app.goToScene('Login', {app})}
                 extraStyle={{width: 80, height: 15}}
                 textStyles={{textDecorationLine: 'underline'}}
                 text=' Sign in?' /></Text>      
             </View>
         }
 
-        <Text style={style.errorText}>{this.state.invalidEmail ? 'Invalid email address' : '' }</Text>
-        <Text style={style.errorText}>{this.state.invalidPassword ? 'Password should be at least 6 characters' : '' }</Text>
-        <Text style={style.errorText}>{this.state.passwordMismatch ? 'The passwords that you entered do not match' : '' }</Text>
+        { this.state.invalidEmail && <Text style={style.errorText}> Invalid email address </Text> }
+        { this.state.invalidPassword && <Text style={style.errorText}> Password should be at least 6 characters </Text> }
+        { this.state.passwordMismatch && <Text style={style.errorText}> The passwords that you entered do not match </Text> }
 
         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.verifyPasswordMatch(this.state) }> </Button>
       </View>
