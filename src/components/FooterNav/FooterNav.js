@@ -16,58 +16,92 @@ import style from './style';
 // <NotificationsCounter {...props} />
 
 
-const FooterNav = (props) => {
+class FooterNav extends Component {
 
-  const {app} = props;
-  const iconStyles = {width: 100, height: 60, marginBottom: -15, marginTop: -10};
-  const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -8, marginTop: -20, position: 'relative', top: -5};
-  const feedbackIcon = {height: 45, width: 60};
+  componentRecievedProps() {
+    console.log('Yup!!!')
+  }
 
-  return (
-    <View>
-      <LinearGradient
-        colors={['white', '#dbdbdb']} 
-        style={[style.footerNav]}
-      >
-        <Link 
-          extraStyle={style.footerLink} 
-          textStyles={style.footerLinkCopy} 
-          onClick={ () => app.goToScene('Dashboard', {app}) }
-          iconTop={{url: require('../../../images/home-blue.png'), dimensions: iconStyles }}
-          text='HOME' />
-        <Link 
-          extraStyle={style.footerLink} 
-          textStyles={style.footerLinkCopy} 
-          onClick={ () => app.goToScene('Calendar', {app}) }
-          iconTop={{url: require('../../../images/calander-blue.png'), dimensions: iconStyles }}
-          text='CALENDAR' />
-        <Link 
-          extraStyle={style.footerLink, style.browseHostsLink} 
-          textStyles={style.footerLinkCopy} 
-          onClick={ () => app.goToScene('BrowseHosts', {app}) }
-          iconTop={{url: require('../../../images/globe-blue.png'), dimensions: browseHostsIconStyles }}
-          text='BROWSE HOSTS' />
-        <Link 
-          extraStyle={style.footerLink} 
-          textStyles={style.footerLinkCopy} 
-          onClick={ () => app.goToScene('Notifications', {app}) }
-          iconTop={{url: require('../../../images/bell-blue.png'), dimensions: iconStyles }}
-          text='NOTIFICATIONS' />
-        <Link 
-          extraStyle={style.footerLink}
-          textStyles={style.footerLinkCopy} 
-          onClick={ () => app.goToScene('Feedback', {app}) }
-          iconTop={{url: require('../../../images/feedback-blue.png'), dimensions: feedbackIcon }}
-          text='FEEDBACK' />
-      </LinearGradient>
-      <LinearGradient
-        colors={['rgba(255, 255, 255, 1)', 'white']}
-        style={style.decoCurve}
-        locations={[1, 1]}
-      >
-      </LinearGradient>
-    </View>
-  )
+  render () {
+
+    console.log('footer props: ', this.props)
+    const iconStyles = {width: 100, height: 60, marginBottom: -15, marginTop: -10};
+    const browseHostsIconStyles = {width: 80, height: 60, marginBottom: -8, marginTop: -20, position: 'relative', top: -5};
+    const feedbackIcon = {height: 45, width: 60};
+    
+    // get the current scene
+    const {app} = this.props;
+    console.log('footer props: ', this.props)
+    console.log('footer app: ', app)
+    const { navigator } = app.refs
+    let currentScene = navigator.getCurrentRoutes().pop().scene;
+    console.log('currentScene: ', currentScene)
+
+
+    function checkScene (scene) {
+      let chosenIcon;
+      currentScene === scene 
+        ? chosenIcon = icons[scene][1]
+        : chosenIcon = icons[scene][0]
+      return chosenIcon;
+    }
+
+    const icons = {
+
+      Dashboard: [ require('../../../images/home-blue.png'), require('../../../images/home-purp.png') ],
+      Calendar: [ require('../../../images/calander-blue.png'), require('../../../images/calender-purp.png') ],
+      BrowseHosts: [ require('../../../images/globe-blue.png'), require('../../../images/globe-purple.png') ],
+      Notifications: [ require('../../../images/bell-blue.png'), require('../../../images/bell-purp.png') ],
+      Feedback: [ require('../../../images/feedback-blue.png'), require('../../../images/feedback-purp.png') ]
+
+    }
+
+    return (
+      <View style={style.container}>
+        <LinearGradient
+          colors={['white', '#dbdbdb']} 
+          style={[style.footerNav]}
+        >
+          <Link 
+            extraStyle={style.footerLink} 
+            textStyles={style.footerLinkCopy} 
+            onClick={ () => app.goToScene('Dashboard', {app}) }
+            iconTop={{url: checkScene('Dashboard'), dimensions: iconStyles }}
+            text='HOME' />
+          <Link 
+            extraStyle={style.footerLink} 
+            textStyles={style.footerLinkCopy} 
+            onClick={ () => app.goToScene('Calendar', {app}) }
+            iconTop={{url: checkScene('Calendar'), dimensions: iconStyles }}
+            text='CALENDAR' />
+          <Link 
+            extraStyle={style.footerLink, style.browseHostsLink} 
+            textStyles={style.footerLinkCopy} 
+            onClick={ () => app.goToScene('BrowseHosts', {app}) }
+            iconTop={{url: checkScene('BrowseHosts'), dimensions: browseHostsIconStyles }}
+            text='BROWSE HOSTS' />
+          <Link 
+            extraStyle={style.footerLink} 
+            textStyles={style.footerLinkCopy} 
+            onClick={ () => app.goToScene('Notifications', {app}) }
+            iconTop={{url: checkScene('Notifications'), dimensions: iconStyles }}
+            text='NOTIFICATIONS' />
+          <Link 
+            extraStyle={style.footerLink}
+            textStyles={style.footerLinkCopy} 
+            onClick={ () => app.goToScene('Feedback', {app}) }
+            iconTop={{url: checkScene('Feedback'), dimensions: feedbackIcon }}
+            text='FEEDBACK' />
+        </LinearGradient>
+        <LinearGradient
+          colors={['rgba(255, 255, 255, 1)', 'white']}
+          style={style.decoCurve}
+          locations={[1, 1]}
+        >
+        </LinearGradient>
+      </View>
+    )
+  }
 }
 
 export default FooterNav;

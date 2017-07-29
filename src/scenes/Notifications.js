@@ -7,6 +7,7 @@ import {
 
 import NotificationsHeader from '../components/NotificationsHeader';
 import NotificationsOutput from '../components/NotificationsOutput';
+import FooterNav from '../components/FooterNav';
 
 class Notifications extends Component {
 
@@ -18,6 +19,7 @@ class Notifications extends Component {
       <View style={{flex: 1}}>
         <NotificationsHeader {...props} />
         <NotificationsOutput {...props} />
+        <FooterNav {...props} />
       </View>
     )
   };

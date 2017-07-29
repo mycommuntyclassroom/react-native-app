@@ -12,6 +12,7 @@ import Summary from '../Summary';
 import CirclesTeaser from '../CirclesTeaser';
 import EventTeaser from '../EventTeaser';
 import styleVariables from '../../styles/variables';
+import FooterNav from '../FooterNav';
 
 class AdminView extends Component {
 
@@ -21,19 +22,22 @@ class AdminView extends Component {
     const { user } = app.props;
 
     return(
-      <ScrollView>
-        <Header { ...props } />
-        <Hero {...props} user={user} />
-        <Summary {...props} />
-        <CirclesTeaser 
-          circlesData={user.children} 
-          customStyles={{borderBottomWidth: 1, borderColor: styleVariables.mc2medLightGray}} 
-          circleType="myChildren" 
-          title="Children:" 
-          path="child" 
-          hasAddButton={true} {...props} />
-        <EventTeaser {...props} />
-      </ScrollView>
+      <View>
+        <ScrollView>
+          <Header { ...props } />
+          <Hero {...props} user={user} />
+          <Summary {...props} />
+          <CirclesTeaser 
+            circlesData={user.children} 
+            customStyles={{borderBottomWidth: 1, borderColor: styleVariables.mc2medLightGray}} 
+            circleType="myChildren" 
+            title="Children:" 
+            path="child" 
+            hasAddButton={true} {...props} />
+          <EventTeaser {...props} />
+        </ScrollView>
+        <FooterNav {...props} />
+      </View>
     )
   }
 }
