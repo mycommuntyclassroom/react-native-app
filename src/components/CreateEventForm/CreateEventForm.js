@@ -10,7 +10,8 @@ import {
   TouchableHighlight,
   TextInput,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 
 import moment from 'moment';
@@ -250,15 +251,27 @@ class CreateEventForm extends Component {
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
           />
 
-          <View className="seats-available">
-            <Text>Seats Available</Text>
-            <View>
-              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
-                <Text>Minus Icon</Text> 
+          <Text style={style.subTitle}>Seats Available</Text>
+          <View style={style.seatsAvailableContainer}>
+            <View style={style.seatsAvailableControls}>
+              <TouchableHighlight style={style.seatControlsIconBG} onPress={() => this.handleSeatsAvailable('minus')}>
+                <Image 
+                  source={require('../../../images/minus-white.png')} 
+                  resizeMode='cover' 
+                  style={style.seatControlsIcon}
+                />
               </TouchableHighlight>
-              <Text>Chair Icon</Text>
-              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
-                <Text>Plus Icon</Text> 
+                <Image 
+                  source={require('../../../images/chair-white.png')} 
+                  resizeMode='cover' 
+                  style={style.seatIcon}
+                />
+              <TouchableHighlight style={style.seatControlsIconBG} onPress={() => this.handleSeatsAvailable('add')}> 
+                <Image 
+                  source={require('../../../images/plus-sign-white.png')} 
+                  resizeMode='cover' 
+                  style={style.seatControlsIcon}
+                />
               </TouchableHighlight>
               <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
             </View>
