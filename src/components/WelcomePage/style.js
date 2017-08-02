@@ -1,14 +1,40 @@
-import styleVariables from '../../styles/variables'
+import { Platform } from 'react-native';
+import styleVariables from '../../styles/variables';
+import { deviceDimensions } from '../../styles';
+const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const WelcomePage = {};
+ 
 
+console.log('Platform.OS: ', Platform.OS)
 
-WelcomePage.container = {
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  paddingRight: 15,
-  paddingLeft: 15
+const aspectRatio = deviceHeight/deviceWidth;
+
+// Aspect ratio of iPad is 4:3 (1.334) and aspect ratio of iPhone is 16:9 (1.778)
+if(Platform.OS === 'ios' && aspectRatio > 1.6) {
+  // Code for Iphone
+  WelcomePage.container = {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingRight: 15,
+    paddingLeft: 15,
+    maxWidth: 400
+  }
 }
+else {
+  // Code for Ipad
+  WelcomePage.container = {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingRight: 15,
+    paddingLeft: 15,
+    paddingTop: 35,
+    paddingBottom: 20,
+    maxWidth: 400
+  }
+
+}
+
 
 WelcomePage.logo = {
   width: 90, 
