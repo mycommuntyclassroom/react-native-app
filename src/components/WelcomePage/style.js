@@ -1,14 +1,38 @@
-import styleVariables from '../../styles/variables'
+import { Platform } from 'react-native';
+import styleVariables from '../../styles/variables';
+import { deviceDimensions } from '../../styles';
+const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const WelcomePage = {};
+ 
 
+console.log('Platform.OS: ', Platform.OS)
 
-WelcomePage.container = {
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  paddingRight: 15,
-  paddingLeft: 15
+const aspectRatio = deviceHeight/deviceWidth;
+
+if(Platform.OS === 'ios' && aspectRatio > 1.6) {
+  // Code for Iphone
+  WelcomePage.container = {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingRight: 15,
+    paddingLeft: 15,
+    maxWidth: 400
+  }
 }
+else {
+  // Code for Ipad
+  WelcomePage.container = {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingRight: 15,
+    paddingLeft: 15,
+    maxWidth: 400,
+    backgroundColor: 'purple'
+  }
+
+}
+
 
 WelcomePage.logo = {
   width: 90, 
