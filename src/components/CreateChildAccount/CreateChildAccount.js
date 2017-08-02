@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { addChildProfile, removeItem, handleFileUpload } from '../../helpers/form';
-import { database } from '../../helpers/firebase';
+import { database, storage } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
@@ -35,8 +35,8 @@ class CreateChildAccount extends Component {
 
     // clear the old formData
     AsyncStorage.removeItem('formData');
-
-    const { auth } = props.app.props;
+    const { app } = props
+    const { auth } = app.props;
 
     // pull the formData tree from the DB and grab all of the checkboxes for the guardians
     database

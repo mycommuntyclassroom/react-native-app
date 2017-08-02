@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   ScrollView,
   TouchableHighlight,
+  View,
   Text
 } from 'react-native';
 
@@ -12,6 +13,8 @@ import Hero from '../Hero';
 import Summary from '../Summary';
 import CirclesTeaser from '../CirclesTeaser';
 import EventTeaser from '../EventTeaser';
+
+import style from './style';
 
 class GuardianView extends Component {
 
@@ -40,12 +43,15 @@ class GuardianView extends Component {
     const { auth, user, signOut } = app.props
 
     return(
-      <ScrollView className="guardian-view">
-        <Hero {...props} guardianData={this.state} />
-        <Summary {...props} guardianData={this.state} />
-        <CirclesTeaser {...props} guardianData={this.state} circlesData={this.state.children || [' ']} title="Children" path="child" />
-        <EventTeaser {...props} guardianData={this.state} />
-      </ScrollView>
+      <View style={style.container}>
+        <ScrollView>
+          <Hero {...props} guardianData={this.state} />
+          <Summary {...props} guardianData={this.state} />
+          <CirclesTeaser {...props} guardianData={this.state} circlesData={this.state.children || [' ']} title="Children" path="child" />
+          <EventTeaser {...props} guardianData={this.state} />
+        </ScrollView>
+        <FooterNav {...props} />
+      </View>
     )
   }
 }

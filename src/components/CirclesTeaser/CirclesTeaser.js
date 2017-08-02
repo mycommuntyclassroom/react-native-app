@@ -37,6 +37,9 @@ class CirclesTeaser extends Component {
     let nullOutput;
     let customClassName = '';
 
+    console.log('circlesTeaser is running ')
+    console.log('props.circleType: ', props.circleType)
+
     // if the circlesData is undefined, output a null-circle element
     switch (props.circleType) {
       case 'myChildren':
@@ -62,10 +65,16 @@ class CirclesTeaser extends Component {
         break;
     }
 
+    console.log('props: ', props)
+    console.log('circlesData: ', circlesData)
+    console.log('friendStatus: ', friendStatus)
+    console.log('props.gid === app.props.auth.uid: ', props.gid === app.props.auth.uid)
+
     // if there is no data for the circlesData, assign it a null output,
     // otherwise, output the circles
     if (circlesData && friendStatus || props.gid === app.props.auth.uid) 
     {
+      console.log('we are generating the circles')
       generateCircles();   
     } 
     else 

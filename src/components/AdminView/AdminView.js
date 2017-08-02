@@ -14,6 +14,8 @@ import EventTeaser from '../EventTeaser';
 import styleVariables from '../../styles/variables';
 import FooterNav from '../FooterNav';
 
+import style from './style';
+
 class AdminView extends Component {
 
   render() {
@@ -22,7 +24,7 @@ class AdminView extends Component {
     const { user } = app.props;
 
     return(
-      <View>
+      <View style={style.container}>
         <ScrollView>
           <Header { ...props } />
           <Hero {...props} user={user} />
@@ -31,7 +33,8 @@ class AdminView extends Component {
             circlesData={user.children} 
             customStyles={{borderBottomWidth: 1, borderColor: styleVariables.mc2medLightGray}} 
             circleType="myChildren" 
-            title="Children:" 
+            title="Children:"
+            gid={app.props.auth.uid}
             path="child" 
             hasAddButton={true} {...props} />
           <EventTeaser {...props} />

@@ -1,7 +1,7 @@
 const EventDetailsView = {}
 
-EventDetailsView.eventDetails = {
-  height: '100%',
+EventDetailsView.container = {
+  height: '90%',
   backgroundColor: 'white'
 }
 
