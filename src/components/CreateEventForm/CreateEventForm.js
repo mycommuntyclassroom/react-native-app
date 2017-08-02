@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { addItem } from '../helpers/form';
-import { database } from '../helpers/firebase';
-import actions from '../redux/actions';
-import store from '../redux/store';
+import { addItem } from '../../helpers/form';
+import { database } from '../../helpers/firebase';
+import actions from '../../redux/actions';
+import store from '../../redux/store';
 
 import {
   View,
@@ -16,8 +16,9 @@ import {
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import CheckBox from './CheckBox';
-import Button from '../components/Button';
+import CheckBox from '../CheckBox';
+import Button from '../Button';
+import style from './style'
 
 const now = moment().hour(0).minute(0);
 const nowFormat = now.format('YYYY-MM-DD')
@@ -184,7 +185,8 @@ class CreateEventForm extends Component {
    * @returns {XML}
    */
   render() {
-    const props = this.props
+    const props = this.props;
+    const { globalStyles } = props;
     let formData = this.state.formData || {};
 
     const outputCheckboxes = () => {
@@ -230,19 +232,21 @@ class CreateEventForm extends Component {
         // <BackButton path="/welcome-search" />
 
     return(
-      <ScrollView>
+      <ScrollView style={style.container}>
         <Text> Add an Event! </Text>
         <View style={{paddingBottom: 91}}>
 
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
             placeholder='Event Title'
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'title') } 
           />
 
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
             placeholder='Summary of the event'
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
           />
 
