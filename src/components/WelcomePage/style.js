@@ -10,6 +10,7 @@ console.log('Platform.OS: ', Platform.OS)
 
 const aspectRatio = deviceHeight/deviceWidth;
 
+// Aspect ratio of iPad is 4:3 (1.334) and aspect ratio of iPhone is 16:9 (1.778)
 if(Platform.OS === 'ios' && aspectRatio > 1.6) {
   // Code for Iphone
   WelcomePage.container = {
@@ -27,8 +28,9 @@ else {
     alignItems: 'center',
     paddingRight: 15,
     paddingLeft: 15,
-    maxWidth: 400,
-    backgroundColor: 'purple'
+    paddingTop: 35,
+    paddingBottom: 20,
+    maxWidth: 400
   }
 
 }
