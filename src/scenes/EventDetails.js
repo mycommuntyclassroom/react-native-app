@@ -19,7 +19,7 @@ class EventDetails extends Component {
     const { globalStyles, app } = props;
 
     return (
-      <View style={{marginBottom: 90, backgroundColor: 'white'}}>
+      <View>
         <Header backOption={true} scene="BrowseHosts" { ...props } />
         <EventDetailsView {...props} />
       </View>

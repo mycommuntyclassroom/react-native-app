@@ -20,7 +20,7 @@ class BrowseHosts extends Component {
     const { globalStyles, app } = props;
 
     return (
-      <View style={{marginBottom: 90, backgroundColor: 'white'}}>
+      <View style={{height: '100%', backgroundColor: 'white'}}>
         <Header { ...props } />
         <BrowseHostsOutput {...props} />
         <FooterNav {...props} />

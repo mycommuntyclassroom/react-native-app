@@ -5,8 +5,8 @@ const { deviceWidth, deviceHeight } = deviceDimensions;
 const BrosweHosts = {};
 
 BrosweHosts.container = {
-  backgroundColor: 'white'
-  }
+  marginBottom: 65
+}
 
 BrosweHosts.teaserContainer = {
   position: 'relative',

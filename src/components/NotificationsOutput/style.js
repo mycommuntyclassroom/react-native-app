@@ -6,11 +6,12 @@ NotificationsOutput.container = {
   backgroundColor: 'white',
   flex: 1,
   padding: 10,
-  paddingTop: 0
+  paddingTop: 0,
+  marginBottom: 65
 }
 
 NotificationsOutput.note = {
-  paddingBottom: 13,
+  paddingBottom: 17,
   borderBottomWidth: 1,
   borderColor: styleVariables.mc2lightGray
 }
@@ -47,7 +48,7 @@ NotificationsOutput.decoCircle = {
 NotificationsOutput.noteInfo = {
   display: 'flex',
   flexDirection: 'row',
-  marginTop: 14,
+  marginTop: 17,
   alignItems: 'center'
 }
 

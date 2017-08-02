@@ -75,19 +75,22 @@ class EventDetailsView extends Component {
     }
 
     return(
-      <View style={style.eventDetails}>
-        { hostEventsOutput }
-        <Text style={style.eventSummary}>{ summary }</Text>
-        <CirclesTeaser 
-          {...props}
-          circlesData={selectedEventDetails} 
-          circleType="eventDetail" />
-        <SeatBooking 
-          visibility={this.state.visibility} 
-          toggleSeatBooking={this.toggleSeatBooking} 
-          {...props} 
-          selectedEventDetails={selectedEventDetails}
-          currentEventIndex={currentEventIndex} />
+      <View>
+        <View style={style.container}>
+          { hostEventsOutput }
+          <Text style={style.eventSummary}>{ summary }</Text>
+          <CirclesTeaser 
+            {...props}
+            circlesData={selectedEventDetails} 
+            circleType="eventDetail" />
+          <SeatBooking 
+            visibility={this.state.visibility} 
+            toggleSeatBooking={this.toggleSeatBooking} 
+            {...props} 
+            selectedEventDetails={selectedEventDetails}
+            currentEventIndex={currentEventIndex} />
+        </View>
+        <FooterNav {...props} />
       </View>
     )
   }
