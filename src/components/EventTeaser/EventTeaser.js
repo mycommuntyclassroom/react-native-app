@@ -41,9 +41,23 @@ class EventTeaser extends Component {
     // if the teaserData is undefined, output a fallback element
     if (teaserData[0] === ' ') {
       teaserOutput = 
-        <View className="event-teaser-element null-teaser">
-          <Text>Want to host? Add an event here</Text>
-          <Link onClick={ () => app.goToScene('CreateEvent') } text='TiPlus' />
+        <View style={{justifyContent: 'center', width: deviceWidth - 40, height: 50}}>
+          <Text>
+            Want to host? Add an event here
+          </Text>
+          <View style={{top: -6, right: 0}}>
+            <TouchableHighlight onPress={ () => app.goToScene('CreateEvent') }>
+              <LinearGradient
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                style={[globalStyles.addItem, style.addItem]}
+              >
+                <Image 
+                  source={require('../../../images/plus-sign-white.png')}
+                  resizeMode='cover' 
+                  style={{top: 2, left: 1, width: 40, height: 40}} />
+              </LinearGradient>
+            </TouchableHighlight>
+          </View>
         </View>;
       nullClass = 'null-teaser';
     } else {
