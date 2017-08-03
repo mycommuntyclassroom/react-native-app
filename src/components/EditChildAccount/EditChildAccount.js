@@ -83,6 +83,7 @@ class EditChildAccount extends Component {
   }
 
   getSelectedImages(images, current) {
+    console.log('getSelectedImages Coalled, (current): ', current)
     this.setState({selectedImage: current})
   }
 
@@ -136,9 +137,13 @@ class EditChildAccount extends Component {
 
     // store the selected image's url
     const { selectedImage } = this.state;
-    let imageUri = selectedImage.uri;
-    // upload the profile image 
-    handleFileUpload(imageUri, selectedImage, this.storageRef, this.childRef);
+
+    // skip if the profile image wasn't updated
+    if (selectedImage) {
+      let imageUri = selectedImage.uri;
+      // upload the profile image 
+      handleFileUpload(imageUri, selectedImage, this.storageRef, this.childRef);
+    }
 
     // remove the values from the formData prop
     data.formData = null;
@@ -155,6 +160,9 @@ class EditChildAccount extends Component {
 
     // pass the updated user to the store
     store.dispatch(actions.userInfo(updatedUser));
+    console.log('childId: ',childId)
+
+    console.log('data: ', data)
 
     // update the database - path, data
     updateProfile(`guardians/${data.gid}/children/${childId}`, data);

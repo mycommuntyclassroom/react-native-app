@@ -129,11 +129,10 @@ class CreateChildAccount extends Component {
 
   radioButtonChange(value, group) {
     // current array of options
-    let radioButtonGroup = group
-    let radio = value
-
     const newState = {}
-    newState[radioButtonGroup] = radio
+    newState[group] = value
+
+    console.log('newState: ', newState)
 
     // update the state with the new array of options
     this.setState(newState);
