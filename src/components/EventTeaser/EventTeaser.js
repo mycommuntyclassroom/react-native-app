@@ -36,6 +36,7 @@ class EventTeaser extends Component {
     let teaserElement;
     let nullClass = '';
 
+    console.log('teaserData: ', teaserData)
     // TODO: Check if generateTeasers within the Render method is causing excessive calls
     // 
     // if the teaserData is undefined, output a fallback element

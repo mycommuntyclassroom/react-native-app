@@ -390,7 +390,7 @@ class EditGuardianAccount extends Component {
 
           <Text style={style.subTitle}> Finish Date </Text>
           <DatePicker
-            style={{width: 200}}
+            style={style.datePicker}
             date={this.state.finishDate}
             mode="datetime"
             placeholder="Finish Date"
