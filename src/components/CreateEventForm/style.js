@@ -5,7 +5,6 @@ CreateEventForm.container = {
 }
 
 CreateEventForm.subTitle = {
-  color: 'white',
   fontSize: 18,
   marginTop: 20,
   fontWeight: '500',

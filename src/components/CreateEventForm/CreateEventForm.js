@@ -316,7 +316,8 @@ class CreateEventForm extends Component {
             onDateChange={(date) => {this.setState({finishDate: date});}}
           />
 
-          <Text>Repeats</Text>
+          <Text style={style.subTitle}>Repeats</Text>
+          <View style={{marginRight: -4, justifyContent: 'space-between', flexDirection: 'row', flexGrow: 1, }}>
           {
             /* custom checkbox output for the event form. This doesn't exist in the formData */
             recurringDays_checkbox_props.map((item) =>{
@@ -325,12 +326,13 @@ class CreateEventForm extends Component {
                 <CheckBox
                   label={label}
                   key={label}
+                  extraStyles={{flexGrow: 1}}
                   onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
                 />
               )
             })
-
           }
+          </View>
 
           <View>
             <Text>frequency</Text>
