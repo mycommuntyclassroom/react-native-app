@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import { addItem } from '../../helpers/form';
-import { database } from '../../helpers/firebase';
-import actions from '../../redux/actions';
-import store from '../../redux/store';
-
 import {
   View,
   Text,
@@ -18,6 +13,12 @@ import CameraRollPicker from 'react-native-camera-roll-picker';
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+
+import { addItem, handleFileUpload } from '../../helpers/form';
+import { storage, database } from '../../helpers/firebase';
+import actions from '../../redux/actions';
+import store from '../../redux/store';
+
 import CheckBox from '../CheckBox';
 import Button from '../Button';
 import Link from '../Link';
@@ -263,7 +264,7 @@ class CreateEventForm extends Component {
     ];
 
     // handle the output of the required image
-    let userImage = profileImage != '../../../images/logo.png'
+    let eventImage = profileImage != '../../../images/logo.png'
       ? {uri: profileImage} 
       : require('../../../images/logo.png');
 
@@ -310,7 +311,7 @@ class CreateEventForm extends Component {
         <View className="image-uploader">
           <View style={globalStyles.formImageContainer}>
             <Image 
-              source={userImage} 
+              source={eventImage} 
               style={globalStyles.formImage}
               resizeMode='cover' />
           </View>

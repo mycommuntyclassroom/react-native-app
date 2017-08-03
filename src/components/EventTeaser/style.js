@@ -14,7 +14,8 @@ EventTeaser.teaserContainer = {
 
 EventTeaser.teaserImage = {
   width: deviceWidth - 40,
-  height: 200
+  height: 200,
+  backgroundColor: styleVariables.mc2purpleElectric,
 }
 
 EventTeaser.addEventContainer = {

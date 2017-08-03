@@ -21,6 +21,7 @@ import { updateProfile, handleFileUpload } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
+import style from '../CreateEventForm/style'
 
 // time/date values
 const now = moment().hour(0).minute(0);
@@ -85,25 +86,21 @@ class EditGuardianAccount extends Component {
     this.submitForm=this.submitForm.bind(this);
   }
 
-  handleFileUpload(event) {
-    // const file = event.target.files[0];
-    // const uploadTask = this.storageRef.child(file.name)
-    //                                   .put(file, { contentType: file.type });
+  handleImageSelector() {
+    this.setState({imageModal: !this.state.imageModal});
+  }
 
-    // uploadTask.on('state_changed', (snapshot) => {
-    //   const uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //   this.setState({ uploadProgress });
-    // });
+  selectImage() {
+    // if the user didn't select an image, skip this
+    if (!this.state.selectedImage) return;
 
-    // uploadTask.then((snapshot) => {
-    //   this.userRef.update({
-    //     image: snapshot.downloadURL
-    //   });
-    //   this.setState({ 
-    //     uploadProgress: null,
-    //     image: snapshot.downloadURL
-    //   });
-    // });
+    // set the image uri to the profile image and close the modal
+    this.setState({profileImage: this.state.selectedImage.uri});
+    this.handleImageSelector();
+  }
+
+  getSelectedImages(images, current) {
+    this.setState({selectedImage: current})
   }
 
   /**
@@ -195,7 +192,7 @@ class EditGuardianAccount extends Component {
    */
   render() {
     const props = this.props;
-    const { app } = props
+    const { app, globalStyles } = props;
 
     // state values for the event
     const { 
@@ -211,33 +208,28 @@ class EditGuardianAccount extends Component {
       if (gid === null) { return }
       let checkboxOutput = [];
       for (var category in formData) {
-        checkboxOutput.push(
-          <View key={category}>
-            <Text>{category}</Text>
-            {formData[category].map(item => {
-              var checkbox = '';
-              // pre-check any items that were selected and saved
-              if (this.state[`${category}`].indexOf(item) > -1) {
-                checkbox = 
-                  <CheckBox
-                    label={item}
-                    checked={true}
-                    key={`${item}${category}`}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />;
-              } else {
-                checkbox = 
-                  <CheckBox
-                    label={item}
-                    key={`${item}${category}`}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />;
-              }
-
-              return checkbox;
-            })}
-          </View>
-        )
+        {formData[category].map(item => {
+          // pre-check any items that were selected and saved
+          if (this.state[`${category}`].indexOf(item) > -1) {
+            checkboxOutput.push(
+              <CheckBox
+                label={item}
+                checked={true}
+                key={`${item}${category}`}
+                onChange={(checked) => this.checkboxChange(item, category, checked) }
+              />
+            )
+          } 
+          else {
+            checkboxOutput.push(
+              <CheckBox
+                label={item}
+                key={`${item}${category}`}
+                onChange={(checked) => this.checkboxChange(item, category, checked) }
+              />
+            )
+          }
+        })}
       }
       return checkboxOutput
     }
@@ -275,67 +267,110 @@ class EditGuardianAccount extends Component {
       : require('../../../images/blank-profile-pic.png');
 
     return(
-      <ScrollView>
+      <ScrollView style={style.container}>
 
-        <Text> { `Editing ${title}` }  </Text>
+        {
+          /* page overlay for the image selection
+             rendered based on the state per the open/close */
+
+          this.state.imageModal &&
+            // if true, render the imageModal
+            <View style={style.imageModal}>
+              <Text style={globalStyles.imagePickerTitle}>
+                Select an image for your profile 
+              </Text>
+              <Link 
+                text='Cancel'
+                extraStyle={[globalStyles.chooseImage, {backgroundColor: 'maroon'}]}
+                textStyles={{color: 'white'}}
+                onClick={() => this.handleImageSelector()}/>
+              <Link 
+                text='Select'
+                extraStyle={globalStyles.chooseImage}
+                onClick={() => this.selectImage()}/>
+
+              {/* image handler */}
+              <CameraRollPicker
+                scrollRenderAheadDistance={500}
+                initialListSize={1}
+                pageSize={3}
+                removeClippedSubviews={false}
+                groupTypes='SavedPhotos'
+                batchSize={5}
+                maximum={1}
+                selected={this.state.selected}
+                assetType='Photos'
+                imagesPerRow={3}
+                imageMargin={5}
+                callback={this.getSelectedImages.bind(this)} />
+            </View>
+        }
+
+        <Text style={[globalStyles.title, {color: 'white', textAlign: 'center'}]}> 
+          { `Editing ${title}` } 
+        </Text>
 
         <View className="image-uploader">
-          <View className="image-uploader--image-container">
+          <View style={globalStyles.formImageContainer}>
             <Image 
               source={eventImage} 
-              className="image-uploader--photo"
-              resizeMode='contain' 
-              style={{width: 100, height: 100}} />
+              style={globalStyles.formImage}
+              resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Text>File Input</Text>
+            <Link 
+              text='Add a profile image' 
+              onClick={() => this.handleImageSelector()}
+              extraStyle={globalStyles.uploadImageButton}
+            />
           </View>
         </View>
 
-        <View style={{paddingBottom: 93}}>
+        <View style={{paddingBottom: 140}}>
           <TextInput
-            style={{height: 50}}
+            style={globalStyles.textInput}
             name="title"
             defaultValue={ this.state.title }
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'title') } />
 
           <TextInput
-            style={{minHeight: 50}}
+            style={[globalStyles.textInput, {height: 90}]}
             name="summary"
             multiline={true}
-            numberOfLines={4}
+            numberOfLines={6}
             defaultValue={ this.state.summary }
             onChangeText={ (value) => this.handleChange(value, 'summary') } />
 
-
-          <View style={{ position: 'relative' }}>
-            <Text>Seats Available</Text>
-            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <TouchableHighlight style={{backgroundColor: 'gray', borderRadius: 20}} onPress={() => this.handleSeatsAvailable('minus')}> 
+          <Text style={[style.subTitle, {textAlign: 'center'}]}>Seats Available</Text>
+          <View style={style.seatsAvailableContainer}>
+            <View style={style.seatsAvailableControls}>
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('minus')}>
                 <Image 
                   source={require('../../../images/minus-white.png')}
                   resizeMode='contain'
-                  style={{width: 40, height: 40}} />
+                  style={style.seatControlsIcon}
+                />
               </TouchableHighlight>
               <Image 
                 source={require('../../../images/chair-white.png')}
                 resizeMode='cover'
-                style={{width: 80, height: 120}} />
-              <TouchableHighlight style={{backgroundColor: 'gray', borderRadius: 20}} onPress={() => this.handleSeatsAvailable('add')}> 
+                style={style.seatIcon}
+              />
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('add')}> 
                 <Image 
                   source={require('../../../images/plus-sign-white.png')}
                   resizeMode='contain' 
-                  style={{width: 40, height: 40}} />
+                  style={style.seatControlsIcon} 
+                />
               </TouchableHighlight>
-              <View style={{ position: 'absolute' }}>
-                <Text style={{ fontWeight: 'bold' }}>{ this.state.seatsAvailable }</Text>
-              </View>
             </View>
+            <View style={style.seatCount}><Text style={style.seatCountCopy}>{ this.state.seatsAvailable }</Text></View>
           </View>
 
-          <Text> Start Date </Text>
+          <Text style={style.subTitle}> Start Date </Text>
           <DatePicker
-            style={{width: 200}}
+            style={style.datePicker}
             date={this.state.startDate}
             mode="datetime"
             placeholder="Start Date"
@@ -343,12 +378,17 @@ class EditGuardianAccount extends Component {
             minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            customStyles={{
+              dateInput: style.dateInput,
+              placeholderText: style.datePickerText,
+              dateText: style.dateText
+            }}
             minuteInterval={5}
             showIcon={false}
             onDateChange={(date) => {this.setState({startDate: date});}}
           />
 
-          <Text> Finish Date </Text>
+          <Text style={style.subTitle}> Finish Date </Text>
           <DatePicker
             style={{width: 200}}
             date={this.state.finishDate}
@@ -358,49 +398,64 @@ class EditGuardianAccount extends Component {
             minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            customStyles={{
+              dateInput: style.dateInput,
+              placeholderText: style.datePickerText,
+              dateText: style.dateText
+            }}
             minuteInterval={5}
             showIcon={false}
             onDateChange={(date) => {this.setState({finishDate: date});}}
           />
 
-          <Text>Repeats</Text>
-          {
-            /* custom checkbox output for the event form. This doesn't exist in the formData */
-            recurringDays_checkbox_props.map((item, i) =>{
-              let { label, value } = item;
-              let currentValue = recurringDays_checkbox_props[i].value;
+          <Text style={style.subTitle}>Repeats</Text>
+          <View style={ [style.radioButtonContainer, {marginTop: 5}] }>
+            {
+              /* custom checkbox output for the event form. This doesn't exist in the formData */
+              recurringDays_checkbox_props.map((item, i) =>{
+                let { label, value } = item;
+                let currentValue = recurringDays_checkbox_props[i].value;
 
-              // pre-check any items that were selected and saved
-              if (this.state.recurringDays.indexOf(currentValue) > -1) {
-                return (
-                  <CheckBox
-                    label={label}
-                    key={label}
-                    checked={true}
-                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
-                  />
-                ) 
-              } else {
-                return (
-                  <CheckBox
-                    label={label}
-                    key={label}
-                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
-                  />
-                )
-              }
-            })
-          }
+                // pre-check any items that were selected and saved
+                if (this.state.recurringDays.indexOf(currentValue) > -1) {
+                  return (
+                    <CheckBox
+                      label={label}
+                      key={label}
+                      checked={true}
+                      onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                    />
+                  ) 
+                } else {
+                  return (
+                    <CheckBox
+                      label={label}
+                      key={label}
+                      onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                    />
+                  )
+                }
+              })
+            }
+          </View>
           <View>
-            <Text>frequency</Text>
+            <Text style={style.subTitle}>Frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
               initial={frequencySelected}
+              style={{marginTop: 5, marginBottom: 5}}
+              buttonColor={'rgba(0, 0, 0, 0.3)'}
+              buttonSize={30}
+              buttonWrapStyle={{padding: 30, marginRight: 10}}
+              labelStyle={{marginRight: 30, color: 'white', fontSize: 15}}
+              formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
 
-          { outputCheckboxes() }
+          <View style={ [style.radioButtonContainer, {marginBottom: 30}] }>
+            { outputCheckboxes() }
+          </View>
 
           <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>

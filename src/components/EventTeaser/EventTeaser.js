@@ -69,12 +69,10 @@ class EventTeaser extends Component {
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
 
-              // <Image source={require(image)} resizeMode='contain' />
-
         // handle the output of the image
-        let eventImage = image != '../../../images/blank-profile-pic.png'
-          ? {uri: image} 
-          : require('../../../images/blank-profile-pic.png');
+        let eventImage = image != '../../../images/logo.png'
+          ? {uri: image}
+          : require('../../../images/logo.png');
 
         teaserElement =
           <View style={style.teaserElement} key={teaser}>
