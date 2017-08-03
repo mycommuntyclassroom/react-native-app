@@ -44,8 +44,10 @@ class EditGuardianAccount extends Component {
 
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
-            ageRange, startDate, finishDate, recurringDays, frequency 
+            ageRange, startDate, finishDate, frequency 
           } = hostEvents || null;
+
+    const recurringDays = hostEvents.recurringDays || []
 
     // build the state object with the key values in the props
     let newStateObject = {

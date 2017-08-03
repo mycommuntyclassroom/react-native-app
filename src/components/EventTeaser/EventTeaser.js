@@ -69,6 +69,7 @@ class EventTeaser extends Component {
     function generateTeasers() {
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
+        const recurringDays = teaserData[teaser].recurringDays || []
 
         // handle the output of the image
         let eventImage = image != '../../../images/logo.png'
@@ -128,10 +129,8 @@ class EventTeaser extends Component {
                 {
                   // develop the view for recurring days ex: M/W/F
                   // if there are no recurring days, show the date of the event
-                  teaserData[teaser].recurringDays.map((item, index) => {
-                    let daysArray = teaserData[teaser].recurringDays;
-
-                    if(daysArray.length === 1 && item === ' ') {
+                  recurringDays.map((item, index) => {
+                    if(recurringDays.length === 1 && item === ' ') {
                       let stringDate = teaserData[teaser].startDate.split(' ').slice(0,3).join(' ')
                       return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{stringDate}</Text></View>
                     }
