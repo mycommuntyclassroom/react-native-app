@@ -36,6 +36,7 @@ class EventTeaser extends Component {
     let teaserElement;
     let nullClass = '';
 
+    console.log('teaserData: ', teaserData)
     // TODO: Check if generateTeasers within the Render method is causing excessive calls
     // 
     // if the teaserData is undefined, output a fallback element
@@ -68,13 +69,12 @@ class EventTeaser extends Component {
     function generateTeasers() {
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
-
-              // <Image source={require(image)} resizeMode='contain' />
+        const recurringDays = teaserData[teaser].recurringDays || []
 
         // handle the output of the image
-        let eventImage = image != '../../../images/blank-profile-pic.png'
-          ? {uri: image} 
-          : require('../../../images/blank-profile-pic.png');
+        let eventImage = image != '../../../images/logo.png'
+          ? {uri: image}
+          : require('../../../images/logo.png');
 
         teaserElement =
           <View style={style.teaserElement} key={teaser}>
@@ -129,10 +129,8 @@ class EventTeaser extends Component {
                 {
                   // develop the view for recurring days ex: M/W/F
                   // if there are no recurring days, show the date of the event
-                  teaserData[teaser].recurringDays.map((item, index) => {
-                    let daysArray = teaserData[teaser].recurringDays;
-
-                    if(daysArray.length === 1 && item === ' ') {
+                  recurringDays.map((item, index) => {
+                    if(recurringDays.length === 1 && item === ' ') {
                       let stringDate = teaserData[teaser].startDate.split(' ').slice(0,3).join(' ')
                       return <View key={`${teaser}${item}`}><Text style={style.eventDay}>{stringDate}</Text></View>
                     }

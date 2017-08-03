@@ -22,8 +22,11 @@ export function addItem (path, formData) {
 }
 
 export function addChildProfile (formData) {
-  database.ref(`guardians/${formData.gid}/children`)
-          .push(formData);
+  let newPostRef =
+    database.ref(`guardians/${formData.gid}/children`)
+            .push(formData);
+
+  return newPostRef.key;
 }
 
 // FILE UPLOAD
@@ -34,7 +37,7 @@ export function handleFileUpload(uri, selectedImage, storageRef, userRef, mime =
 
   // Prepare Blob support
   const Blob = RNFetchBlob.polyfill.Blob
-  const fs = RNFetchBlob.fs
+  const { fs } = RNFetchBlob
   window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
   window.Blob = Blob
 

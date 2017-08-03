@@ -185,10 +185,12 @@ class CreateChildAccount extends Component {
     store.dispatch(actions.handleChildProfile(updatedUser));
 
     // update the database
-    addChildProfile(newChild);
+    let userId = addChildProfile(newChild);
+
+    const userRef = database.ref(`guardians/${newChild.gid}/children/${userId}`)
     
     // upload the profile image 
-    handleFileUpload(imageUri, selectedImage, this.storageRef, this.userRef);
+    handleFileUpload(imageUri, selectedImage, this.storageRef, userRef);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})
