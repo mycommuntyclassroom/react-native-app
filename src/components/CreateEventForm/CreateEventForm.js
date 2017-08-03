@@ -89,6 +89,23 @@ class CreateEventForm extends Component {
     this.submitForm=this.submitForm.bind(this);
   }
 
+  handleImageSelector() {
+    this.setState({imageModal: !this.state.imageModal});
+  }
+
+  selectImage() {
+    // if the user didn't select an image, skip this
+    if (!this.state.selectedImage) return;
+
+    // set the image uri to the profile image and close the modal
+    this.setState({ profileImage: this.state.selectedImage.uri});
+    this.handleImageSelector();
+  }
+
+  getSelectedImages(images, current) {
+    this.setState({selectedImage: current})
+  }
+
   /**
    *
    * @param e

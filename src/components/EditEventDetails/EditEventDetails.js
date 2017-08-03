@@ -13,6 +13,7 @@ import CameraRollPicker from 'react-native-camera-roll-picker';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 
+import ChooseNewImageModal from '../ChooseNewImageModal'
 import CheckBox from '../CheckBox';
 import Button from '../Button';
 import Link from '../Link';
@@ -291,6 +292,10 @@ class EditGuardianAccount extends Component {
             <Text>File Input</Text>
           </View>
         </View>
+
+        <ChooseNewImageModal 
+          
+        />
 
         <View style={{paddingBottom: 140}}>
           <TextInput
