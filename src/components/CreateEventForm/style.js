@@ -8,12 +8,14 @@ CreateEventForm.subTitle = {
   color: 'white',
   fontSize: 18,
   marginTop: 20,
-  textAlign: 'center'
+  fontWeight: '500',
+  color: 'rgba(0,0,0,.5)',
 }
 
 CreateEventForm.seatsAvailableContainer = {
   alignItems: 'center',
-  marginTop: 20
+  justifyContent: 'center',
+  marginTop: 10
 }
 
 CreateEventForm.seatsAvailableControls = {
@@ -24,7 +26,7 @@ CreateEventForm.seatsAvailableControls = {
 CreateEventForm.seatControlsIcon = {
   width: 40,
   height: 40,
-  backgroundColor: 'gray',
+  backgroundColor: '#6a6a6b',
   borderRadius: 20
 }
 
@@ -33,8 +35,35 @@ CreateEventForm.seatIcon = {
   height: 130
 }
 
-CreateEventForm.seatControlsIconBG = {
+CreateEventForm.seatCount = {
+  position: 'absolute',
+}
 
+CreateEventForm.seatCountCopy = {
+  fontSize: 30
+}
+
+CreateEventForm.datePicker = {
+  width: '100%',
+  marginBottom: 10,
+  marginTop: 5
+}
+
+CreateEventForm.dateInput = {
+  // backgroundColor: 'rgba(0,0,0,.3)',
+  borderColor: 'rgba(0,0,0,.3)',
+  borderWidth: 1,
+  borderRadius: 4
+}
+
+CreateEventForm.datePickerText = {
+  fontSize: 18,
+  color: 'rgba(0,0,0,.3)'
+}
+
+CreateEventForm.dateText = {
+  color: 'white',
+  fontSize: 16
 }
 
 export default CreateEventForm;

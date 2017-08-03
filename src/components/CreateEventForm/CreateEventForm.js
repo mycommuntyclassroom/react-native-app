@@ -230,7 +230,6 @@ class CreateEventForm extends Component {
       {label: 'Sat', value: 'S' },
       {label: 'Sun', value: 'Su' }
     ];
-        // <BackButton path="/welcome-search" />
 
     return(
       <ScrollView style={style.container}>
@@ -251,10 +250,10 @@ class CreateEventForm extends Component {
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
           />
 
-          <Text style={style.subTitle}>Seats Available</Text>
+          <Text style={[style.subTitle, {textAlign: 'center'}]}>Seats Available</Text>
           <View style={style.seatsAvailableContainer}>
             <View style={style.seatsAvailableControls}>
-              <TouchableHighlight style={style.seatControlsIconBG} onPress={() => this.handleSeatsAvailable('minus')}>
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('minus')}>
                 <Image 
                   source={require('../../../images/minus-white.png')} 
                   resizeMode='cover' 
@@ -266,22 +265,20 @@ class CreateEventForm extends Component {
                   resizeMode='cover' 
                   style={style.seatIcon}
                 />
-              <TouchableHighlight style={style.seatControlsIconBG} onPress={() => this.handleSeatsAvailable('add')}> 
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('add')}> 
                 <Image 
                   source={require('../../../images/plus-sign-white.png')} 
                   resizeMode='cover' 
                   style={style.seatControlsIcon}
                 />
               </TouchableHighlight>
-              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
             </View>
+            <View style={style.seatCount}><Text style={style.seatCountCopy}>{ this.state.seatsAvailable }</Text></View>
           </View>
 
-          <Text>
-            Start Date
-          </Text>
+          <Text style={style.subTitle}> Start Date </Text>
           <DatePicker
-            style={{width: 200}}
+            style={style.datePicker}
             date={this.state.startDate}
             mode="datetime"
             placeholder="Start Date"
@@ -289,16 +286,19 @@ class CreateEventForm extends Component {
             minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            customStyles={{
+              dateInput: style.dateInput,
+              placeholderText: style.datePickerText,
+              dateText: style.dateText
+            }}
             minuteInterval={5}
             showIcon={false}
             onDateChange={(date) => {this.setState({startDate: date});}}
           />
 
-          <Text>
-            Finish Date
-          </Text>
+          <Text style={style.subTitle}> Finish Date </Text>
           <DatePicker
-            style={{width: 200}}
+            style={style.datePicker}
             date={this.state.finishDate}
             mode="datetime"
             placeholder="Finish Date"
@@ -306,6 +306,11 @@ class CreateEventForm extends Component {
             minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            customStyles={{
+              dateInput: style.dateInput,
+              placeholderText: style.datePickerText,
+              dateText: style.dateText
+            }}
             minuteInterval={5}
             showIcon={false}
             onDateChange={(date) => {this.setState({finishDate: date});}}
