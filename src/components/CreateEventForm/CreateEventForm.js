@@ -227,8 +227,8 @@ class CreateEventForm extends Component {
 
     return(
       <ScrollView style={style.container}>
-        <Text> Add an Event! </Text>
-        <View style={{paddingBottom: 91}}>
+        <Text style={[globalStyles.title, {color: 'white', textAlign: 'center'}]}> Add an Event! </Text>
+        <View style={{paddingBottom: 140}}>
 
           <TextInput
             style={globalStyles.textInput}
@@ -238,7 +238,9 @@ class CreateEventForm extends Component {
           />
 
           <TextInput
-            style={globalStyles.textInput}
+            style={[globalStyles.textInput, {height: 90}]}
+            multiline = {true}
+            numberOfLines = {6}
             placeholder='Summary of the event'
             placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
@@ -311,7 +313,7 @@ class CreateEventForm extends Component {
           />
 
           <Text style={style.subTitle}>Repeats</Text>
-          <View style={ style.radioButtonContainer }>
+          <View style={ [style.radioButtonContainer, {marginTop: 5}] }>
             {
               /* custom checkbox output for the event form. This doesn't exist in the formData */
               recurringDays_checkbox_props.map((item) =>{
@@ -328,20 +330,20 @@ class CreateEventForm extends Component {
           </View>
 
           <View>
-            <Text style={style.subTitle}>frequency</Text>
+            <Text style={style.subTitle}>Frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
               initial={0}
-              style={{marginTop: 15, marginBottom: 25}}
+              style={{marginTop: 5, marginBottom: 5}}
               buttonColor={'rgba(0, 0, 0, 0.3)'}
               buttonSize={30}
               buttonWrapStyle={{padding: 30, marginRight: 10}}
-              labelStyle={{marginRight: 30, color: 'white'}}
+              labelStyle={{marginRight: 30, color: 'white', fontSize: 15}}
               formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
-          <View style={ [style.radioButtonContainer, {alignItems: 'stretch'}] }>
+          <View style={ [style.radioButtonContainer, {marginBottom: 30}] }>
             { outputCheckboxes() }
           </View>
 
