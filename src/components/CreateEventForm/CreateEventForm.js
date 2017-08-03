@@ -193,22 +193,16 @@ class CreateEventForm extends Component {
     const outputCheckboxes = () => {
       let checkboxOutput = []
       for (var category in formData) {
-        checkboxOutput.push(
-          <View key={category}>
-            <Text>{category}</Text>
-            {formData[category].map(item => {
-              return ( 
-                <View key={item}>
-                  <CheckBox
-                    label={item}
-                    key={item}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />
-                </View>
-              )
-            })}
-          </View>
-        )
+        {formData[category].map(item => {
+          checkboxOutput.push(
+            <CheckBox
+              label={item}
+              key={item}
+              extraStyle={{justifyContent: 'stretch'}}
+              onChange={(checked) => this.checkboxChange(item, category, checked) }
+            />
+          )
+        })}
       }
       return checkboxOutput
     }
@@ -317,33 +311,39 @@ class CreateEventForm extends Component {
           />
 
           <Text style={style.subTitle}>Repeats</Text>
-          <View style={{marginRight: -4, justifyContent: 'space-between', flexDirection: 'row', flexGrow: 1, }}>
-          {
-            /* custom checkbox output for the event form. This doesn't exist in the formData */
-            recurringDays_checkbox_props.map((item) =>{
-              let { label, value } = item;
-              return (
-                <CheckBox
-                  label={label}
-                  key={label}
-                  extraStyles={{flexGrow: 1}}
-                  onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
-                />
-              )
-            })
-          }
+          <View style={ style.radioButtonContainer }>
+            {
+              /* custom checkbox output for the event form. This doesn't exist in the formData */
+              recurringDays_checkbox_props.map((item) =>{
+                let { label, value } = item;
+                return (
+                  <CheckBox
+                    label={label}
+                    key={label}
+                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                  />
+                )
+              })
+            }
           </View>
 
           <View>
-            <Text>frequency</Text>
+            <Text style={style.subTitle}>frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
               initial={0}
+              style={{marginTop: 15, marginBottom: 25}}
+              buttonColor={'rgba(0, 0, 0, 0.3)'}
+              buttonSize={30}
+              buttonWrapStyle={{padding: 30, marginRight: 10}}
+              labelStyle={{marginRight: 30, color: 'white'}}
+              formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
-
-          { outputCheckboxes() }
+          <View style={ [style.radioButtonContainer, {alignItems: 'stretch'}] }>
+            { outputCheckboxes() }
+          </View>
 
           <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>

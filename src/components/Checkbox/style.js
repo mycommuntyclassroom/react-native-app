@@ -5,14 +5,16 @@ const CheckBox = {};
 CheckBox.container = {
   position: 'relative',
   borderRadius: 3,
-  marginRight: 4
+  marginRight: 4,
+  flexGrow: 1
 }
 
 CheckBox.text = {
   color: 'white',
   padding: 10,
   paddingLeft: 10,
-  paddingRight: 10
+  paddingRight: 10,
+  textAlign: 'center'
 }
 
 CheckBox.true = {
