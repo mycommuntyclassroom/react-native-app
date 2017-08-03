@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { addItem } from '../helpers/form';
-import { database } from '../helpers/firebase';
-import actions from '../redux/actions';
-import store from '../redux/store';
+import { addItem } from '../../helpers/form';
+import { database } from '../../helpers/firebase';
+import actions from '../../redux/actions';
+import store from '../../redux/store';
 
 import {
   View,
@@ -10,14 +10,16 @@ import {
   TouchableHighlight,
   TextInput,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  Image
 } from 'react-native';
 
 import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import CheckBox from './CheckBox';
-import Button from '../components/Button';
+import CheckBox from '../CheckBox';
+import Button from '../Button';
+import style from './style'
 
 const now = moment().hour(0).minute(0);
 const nowFormat = now.format('YYYY-MM-DD')
@@ -184,28 +186,23 @@ class CreateEventForm extends Component {
    * @returns {XML}
    */
   render() {
-    const props = this.props
+    const props = this.props;
+    const { globalStyles } = props;
     let formData = this.state.formData || {};
 
     const outputCheckboxes = () => {
       let checkboxOutput = []
       for (var category in formData) {
-        checkboxOutput.push(
-          <View key={category}>
-            <Text>{category}</Text>
-            {formData[category].map(item => {
-              return ( 
-                <View key={item}>
-                  <CheckBox
-                    label={item}
-                    key={item}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />
-                </View>
-              )
-            })}
-          </View>
-        )
+        {formData[category].map(item => {
+          checkboxOutput.push(
+            <CheckBox
+              label={item}
+              key={item}
+              extraStyle={{justifyContent: 'stretch'}}
+              onChange={(checked) => this.checkboxChange(item, category, checked) }
+            />
+          )
+        })}
       }
       return checkboxOutput
     }
@@ -227,44 +224,57 @@ class CreateEventForm extends Component {
       {label: 'Sat', value: 'S' },
       {label: 'Sun', value: 'Su' }
     ];
-        // <BackButton path="/welcome-search" />
 
     return(
-      <ScrollView>
-        <Text> Add an Event! </Text>
-        <View style={{paddingBottom: 91}}>
+      <ScrollView style={style.container}>
+        <Text style={[globalStyles.title, {color: 'white', textAlign: 'center'}]}> Add an Event! </Text>
+        <View style={{paddingBottom: 140}}>
 
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
             placeholder='Event Title'
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'title') } 
           />
 
           <TextInput
-            style={{width: 200, height: 40}}
+            style={[globalStyles.textInput, {height: 90}]}
+            multiline = {true}
+            numberOfLines = {6}
             placeholder='Summary of the event'
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'summary') } 
           />
 
-          <View className="seats-available">
-            <Text>Seats Available</Text>
-            <View>
-              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('minus')}> 
-                <Text>Minus Icon</Text> 
+          <Text style={[style.subTitle, {textAlign: 'center'}]}>Seats Available</Text>
+          <View style={style.seatsAvailableContainer}>
+            <View style={style.seatsAvailableControls}>
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('minus')}>
+                <Image 
+                  source={require('../../../images/minus-white.png')} 
+                  resizeMode='cover' 
+                  style={style.seatControlsIcon}
+                />
               </TouchableHighlight>
-              <Text>Chair Icon</Text>
-              <TouchableHighlight className="seat-control" onPress={() => this.handleSeatsAvailable('add')}> 
-                <Text>Plus Icon</Text> 
+                <Image 
+                  source={require('../../../images/chair-white.png')} 
+                  resizeMode='cover' 
+                  style={style.seatIcon}
+                />
+              <TouchableHighlight onPress={() => this.handleSeatsAvailable('add')}> 
+                <Image 
+                  source={require('../../../images/plus-sign-white.png')} 
+                  resizeMode='cover' 
+                  style={style.seatControlsIcon}
+                />
               </TouchableHighlight>
-              <View className="seat-count"><Text>{ this.state.seatsAvailable }</Text></View>
             </View>
+            <View style={style.seatCount}><Text style={style.seatCountCopy}>{ this.state.seatsAvailable }</Text></View>
           </View>
 
-          <Text>
-            Start Date
-          </Text>
+          <Text style={style.subTitle}> Start Date </Text>
           <DatePicker
-            style={{width: 200}}
+            style={style.datePicker}
             date={this.state.startDate}
             mode="datetime"
             placeholder="Start Date"
@@ -272,16 +282,19 @@ class CreateEventForm extends Component {
             minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            customStyles={{
+              dateInput: style.dateInput,
+              placeholderText: style.datePickerText,
+              dateText: style.dateText
+            }}
             minuteInterval={5}
             showIcon={false}
             onDateChange={(date) => {this.setState({startDate: date});}}
           />
 
-          <Text>
-            Finish Date
-          </Text>
+          <Text style={style.subTitle}> Finish Date </Text>
           <DatePicker
-            style={{width: 200}}
+            style={style.datePicker}
             date={this.state.finishDate}
             mode="datetime"
             placeholder="Finish Date"
@@ -289,37 +302,50 @@ class CreateEventForm extends Component {
             minDate={`${yesterday}`}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
+            customStyles={{
+              dateInput: style.dateInput,
+              placeholderText: style.datePickerText,
+              dateText: style.dateText
+            }}
             minuteInterval={5}
             showIcon={false}
             onDateChange={(date) => {this.setState({finishDate: date});}}
           />
 
-          <Text>Repeats</Text>
-          {
-            /* custom checkbox output for the event form. This doesn't exist in the formData */
-            recurringDays_checkbox_props.map((item) =>{
-              let { label, value } = item;
-              return (
-                <CheckBox
-                  label={label}
-                  key={label}
-                  onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
-                />
-              )
-            })
-
-          }
+          <Text style={style.subTitle}>Repeats</Text>
+          <View style={ [style.radioButtonContainer, {marginTop: 5}] }>
+            {
+              /* custom checkbox output for the event form. This doesn't exist in the formData */
+              recurringDays_checkbox_props.map((item) =>{
+                let { label, value } = item;
+                return (
+                  <CheckBox
+                    label={label}
+                    key={label}
+                    onChange={(checked) => this.checkboxChange(value, 'recurringDays', checked) }
+                  />
+                )
+              })
+            }
+          </View>
 
           <View>
-            <Text>frequency</Text>
+            <Text style={style.subTitle}>Frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
               initial={0}
+              style={{marginTop: 5, marginBottom: 5}}
+              buttonColor={'rgba(0, 0, 0, 0.3)'}
+              buttonSize={30}
+              buttonWrapStyle={{padding: 30, marginRight: 10}}
+              labelStyle={{marginRight: 30, color: 'white', fontSize: 15}}
+              formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
-
-          { outputCheckboxes() }
+          <View style={ [style.radioButtonContainer, {marginBottom: 30}] }>
+            { outputCheckboxes() }
+          </View>
 
           <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>

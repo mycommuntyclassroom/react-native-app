@@ -165,7 +165,7 @@ STYLE.chooseImage = {
 }
 
 STYLE.textInput = {
-  height: 40, 
+  minHeight: 40, 
   borderRadius: 3,
   fontSize: 12,
   padding: 10,
