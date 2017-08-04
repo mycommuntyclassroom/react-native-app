@@ -44,7 +44,7 @@ class EditGuardianAccount extends Component {
 
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
-            ageRange, startDate, finishDate, frequency, profileImage 
+            ageRange, startDate, finishDate, frequency 
           } = hostEvents || null;
 
     const recurringDays = hostEvents.recurringDays || []
@@ -58,11 +58,10 @@ class EditGuardianAccount extends Component {
       startDate,
       finishDate,
       frequency,
-      image,
       seatsAvailable,
       recurringDays,
       ageRange: ageRange || [''],
-      profileImage,
+      image,
       uploadProgress: null,
       imageModal: false
     }
@@ -99,7 +98,7 @@ class EditGuardianAccount extends Component {
     if (!this.state.selectedImage) return;
 
     // set the image uri to the profile image and close the modal
-    this.setState({profileImage: this.state.selectedImage.uri});
+    this.setState({image: this.state.selectedImage.uri});
     this.handleImageSelector();
   }
 
@@ -210,7 +209,7 @@ class EditGuardianAccount extends Component {
     // state values for the event
     const { 
       title, uploadProgress, gid, image, recurringDays, 
-      frequency, startDate, finishDate, ageRange, summary, profileImage
+      frequency, startDate, finishDate, ageRange, summary
     } = this.state;
 
     // grab the form data set within the state
@@ -276,8 +275,8 @@ class EditGuardianAccount extends Component {
     ];
 
     // handle the output of the required image
-    let eventImage = profileImage != '../../../images/logo.png'
-      ? {uri: profileImage} 
+    let eventImage = image != '../../../images/logo.png'
+      ? {uri: image} 
       : require('../../../images/logo.png');
 
     return(

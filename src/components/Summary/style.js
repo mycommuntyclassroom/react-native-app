@@ -30,6 +30,11 @@ summary.summaryCopy = {
   marginBottom: 9
 }
 
+summary.greetingContainer = {
+  paddingTop: 10,
+  paddingBottom: 8,
+}
+
 summary.summaryBodyCopy = {
   marginBottom: 12
 }

@@ -209,7 +209,7 @@ class CreateChildAccount extends Component {
       for (var category in formData) {
         checkboxOutput.push(
           <View>
-            <Text>{category}</Text>
+            <Text style={globalStyles.formSubTitle}>{category}</Text>
             <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
               {formData[category].map(item => {
                 return ( 
@@ -242,7 +242,7 @@ class CreateChildAccount extends Component {
       : require('../../../images/blank-profile-pic.png');
 
     return(
-      <ScrollView>
+      <ScrollView style={globalStyles.formContainer}>
         {
           /* page overlay for the image selection
              rendered based on the state per the open/close */
@@ -299,14 +299,16 @@ class CreateChildAccount extends Component {
 
         <View>
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
             placeholder='First Name'
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'fName') } 
           />
 
           <TextInput
-            style={{width: 200, height: 40}}
+           style={globalStyles.textInput}
             placeholder='Last Name'
+            placeholderTextColor="white"
             onChangeText={ (value) => this.handleChange(value, 'lName') } 
           />
 
@@ -314,6 +316,10 @@ class CreateChildAccount extends Component {
             <RadioForm
               radio_props={radio_props}
               initial={userGender === 'male' ? 0 : 1 }
+              style={{padding: 30, marginRight: 10}}
+              buttonWrapStyle={{padding: 30, marginRight: 10}}
+              labelStyle={{marginRight: 30}}
+              formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>

@@ -31,7 +31,7 @@ class EditGuardianAccount extends Component {
     const { app } = props;
     const { 
             uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state
+            street, city, zipCode, gender, state, greeting,
           } = app.props.user;
 
     // build the state object with the key values in the props
@@ -39,6 +39,7 @@ class EditGuardianAccount extends Component {
       uid,
       displayName,
       profileImage,
+      greeting,
       street,
       city,
       zipCode,
@@ -306,8 +307,19 @@ class EditGuardianAccount extends Component {
           <TextInput
             style={globalStyles.textInput}
             name="displayName"
+            placeholderTextColor="white"
             defaultValue={ this.state.displayName }
             onChangeText={ (value) => this.handleChange(value, 'displayName') } />
+
+          <TextInput
+            style={[globalStyles.textInput, {height: 90}]}
+            multiline = {true}
+            numberOfLines = {6}
+            placeholderTextColor='white'
+            placeholder='Write a summary about yourself here'
+            defaultValue={ this.state.greeting }
+            onChangeText={ (value) => this.handleChange(value, 'greeting') } 
+          />
 
           <View style={{alignItems: 'center'}}>
             <RadioForm
@@ -327,6 +339,7 @@ class EditGuardianAccount extends Component {
               style={globalStyles.textInput}
               type="text"
               placeholder="Street Address"
+              placeholderTextColor="white"
               defaultValue={ this.state.street }
               onChangeText={ (value) => this.handleChange(value, 'street') }
             />
