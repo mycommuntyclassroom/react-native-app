@@ -45,6 +45,7 @@ class RequestFriendButton extends Component {
     } 
     // if they have an incoming friend request, output a connect option
     else if (checkRelationship('incoming', props, props.gid)) {
+      console.log('incoming PENDING')
       buttonOutput =
         <LinearGradient
           style={[browseHostsStyle, style.connect]}

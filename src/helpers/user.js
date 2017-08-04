@@ -292,18 +292,20 @@ export function checkRelationship (relationship, props, gid) {
       return friendsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'incoming':
+      console.log('checkRelationship incoming called')
       // check if the user has been friend requested
       const incomingRequests = props.user.incomingRequests || {};
-      const requestsList = Object.keys(incomingRequests);
-      return requestsList.indexOf(gid) === 1 ? true : false;
+      for(var key in incomingRequests) {
+        return incomingRequests[key] === gid && true;
+      }
+      return false;
       break;
     case 'pending':
       console.log('checkRelationship pending Called, props.user.pendingRequests: ', props.user.pendingRequests)
       // check if there is a pending request for the user
       const pendingRequests = props.user.pendingRequests || {};
       const pendingList = Object.keys(pendingRequests);
-      console.log('pendingList.indexOf(gid): ', pendingList.indexOf(gid))
-      return pendingList.indexOf(gid) !==-1 ? true : false
+      return pendingList.indexOf(gid) !== -1 ? true : false
       break;
     default :
       // does nothing
