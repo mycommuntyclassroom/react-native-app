@@ -306,6 +306,7 @@ class EditGuardianAccount extends Component {
           <TextInput
             style={globalStyles.textInput}
             name="displayName"
+            placeholderTextColor="white"
             defaultValue={ this.state.displayName }
             onChangeText={ (value) => this.handleChange(value, 'displayName') } />
 
@@ -327,6 +328,7 @@ class EditGuardianAccount extends Component {
               style={globalStyles.textInput}
               type="text"
               placeholder="Street Address"
+              placeholderTextColor="white"
               defaultValue={ this.state.street }
               onChangeText={ (value) => this.handleChange(value, 'street') }
             />

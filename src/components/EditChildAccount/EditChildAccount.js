@@ -195,7 +195,7 @@ class EditChildAccount extends Component {
       for (var category in formData) {
         checkboxOutput.push(
           <View>
-            <Text>{category}</Text>
+            <Text style={globalStyles.formSubTitle}>{category}</Text>
             <View key={category} style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
               {formData[category].map(item => {
                 var checkbox = '';
@@ -239,7 +239,7 @@ class EditChildAccount extends Component {
       : require('../../../images/blank-profile-pic.png');
 
     return(
-      <ScrollView className="edit-account">
+      <ScrollView style={globalStyles.formContainer}>
         {
           /* page overlay for the image selection
              rendered based on the state per the open/close */
@@ -297,14 +297,16 @@ class EditChildAccount extends Component {
 
         <View style={{paddingBottom: 93}}>
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
             name="fName"
+            placeholderTextColor="white"
             defaultValue={ this.state.fName }
             onChangeText={ (value) => this.handleChange(value, 'fName') } />
 
           <TextInput
-            style={{width: 200, height: 40}}
+            style={globalStyles.textInput}
             name="lName"
+            placeholderTextColor="white"
             defaultValue={ this.state.lName }
             onChangeText={ (value) => this.handleChange(value, 'lName') } />
 
@@ -312,6 +314,10 @@ class EditChildAccount extends Component {
             <RadioForm
               radio_props={radio_props}
               initial={gender === 'male' ? 0 : 1 }
+              style={{padding: 30, marginRight: 10}}
+              buttonWrapStyle={{padding: 30, marginRight: 10}}
+              labelStyle={{marginRight: 30}}
+              formHorizontal={true}
               onPress={(value) => { this.radioButtonChange(value, 'gender') }}
             />
           </View>
