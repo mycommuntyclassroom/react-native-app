@@ -45,6 +45,7 @@ class BrowseHostsOutput extends Component {
       for (let teaser in eventData[teaserGroup]) {
         
         let teaserData = eventData[teaserGroup][teaser];
+        const recurringDays = teaserData.recurringDays || []
         const { hostName, title, image, startTime, finishTime } = teaserData;
 
         // set the gid for the scope above
@@ -101,10 +102,9 @@ class BrowseHostsOutput extends Component {
               <View style={style.dayAndTime}>
                 <View style={style.days}>
                   {
-                    teaserData.recurringDays.map((item, index) => {
+                    recurringDays.map((item, index) => {
                       // conditionals for handling the various output for the recurring days
-                      let daysArray = teaserData.recurringDays;
-                      if(daysArray.length === 1 && item === ' '){
+                      if(recurringDays.length === 1 && item === ' '){
                         let stringDate = teaserData.startDate.split(' ').slice(0,3).join(' ')
                         return <Text style={style.dayText} key={`${teaser}${item}`}>{stringDate}</Text>
                       }
