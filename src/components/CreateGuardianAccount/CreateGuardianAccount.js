@@ -45,6 +45,7 @@ class CreateGuardianAccount extends Component {
       let categories = {
         uid: auth.uid,
         displayName: auth.displayName,
+        greeting: '',
         photoURL: auth.photoURL,
         email: auth.email,
         street: '',
@@ -191,6 +192,15 @@ class CreateGuardianAccount extends Component {
             placeholderTextColor='white'
             placeholder='Your Name'
             onChangeText={ (value) => this.handleChange(value, 'displayName') } 
+          />
+
+          <TextInput
+            style={[globalStyles.textInput, {height: 90}]}
+            multiline = {true}
+            numberOfLines = {6}
+            placeholderTextColor='white'
+            placeholder='Write a summary about yourself here'
+            onChangeText={ (value) => this.handleChange(value, 'greeting') } 
           />
 
           <View>
