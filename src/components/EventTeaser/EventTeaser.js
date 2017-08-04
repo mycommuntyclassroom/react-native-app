@@ -66,18 +66,19 @@ class EventTeaser extends Component {
 
     // generate teaser based on the data passed to this function
     function generateTeasers() {
+      console.log('generateTeasers called, this si the app: ', app)
       for (let teaser in teaserData) {
-        const { gid, title, profileImage, date, startTime, finishTime } = teaserData[teaser];
+        const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
         const recurringDays = teaserData[teaser].recurringDays || []
 
         // handle the output of the image
-        let eventImage = profileImage != '../../../images/logo.png'
-          ? {uri: profileImage}
+        let eventImage = image != '../../../images/logo.png'
+          ? {uri: image}
           : require('../../../images/logo.png');
 
         teaserElement =
           <View style={style.teaserElement} key={teaser}>
-            <TouchableHighlight className="event-image" onPress={ () => app.goToScene('EventDetails') }>
+            <TouchableHighlight className="event-image" onPress={() => app.goToScene('EventDetails', {app, gid}) }>
               <Image 
                 source={eventImage} 
                 resizeMode='cover' 

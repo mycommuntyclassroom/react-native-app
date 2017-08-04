@@ -21,6 +21,8 @@ class BrowseHostsOutput extends Component {
 
     const props = this.props;
     const { app } = props;
+
+    console.log('This is the browse hosts app: ', app)
     const { deviceWidth, deviceHeight } = deviceDimensions;
     const eventData = app.props.events || [' '];
 
@@ -46,10 +48,11 @@ class BrowseHostsOutput extends Component {
         
         let teaserData = eventData[teaserGroup][teaser];
         const recurringDays = teaserData.recurringDays || []
-        const { hostName, title, image, startTime, finishTime } = teaserData;
+        const { hostName, title, image, startTime, finishTime, gid } = teaserData;
+
+        console.log('this is the teaserData: ', teaserData)
 
         // set the gid for the scope above
-        gid = teaserData.gid
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
 
@@ -57,7 +60,7 @@ class BrowseHostsOutput extends Component {
         let eventImage;
         let imageStyle;
 
-          if (image === '../../../images/blank-profile-pic.png' || image === '') {
+          if (image === '../../../images/logo.png' || image === '') {
            eventImage = require('../../../images/logo.png'); 
            imageStyle = {width: 150, height: 150}
           } else {
