@@ -190,6 +190,14 @@ STYLE.formAddressCenterPiece = {
   marginRight: '2%'
 }
 
+// RADIO BUTTON
+STYLE.radioButtonContainer = {
+  marginRight: -4,
+  justifyContent: 'space-around', 
+  flexDirection: 'row',
+  flexGrow: 1
+}
+
 // CHECKBOX
 // 
 STYLE.checkboxContainer = {

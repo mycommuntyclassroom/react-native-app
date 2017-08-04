@@ -408,7 +408,7 @@ class CreateEventForm extends Component {
           />
 
           <Text style={style.subTitle}>Repeats</Text>
-          <View style={ [style.radioButtonContainer, {marginTop: 5}] }>
+          <View style={ [globalStyles.radioButtonContainer, {marginTop: 5}] }>
             {
               /* custom checkbox output for the event form. This doesn't exist in the formData */
               recurringDays_checkbox_props.map((item) =>{
@@ -438,7 +438,7 @@ class CreateEventForm extends Component {
               onPress={(value) => { this.radioButtonChange(value, 'frequency') }}
             />
           </View>
-          <View style={ [style.radioButtonContainer, {marginBottom: 30}] }>
+          <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
             { outputCheckboxes() }
           </View>
 
