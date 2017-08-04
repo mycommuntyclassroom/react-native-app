@@ -119,7 +119,6 @@ class EditGuardianAccount extends Component {
 
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    console.log('checkboxOptions: ', checkboxOptions)
     let options;
     if (this.state[checkboxOptions]) {
       options = this.state[checkboxOptions]
@@ -183,8 +182,6 @@ class EditGuardianAccount extends Component {
     const { eventId, app } = props;
     const eventData = {...this.state};
 
-    console.log('this is the eventData: ', eventData)
-
     // set a timestamp for last updated
     eventData.lastUpdated = (new Date()).getTime();
 
@@ -224,7 +221,6 @@ class EditGuardianAccount extends Component {
       if (gid === null) { return }
       let checkboxOutput = [];
       for (var category in formData) {
-        console.log('category: ', category)
         {formData[category].map(item => {
           let currentCategory = this.state[`${category}`] || [];
           // pre-check any items that were selected and saved

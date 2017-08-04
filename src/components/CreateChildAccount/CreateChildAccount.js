@@ -132,8 +132,6 @@ class CreateChildAccount extends Component {
     const newState = {}
     newState[group] = value
 
-    console.log('newState: ', newState)
-
     // update the state with the new array of options
     this.setState(newState);
 

@@ -4,10 +4,6 @@ import { deviceDimensions } from '../../styles';
 const { deviceWidth, deviceHeight } = deviceDimensions;
 
 const WelcomePage = {};
- 
-
-console.log('Platform.OS: ', Platform.OS)
-
 const aspectRatio = deviceHeight/deviceWidth;
 
 // Aspect ratio of iPad is 4:3 (1.334) and aspect ratio of iPhone is 16:9 (1.778)
