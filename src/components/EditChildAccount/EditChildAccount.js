@@ -20,7 +20,7 @@ import { storage, database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 
-import style from './style';
+import style from '../CreateChildAccount/style';
 
 class EditChildAccount extends Component {
 
@@ -42,7 +42,7 @@ class EditChildAccount extends Component {
       fName,
       lName,
       profileImage,
-      gender,
+      gender: gender || 'female',
       allergies,
       uploadProgress: null,
       imageModal: false
@@ -79,7 +79,12 @@ class EditChildAccount extends Component {
   }
 
   selectImage() {
+    // if the user didn't select an image, skip this
+    if (!this.state.selectedImage) return;
+
+    // set the image uri to the profile image and close the modal
     this.setState({ profileImage: this.state.selectedImage.uri});
+    this.handleImageSelector();
   }
 
   getSelectedImages(images, current) {
@@ -136,9 +141,13 @@ class EditChildAccount extends Component {
 
     // store the selected image's url
     const { selectedImage } = this.state;
-    let imageUri = selectedImage.uri;
-    // upload the profile image 
-    handleFileUpload(imageUri, selectedImage, this.storageRef, this.childRef);
+
+    // skip if the profile image wasn't updated
+    if (selectedImage) {
+      let imageUri = selectedImage.uri;
+      // upload the profile image 
+      handleFileUpload(imageUri, selectedImage, this.storageRef, this.childRef);
+    }
 
     // remove the values from the formData prop
     data.formData = null;
@@ -172,7 +181,7 @@ class EditChildAccount extends Component {
     const { app, globalStyles } = props
     const currentChild = this.state
     const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
-
+    let allergyList = allergies || [];
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
@@ -185,30 +194,32 @@ class EditChildAccount extends Component {
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category}>
+          <View>
             <Text>{category}</Text>
-            {formData[category].map(item => {
-              var checkbox = '';
-              // pre-check any items that were selected and saved
-              if (allergies.indexOf(item) > -1) {
-                checkbox = 
-                  <CheckBox
-                    label={item}
-                    checked={true}
-                    key={item}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />;
-              } else {
-                checkbox = 
-                  <CheckBox
-                    label={item}
-                    key={item}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />;
-              }
+            <View key={category} style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
+              {formData[category].map(item => {
+                var checkbox = '';
+                // pre-check any items that were selected and saved
+                if (allergyList.indexOf(item) > -1) {
+                  checkbox = 
+                    <CheckBox
+                      label={item}
+                      checked={true}
+                      key={item}
+                      onChange={(checked) => this.checkboxChange(item, category, checked) }
+                    />;
+                } else {
+                  checkbox = 
+                    <CheckBox
+                      label={item}
+                      key={item}
+                      onChange={(checked) => this.checkboxChange(item, category, checked) }
+                    />;
+                }
 
-              return checkbox;
-            })}
+                return checkbox;
+              })}
+            </View>
           </View>
         )
       }
@@ -229,9 +240,6 @@ class EditChildAccount extends Component {
 
     return(
       <ScrollView className="edit-account">
-
-        <Text> {`Updating ${fName}'s Profile`} </Text>
-
         {
           /* page overlay for the image selection
              rendered based on the state per the open/close */
@@ -239,9 +247,18 @@ class EditChildAccount extends Component {
           this.state.imageModal &&
             // if true, render the imageModal
             <View style={style.imageModal}>
-              <Text>IMAGE MODAL </Text>
-              <Link text='Close' onClick={() => this.handleImageSelector()}> </Link>
-              <Link text='Select' onClick={() => this.selectImage()}> </Link>
+              <Text style={globalStyles.imagePickerTitle}>
+                Select an image for your profile 
+              </Text>
+              <Link 
+                text='Cancel'
+                extraStyle={[globalStyles.chooseImage, {backgroundColor: 'maroon'}]}
+                textStyles={{color: 'white'}}
+                onClick={() => this.handleImageSelector()}/>
+              <Link 
+                text='Select'
+                extraStyle={globalStyles.chooseImage}
+                onClick={() => this.selectImage()}/>
 
               {/* image handler */}
               <CameraRollPicker
@@ -251,7 +268,7 @@ class EditChildAccount extends Component {
                 removeClippedSubviews={false}
                 groupTypes='SavedPhotos'
                 batchSize={5}
-                maximum={3}
+                maximum={1}
                 selected={this.state.selected}
                 assetType='Photos'
                 imagesPerRow={3}
@@ -260,28 +277,33 @@ class EditChildAccount extends Component {
             </View>
         }
 
+        <Text style={[globalStyles.formTitle, style.title]}> {`Updating ${fName}'s Profile`} </Text>
+
         <View className="image-uploader">
-          <View className="image-uploader--image-container">
+          <View style={globalStyles.formImageContainer}>
             <Image 
               source={userImage} 
-              className="image-uploader--photo"
-              resizeMode='contain' 
-              style={{width: 100, height: 100}} />
+              style={globalStyles.formImage}
+              resizeMode='cover' />
           </View>
           <View className="image-uploader--identification">
-            <Link text='File Input' onClick={() => this.handleImageSelector()} style={globalStyles.formSubTitle}></Link>
+            <Link 
+              text='Add a profile image' 
+              onClick={() => this.handleImageSelector()}
+              extraStyle={globalStyles.uploadImageButton}
+            />
           </View>
         </View>
 
         <View style={{paddingBottom: 93}}>
           <TextInput
-            style={{height: 50}}
+            style={{width: 200, height: 40}}
             name="fName"
             defaultValue={ this.state.fName }
             onChangeText={ (value) => this.handleChange(value, 'fName') } />
 
           <TextInput
-            style={{height: 50}}
+            style={{width: 200, height: 40}}
             name="lName"
             defaultValue={ this.state.lName }
             onChangeText={ (value) => this.handleChange(value, 'lName') } />

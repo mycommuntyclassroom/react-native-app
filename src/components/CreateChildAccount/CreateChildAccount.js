@@ -129,11 +129,8 @@ class CreateChildAccount extends Component {
 
   radioButtonChange(value, group) {
     // current array of options
-    let radioButtonGroup = group
-    let radio = value
-
     const newState = {}
-    newState[radioButtonGroup] = radio
+    newState[group] = value
 
     // update the state with the new array of options
     this.setState(newState);
@@ -211,19 +208,21 @@ class CreateChildAccount extends Component {
       let checkboxOutput = []
       for (var category in formData) {
         checkboxOutput.push(
-          <View key={category}>
+          <View>
             <Text>{category}</Text>
-            {formData[category].map(item => {
-              return ( 
-                <View key={item}>
-                  <CheckBox
-                    label={item}
-                    key={item}
-                    onChange={(checked) => this.checkboxChange(item, category, checked) }
-                  />
-                </View>
-              )
-            })}
+            <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
+              {formData[category].map(item => {
+                return ( 
+                  <View key={item}>
+                    <CheckBox
+                      label={item}
+                      key={item}
+                      onChange={(checked) => this.checkboxChange(item, category, checked) }
+                    />
+                  </View>
+                )
+              })}
+            </View>
           </View>
         )
       }

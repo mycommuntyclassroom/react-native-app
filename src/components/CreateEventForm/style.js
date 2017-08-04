@@ -64,11 +64,4 @@ CreateEventForm.dateText = {
   fontSize: 16
 }
 
-CreateEventForm.radioButtonContainer = {
-  marginRight: -4,
-  justifyContent: 'space-around', 
-  flexDirection: 'row',
-  flexGrow: 1
-}
-
 export default CreateEventForm;
