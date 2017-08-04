@@ -44,7 +44,7 @@ class EditGuardianAccount extends Component {
 
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
-            ageRange, startDate, finishDate, frequency 
+            ageRange, startDate, finishDate, frequency, profileImage 
           } = hostEvents || null;
 
     const recurringDays = hostEvents.recurringDays || []
@@ -62,7 +62,9 @@ class EditGuardianAccount extends Component {
       seatsAvailable,
       recurringDays,
       ageRange,
-      uploadProgress: null
+      profileImage,
+      uploadProgress: null,
+      imageModal: false
     }
 
     // update the state after the render
@@ -199,7 +201,7 @@ class EditGuardianAccount extends Component {
     // state values for the event
     const { 
       title, uploadProgress, gid, image, recurringDays, 
-      frequency, startDate, finishDate, ageRange, summary
+      frequency, startDate, finishDate, ageRange, summary, profileImage
     } = this.state;
 
     // grab the form data set within the state
@@ -264,9 +266,9 @@ class EditGuardianAccount extends Component {
     ];
 
     // handle the output of the required image
-    let eventImage = image != '../../../images/blank-profile-pic.png'
-      ? {uri: image} 
-      : require('../../../images/blank-profile-pic.png');
+    let eventImage = profileImage != '../../../images/logo.png'
+      ? {uri: profileImage} 
+      : require('../../../images/logo.png');
 
     return(
       <ScrollView style={style.container}>
@@ -411,7 +413,7 @@ class EditGuardianAccount extends Component {
           />
 
           <Text style={style.subTitle}>Repeats</Text>
-          <View style={ [style.radioButtonContainer, {marginTop: 5}] }>
+          <View style={ [globalStyles.radioButtonContainer, {marginTop: 5}] }>
             {
               /* custom checkbox output for the event form. This doesn't exist in the formData */
               recurringDays_checkbox_props.map((item, i) =>{
@@ -455,7 +457,7 @@ class EditGuardianAccount extends Component {
             />
           </View>
 
-          <View style={ [style.radioButtonContainer, {marginBottom: 30}] }>
+          <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
             { outputCheckboxes() }
           </View>
 

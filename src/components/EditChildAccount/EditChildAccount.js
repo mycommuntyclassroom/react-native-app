@@ -79,11 +79,15 @@ class EditChildAccount extends Component {
   }
 
   selectImage() {
+    // if the user didn't select an image, skip this
+    if (!this.state.selectedImage) return;
+
+    // set the image uri to the profile image and close the modal
     this.setState({ profileImage: this.state.selectedImage.uri});
+    this.handleImageSelector();
   }
 
   getSelectedImages(images, current) {
-    console.log('getSelectedImages Coalled, (current): ', current)
     this.setState({selectedImage: current})
   }
 
@@ -160,9 +164,6 @@ class EditChildAccount extends Component {
 
     // pass the updated user to the store
     store.dispatch(actions.userInfo(updatedUser));
-    console.log('childId: ',childId)
-
-    console.log('data: ', data)
 
     // update the database - path, data
     updateProfile(`guardians/${data.gid}/children/${childId}`, data);
