@@ -280,6 +280,8 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
 // 
 export function checkRelationship (relationship, props, gid) {
 
+  console.log('checkRelationship props: ', props)
+
   switch (relationship) {
     case 'friend':
       // all admin users are considered friends to themselves
@@ -290,22 +292,19 @@ export function checkRelationship (relationship, props, gid) {
       return friendsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'incoming':
-      // check if the user is a friend
+      // check if the user has been friend requested
       const incomingRequests = props.user.incomingRequests || {};
       const requestsList = Object.keys(incomingRequests);
       return requestsList.indexOf(gid) === 1 ? true : false;
       break;
     case 'pending':
-      // check if there is a pending request for the user 
-      let pendingResponce = '';
+      console.log('checkRelationship pending Called, props.user.pendingRequests: ', props.user.pendingRequests)
+      // check if there is a pending request for the user
       const pendingRequests = props.user.pendingRequests || {};
       const pendingList = Object.keys(pendingRequests);
-      pendingList.map((pendingId) => {
-        pendingId === gid ? pendingResponce = 'pending' : '';
-      })
-      return pendingResponce;
-
-    break;
+      console.log('pendingList.indexOf(gid): ', pendingList.indexOf(gid))
+      return pendingList.indexOf(gid) !==-1 ? true : false
+      break;
     default :
       // does nothing
       break;

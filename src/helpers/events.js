@@ -45,6 +45,7 @@ export function getHostEvents () {
 // 
 export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBooking) {
 
+  console.log('generateTeasers props: ', props)
   const { app } = props;
 
   // this array stores the template elements ex: the event post
@@ -53,6 +54,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   let teaserElement;
 
   let isFriend = checkRelationship('friend', props, props.gid);
+  console.log('isFriend: ', isFriend)
 
   function slideChange (index) {
     return handleEventIndex(index)
@@ -117,7 +119,12 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
                 </TouchableHighlight>
               </LinearGradient>
             }
-            <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={EventStyles.requestFriendButton} />
+            <RequestFriendButton 
+              {...props} 
+              gid={gid} 
+              requester={{displayName: hostName, uid: gid}} 
+              browseHostsStyle={EventStyles.requestFriendButton} 
+            />
             <View style={EventStyles.dayAndTime}>
               <View style={EventStyles.days}>
                 {

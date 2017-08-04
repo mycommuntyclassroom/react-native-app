@@ -36,6 +36,8 @@ class EditChildAccount extends Component {
             gid, fName, lName, profileImage, gender, allergies
           } = child;
 
+    console.log('allergies initial: ', allergies)
+
     // build the state object with the key values in the props
     let newStateObject = {
       gid,
@@ -43,13 +45,15 @@ class EditChildAccount extends Component {
       lName,
       profileImage,
       gender: gender || 'female',
-      allergies,
+      allergies: allergies || [''],
       uploadProgress: null,
       imageModal: false
     }
 
     // set the state
     this.state = newStateObject;
+
+    console.log('this.state: ', this.state)
 
     // pull the formData tree and grab all of the checkboxes for the children
     // and save it in the state
@@ -139,6 +143,7 @@ class EditChildAccount extends Component {
     const { app } = props;
     const data = {...this.state};
 
+    console.log('This is the data: ', data)
     // store the selected image's url
     const { selectedImage } = this.state;
 
@@ -181,7 +186,7 @@ class EditChildAccount extends Component {
     const { app, globalStyles } = props
     const currentChild = this.state
     const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
-    let allergyList = allergies || [];
+    let allergyList = allergies || [''];
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
@@ -194,9 +199,9 @@ class EditChildAccount extends Component {
       let checkboxOutput = [];
       for (var category in formData) {
         checkboxOutput.push(
-          <View>
+          <View key={category}>
             <Text style={globalStyles.formSubTitle}>{category}</Text>
-            <View key={category} style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
+            <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
               {formData[category].map(item => {
                 var checkbox = '';
                 // pre-check any items that were selected and saved
