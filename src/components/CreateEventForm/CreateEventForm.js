@@ -14,7 +14,7 @@ import moment from 'moment';
 import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
-import { addItem, handleFileUpload } from '../../helpers/form';
+import { addItem, handleFileUpload, updateProfile } from '../../helpers/form';
 import { storage, database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -89,7 +89,6 @@ class CreateEventForm extends Component {
     }) 
 
     // FILE UPLOAD
-    this.userRef = database.ref(`guardians/${props.auth.uid}/hostEvents`);
     this.storageRef = storage.ref(`event-images/${props.auth.uid}`);
 
     // bind functions
@@ -208,12 +207,17 @@ class CreateEventForm extends Component {
     // update the database
     // 
     // add the event to the guardian host branch - path, data
-    addItem(`guardians/${this.state.gid}/hostEvents`, newEvent);
+    let userId = addItem(`guardians/${this.state.gid}/hostEvents`, newEvent);
     // add the event to the general hosts tree - path, data
-    addItem(`hostEvents/${this.state.gid}`, newEvent);
+    updateProfile(`hostEvents/${this.state.gid}/${userId}`, newEvent);
+
+    // update the database
+    const eventRef = database.ref(`guardians/${this.state.gid}/hostEvents/${userId}`)
+    const hostRef = database.ref(`hostEvents/${this.state.gid}/${userId}`)
 
     // upload the profile image 
-    handleFileUpload(imageUri, selectedImage, this.storageRef, this.userRef);
+    handleFileUpload(imageUri, selectedImage, this.storageRef, eventRef);
+    handleFileUpload(imageUri, selectedImage, this.storageRef, hostRef);
 
     // navigate to the dashboard
     app.goToScene('Dashboard', {app})

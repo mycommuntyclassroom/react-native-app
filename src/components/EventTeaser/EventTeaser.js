@@ -68,12 +68,12 @@ class EventTeaser extends Component {
     // generate teaser based on the data passed to this function
     function generateTeasers() {
       for (let teaser in teaserData) {
-        const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
+        const { gid, title, profileImage, date, startTime, finishTime } = teaserData[teaser];
         const recurringDays = teaserData[teaser].recurringDays || []
 
         // handle the output of the image
-        let eventImage = image != '../../../images/logo.png'
-          ? {uri: image}
+        let eventImage = profileImage != '../../../images/logo.png'
+          ? {uri: profileImage}
           : require('../../../images/logo.png');
 
         teaserElement =

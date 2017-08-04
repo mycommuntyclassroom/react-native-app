@@ -7,8 +7,11 @@ import RNFetchBlob from 'react-native-fetch-blob';
 
 
 export function updateProfile (path, formData) {
-  database.ref(path)
-          .update(formData);
+  let newPostRef =
+    database.ref(path)
+            .update(formData);
+
+  return newPostRef.key;
 }
 
 export function removeItem (path) {
@@ -17,8 +20,11 @@ export function removeItem (path) {
 }
 
 export function addItem (path, formData) {
-  database.ref(path)
-          .push(formData);
+  let newPostRef =
+    database.ref(path)
+            .push(formData);
+
+  return newPostRef.key;
 }
 
 export function addChildProfile (formData) {
