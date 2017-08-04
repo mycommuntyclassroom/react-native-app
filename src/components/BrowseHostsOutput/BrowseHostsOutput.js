@@ -21,8 +21,6 @@ class BrowseHostsOutput extends Component {
 
     const props = this.props;
     const { app } = props;
-
-    console.log('This is the browse hosts app: ', app)
     const { deviceWidth, deviceHeight } = deviceDimensions;
     const eventData = app.props.events || [' '];
 
@@ -49,8 +47,6 @@ class BrowseHostsOutput extends Component {
         let teaserData = eventData[teaserGroup][teaser];
         const recurringDays = teaserData.recurringDays || []
         const { hostName, title, image, startTime, finishTime, gid } = teaserData;
-
-        console.log('this is the teaserData: ', teaserData)
 
         // set the gid for the scope above
         const ageRange = teaserData.ageRange || [];

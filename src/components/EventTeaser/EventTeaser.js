@@ -66,7 +66,6 @@ class EventTeaser extends Component {
 
     // generate teaser based on the data passed to this function
     function generateTeasers() {
-      console.log('generateTeasers called, this si the app: ', app)
       for (let teaser in teaserData) {
         const { gid, title, image, date, startTime, finishTime } = teaserData[teaser];
         const recurringDays = teaserData[teaser].recurringDays || []
