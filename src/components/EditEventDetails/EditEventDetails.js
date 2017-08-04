@@ -61,7 +61,7 @@ class EditGuardianAccount extends Component {
       image,
       seatsAvailable,
       recurringDays,
-      ageRange,
+      ageRange: ageRange || [''],
       profileImage,
       uploadProgress: null,
       imageModal: false
@@ -119,7 +119,17 @@ class EditGuardianAccount extends Component {
 
   checkboxChange(checkbox, checkboxOptions, checked) {
     // current array of options
-    const options = this.state[checkboxOptions];
+    console.log('checkboxOptions: ', checkboxOptions)
+    let options;
+    if (this.state[checkboxOptions]) {
+      options = this.state[checkboxOptions]
+    }
+    else {
+      let checkboxOptionsObj = {};
+      checkboxOptionsObj[checkboxOptions] = []
+      this.setState(checkboxOptionsObj);
+    };
+
     let index;
 
     // check if the check box is checked or unchecked
@@ -173,6 +183,8 @@ class EditGuardianAccount extends Component {
     const { eventId, app } = props;
     const eventData = {...this.state};
 
+    console.log('this is the eventData: ', eventData)
+
     // set a timestamp for last updated
     eventData.lastUpdated = (new Date()).getTime();
 
@@ -212,9 +224,11 @@ class EditGuardianAccount extends Component {
       if (gid === null) { return }
       let checkboxOutput = [];
       for (var category in formData) {
+        console.log('category: ', category)
         {formData[category].map(item => {
+          let currentCategory = this.state[`${category}`] || [];
           // pre-check any items that were selected and saved
-          if (this.state[`${category}`].indexOf(item) > -1) {
+          if (currentCategory.indexOf(item) > -1) {
             checkboxOutput.push(
               <CheckBox
                 label={item}

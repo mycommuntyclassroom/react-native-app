@@ -181,7 +181,7 @@ class EditChildAccount extends Component {
     const { app, globalStyles } = props
     const currentChild = this.state
     const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
-
+    let allergyList = allergies || [];
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
@@ -200,7 +200,7 @@ class EditChildAccount extends Component {
               {formData[category].map(item => {
                 var checkbox = '';
                 // pre-check any items that were selected and saved
-                if (allergies.indexOf(item) > -1) {
+                if (allergyList.indexOf(item) > -1) {
                   checkbox = 
                     <CheckBox
                       label={item}
