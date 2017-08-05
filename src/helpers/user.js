@@ -111,20 +111,28 @@ export function requestFriend (props, hostId, handlePending) {
     timestamp
   }
   // send the request to the guardian's notifications branch
-  database.ref(`guardians/${hostId}/notifications`)
-          .push(userObj);
+  const notificationItem = 
+    database
+      .ref(`guardians/${hostId}/notifications`)
+      .push(userObj);
 
-  // add the requested user's id to the requester's [pendingRequests] tree
+  const notificationKey = notificationItem.key;
+
+  // add the requester's id and notificationKey to the reciepient's [incomingRequests] tree
   // first build the object that will go into the update method and the store
-  let emptyObj = {};
-  emptyObj[`${hostId}`] = uid;
-  let friendRequestObj = emptyObj;
+  let friendRequestObj = {};
+  friendRequestObj[`${uid}`] = notificationKey;
+
+  // add the reciepient's id to the requester's [pendingRequests] tree
+  // first build the object that will go into the update method and the store
+  let pendingRequestObj = {};
+  pendingRequestObj[`${hostId}`] = uid;
   
+  // note that the user has sent a request to the guardian
   database.ref(`guardians/${uid}/pendingRequests`)
-          .update(friendRequestObj);
+          .update(pendingRequestObj);
 
   // send the request to the guardian's incomingRequests branch
-  // so we can use its data to deliniate the output of a request
   database.ref(`guardians/${hostId}/incomingRequests`)
           .update(friendRequestObj);
 
@@ -158,22 +166,30 @@ export function getGuardianData (gid, callback) {
 // ACCEPT/DENY FRIEND REQUEST
 // 
 // 
-export function handleInvite (userData, inviteData, response, note) {
+export function handleInvite (userData, inviteData, response, note, callback) {
 
   // modularize the internal workings of the invite into the 
   // acceptInvite, and denyInvite functions
   switch (response){
     case 'accept':
       // accept the guardian's invite
-      acceptInvite(userData, inviteData, note );
+      acceptInvite(userData, inviteData, note, callback );
+      break;
     case 'delete':
+      console.log('DELETE invite invoked')
       // deny the guardian's invite
       denyInvite(userData, note );
+    default:
+      // no function
   }
 }
 
-export function acceptInvite (userData, inviteData, note) {
+export function acceptInvite (userData, inviteData, note, callback) {
+  console.log('acceptInvite CAlled')
   const { displayName, uid } = inviteData
+
+  // NOTE: the uid is the guardian who MADE the request to connect
+  // the userData.uid is the user of the account recieving this request
 
   // add the guardian to the user's profile
   let friendObj = { 
@@ -187,9 +203,9 @@ export function acceptInvite (userData, inviteData, note) {
   .update(friendObj);
 
   // now REMOVE the invitation from the user's notifications
-  database
-  .ref(`guardians/${userData.uid}/notifications/${note}`)
-  .remove();
+//   database
+//   .ref(`guardians/${userData.uid}/notifications/${note}`)
+//   .remove();
 
   // add the user to the guardian's friends profile
   database
@@ -199,7 +215,7 @@ export function acceptInvite (userData, inviteData, note) {
     name: userData.displayName
   });
 
-  // 
+  // build notification messages for the newly connected users
   let userMessage = `You and ${displayName} are now connected.`;
   let guardianMessage = `You and ${userData.displayName} are now connected.`;
   let timestamp = (new Date()).getTime();
@@ -225,9 +241,12 @@ export function acceptInvite (userData, inviteData, note) {
   database.ref(`guardians/${userData.uid}/notifications`)
           .push(userObj);
 
-  // send the confirmation to the guardian's notifications tree
-  database.ref(`guardians/${uid}/notifications`)
-          .push(guardianObj);
+//   // send the confirmation to the guardian's notifications tree
+//   database.ref(`guardians/${uid}/notifications`)
+//           .push(guardianObj);
+
+  // invoke the callback to hide the connect button
+  // callback()
 }
 
 export function denyInvite (userData, note) {
@@ -280,8 +299,6 @@ export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, fri
 // 
 export function checkRelationship (relationship, props, gid) {
 
-  console.log('checkRelationship props: ', props)
-
   switch (relationship) {
     case 'friend':
       // all admin users are considered friends to themselves
@@ -289,19 +306,17 @@ export function checkRelationship (relationship, props, gid) {
       // check if the user is a friend
       const friends = props.user.friends || {};
       const friendsList = Object.keys(friends);
-      return friendsList.indexOf(gid) === 1 ? true : false;
+      return friendsList.indexOf(gid) !== -1 ? true : false;
       break;
     case 'incoming':
       console.log('checkRelationship incoming called')
+      console.log('props.user.incomingRequests: ', props.user.incomingRequests)
       // check if the user has been friend requested
       const incomingRequests = props.user.incomingRequests || {};
-      for(var key in incomingRequests) {
-        return incomingRequests[key] === gid && true;
-      }
-      return false;
+      const incomingRequestsList = Object.keys(incomingRequests);
+      return incomingRequestsList.indexOf(gid) !== -1 ? true : false;
       break;
     case 'pending':
-      console.log('checkRelationship pending Called, props.user.pendingRequests: ', props.user.pendingRequests)
       // check if there is a pending request for the user
       const pendingRequests = props.user.pendingRequests || {};
       const pendingList = Object.keys(pendingRequests);

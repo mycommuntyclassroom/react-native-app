@@ -19,7 +19,8 @@ class RequestFriendButton extends Component {
     super(props)
 
     this.state = {
-      pending: false
+      pending: false,
+      connected: false
     }
 
   }
@@ -30,9 +31,11 @@ class RequestFriendButton extends Component {
       this.setState({pending: true}) // 1 for true; is pending (also used for array pointing)
     }
 
-    const props = this.props;
+    const connectTrigger = () => {
+      this.setState({connected: true})
+    }
 
-    console.log('request friend Props: ', props)
+    const props = this.props;
     const { app, browseHostsStyle, globalStyles, requester } = props;
     const userData = app.props.user;
 
@@ -40,24 +43,25 @@ class RequestFriendButton extends Component {
 
     // if the users are already friends don't output a button
     if (checkRelationship('friend', props, props.gid)){
-      console.log('already a Friend')
       buttonOutput = <Text></Text>;
     } 
     // if they have an incoming friend request, output a connect option
     else if (checkRelationship('incoming', props, props.gid)) {
-      console.log('incoming PENDING')
       buttonOutput =
         <LinearGradient
           style={[browseHostsStyle, style.connect]}
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
           colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
         >
-          <Link textStyles={style.connectText} onClick={() => handleInvite(app.props.auth, requester, 'accept')} text='Connect' />
+          <Link 
+            textStyles={style.connectText} 
+            onClick={() => handleInvite(app.props.auth, requester, 'accept', '', connectTrigger)} 
+            text='Connect' 
+          />
         </LinearGradient>
     }
     // if they have a pending friend request, output a null friend request icon
     else if (this.state.pending || checkRelationship('pending', props, props.gid)) {
-      console.log('outputting PENDING')
       buttonOutput = 
       <TouchableHighlight>
         <LinearGradient
@@ -74,7 +78,6 @@ class RequestFriendButton extends Component {
     }
     else {
       // default to outputting the request friend icon
-      console.log('outputting DEFAULT')
       buttonOutput = 
       <TouchableHighlight onPress={ () => requestFriend(props, props.gid, handlePending) }>
         <LinearGradient
