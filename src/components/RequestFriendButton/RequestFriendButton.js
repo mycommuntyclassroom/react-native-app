@@ -48,7 +48,6 @@ class RequestFriendButton extends Component {
     } 
     // if they have an incoming friend request, output a connect option
     else if (incomingRequestNoteId) {
-      console.log('incomingRequestNoteId: ', incomingRequestNoteId)
       buttonOutput =
         <LinearGradient
           style={[browseHostsStyle, style.connect]}

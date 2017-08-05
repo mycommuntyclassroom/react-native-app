@@ -45,16 +45,13 @@ export function getHostEvents () {
 // 
 export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBooking) {
 
-  console.log('generateTeasers props: ', props)
   const { app } = props;
 
   // this array stores the template elements ex: the event post
   let hostEventsOutput = [];
   let teaserOutput = [];
   let teaserElement;
-
   let isFriend = checkRelationship('friend', props, props.gid);
-  console.log('isFriend: ', isFriend)
 
   function slideChange (index) {
     return handleEventIndex(index)

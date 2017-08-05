@@ -36,7 +36,6 @@ class EditChildAccount extends Component {
             gid, fName, lName, profileImage, gender, allergies
           } = child;
 
-    console.log('allergies initial: ', allergies)
 
     // build the state object with the key values in the props
     let newStateObject = {
@@ -53,7 +52,6 @@ class EditChildAccount extends Component {
     // set the state
     this.state = newStateObject;
 
-    console.log('this.state: ', this.state)
 
     // pull the formData tree and grab all of the checkboxes for the children
     // and save it in the state
@@ -143,7 +141,6 @@ class EditChildAccount extends Component {
     const { app } = props;
     const data = {...this.state};
 
-    console.log('This is the data: ', data)
     // store the selected image's url
     const { selectedImage } = this.state;
 

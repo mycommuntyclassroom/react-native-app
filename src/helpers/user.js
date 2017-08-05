@@ -176,7 +176,6 @@ export function handleInvite (userData, inviteData, response, noteId, callback) 
       acceptInvite(userData, inviteData, noteId, callback );
       break;
     case 'delete':
-      console.log('DELETE invite invoked')
       // deny the guardian's invite
       denyInvite(userData, noteId );
     default:
@@ -185,7 +184,6 @@ export function handleInvite (userData, inviteData, response, noteId, callback) 
 }
 
 export function acceptInvite (userData, inviteData, noteId, callback) {
-  console.log('acceptInvite CAlled')
   const { displayName, uid } = inviteData
 
   // NOTE: the uid is the guardian who MADE the request to connect
@@ -309,8 +307,6 @@ export function checkRelationship (relationship, props, gid) {
       return friendsList.indexOf(gid) !== -1 ? true : false;
       break;
     case 'incoming':
-      console.log('checkRelationship incoming called')
-      console.log('props.user.incomingRequests: ', props.user.incomingRequests)
       // check if the user has been friend requested
       const incomingRequests = props.user.incomingRequests || {};
       for(var key in incomingRequests) {
