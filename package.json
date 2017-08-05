@@ -28,7 +28,8 @@
     "react-native-snap-carousel": "2.1.4",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "rn-viewpager": "^1.2.3"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

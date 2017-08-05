@@ -38,6 +38,7 @@ class RequestFriendButton extends Component {
     const props = this.props;
     const { app, browseHostsStyle, globalStyles, requester } = props;
     const userData = app.props.user;
+    let incomingRequestNoteId = checkRelationship('incoming', props, props.gid);
 
     let buttonOutput;
 
@@ -46,7 +47,8 @@ class RequestFriendButton extends Component {
       buttonOutput = <Text></Text>;
     } 
     // if they have an incoming friend request, output a connect option
-    else if (checkRelationship('incoming', props, props.gid)) {
+    else if (incomingRequestNoteId) {
+      console.log('incomingRequestNoteId: ', incomingRequestNoteId)
       buttonOutput =
         <LinearGradient
           style={[browseHostsStyle, style.connect]}
@@ -55,7 +57,7 @@ class RequestFriendButton extends Component {
         >
           <Link 
             textStyles={style.connectText} 
-            onClick={() => handleInvite(app.props.auth, requester, 'accept', '', connectTrigger)} 
+            onClick={() => handleInvite(app.props.auth, requester, 'accept', incomingRequestNoteId, connectTrigger)} 
             text='Connect' 
           />
         </LinearGradient>
