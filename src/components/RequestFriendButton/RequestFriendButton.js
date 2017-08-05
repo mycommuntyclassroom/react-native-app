@@ -19,7 +19,8 @@ class RequestFriendButton extends Component {
     super(props)
 
     this.state = {
-      pending: false
+      pending: false,
+      connected: false
     }
 
   }
@@ -30,48 +31,62 @@ class RequestFriendButton extends Component {
       this.setState({pending: true}) // 1 for true; is pending (also used for array pointing)
     }
 
+    const connectTrigger = () => {
+      this.setState({connected: true})
+    }
+
     const props = this.props;
     const { app, browseHostsStyle, globalStyles, requester } = props;
+    const userData = app.props.user;
+    let incomingRequestNoteId = checkRelationship('incoming', props, props.gid);
 
-    let buttonOutput = ''
-          // <View className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)}>Connect</View>
+    let buttonOutput;
 
-    // check if the users are already friends
+    // if the users are already friends don't output a button
     if (checkRelationship('friend', props, props.gid)){
       buttonOutput = <Text></Text>;
     } 
-    // check if they have an incoming friend request
-    else if (checkRelationship('incoming', props, props.gid)) {
+    // if they have an incoming friend request, output a connect option
+    else if (incomingRequestNoteId) {
       buttonOutput =
         <LinearGradient
           style={[browseHostsStyle, style.connect]}
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)']} 
           colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
         >
-          <Link textStyles={style.connectText} onClick={() => handleInvite(app.props.auth, requester, 'accept')} text='Connect' />
+          <Link 
+            textStyles={style.connectText} 
+            onClick={() => handleInvite(app.props.auth, requester, 'accept', incomingRequestNoteId, connectTrigger)} 
+            text='Connect' 
+          />
         </LinearGradient>
+    }
+    // if they have a pending friend request, output a null friend request icon
+    else if (this.state.pending || checkRelationship('pending', props, props.gid)) {
+      buttonOutput = 
+      <TouchableHighlight>
+        <LinearGradient
+          style={[browseHostsStyle, globalStyles.addItem]}
+          colors={['gray', 'gray']}
+        >
+          <Image 
+            source={require('../../../images/friend-request-greyed-out.png')} 
+            resizeMode='cover' 
+            style={style.requestFriendIcon} />
+        </LinearGradient>
+      </TouchableHighlight>
+
     }
     else {
       // default to outputting the request friend icon
-      let requestFriendIcon;
-      let gradientColor;
-
-      if (this.state.pending) {
-        requestFriendIcon = require('../../../images/friend-request-greyed-out.png')
-        gradientColor = ['gray', 'gray'];
-      } else {
-        requestFriendIcon = require('../../../images/friend-request.png')
-        gradientColor = [styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]
-      }
-
       buttonOutput = 
       <TouchableHighlight onPress={ () => requestFriend(props, props.gid, handlePending) }>
         <LinearGradient
           style={[browseHostsStyle, globalStyles.addItem]}
-          colors={gradientColor}
+          colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
         >
           <Image 
-            source={requestFriendIcon} 
+            source={require('../../../images/friend-request.png')} 
             resizeMode='cover' 
             style={style.requestFriendIcon} />
         </LinearGradient>

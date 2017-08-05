@@ -51,7 +51,6 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   let hostEventsOutput = [];
   let teaserOutput = [];
   let teaserElement;
-
   let isFriend = checkRelationship('friend', props, props.gid);
 
   function slideChange (index) {
@@ -117,7 +116,12 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
                 </TouchableHighlight>
               </LinearGradient>
             }
-            <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={EventStyles.requestFriendButton} />
+            <RequestFriendButton 
+              {...props} 
+              gid={gid} 
+              requester={{displayName: hostName, uid: gid}} 
+              browseHostsStyle={EventStyles.requestFriendButton} 
+            />
             <View style={EventStyles.dayAndTime}>
               <View style={EventStyles.days}>
                 {
