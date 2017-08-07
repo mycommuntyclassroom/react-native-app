@@ -254,44 +254,6 @@ export function denyInvite (userData, note) {
   .remove();
 }
 
-// NOTIFICATION OUTPUT
-// 
-// 
-
-export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style, app) {
-  let elements;
-  let noteClass;
-  let noteType = noteProp.noteType || '';
-  switch( noteType ) {
-    case 'friend':
-      elements = 
-        <View className="action-items">
-          <View className="cta-buttons">
-            <Link className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)} text='Connect' />
-            <Link className="delete" onClick={() => handleInvite(userObj, noteProp, 'delete', note)} text='Delete' />
-          </View>
-          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
-        </View>;
-      break;
-    default: 
-      elements = <View className="action-items"></View>;
-      noteClass = 'standard'
-  }
-
-  return(
-    <View style={style.note} key={`${note}`} id={`${note}`}> 
-      <View style={[style.noteInfo, style[noteClass]]}>
-        <View style={[style.switch, style[seenSwitch]]}>
-          <View style={style.decoCircle} />
-        </View>
-        <Text>{noteProp.displayName}</Text>
-        <View><Text style={style.message}>{noteProp.message}</Text></View>
-      </View>
-      {elements}
-    </View>
-  )
-}
-
 // CHECK RELATIONSHIP STATUS
 // 
 // 
