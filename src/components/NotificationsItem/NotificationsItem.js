@@ -6,6 +6,8 @@ import {
   ScrollView
 } from 'react-native';
 
+import { handleInvite } from '../../helpers/user'
+
 import Link from '../Link';
 import style from './style'
 

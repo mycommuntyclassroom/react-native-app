@@ -184,20 +184,20 @@ export function handleInvite (userData, inviteData, response, noteId, callback) 
 }
 
 export function acceptInvite (userData, inviteData, noteId, callback) {
-  const { displayName, uid } = inviteData
+  const { displayName, gid } = inviteData
 
   // NOTE: the uid is the guardian who MADE the request to connect
   // the userData.uid is the user of the account recieving this request
 
   // add the guardian to the user's profile
   let friendObj = { 
-    gid: uid,
+    gid,
     name: displayName
   }
 
   // update the user's friends list with the newly accepted guardian
   database
-  .ref(`guardians/${userData.uid}/friends/${uid}`)
+  .ref(`guardians/${userData.uid}/friends/${gid}`)
   .update(friendObj);
 
   // now REMOVE the invitation from the user's notifications
@@ -207,7 +207,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
 
   // add the user to the guardian's friends list
   database
-  .ref(`guardians/${uid}/friends/${userData.uid}`)
+  .ref(`guardians/${gid}/friends/${userData.uid}`)
   .update({ 
     gid: userData.uid,
     name: userData.displayName
@@ -221,7 +221,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
   // build the userObj and guardianObj for the notifications tree
   let userObj = {
     name: userData.displayName,
-    gid: uid,
+    gid,
     message: userMessage,
     seen: true,
     timestamp
@@ -229,7 +229,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
 
   let guardianObj = {
     name: userData.displayName,
-    gid: uid,
+    gid: userData.uid,
     message: guardianMessage,
     seen: true,
     timestamp
@@ -240,11 +240,11 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
           .push(userObj);
 
   // send the new friend connection note to the guardian's notifications tree
-  database.ref(`guardians/${uid}/notifications`)
+  database.ref(`guardians/${gid}/notifications`)
           .push(guardianObj);
 
   // invoke the callback to hide the connect button
-  callback()
+  callback && callback()
 }
 
 export function denyInvite (userData, note) {

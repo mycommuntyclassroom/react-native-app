@@ -31,12 +31,12 @@ class Summary extends Component {
   render(){ 
 
     const props = this.props;
-    const { app } = props;
+    const { app, guardianData } = props;
     let userData;
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    props.guardianData ? userData = props.guardianData : userData = app.props.user
+    guardianData ? userData = guardianData : userData = app.props.user
 
     // if showAllTags becomes true, update its value
     let showAllTagsClass = this.state.showAllTagsView ? "show-all-tags" : ""
