@@ -13,8 +13,6 @@ import style from './style'
 
 export default function NotificationsItem (props) {
   const { auth, noteProp, note, seenSwitch, friends, app } = props;
-
-  console.log('NotificationsItem props: ', props)
   const { gid } = noteProp;
 
   let 
