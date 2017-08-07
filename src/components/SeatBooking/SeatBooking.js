@@ -34,6 +34,8 @@ class SeatBooking extends Component {
     if (checked) {
       // add the childDetails to the studentsCopy object
       studentsCopy[child]=children[child];
+      studentsCopy[child]['childId'] = child;
+
     } else {
       // remove the value from the unchecked checkbox from the array
       delete studentsCopy[child]
@@ -45,16 +47,16 @@ class SeatBooking extends Component {
   submitForm() {
     const props = this.props;
     // gather the students that are registered for the class
-    const data = this.state.students;
+    const students = this.state.students;
     // close the child dropoff overlay
     props.toggleSeatBooking();
     // set the updated students group in the database
-    childDropOff(data, props);
+    childDropOff(students, props);
   }
 
   render() {
     const props = this.props;
-    const { toggleSeatBooking, selectedEventDetails, currentEventIndex, visibility } = props;
+    const { toggleSeatBooking, selectedEventDetails, currentEventId, visibility } = props;
 
     // handle the style that toggles the modal's visibility
     let isVisible = visibility ? style.isVisible : {}
@@ -71,7 +73,7 @@ class SeatBooking extends Component {
         //
         let eventStudents = selectedEventDetails.students || {};
         let eventStudentsId = Object.keys(eventStudents);
-        let childEventId = `${child}-${currentEventIndex}`
+        let childEventId = `${child}-${currentEventId}`
         let studentImage = profileImage != '../../../images/blank-profile-pic.png'
           ? {uri: profileImage}
           : require('../../../images/blank-profile-pic.png');

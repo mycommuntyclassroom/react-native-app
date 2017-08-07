@@ -43,7 +43,6 @@ class CreateEventForm extends Component {
 
     // clear the old formData
     AsyncStorage.removeItem('formData');
-
     const { auth } = props.app.props;
 
     // pull the formData tree from the DB and grab all of the checkboxes for hostEvents
@@ -66,7 +65,9 @@ class CreateEventForm extends Component {
         frequency: '',
         ageRange: [],
         startDate: '',
+        formattedStartDate: '',
         finishDate: '',
+        formattedFinishDate: '',
         imageModal: false
       }
 
@@ -388,7 +389,12 @@ class CreateEventForm extends Component {
             }}
             minuteInterval={5}
             showIcon={false}
-            onDateChange={(date) => {this.setState({startDate: date});}}
+            onDateChange={(date) => {
+              this.setState({
+                startDate: date,
+                formattedStartDate: moment(date, 'MMMM Do YYYY, h:mm a').format("YYYY-MM-DD")
+              });
+            }}
           />
 
           <Text style={style.subTitle}> Finish Date </Text>
@@ -408,7 +414,12 @@ class CreateEventForm extends Component {
             }}
             minuteInterval={5}
             showIcon={false}
-            onDateChange={(date) => {this.setState({finishDate: date});}}
+            onDateChange={(date) => {
+              this.setState({
+                finishDate: date,
+                formattedFinishDate: moment(date, 'MMMM Do YYYY, h:mm a').format("YYYY-MM-DD")
+              });
+            }}
           />
 
           <Text style={style.subTitle}>Repeats</Text>

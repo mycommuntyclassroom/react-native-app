@@ -398,7 +398,12 @@ class EditGuardianAccount extends Component {
             }}
             minuteInterval={5}
             showIcon={false}
-            onDateChange={(date) => {this.setState({startDate: date});}}
+            onDateChange={(date) => {
+              this.setState({
+                startDate: date,
+                formattedStartDate: moment(date, 'MMMM Do YYYY, h:mm a').format("YYYY-MM-DD")
+              });
+            }}
           />
 
           <Text style={style.subTitle}> Finish Date </Text>
@@ -418,7 +423,12 @@ class EditGuardianAccount extends Component {
             }}
             minuteInterval={5}
             showIcon={false}
-            onDateChange={(date) => {this.setState({finishDate: date});}}
+            onDateChange={(date) => {
+              this.setState({
+                finishDate: date,
+                formattedFinishDate: moment(date, 'MMMM Do YYYY, h:mm a').format("YYYY-MM-DD")
+              });
+            }}
           />
 
           <Text style={style.subTitle}>Repeats</Text>

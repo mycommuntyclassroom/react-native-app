@@ -174,16 +174,44 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 
 // CHILD DROP-OFF
 // 
+// When a parent enrolls one or more of their children in a class
+// send a notification to the reciepient host and add the host event details to 
+// the classroomSchedule within the requester's data tree and the requester's 
+// child(ren) data tree
 // 
-export function childDropOff (data, props) {
-  const { gid } = props
+export function childDropOff (students, props) {
+  const { gid, currentEventId, selectedEventDetails, auth } = props
 
-  // set the new data on the students tree
-  database.ref(`hostEvents/${gid}/${props.currentEventIndex}/students`)
-          .set(data);
-
+  // add the updated group of children to the students tree
+  database.ref(`hostEvents/${gid}/${currentEventId}/students`)
+          .set(students);
+  
+  // record the timestamp for the date the student was added
   let timestamp = (new Date()).getTime();
 
+  // grab the user's children from the collection of students
+  // and store them in the mychildren branch
+  const studentList = Object.keys(students)
+
+  const mychildren = studentList.map(child => {
+    return students[child].gid === auth.uid && students[child]
+  })
+
+  // add the mychildren group to the selectedEventDetails object
+  selectedEventDetails['mychildren'] = mychildren;
+
+  // send the selectedEventDetails to the classroomSchedule table
+  // in the the root of the guardian branch and the children branch
+  database.ref(`guardians/${auth.uid}/classroomSchedule/${currentEventId}`)
+          .set(selectedEventDetails);
+
+  // send the selectedEventDetails to each of the children's branches
+  mychildren.map(child => {
+    database.ref(`guardians/${auth.uid}/children/${child.childId}/classroomSchedule/${currentEventId}`)
+            .set(selectedEventDetails);
+  })
+
+  // build the notification message
   let studentObj = {
     message: 'A child has been scheduled for your class!',
     seen: true,
