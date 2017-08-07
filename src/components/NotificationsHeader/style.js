@@ -2,6 +2,8 @@ import { deviceDimensions } from '../../styles';
 import styleVariables from '../../styles/variables'
 
 const NotificationsHeader = {};
+const NotificationsHeaderWidth = 154.5;
+const backArrow = 60;
 
 NotificationsHeader.container = {
   padding: 20,
@@ -15,7 +17,7 @@ NotificationsHeader.headerTabs = {
   position: 'relative',
   display: 'flex',
   flexDirection: 'row',
-  left: deviceDimensions.deviceWidth / 15,
+  left: (deviceDimensions.deviceWidth / 2) - ((NotificationsHeaderWidth / 2) + backArrow),
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
   padding: 4,
   paddingLeft: 12,

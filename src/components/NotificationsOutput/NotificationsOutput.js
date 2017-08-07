@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import NotificationsHeader from '../NotificationsHeader';
-import { chooseNotificationItem } from '../../helpers/user';
+import NotificationsItem from '../NotificationsItem';
 import style from './style';
 
 class NotificationsOutput extends Component {
@@ -42,7 +42,14 @@ class NotificationsOutput extends Component {
 
         // pass the notificationItem into the notesOutput array
         // noteType, userObj, noteProp, note, viewed
-        notesOutput.unshift(chooseNotificationItem(app.props.auth, noteProp, note, seenSwitch, friends, style, app));
+        notesOutput.unshift(
+          <NotificationsItem
+            {...props}
+            auth={app.props.auth}
+            noteProp={noteProp}
+            seenSwitch={seenSwitch}
+          />
+        )
 
         // pass the note notifications to the 
         viewedNotifications[`${note}/seen`] = true;

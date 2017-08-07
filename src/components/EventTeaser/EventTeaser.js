@@ -23,13 +23,13 @@ class EventTeaser extends Component {
   render(){ 
 
     const props = this.props
-    const { globalStyles, app } = this.props;
+    const { globalStyles, app, guardianData } = props;
     const { deviceWidth, deviceHeight } = deviceDimensions;
     let userData;
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    props.guardianData ? userData = props.guardianData : userData = app.props.user
+    guardianData ? userData = guardianData : userData = app.props.user
 
     const teaserData = userData.hostEvents || [' '];
     let teaserOutput = []
@@ -84,19 +84,24 @@ class EventTeaser extends Component {
                 style={style.teaserImage} />
             </TouchableHighlight>
             <View style={style.addEventContainer}>
-              <LinearGradient
-                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
-                style={[globalStyles.addItem, style.editItem]}
-              >
-                <TouchableHighlight onPress={ () => app.goToScene('EditEvent', {app, eventId: teaser}) }>
-                  <Image
-                    source={require('../../../images/edit.png')}
-                    resizeMode='cover' 
-                    style={{width: 40, height: 40}} />
-                </TouchableHighlight>
-              </LinearGradient>
+
               {
-               !props.guardianData &&
+                !guardianData &&
+                <LinearGradient
+                  colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
+                  style={[globalStyles.addItem, style.editItem]}
+                >
+                  <TouchableHighlight onPress={ () => app.goToScene('EditEvent', {app, eventId: teaser}) }>
+                    <Image
+                      source={require('../../../images/edit.png')}
+                      resizeMode='cover' 
+                      style={{width: 40, height: 40}} />
+                  </TouchableHighlight>
+                </LinearGradient>
+              }
+
+              {
+               !guardianData &&
                 <LinearGradient
                   colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]} 
                   style={[globalStyles.addItem, style.addItem]}

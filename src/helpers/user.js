@@ -105,7 +105,7 @@ export function requestFriend (props, hostId, handlePending) {
   let userObj = {
     noteType: 'friend',
     displayName,
-    uid,
+    gid: uid,
     message,
     seen: false,
     timestamp
@@ -184,20 +184,20 @@ export function handleInvite (userData, inviteData, response, noteId, callback) 
 }
 
 export function acceptInvite (userData, inviteData, noteId, callback) {
-  const { displayName, uid } = inviteData
+  const { displayName, gid } = inviteData
 
   // NOTE: the uid is the guardian who MADE the request to connect
   // the userData.uid is the user of the account recieving this request
 
   // add the guardian to the user's profile
   let friendObj = { 
-    gid: uid,
+    gid,
     name: displayName
   }
 
   // update the user's friends list with the newly accepted guardian
   database
-  .ref(`guardians/${userData.uid}/friends/${uid}`)
+  .ref(`guardians/${userData.uid}/friends/${gid}`)
   .update(friendObj);
 
   // now REMOVE the invitation from the user's notifications
@@ -207,7 +207,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
 
   // add the user to the guardian's friends list
   database
-  .ref(`guardians/${uid}/friends/${userData.uid}`)
+  .ref(`guardians/${gid}/friends/${userData.uid}`)
   .update({ 
     gid: userData.uid,
     name: userData.displayName
@@ -221,7 +221,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
   // build the userObj and guardianObj for the notifications tree
   let userObj = {
     name: userData.displayName,
-    gid: userData.uid,
+    gid,
     message: userMessage,
     seen: true,
     timestamp
@@ -240,11 +240,11 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
           .push(userObj);
 
   // send the new friend connection note to the guardian's notifications tree
-  database.ref(`guardians/${uid}/notifications`)
+  database.ref(`guardians/${gid}/notifications`)
           .push(guardianObj);
 
   // invoke the callback to hide the connect button
-  callback()
+  callback && callback()
 }
 
 export function denyInvite (userData, note) {
@@ -252,44 +252,6 @@ export function denyInvite (userData, note) {
   database
   .ref(`guardians/${userData.uid}/notifications/${note}`)
   .remove();
-}
-
-// NOTIFICATION OUTPUT
-// 
-// 
-
-export function chooseNotificationItem (userObj, noteProp, note, seenSwitch, friends, style, app) {
-  let elements;
-  let noteClass;
-  let noteType = noteProp.noteType || '';
-  switch( noteType ) {
-    case 'friend':
-      elements = 
-        <View className="action-items">
-          <View className="cta-buttons">
-            <Link className="connect" onClick={() => handleInvite(userObj, noteProp, 'accept', note)} text='Connect' />
-            <Link className="delete" onClick={() => handleInvite(userObj, noteProp, 'delete', note)} text='Delete' />
-          </View>
-          <Link className="profile-view" onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
-        </View>;
-      break;
-    default: 
-      elements = <View className="action-items"></View>;
-      noteClass = 'standard'
-  }
-
-  return(
-    <View style={style.note} key={`${note}`} id={`${note}`}> 
-      <View style={[style.noteInfo, style[noteClass]]}>
-        <View style={[style.switch, style[seenSwitch]]}>
-          <View style={style.decoCircle} />
-        </View>
-        <Text>{noteProp.displayName}</Text>
-        <View><Text style={style.message}>{noteProp.message}</Text></View>
-      </View>
-      {elements}
-    </View>
-  )
 }
 
 // CHECK RELATIONSHIP STATUS

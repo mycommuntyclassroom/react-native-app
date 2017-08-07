@@ -25,7 +25,7 @@ class NotificationsHeader extends Component {
         <BackButton {...props} />
         <View style={style.headerTabs}>
           <Text style={style.notificationsText}>Notifications</Text>
-          <NotificationsCounter {...this.props} />
+          <NotificationsCounter {...props} />
         </View>
       </LinearGradient>
     )

@@ -10,21 +10,25 @@ class NotificationsCounter extends Component {
 
   render() {
     const props = this.props;
-    let userNotifications = props.notifications;
+    const {notifications, customStyle} = props;
     let newNotifications = 0;
 
     // increment the counter for the unread notifications
-    for(let note in userNotifications) {
+    for(let note in notifications) {
 
       let seenSwitch = 'seen';
 
-      if (!userNotifications[`${note}`].seen) {
+      if (!notifications[`${note}`].seen) {
         seenSwitch = 'not-seen'
         newNotifications ++;
       }
     }
 
-    return <View style={style.notificationBubble}><Text style={style.notificationBubbleText}>{ newNotifications }</Text></View>
+    return (
+      <View style={[style.notificationBubble, customStyle || {}]}>
+        <Text style={style.notificationBubbleText}>{ newNotifications }</Text>
+      </View>
+    )
   }
 }
 

@@ -4,6 +4,8 @@ const NotificationsCounter = {};
 
 NotificationsCounter.notificationBubble = {
   backgroundColor: styleVariables.mc2LightBlue,
+  alignItems: 'center',
+  justifyContent: 'center',
   padding: 0.2,
   paddingLeft: 9,
   paddingRight: 9,

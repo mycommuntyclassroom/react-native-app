@@ -1,4 +1,4 @@
-import styleVariables from '../../styles/variables'
+import styleVariables from '../../styles/variables';
 
 const NotificationsOutput = {}; 
 
