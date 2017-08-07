@@ -34,6 +34,9 @@ class SeatBooking extends Component {
     if (checked) {
       // add the childDetails to the studentsCopy object
       studentsCopy[child]=children[child];
+      studentsCopy[child]['childId'] = child;
+
+      console.log('this is the studentsCopy: ', studentsCopy)
     } else {
       // remove the value from the unchecked checkbox from the array
       delete studentsCopy[child]
@@ -44,6 +47,8 @@ class SeatBooking extends Component {
 
   submitForm() {
     const props = this.props;
+
+    console.log('props: ', props)
     // gather the students that are registered for the class
     const students = this.state.students;
     // close the child dropoff overlay
@@ -61,10 +66,12 @@ class SeatBooking extends Component {
 
     const childrenOutput = () => {
       const children = props.user.children || [];
+      console.log('children:', children);
       let output = [];
       if (children[0] == [' ']) return "You haven't added any of your children yet."
       for (let child in children) {
 
+        console.log('child:', child);
         // grab the profileImage from the child obj
         const { profileImage } = children[child];
 
