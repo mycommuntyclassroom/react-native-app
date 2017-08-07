@@ -41,7 +41,8 @@ class NotificationsOutput extends Component {
         let noteProp = userNotifications[`${note}`];
 
         
-        console.log('NotificationsOutput style: ', style)
+        console.log('NotificationsOutput props: ', props)
+        console.log('noteProp: ', noteProp)
 
         // pass the notificationItem into the notesOutput array
         // noteType, userObj, noteProp, note, viewed

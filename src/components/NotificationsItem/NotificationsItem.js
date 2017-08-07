@@ -11,6 +11,10 @@ import style from './style'
 
 export default function NotificationsItem (props) {
   const { auth, noteProp, note, seenSwitch, friends, app } = props;
+
+  console.log('NotificationsItem props: ', props)
+  const { gid } = noteProp;
+
   let 
     options, 
     noteClass,
@@ -32,12 +36,15 @@ export default function NotificationsItem (props) {
               onClick={() => handleInvite(auth, noteProp, 'delete', note)} 
               text='Delete >' />
           </View>
-          <Link textStyles={style.profileView} onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
+          <Link 
+            textStyles={style.profileView} 
+            onClick={ () => app.goToScene('GuardianDetails', {props, gid}) } 
+            text='Click to view Profile' />
         </View>;
       break;
     default: 
       options = <View style={style.actionItems}></View>;
-      noteClass = 'standard'
+      noteClass = 'standard';
   }
 
   return(

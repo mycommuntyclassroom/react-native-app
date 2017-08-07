@@ -36,7 +36,7 @@ class Summary extends Component {
 
     // if guardianData is passed in the props, then show guardian data 
     // instead of admin user data
-    app.props.guardianData ? userData = app.props.guardianData : userData = app.props.user
+    props.guardianData ? userData = props.guardianData : userData = app.props.user
 
     // if showAllTags becomes true, update its value
     let showAllTagsClass = this.state.showAllTagsView ? "show-all-tags" : ""

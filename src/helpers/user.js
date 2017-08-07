@@ -105,7 +105,7 @@ export function requestFriend (props, hostId, handlePending) {
   let userObj = {
     noteType: 'friend',
     displayName,
-    uid,
+    gid: uid,
     message,
     seen: false,
     timestamp
@@ -221,7 +221,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
   // build the userObj and guardianObj for the notifications tree
   let userObj = {
     name: userData.displayName,
-    gid: userData.uid,
+    gid: uid,
     message: userMessage,
     seen: true,
     timestamp
@@ -229,7 +229,7 @@ export function acceptInvite (userData, inviteData, noteId, callback) {
 
   let guardianObj = {
     name: userData.displayName,
-    gid: userData.uid,
+    gid: uid,
     message: guardianMessage,
     seen: true,
     timestamp
