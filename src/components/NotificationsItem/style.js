@@ -11,7 +11,7 @@ NotificationsItem.note = {
 
 NotificationsItem.message = {
   color: styleVariables.mc2rusticRed,
-  fontSize: 11,
+  fontSize: 13,
   fontWeight: '500'
 }
 
@@ -45,7 +45,9 @@ NotificationsItem.noteInfo = {
 }
 
 NotificationsItem.actionItems = {
-  flexDirection: 'row'
+  flexDirection: 'row',
+  marginLeft: 17,
+  marginTop: 5
 }
 
 NotificationsItem.connectDelete = {
@@ -57,15 +59,20 @@ NotificationsItem.connectDelete = {
 }
 
 NotificationsItem.connectDeleteText = {
-  color: 'white'
+  color: 'white',
 }
 
 NotificationsItem.delete = {
-  backgroundColor: 'gray'
+  backgroundColor: 'gray',
+  paddingRight: 15,
+  alignItems: 'flex-end',
+  width: 100,
+  left: -27
 }
 
 NotificationsItem.connect = {
-  backgroundColor: styleVariables.mc2BlueElectric
+  backgroundColor: styleVariables.mc2BlueElectric,
+  zIndex: 1
 }
 
 NotificationsItem.ctaButtons = {
@@ -74,7 +81,8 @@ NotificationsItem.ctaButtons = {
 
 NotificationsItem.profileView = {
   color: styleVariables.mc2rusticRed,
-  fontWeight: '600'
+  fontWeight: '600',
+  top: 5
 }
 
 NotificationsItem.displayName = {
