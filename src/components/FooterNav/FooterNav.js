@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import NotificationsCounter from '../NotificationsCounter';
 import Link from "../Link";
 import styleVariables from '../../styles/variables'
 import style from './style';
@@ -25,7 +26,8 @@ class FooterNav extends Component {
     const feedbackIcon = {height: 45, width: 60};
     
     // get the current scene
-    const {app} = this.props;
+    const props = this.props;
+    const {app} = props;
     const { navigator } = app.refs
     let currentScene = navigator.getCurrentRoutes().pop().scene;
 
@@ -76,6 +78,7 @@ class FooterNav extends Component {
             textStyles={style.footerLinkCopy} 
             onClick={ () => app.goToScene('Notifications', {app}) }
             iconTop={{url: checkScene('Notifications'), dimensions: iconStyles }}
+            customElement={<NotificationsCounter {...props} customStyle={style.notificationsBubble} />}
             text='NOTIFICATIONS' />
           <Link 
             extraStyle={style.footerLink}

@@ -44,7 +44,6 @@ FooterNav.browseHostsButton = {
   // display: 'flex',
   // alignItems: 'center',
   // justifyContent: 'center',
-  backgroundColor: 'green',
   zIndex: 2
 }
 
@@ -71,6 +70,17 @@ FooterNav.decoCurve = {
   left: (deviceWidth / 2) - ((deviceWidth * 0.2315) / 2),
   borderRadius: 30,
   zIndex: -1
+}
+
+FooterNav.notificationsBubble = {
+  position: 'absolute',
+  right: 25,
+  top: -2,
+  width: 18,
+  height: 18,
+  paddingLeft: 0,
+  paddingRight: 0,
+  borderRadius: 9
 }
 
 export default FooterNav;
