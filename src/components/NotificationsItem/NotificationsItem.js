@@ -12,23 +12,31 @@ import style from './style'
 export default function NotificationsItem (props) {
   const { auth, noteProp, note, seenSwitch, friends, app } = props;
   let 
-    elements, 
+    options, 
     noteClass,
     noteType = noteProp.noteType || '';
 
   switch( noteType ) {
     case 'friend':
-      elements = 
+      options = 
         <View style={style.actionItems}>
-          <View className={style.ctaButtons}>
-            <Link style={style.connect} onClick={() => handleInvite(auth, noteProp, 'accept', note)} text='Connect' />
-            <Link className={style.delete} onClick={() => handleInvite(auth, noteProp, 'delete', note)} text='Delete' />
+          <View style={style.ctaButtons}>
+            <Link 
+              extraStyle={[style.connectDelete, style.connect]}
+              textStyles={style.connectDeleteText}
+              onClick={() => handleInvite(auth, noteProp, 'accept', note)} 
+              text='Connect' />
+            <Link 
+              extraStyle={[style.connectDelete, style.delete]}
+              textStyles={style.connectDeleteText}
+              onClick={() => handleInvite(auth, noteProp, 'delete', note)} 
+              text='Delete >' />
           </View>
-          <Link className={style.profileView} onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
+          <Link textStyles={style.profileView} onClick={ () => app.goToScene('GuardianDetails', {app})} text='Click to view Profile' />
         </View>;
       break;
     default: 
-      elements = <View style={style.actionItems}></View>;
+      options = <View style={style.actionItems}></View>;
       noteClass = 'standard'
   }
 
@@ -38,10 +46,13 @@ export default function NotificationsItem (props) {
         <View style={[style.switch, style[seenSwitch]]}>
           <View style={style.decoCircle} />
         </View>
-        <Text>{noteProp.displayName}</Text>
+        {
+          noteProp.displayName &&
+            <Text style={style.displayName}>{noteProp.displayName} </Text>
+        }
         <View><Text style={style.message}>{noteProp.message}</Text></View>
       </View>
-      {elements}
+      {options}
     </View>
   )
 }

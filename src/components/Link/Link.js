@@ -8,7 +8,7 @@ import {
 
 import style from '../../styles';
 
-const Link = ({ text, onClick, extraStyle, textStyles, iconTop, customElement }) => (
+const Link = ({ text, onClick, extraStyle, textStyles, iconTop, customElement, hasGradient }) => (
   <TouchableHighlight style={[style.Link, extraStyle || {}]} onPress={onClick}>
     <View>
       {

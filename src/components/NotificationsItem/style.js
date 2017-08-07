@@ -2,7 +2,6 @@ import styleVariables from '../../styles/variables';
 
 const NotificationsItem = {};
 
-NotificationsItem.container = {}
 
 NotificationsItem.note = {
   paddingBottom: 17,
@@ -38,12 +37,48 @@ NotificationsItem.decoCircle = {
   backgroundColor: 'white'
 }
 
-
 NotificationsItem.noteInfo = {
   display: 'flex',
   flexDirection: 'row',
   marginTop: 17,
   alignItems: 'center'
+}
+
+NotificationsItem.actionItems = {
+  flexDirection: 'row'
+}
+
+NotificationsItem.connectDelete = {
+  width: 80,
+  padding: 5,
+  borderRadius: 30,
+  marginRight: 6,
+  alignItems: 'center',
+}
+
+NotificationsItem.connectDeleteText = {
+  color: 'white'
+}
+
+NotificationsItem.delete = {
+  backgroundColor: 'gray'
+}
+
+NotificationsItem.connect = {
+  backgroundColor: styleVariables.mc2BlueElectric
+}
+
+NotificationsItem.ctaButtons = {
+  flexDirection: 'row'
+}
+
+NotificationsItem.profileView = {
+  color: styleVariables.mc2rusticRed,
+  fontWeight: '600'
+}
+
+NotificationsItem.displayName = {
+  color: styleVariables.mc2fontGray,
 }
 
 export default NotificationsItem;
