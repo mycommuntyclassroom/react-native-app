@@ -88,7 +88,7 @@ class EventDetailsView extends Component {
             toggleSeatBooking={this.toggleSeatBooking} 
             {...props} 
             selectedEventDetails={selectedEventDetails}
-            currentEventIndex={currentEventIndex} />
+            currentEventId={currentEventIndex} />
         </View>
         <FooterNav {...props} />
       </View>

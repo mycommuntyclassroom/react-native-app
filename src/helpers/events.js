@@ -180,10 +180,10 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // child(ren) data tree
 // 
 export function childDropOff (students, props) {
-  const { gid, currentEventIndex, selectedEventDetails, auth } = props
+  const { gid, currentEventId, selectedEventDetails, auth } = props
 
   // add the updated group of children to the students tree
-  database.ref(`hostEvents/${gid}/${currentEventIndex}/students`)
+  database.ref(`hostEvents/${gid}/${currentEventId}/students`)
           .set(students);
   
   // record the timestamp for the date the student was added
@@ -202,8 +202,14 @@ export function childDropOff (students, props) {
 
   // send the selectedEventDetails to the classroomSchedule table
   // in the the root of the guardian branch and the children branch
-  database.ref(`guardians/${auth.uid}/classroomSchedule/${currentEventIndex}`)
+  database.ref(`guardians/${auth.uid}/classroomSchedule/${currentEventId}`)
           .set(selectedEventDetails);
+
+  // send the selectedEventDetails to each of the children's branches
+  mychildren.map(child => {
+    database.ref(`guardians/${auth.uid}/children/${child.childId}/classroomSchedule/${currentEventId}`)
+            .set(selectedEventDetails);
+  })
 
   // build the notification message
   let studentObj = {

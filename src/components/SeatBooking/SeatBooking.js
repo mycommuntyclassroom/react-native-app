@@ -59,7 +59,7 @@ class SeatBooking extends Component {
 
   render() {
     const props = this.props;
-    const { toggleSeatBooking, selectedEventDetails, currentEventIndex, visibility } = props;
+    const { toggleSeatBooking, selectedEventDetails, currentEventId, visibility } = props;
 
     // handle the style that toggles the modal's visibility
     let isVisible = visibility ? style.isVisible : {}
@@ -78,7 +78,7 @@ class SeatBooking extends Component {
         //
         let eventStudents = selectedEventDetails.students || {};
         let eventStudentsId = Object.keys(eventStudents);
-        let childEventId = `${child}-${currentEventIndex}`
+        let childEventId = `${child}-${currentEventId}`
         let studentImage = profileImage != '../../../images/blank-profile-pic.png'
           ? {uri: profileImage}
           : require('../../../images/blank-profile-pic.png');
