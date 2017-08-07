@@ -45,11 +45,11 @@ class SeatBooking extends Component {
   submitForm() {
     const props = this.props;
     // gather the students that are registered for the class
-    const data = this.state.students;
+    const students = this.state.students;
     // close the child dropoff overlay
     props.toggleSeatBooking();
     // set the updated students group in the database
-    childDropOff(data, props);
+    childDropOff(students, props);
   }
 
   render() {
