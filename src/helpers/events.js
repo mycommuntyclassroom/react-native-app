@@ -8,6 +8,7 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
 
 import { database } from './firebase';
 import actions from '../redux/actions';
@@ -170,6 +171,53 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   hostEventsOutput = hostEventsOutput === [] ? [' '] : hostEventsOutput;
 
   return hostEventsOutput;
+}
+
+// GENERATE CALENDAR DATES
+// 
+// convert date ranges to individual calendar dates
+// this is based on a start date and finsh date.
+// the individual dates are determined by the 
+// 
+export function generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency) {
+  // if the frequency is none ('') then skip all of this function and return the startDate
+  if (frequency == '' ){console.log('none for freq'); return; } 
+
+  // get the startingDay by converting the formattedStartDate to a day
+  const startingDay = moment(formattedStartDate, 'YYYY-MM-DD').format("dddd");
+  let initialStartingDate;
+
+  // setup conversion rules for the event days
+  const dayConversions = {
+    Monday: 'M',
+    Tuesday: 'T',
+    Wednesday: 'W',
+    Thursday: 'Th',
+    Friday: 'F',
+    Saturday: 'S',
+    Sunday: 'Su'
+  };
+
+  let daysApart;
+  // set numerical value for the days between the frequency options
+  switch(frequency) {
+    case 'monthly':
+      daysApart = 30;
+      break;
+    case 'weekly':
+      daysApart = 7;
+      break;
+    default:
+      // no function
+  }
+
+  // check if the startingDay matches any of the recurringDays
+  const startsOnRecurringDay = recurringDays.indexOf(dayConversions[startingDay]) !== -1 ? true : false;
+
+  console.log('startsOnRecurringDay: ', startsOnRecurringDay);
+  // if there is a match, we can start to count the distance apart
+  // if there is no match, lets get the distance of the starting day from the closest recurring day
+  // startsOnRecurringDay ? startingDay
 }
 
 // CHILD DROP-OFF
