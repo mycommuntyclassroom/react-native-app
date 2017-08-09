@@ -78,12 +78,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate**********')
     const { navigator } = this.refs
     const props = this.props;
     // get the current scene
     let currentScene = navigator.getCurrentRoutes().pop().scene;
-    console.log('currentScene: ', currentScene)
     // get the status of the user authentication
     let { status } = props.auth;
 
