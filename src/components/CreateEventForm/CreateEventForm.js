@@ -66,8 +66,10 @@ class CreateEventForm extends Component {
         frequency: '',
         ageRange: [],
         startDate: '',
+        startTime: '',
         formattedStartDate: '',
         finishDate: '',
+        finishTime: '',
         formattedFinishDate: '',
         imageModal: false
       }
@@ -245,6 +247,8 @@ class CreateEventForm extends Component {
     const { profileImage } = this.state;
     let formData = this.state.formData || {};
 
+    console.log('this.state: ', this.state);
+
     const outputCheckboxes = () => {
       let checkboxOutput = []
       for (var category in formData) {
@@ -403,7 +407,8 @@ class CreateEventForm extends Component {
             onDateChange={(date) => {
               this.setState({
                 startDate: date,
-                formattedStartDate: moment(date, 'MMMM Do YYYY, h:mm a').format("YYYY-MM-DD")
+                startTime: moment(date, 'MMMM Do YYYY, h:mm a').format('h:mm a'),
+                formattedStartDate: moment(date, 'MMMM Do YYYY, h:mm a').format('YYYY-MM-DD')
               });
             }}
           />
@@ -428,6 +433,7 @@ class CreateEventForm extends Component {
             onDateChange={(date) => {
               this.setState({
                 finishDate: date,
+                finishTime: moment(date, 'MMMM Do YYYY, h:mm a').format('h:mm a'),
                 formattedFinishDate: moment(date, 'MMMM Do YYYY, h:mm a').format("YYYY-MM-DD")
               });
             }}
