@@ -182,6 +182,7 @@ class CreateEventForm extends Component {
     const props = this.props;
     const { app } = props;
     const newEvent = {...this.state};
+    console.log('newEvent: ', newEvent)
 
     const { 
       formattedStartDate, 

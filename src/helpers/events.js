@@ -14,6 +14,7 @@ import { database } from './firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
 import { checkRelationship } from './user';
+import { dayConversions } from './data'
 
 import Link from '../components/Link';
 import RequestFriendButton from '../components/RequestFriendButton';
@@ -180,44 +181,48 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // the individual dates are determined by the 
 // 
 export function generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency) {
-  // if the frequency is none ('') then skip all of this function and return the startDate
-  if (frequency == '' ){console.log('none for freq'); return; } 
+  console.log('recurringDays: ', recurringDays)
+  console.log('recurringDays.length: ', recurringDays.length)
+  // if the frequency is none ('') or there are no recurring days then skip this function and return the startDate
+  if (frequency === '' || recurringDays.length === 0 ){console.log('none for freq or rec days');  return formattedStartDate; }
 
   // get the startingDay by converting the formattedStartDate to a day
   const startingDay = moment(formattedStartDate, 'YYYY-MM-DD').format("dddd");
-  let initialStartingDate;
 
-  // setup conversion rules for the event days
-  const dayConversions = {
-    Monday: 'M',
-    Tuesday: 'T',
-    Wednesday: 'W',
-    Thursday: 'Th',
-    Friday: 'F',
-    Saturday: 'S',
-    Sunday: 'Su'
-  };
-
-  let daysApart;
+  let numberOfDays;
   // set numerical value for the days between the frequency options
   switch(frequency) {
     case 'monthly':
-      daysApart = 30;
+      numberOfDays = 30;
       break;
     case 'weekly':
-      daysApart = 7;
+      numberOfDays = 7;
       break;
     default:
       // no function
   }
 
   // check if the startingDay matches any of the recurringDays
-  const startsOnRecurringDay = recurringDays.indexOf(dayConversions[startingDay]) !== -1 ? true : false;
-
+  const startsOnRecurringDay = recurringDays.indexOf(dayConversions[startingDay].label) !== -1 ? true : false;
+  
   console.log('startsOnRecurringDay: ', startsOnRecurringDay);
-  // if there is a match, we can start to count the distance apart
-  // if there is no match, lets get the distance of the starting day from the closest recurring day
-  // startsOnRecurringDay ? startingDay
+  console.log('recurringDays: ', recurringDays)
+  console.log('recurringDays[0]: ', recurringDays[0])
+  console.log('dayConversions[recurringDays[0]]: ', dayConversions[recurringDays[0]])
+  // if the startingDay matches a recurringDay, check if there are any additional recurring days in the list
+  // let additionalRecurringDays;
+  // startsOnRecurringDay &&
+
+  // if the startingDay does NOT match a recurringDay, assign the starting day to initialStartingDate and determine
+  // the distance between the initialStartingDate and the nearest recurring day
+  let firstRecurringDay;
+  if (!startsOnRecurringDay) {
+    firstRecurringDay = dayConversions[recurringDays[0]].value - dayConversions[startingDay].value;
+    console.log('firstRecurringDay: ', firstRecurringDay)
+    // recurringDays.map(currentDay => {
+    //   dayConversions[currentDay].value
+    // })
+  }
 }
 
 // CHILD DROP-OFF
