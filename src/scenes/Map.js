@@ -9,6 +9,13 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import mapStyle from '../styles/mapStyle'
 import styles from '../styles'
 
+const initialRegion={
+  latitude: 37.78825,
+  longitude: -122.4324,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+};
+
 class Map extends Component {
 
   constructor() {
@@ -25,13 +32,12 @@ class Map extends Component {
   render() {
     const { globalStyles, app } = this.props;
     return (
-      <View style={[globalStyles.container, { backgroundColor: 'burlywood' }]}>
-        <Text style={globalStyles.title}>
-          <MapView
-            style={StyleSheet.absoluteFill}
-          >
-          </MapView>
-        </Text>
+      <View style={{flex:1}}>
+        <MapView
+          initialRegion={initialRegion}
+          style={StyleSheet.absoluteFill}
+        >
+        </MapView>
       </View>
     );
   };
