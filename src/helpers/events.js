@@ -8,11 +8,13 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
 
 import { database } from './firebase';
 import actions from '../redux/actions';
 import store from '../redux/store';
 import { checkRelationship } from './user';
+import { dayConversions } from './data'
 
 import Link from '../components/Link';
 import RequestFriendButton from '../components/RequestFriendButton';
@@ -170,6 +172,110 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
   hostEventsOutput = hostEventsOutput === [] ? [' '] : hostEventsOutput;
 
   return hostEventsOutput;
+}
+
+// GENERATE CALENDAR DATES
+// 
+// convert date ranges to individual calendar dates
+// this function grabs the start date, the finsh date, and all of the dates between
+// 
+export function generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency) {
+  let dateFormatCollection = {};
+  dateFormatCollection[formattedStartDate] = [];
+  dateFormatCollection[formattedFinishDate] = [];
+  const startDateTimeStamp = moment(formattedStartDate).format('X');
+  const finishDateTimeStamp = moment(formattedFinishDate).format('X');
+
+  // if the frequency is none ('') or there are no recurring days then skip this function and return the startDate
+  if (!formattedStartDate || !formattedFinishDate || frequency === '' || recurringDays.length === 0 ){
+    return [];
+  }
+
+  // get the startingDay by converting the formattedStartDate to a day
+  const startingDay = moment(formattedStartDate, 'YYYY-MM-DD').format("dddd");
+
+  let numberOfDays;
+  // set numerical value for the days between the frequency options
+  switch(frequency) {
+    case 'monthly':
+      numberOfDays = 30;
+      break;
+    case 'weekly':
+      numberOfDays = 7;
+      break;
+    default:
+      // no function
+  }
+
+  // check if the startingDay matches any of the recurringDays
+  const startsOnRecurringDay = recurringDays.indexOf(dayConversions[startingDay].label) !== -1 ? true : false;
+
+  // if the startingDay matches a recurringDay, then remove the start day from the recurringDay list
+  let recurringDaysList = recurringDays;
+  let firstRecurringDayObj;
+  if (startsOnRecurringDay) {
+    const firstRecurringDayIndex = recurringDays.indexOf(dayConversions[startingDay].label);
+    recurringDaysList = recurringDays.slice(0);
+    recurringDaysList.splice(firstRecurringDayIndex, 1);
+  }
+
+  let dateGroup = [];
+  // oush the start and finish date in to the date group
+  dateGroup.push(formattedStartDate);
+  dateGroup.push(formattedFinishDate);
+
+  // populate the dateGroup with the date format of the
+  // recurring days remaning in the recurringDaysList
+  if (recurringDaysList.length > 0) {
+    recurringDaysList.map((currentDay, i) => {
+      recurringDayObj = 
+        moment(formattedStartDate)
+        .add(dayConversions[recurringDaysList[i]].value - dayConversions[startingDay].value, 'days');
+
+      recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
+      
+      // only push the date format if the recurringDayFormat is before the finish date
+      moment(recurringDayFormat).isBefore(formattedFinishDate) &&
+        dateGroup.push(recurringDayFormat);
+    })
+  }
+
+  // populate the dateGroup with the following weeks (if any) otherwise, return dateGroup
+  let reachedLastDay = false;
+  let totalNumberOfDays = numberOfDays;
+  let numberOfWeeks = 1;
+  let followingRecurringDayFormat;
+  for(let i = 0; reachedLastDay === false; i++ ) {
+
+    // if the followingRecurringDayFormat is after the finish date, break the loop
+    if(moment(followingRecurringDayFormat).isAfter(formattedFinishDate)) break;
+    // if the numberOfWeeks is more than 10, break the loop
+    if(numberOfWeeks > 10) break;
+
+    // 
+    if (i >= recurringDays.length) {
+      numberOfWeeks ++;
+      totalNumberOfDays += numberOfDays;
+      i = 0;
+    }
+
+    // build the standard week formet
+    recurringDayObj = 
+      moment(formattedStartDate)
+      .add(dayConversions[recurringDays[i]].value - dayConversions[startingDay].value, 'days');
+
+    recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
+
+    // build the following week format
+    followingRecurringDayFormat = 
+      moment(recurringDayFormat)
+      .add(totalNumberOfDays, 'days')
+      .format('YYYY-MM-DD');
+
+    // push the followingRecurringDayFormat into the dateGroup
+    dateGroup.push(followingRecurringDayFormat);
+  }
+  return dateGroup;
 }
 
 // CHILD DROP-OFF

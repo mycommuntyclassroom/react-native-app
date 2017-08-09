@@ -18,6 +18,7 @@ import Button from '../Button';
 import Link from '../Link';
 
 import { updateProfile, handleFileUpload } from '../../helpers/form';
+import { generateCalendarDates } from '../../helpers/events';
 import { storage, database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -44,7 +45,8 @@ class EditGuardianAccount extends Component {
 
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
-            ageRange, startDate, finishDate, frequency 
+            ageRange, startDate, finishDate, frequency, calendarDates,
+            formattedStartDate, formattedFinishDate
           } = hostEvents || null;
 
     const recurringDays = hostEvents.recurringDays || []
@@ -60,6 +62,9 @@ class EditGuardianAccount extends Component {
       frequency,
       seatsAvailable,
       recurringDays,
+      formattedStartDate,
+      formattedFinishDate,
+      calendarDates: calendarDates || [],
       ageRange: ageRange || [''],
       image,
       uploadProgress: null,
@@ -180,6 +185,16 @@ class EditGuardianAccount extends Component {
     const props = this.props;
     const { eventId, app } = props;
     const eventData = {...this.state};
+
+    const { 
+      formattedStartDate, 
+      formattedFinishDate, 
+      recurringDays, 
+      frequency 
+    } = eventData;
+
+    // generate a collection of formatted dates from the recurring event days and place that collection into the newEvent obj
+    eventData.calendarDates = generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency);
 
     // set a timestamp for last updated
     eventData.lastUpdated = (new Date()).getTime();

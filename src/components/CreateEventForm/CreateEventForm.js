@@ -15,6 +15,7 @@ import DatePicker from 'react-native-datepicker';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 import { addItem, handleFileUpload, updateProfile } from '../../helpers/form';
+import { generateCalendarDates } from '../../helpers/events';
 import { storage, database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
@@ -61,7 +62,7 @@ class CreateEventForm extends Component {
         profileImage: '../../../images/logo.png',
         seatsAvailable: 0,
         uploadProgress: null,
-        recurringDays: [' '],
+        recurringDays: [],
         frequency: '',
         ageRange: [],
         startDate: '',
@@ -180,6 +181,16 @@ class CreateEventForm extends Component {
     const props = this.props;
     const { app } = props;
     const newEvent = {...this.state};
+
+    const { 
+      formattedStartDate, 
+      formattedFinishDate, 
+      recurringDays, 
+      frequency 
+    } = newEvent;
+
+    // generate a collection of formatted dates from the recurring event days and place that collection into the newEvent obj
+    newEvent.calendarDates = generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency);
     
     // store the selected image's url
     const { selectedImage, profileImage } = this.state;

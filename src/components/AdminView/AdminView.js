@@ -20,6 +20,7 @@ class AdminView extends Component {
 
   render() {
     const props = this.props;
+    console.log('AdminView props: ', props)
     const { app } = props;
     const { user } = app.props;
 
