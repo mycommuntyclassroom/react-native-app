@@ -294,7 +294,6 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
         moment(formattedStartDate)
         .add(dayConversions[recurringDaysList[i]].value - dayConversions[startingDay].value, 'days');
 
-      recurringDayCalendar = recurringDayObj.calendar();
       recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
       // recurringDayString = moment(recurringDayFormat, 'YYYY-MM-DD').format("dddd");
       // recurringDayString = recurringDayCalendar.slice(0, recurringDayCalendar.indexOf(' '));
@@ -320,6 +319,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   // populate the dateGroup with the following weeks (if any) otherwise, return dateGroup
   let reachedLastDay = false;
   let totalNumberOfDays = numberOfDays;
+  console.log('totalNumberOfDays: ', totalNumberOfDays)
   let numberOfWeeks = 1;
   let followingRecurringDayFormat;
   for(let i = 0; reachedLastDay === false; i++ ) {
@@ -327,10 +327,11 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
     // if the followingRecurringDayFormat is after the finish date, break the loop
     if(moment(followingRecurringDayFormat).isAfter(formattedFinishDate)) break;
     // if the numberOfWeeks is more than 10, break the loop
+    console.log('numberOfWeeks: ', numberOfWeeks)
     if(numberOfWeeks > 10) break;
 
     // 
-    if (i >= recurringDaysList.length) {
+    if (i >= recurringDays.length) {
       numberOfWeeks ++;
       totalNumberOfDays += numberOfDays;
       i = 0;
@@ -341,9 +342,8 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
     // build the standard week formet
     recurringDayObj = 
       moment(formattedStartDate)
-      .add(dayConversions[recurringDaysList[i]].value - dayConversions[startingDay].value, 'days');
+      .add(dayConversions[recurringDays[i]].value - dayConversions[startingDay].value, 'days');
 
-    recurringDayCalendar = recurringDayObj.calendar();
     recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
 
     // build the following week format
@@ -352,8 +352,12 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
       .add(totalNumberOfDays, 'days')
       .format('YYYY-MM-DD');
 
+    // push the followingRecurringDayFormat into the dateGroup
+    dateGroup.push(followingRecurringDayFormat);
+
     console.log('followingRecurringDayFormat: ', followingRecurringDayFormat);
   }
+  console.log('dateGroup: ', dateGroup);
 
 }
 
