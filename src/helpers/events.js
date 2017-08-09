@@ -213,6 +213,8 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
       // no function
   }
 
+  console.log('numberOfDays: ', numberOfDays)
+
   // check if the startingDay matches any of the recurringDays
   const startsOnRecurringDay = recurringDays.indexOf(dayConversions[startingDay].label) !== -1 ? true : false;
   
@@ -299,7 +301,14 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
 
       // console.log('recurringDayString: ', recurringDayString)
       // dateGroup[recurringDayString] = recurringDayFormat;
-      dateGroup.push(recurringDayFormat);
+      console.log('moment(recurringDayFormat).isBefore(formattedFinishDate): ', 
+        moment(recurringDayFormat).isBefore(formattedFinishDate))
+      console.log('formattedFinishDate: ', formattedFinishDate)
+
+      
+      // only push the date format if the recurringDayFormat is before the finish date
+      moment(recurringDayFormat).isBefore(formattedFinishDate) &&
+        dateGroup.push(recurringDayFormat);
       console.log('recurringDayObj: ', recurringDayObj);
       console.log('recurringDayCalendar: ', recurringDayCalendar);
       console.log('recurringDayFormat: ', recurringDayFormat)
@@ -308,7 +317,44 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   console.log('dateGroup: ', dateGroup);
 
   console.log('recurringDays: ', recurringDays)
-  // 
+  // populate the dateGroup with the following weeks (if any) otherwise, return dateGroup
+  let reachedLastDay = false;
+  let totalNumberOfDays = numberOfDays;
+  let numberOfWeeks = 1;
+  let followingRecurringDayFormat;
+  for(let i = 0; reachedLastDay === false; i++ ) {
+
+    // if the followingRecurringDayFormat is after the finish date, break the loop
+    if(moment(followingRecurringDayFormat).isAfter(formattedFinishDate)) break;
+    // if the numberOfWeeks is more than 10, break the loop
+    if(numberOfWeeks > 10) break;
+
+    // 
+    if (i >= recurringDaysList.length) {
+      numberOfWeeks ++;
+      totalNumberOfDays += numberOfDays;
+      i = 0;
+
+      console.log('totalNumberOfDays: ', totalNumberOfDays)
+    }
+
+    // build the standard week formet
+    recurringDayObj = 
+      moment(formattedStartDate)
+      .add(dayConversions[recurringDaysList[i]].value - dayConversions[startingDay].value, 'days');
+
+    recurringDayCalendar = recurringDayObj.calendar();
+    recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
+
+    // build the following week format
+    followingRecurringDayFormat = 
+      moment(recurringDayFormat)
+      .add(totalNumberOfDays, 'days')
+      .format('YYYY-MM-DD');
+
+    console.log('followingRecurringDayFormat: ', followingRecurringDayFormat);
+  }
+
 }
 
 // CHILD DROP-OFF
