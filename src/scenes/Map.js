@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import {
+  StyleSheet,
   View,
   TouchableHighlight,
   Text
 } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import mapStyle from '../styles/mapStyle'
+import styles from '../styles'
 
 class Map extends Component {
 
@@ -23,7 +27,10 @@ class Map extends Component {
     return (
       <View style={[globalStyles.container, { backgroundColor: 'burlywood' }]}>
         <Text style={globalStyles.title}>
-          Map
+          <MapView
+            style={StyleSheet.absoluteFill}
+          >
+          </MapView>
         </Text>
       </View>
     );
@@ -32,3 +39,9 @@ class Map extends Component {
 }
 
 export default Map;
+
+
+/**
+provider={PROVIDER_GOOGLE}
+customMapStyle={mapStyle}
+*/

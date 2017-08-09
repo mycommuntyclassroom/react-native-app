@@ -207,6 +207,7 @@ STYLE.checkboxContainer = {
   alignItems: 'stretch',
   marginTop: 20
 }
+
 STYLE.checkboxSubTitle = {
   color: 'white',
   textAlign: 'center',

@@ -32,10 +32,10 @@ const calendar = {
   props: {}
 };
 
-// const map = {
-//   scene: 'Map',
-//   props: {}
-// };
+const map = {
+  scene: 'Map',
+  props: {}
+};
 
 // const settings = {
 //   scene: 'Settings',
@@ -52,7 +52,7 @@ const ROUTES = [
   // friends,
   dashboard,
   calendar,
-  // map,
+  map,
   // settings,
   feedback
 ];
