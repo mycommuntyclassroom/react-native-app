@@ -178,11 +178,9 @@ class CreateEventForm extends Component {
    * @param e
    */
   submitForm() {
-    console.log('submitForm called')
     const props = this.props;
     const { app } = props;
     const newEvent = {...this.state};
-    console.log('newEvent: ', newEvent)
 
     const { 
       formattedStartDate, 
@@ -191,50 +189,50 @@ class CreateEventForm extends Component {
       frequency 
     } = newEvent;
 
-    // generate a collection of dates for the recurring event days
-    const calendarDates = generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency)
+    // generate a collection of formatted dates from the recurring event days and place that collection into the newEvent obj
+    newEvent.calendarDates = generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency);
     
     // store the selected image's url
-    // const { selectedImage, profileImage } = this.state;
+    const { selectedImage, profileImage } = this.state;
 
-    // let imageUri
-    // selectedImage
-    //   ? imageUri = selectedImage.uri
-    //   : imageUri = profileImage
+    let imageUri
+    selectedImage
+      ? imageUri = selectedImage.uri
+      : imageUri = profileImage
 
-    // // add a timestamp to the added event
-    // newEvent.timestamp = (new Date()).getTime();
+    // add a timestamp to the added event
+    newEvent.timestamp = (new Date()).getTime();
 
-    // // update the store, create a new user object with the updated event in it
-    // const newUserObject = app.props.user;
+    // update the store, create a new user object with the updated event in it
+    const newUserObject = app.props.user;
 
-    // // get the collection of the host's events
-    // const eventGroup = app.props.user.hostEvents || {};
+    // get the collection of the host's events
+    const eventGroup = app.props.user.hostEvents || {};
 
-    // // add the new event to the event group
-    // eventGroup[`${newEvent.title}`] = newEvent;
-    // newUserObject['hostEvents'] = eventGroup;
+    // add the new event to the event group
+    eventGroup[`${newEvent.title}`] = newEvent;
+    newUserObject['hostEvents'] = eventGroup;
     
-    // // pass the updated object to the store
-    // store.dispatch(actions.handleHostEvent(newUserObject));
+    // pass the updated object to the store
+    store.dispatch(actions.handleHostEvent(newUserObject));
 
-    // // update the database
-    // // 
-    // // add the event to the guardian host branch - path, data
-    // let userId = addItem(`guardians/${this.state.gid}/hostEvents`, newEvent);
-    // // add the event to the general hosts tree - path, data
-    // updateProfile(`hostEvents/${this.state.gid}/${userId}`, newEvent);
+    // update the database
+    // 
+    // add the event to the guardian host branch - path, data
+    let userId = addItem(`guardians/${this.state.gid}/hostEvents`, newEvent);
+    // add the event to the general hosts tree - path, data
+    updateProfile(`hostEvents/${this.state.gid}/${userId}`, newEvent);
 
-    // // update the database
-    // const eventRef = database.ref(`guardians/${this.state.gid}/hostEvents/${userId}`)
-    // const hostRef = database.ref(`hostEvents/${this.state.gid}/${userId}`)
+    // update the database
+    const eventRef = database.ref(`guardians/${this.state.gid}/hostEvents/${userId}`)
+    const hostRef = database.ref(`hostEvents/${this.state.gid}/${userId}`)
 
-    // // upload the profile image 
-    // handleFileUpload(imageUri, selectedImage, this.storageRef, eventRef);
-    // handleFileUpload(imageUri, selectedImage, this.storageRef, hostRef);
+    // upload the profile image 
+    handleFileUpload(imageUri, selectedImage, this.storageRef, eventRef);
+    handleFileUpload(imageUri, selectedImage, this.storageRef, hostRef);
 
-    // // navigate to the dashboard
-    // app.goToScene('Dashboard', {app})
+    // navigate to the dashboard
+    app.goToScene('Dashboard', {app})
   }
 
   /**

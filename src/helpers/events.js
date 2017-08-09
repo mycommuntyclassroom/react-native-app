@@ -177,8 +177,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // GENERATE CALENDAR DATES
 // 
 // convert date ranges to individual calendar dates
-// this is based on a start date and finsh date.
-// the individual dates are determined by the 
+// this function grabs the start date, the finsh date, and all of the dates between
 // 
 export function generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency) {
   let dateFormatCollection = {};
@@ -188,8 +187,9 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   const finishDateTimeStamp = moment(formattedFinishDate).format('X');
 
   // if the frequency is none ('') or there are no recurring days then skip this function and return the startDate
-  if (!formattedStartDate || !formattedFinishDate || frequency === '' || recurringDays.length === 0 )
-    return formattedStartDate;
+  if (!formattedStartDate || !formattedFinishDate || frequency === '' || recurringDays.length === 0 ){
+    return [];
+  }
 
   // get the startingDay by converting the formattedStartDate to a day
   const startingDay = moment(formattedStartDate, 'YYYY-MM-DD').format("dddd");
@@ -220,7 +220,9 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   }
 
   let dateGroup = [];
+  // oush the start and finish date in to the date group
   dateGroup.push(formattedStartDate);
+  dateGroup.push(formattedFinishDate);
 
   // populate the dateGroup with the date format of the
   // recurring days remaning in the recurringDaysList
@@ -273,7 +275,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
     // push the followingRecurringDayFormat into the dateGroup
     dateGroup.push(followingRecurringDayFormat);
   }
-  console.log('dateGroup: ', dateGroup)
+  return dateGroup;
 }
 
 // CHILD DROP-OFF
