@@ -181,10 +181,15 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 // the individual dates are determined by the 
 // 
 export function generateCalendarDates(formattedStartDate, formattedFinishDate, recurringDays, frequency) {
+  let dateFormatCollection = {};
+  dateFormatCollection[formattedStartDate] = [];
+  dateFormatCollection[formattedFinishDate] = [];
+
   console.log('recurringDays: ', recurringDays)
   console.log('recurringDays.length: ', recurringDays.length)
   // if the frequency is none ('') or there are no recurring days then skip this function and return the startDate
-  if (frequency === '' || recurringDays.length === 0 ){console.log('none for freq or rec days');  return formattedStartDate; }
+  if (!formattedStartDate || !formattedFinishDate || frequency === '' || recurringDays.length === 0 )
+    {console.log('none for freq or rec days');  return formattedStartDate; }
 
   // get the startingDay by converting the formattedStartDate to a day
   const startingDay = moment(formattedStartDate, 'YYYY-MM-DD').format("dddd");
@@ -232,10 +237,22 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
 
     firstRecurringDayString = firstRecurringDayCalendar.slice(0, firstRecurringDayCalendar.indexOf(' '));
     console.log('firstRecurringDayString: ', firstRecurringDayString)
-    // recurringDays.map(currentDay => {
-    //   dayConversions[currentDay].value
-    // })
   }
+
+  let dateGroup = {};
+  dateGroup[firstRecurringDayString] = firstRecurringDayFormat;
+
+  // now remove the first recurring day from the RecurringDays list
+  recurringDays.splice(0, 1);
+
+  console.log('dateGroup: ', dateGroup)
+  console.log('recurringDays after splice: ', recurringDays)
+
+  // populate the dateGroup with the string date and the date format 
+  // of the recurring days remaning in the recurringDays list
+  recurringDays.map(currentDay => {
+    
+  })
 }
 
 // CHILD DROP-OFF
