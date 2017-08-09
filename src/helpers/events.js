@@ -188,6 +188,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
 
   // get the startingDay by converting the formattedStartDate to a day
   const startingDay = moment(formattedStartDate, 'YYYY-MM-DD').format("dddd");
+  console.log('startingDay: ', startingDay)
 
   let numberOfDays;
   // set numerical value for the days between the frequency options
@@ -216,9 +217,15 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   // if the startingDay does NOT match a recurringDay, assign the starting day to initialStartingDate and determine
   // the distance between the initialStartingDate and the nearest recurring day
   let firstRecurringDay;
+  let firstRecurringDayString;
   if (!startsOnRecurringDay) {
-    firstRecurringDay = dayConversions[recurringDays[0]].value - dayConversions[startingDay].value;
-    console.log('firstRecurringDay: ', firstRecurringDay)
+    firstRecurringDay = 
+      moment(formattedStartDate)
+      .add(dayConversions[recurringDays[0]].value - dayConversions[startingDay].value, 'days')
+      .calendar();
+
+    firstRecurringDayString = firstRecurringDay.slice(0, firstRecurringDay.indexOf(' '));
+    console.log('firstRecurringDayString: ', firstRecurringDayString)
     // recurringDays.map(currentDay => {
     //   dayConversions[currentDay].value
     // })
