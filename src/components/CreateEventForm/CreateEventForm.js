@@ -247,8 +247,6 @@ class CreateEventForm extends Component {
     const { profileImage } = this.state;
     let formData = this.state.formData || {};
 
-    console.log('this.state: ', this.state);
-
     const outputCheckboxes = () => {
       let checkboxOutput = []
       for (var category in formData) {
