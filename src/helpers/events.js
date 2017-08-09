@@ -184,6 +184,11 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   let dateFormatCollection = {};
   dateFormatCollection[formattedStartDate] = [];
   dateFormatCollection[formattedFinishDate] = [];
+  const startDateTimeStamp = moment(formattedStartDate).format('X');
+  const finishDateTimeStamp = moment(formattedFinishDate).format('X');
+
+  console.log('startDateTimeStamp: ', startDateTimeStamp);
+  console.log('finishDateTimeStamp: ', finishDateTimeStamp);
 
   console.log('recurringDays: ', recurringDays)
   console.log('recurringDays.length: ', recurringDays.length)
@@ -223,7 +228,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   // if the startingDay does NOT match a recurringDay, assign the starting day to initialStartingDate and determine
   // the distance between the initialStartingDate and the nearest recurring day
   let firstRecurringDayObj;
-  let firstRecurringDayCalendar;
+  // let firstRecurringDayCalendar;
   let firstRecurringDayFormat;
   let firstRecurringDayString;
   console.log('formattedStartDate: ', formattedStartDate)
@@ -232,29 +237,33 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
       moment(formattedStartDate)
       .add(dayConversions[recurringDays[0]].value - dayConversions[startingDay].value, 'days')
 
-    firstRecurringDayCalendar = firstRecurringDayObj.calendar();
+      console.log('dayConversions[recurringDays[0]].value: ', dayConversions[recurringDays[0]].value);
+      console.log('dayConversions[startingDay].value: ', dayConversions[startingDay].value)
+
+    // firstRecurringDayCalendar = firstRecurringDayObj.calendar();
     firstRecurringDayFormat = firstRecurringDayObj.format('YYYY-MM-DD');
 
-    console.log('firstRecurringDayFormat: ', firstRecurringDayFormat)
-    console.log('firstRecurringDayCalendar: ', firstRecurringDayCalendar)
+  //   console.log('firstRecurringDayFormat: ', firstRecurringDayFormat)
+  //   console.log('firstRecurringDayCalendar: ', firstRecurringDayCalendar)
 
-    // firstRecurringDayString = firstRecurringDayCalendar.slice(0, firstRecurringDayCalendar.indexOf(' '));
-    firstRecurringDayString = moment(firstRecurringDayCalendar, 'YYYY-MM-DD').format("dddd");
-    // if the firstRecurringDayString value is 'Tomorrow' convert it to a literal day
-    if (firstRecurringDayString === 'Tomorrow') {
-      const dayConversionsList = Object.keys(dayConversions);
-      const tomorrowValue = dayConversions[startingDay].value;
-      firstRecurringDayString = dayConversionsList[tomorrowValue];
-      console.log('dayConversionsList: ', dayConversionsList)
-      console.log('tomorrowValue: ', tomorrowValue);
-      console.log('firstRecurringDayString: ', firstRecurringDayString);
-    }
+  //   // firstRecurringDayString = firstRecurringDayCalendar.slice(0, firstRecurringDayCalendar.indexOf(' '));
+  //   firstRecurringDayString = moment(firstRecurringDayCalendar, 'YYYY-MM-DD').format("dddd");
+  //   // if the firstRecurringDayString value is 'Tomorrow' convert it to a literal day
+  //   if (firstRecurringDayString === 'Tomorrow') {
+  //     const dayConversionsList = Object.keys(dayConversions);
+  //     const tomorrowValue = dayConversions[startingDay].value;
+  //     firstRecurringDayString = dayConversionsList[tomorrowValue];
+  //     console.log('dayConversionsList: ', dayConversionsList)
+  //     console.log('tomorrowValue: ', tomorrowValue);
+  //     console.log('firstRecurringDayString: ', firstRecurringDayString);
+  //   }
 
   }
 
   // let dateGroup = {};
   // dateGroup[firstRecurringDayString] = firstRecurringDayFormat;
   let dateGroup = [];
+  dateGroup.push(formattedStartDate);
   dateGroup.push(firstRecurringDayFormat);
 
   // now remove the first recurring day from the RecurringDays list
@@ -266,15 +275,17 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   // populate the dateGroup with the string date and the date format 
   // of the recurring days remaning in the recurringDays list
   if (recurringDays.length > 0) {
-    recurringDays.map(currentDay => {
+    recurringDays.map((currentDay, i) => {
       console.log('recurringDays MAP')
+      console.log('---------------------------')
       console.log('recurringDays: ', recurringDays)
       console.log('recurringDays[0]: ', recurringDays[0])
-      console.log('dayConversions[recurringDays[0]]: ', dayConversions[recurringDays[0]])
-
+      console.log('dayConversions[recurringDays[i]]: ', dayConversions[recurringDays[i]].value);
+      console.log('dayConversions[startingDay].value: ', dayConversions[startingDay].value)
+      console.log('firstRecurringDayFormat: ', firstRecurringDayFormat)
       recurringDayObj = 
-        moment(firstRecurringDayFormat)
-        .add(dayConversions[recurringDays[0]].value - dayConversions[startingDay].value, 'days')
+        moment(formattedStartDate)
+        .add(dayConversions[recurringDays[i]].value - dayConversions[startingDay].value, 'days')
 
       recurringDayCalendar = recurringDayObj.calendar();
       recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
