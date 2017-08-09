@@ -214,6 +214,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   console.log('startsOnRecurringDay: ', startsOnRecurringDay);
   console.log('recurringDays: ', recurringDays)
   console.log('recurringDays[0]: ', recurringDays[0])
+  console.log('dayConversions: ', dayConversions)
   console.log('dayConversions[recurringDays[0]]: ', dayConversions[recurringDays[0]])
   // if the startingDay matches a recurringDay, check if there are any additional recurring days in the list
   // let additionalRecurringDays;
@@ -225,6 +226,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   let firstRecurringDayCalendar;
   let firstRecurringDayFormat;
   let firstRecurringDayString;
+  console.log('formattedStartDate: ', formattedStartDate)
   if (!startsOnRecurringDay) {
     firstRecurringDayObj = 
       moment(formattedStartDate)
@@ -234,22 +236,26 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
     firstRecurringDayFormat = firstRecurringDayObj.format('YYYY-MM-DD');
 
     console.log('firstRecurringDayFormat: ', firstRecurringDayFormat)
+    console.log('firstRecurringDayCalendar: ', firstRecurringDayCalendar)
 
-    firstRecurringDayString = firstRecurringDayCalendar.slice(0, firstRecurringDayCalendar.indexOf(' '));
+    // firstRecurringDayString = firstRecurringDayCalendar.slice(0, firstRecurringDayCalendar.indexOf(' '));
+    firstRecurringDayString = moment(firstRecurringDayCalendar, 'YYYY-MM-DD').format("dddd");
     // if the firstRecurringDayString value is 'Tomorrow' convert it to a literal day
     if (firstRecurringDayString === 'Tomorrow') {
       const dayConversionsList = Object.keys(dayConversions);
       const tomorrowValue = dayConversions[startingDay].value;
-      const firstRecurringDayString = dayConversionsList[tomorrowValue];
+      firstRecurringDayString = dayConversionsList[tomorrowValue];
+      console.log('dayConversionsList: ', dayConversionsList)
+      console.log('tomorrowValue: ', tomorrowValue);
+      console.log('firstRecurringDayString: ', firstRecurringDayString);
     }
 
-    console.log('dayConversionsList: ', dayConversionsList)
-    console.log('tomorrowValue: ', tomorrowValue);
-    console.log('firstRecurringDayString: ', firstRecurringDayString);
   }
 
-  let dateGroup = {};
-  dateGroup[firstRecurringDayString] = firstRecurringDayFormat;
+  // let dateGroup = {};
+  // dateGroup[firstRecurringDayString] = firstRecurringDayFormat;
+  let dateGroup = [];
+  dateGroup.push(firstRecurringDayFormat);
 
   // now remove the first recurring day from the RecurringDays list
   recurringDays.splice(0, 1);
@@ -259,9 +265,32 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
 
   // populate the dateGroup with the string date and the date format 
   // of the recurring days remaning in the recurringDays list
-  recurringDays.map(currentDay => {
-    
-  })
+  if (recurringDays.length > 0) {
+    recurringDays.map(currentDay => {
+      console.log('recurringDays MAP')
+      console.log('recurringDays: ', recurringDays)
+      console.log('recurringDays[0]: ', recurringDays[0])
+      console.log('dayConversions[recurringDays[0]]: ', dayConversions[recurringDays[0]])
+
+      recurringDayObj = 
+        moment(firstRecurringDayFormat)
+        .add(dayConversions[recurringDays[0]].value - dayConversions[startingDay].value, 'days')
+
+      recurringDayCalendar = recurringDayObj.calendar();
+      recurringDayFormat = recurringDayObj.format('YYYY-MM-DD');
+      recurringDayString = moment(recurringDayFormat, 'YYYY-MM-DD').format("dddd");
+      // recurringDayString = recurringDayCalendar.slice(0, recurringDayCalendar.indexOf(' '));
+
+      console.log('recurringDayString: ', recurringDayString)
+      // dateGroup[recurringDayString] = recurringDayFormat;
+      dateGroup.push(recurringDayFormat)
+      console.log('recurringDayObj: ', recurringDayObj);
+      console.log('recurringDayCalendar: ', recurringDayCalendar);
+      console.log('recurringDayFormat: ', recurringDayFormat)
+
+    })
+  }
+  console.log('dateGroup: ', dateGroup);
 }
 
 // CHILD DROP-OFF

@@ -17,7 +17,7 @@ export const dayConversions = {
     value: 4
   },
   Friday: {
-    label: 'Fr',
+    label: 'F',
     value: 5
   },
   Saturday: {
@@ -44,7 +44,7 @@ export const dayConversions = {
     label: 'Thursday',
     value: 4
   },
-  Fr: {
+  F: {
     label: 'Friday',
     value: 5
   },
