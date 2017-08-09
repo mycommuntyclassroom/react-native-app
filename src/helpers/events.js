@@ -236,7 +236,16 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
     console.log('firstRecurringDayFormat: ', firstRecurringDayFormat)
 
     firstRecurringDayString = firstRecurringDayCalendar.slice(0, firstRecurringDayCalendar.indexOf(' '));
-    console.log('firstRecurringDayString: ', firstRecurringDayString)
+    // if the firstRecurringDayString value is 'Tomorrow' convert it to a literal day
+    if (firstRecurringDayString === 'Tomorrow') {
+      const dayConversionsList = Object.keys(dayConversions);
+      const tomorrowValue = dayConversions[startingDay].value;
+      const firstRecurringDayString = dayConversionsList[tomorrowValue];
+    }
+
+    console.log('dayConversionsList: ', dayConversionsList)
+    console.log('tomorrowValue: ', tomorrowValue);
+    console.log('firstRecurringDayString: ', firstRecurringDayString);
   }
 
   let dateGroup = {};
