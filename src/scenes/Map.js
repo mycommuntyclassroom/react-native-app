@@ -34,9 +34,17 @@ class Map extends Component {
     return (
       <View style={{flex:1}}>
         <MapView
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={mapStyle}
           initialRegion={initialRegion}
           style={StyleSheet.absoluteFill}
         >
+          <MapView.Circle 
+            center={{latitude: 37.78825, longitude: -122.4324}}
+            radius={1000}
+            fillColor='rgba(160,123,220,0.22)'
+            strokeColor='rgba(160,123,220,0.22)'
+          />
         </MapView>
       </View>
     );
@@ -48,6 +56,5 @@ export default Map;
 
 
 /**
-provider={PROVIDER_GOOGLE}
-customMapStyle={mapStyle}
+
 */
