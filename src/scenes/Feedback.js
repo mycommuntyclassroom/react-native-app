@@ -9,6 +9,8 @@ import {
 import { deviceDimensions } from '../styles';
 import Header from '../components/Header';
 import FooterNav from '../components/FooterNav';
+import FeedbackForm from '../components/FeedbackForm'
+import DropdownAlert from 'react-native-dropdownalert'
 
 class Feedback extends Component {
 
@@ -16,6 +18,7 @@ class Feedback extends Component {
     super();
 
     this.onPress = this.onPress.bind(this);
+    this.showAlert = this.showAlert.bind(this);
   }
 
   onPress() {
@@ -23,19 +26,27 @@ class Feedback extends Component {
     // this.props.app.goToScene('Feedback', { hostID: 123 });
   }
 
+  showAlert(type,title,message) {
+    this.dropdown.alertWithType(type, title, message);
+  };
+
   render() {
     const props = this.props
     const { globalStyles, app } = this.props;
     const { deviceWidth, deviceHeight } = deviceDimensions;
 
     return (
-      <View style={{marginBottom: 90, backgroundColor: 'white'}}>
+      <View style={{flex:1, backgroundColor: 'white'}}>
         <Header { ...props } />
-        <Image 
-          source={require('../../images/feedback-screenshot.jpg')} 
-          resizeMode='cover' 
-          style={{width: deviceWidth, height: deviceHeight - 90}} />
+        <FeedbackForm {...props}
+          alertFunc={this.showAlert}
+        />
         <FooterNav {...props} />
+        <DropdownAlert
+          ref={(ref) => this.dropdown = ref}
+          containerStyle={{ padding: 16, flexDirection: 'row', zIndex:10 }}
+          translucent={true}
+        />
       </View>
     );
   };
