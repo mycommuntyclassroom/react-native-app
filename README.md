@@ -11,6 +11,9 @@ Cliffnotes for official [React Native Getting Started](https://facebook.github.i
 - `brew install node`
 - `brew install watchman`
 - `npm install -g react-native-cli`
+- `yarn`
+- `cd ios`
+- `pod install`
 
 
 **Run iOS App**
