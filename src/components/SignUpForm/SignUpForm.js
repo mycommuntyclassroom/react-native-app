@@ -66,7 +66,7 @@ class SignUpForm extends Component {
 
     return (
        <View style={style.container}>
-        <BackButton scene='Welcome' {...props} />
+        <BackButton scene='WelcomeSearch' {...props} />
         <Text style={[globalStyles.title, style.header]}> Sign up </Text>
         <TextInput
           style={globalStyles.textInput}
