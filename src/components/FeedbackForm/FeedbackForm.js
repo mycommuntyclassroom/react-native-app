@@ -41,7 +41,7 @@ class FeedbackForm extends Component {
 
   sendEmail (data) {
 
-    const apiKey = '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';
+    const apiKey = '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';
     let emailBody = this.getEmailBody(data);
 
     fetch('https://api.sendgrid.com/v3/mail/send', {
