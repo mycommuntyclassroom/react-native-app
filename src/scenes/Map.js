@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import {
+  StyleSheet,
   View,
   TouchableHighlight,
   Text
 } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import mapStyle from '../styles/mapStyle'
+import styles from '../styles'
+
+const initialRegion={
+  latitude: 37.78825,
+  longitude: -122.4324,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+};
 
 class Map extends Component {
 
@@ -21,10 +32,20 @@ class Map extends Component {
   render() {
     const { globalStyles, app } = this.props;
     return (
-      <View style={[globalStyles.container, { backgroundColor: 'burlywood' }]}>
-        <Text style={globalStyles.title}>
-          Map
-        </Text>
+      <View style={{flex:1}}>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={mapStyle}
+          initialRegion={initialRegion}
+          style={StyleSheet.absoluteFill}
+        >
+          <MapView.Circle 
+            center={{latitude: 37.78825, longitude: -122.4324}}
+            radius={1000}
+            fillColor='rgba(160,123,220,0.22)'
+            strokeColor='rgba(160,123,220,0.22)'
+          />
+        </MapView>
       </View>
     );
   };
@@ -32,3 +53,8 @@ class Map extends Component {
 }
 
 export default Map;
+
+
+/**
+
+*/

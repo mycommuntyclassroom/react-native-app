@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Navigator,
   View,
   TouchableHighlight,
   Text,
   AsyncStorage
 } from 'react-native';
+
+import { Navigator } from 'react-native-deprecated-custom-components';
 
 import LinearGradient from 'react-native-linear-gradient';
 import random from '../helpers/random';

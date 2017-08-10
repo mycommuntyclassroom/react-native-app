@@ -19,6 +19,11 @@ class Hero extends Component {
     user: PropTypes.object
   };
 
+  goToMap = (street, city, state, zipCode) => {
+    // console.log('goToMap', street, city, state, zipCode);
+    this.props.app.goToScene('Map', { street, city, state, zipCode });
+  }
+
   render() {
 
     const props = this.props;
@@ -71,7 +76,9 @@ class Hero extends Component {
           >
             <Text style={style.userName}>{ displayName }</Text>
             <View style={style.hr}></View>
+            <TouchableHighlight onPress={ () => this.goToMap(street, city, state, zipCode) }>
             { addressOutput }
+            </TouchableHighlight>
           </LinearGradient>
         </View>
         { !props.guardianData && 

@@ -16,16 +16,18 @@
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "rc-time-picker": "^2.4.1",
-    "react": "16.0.0-alpha.6",
+    "react": "16.0.0-alpha.12",
     "react-datepicker": "^0.46.0",
     "react-icons": "^2.2.5",
-    "react-native": "^0.43.4",
+    "react-native": "^0.45.1",
     "react-native-calendars": "^1.5.6",
     "react-native-camera-roll-picker": "^1.1.9",
     "react-native-datepicker": "^1.5.1",
+    "react-native-deprecated-custom-components": "^0.1.1",
     "react-native-dropdownalert": "^2.10.0",
     "react-native-fetch-blob": "^0.10.5",
     "react-native-linear-gradient": "^2.0.0",
+    "react-native-maps": "^0.16.0",
     "react-native-radio-buttons": "^1.0.0",
     "react-native-simple-radio-button": "^2.5.0-alpha.1",
     "react-native-snap-carousel": "2.1.4",
@@ -38,7 +40,7 @@
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",
     "jest": "19.0.2",
-    "react-test-renderer": "16.0.0-alpha.6"
+    "react-test-renderer": "16.0.0-alpha.12"
   },
   "jest": {
     "preset": "react-native"
