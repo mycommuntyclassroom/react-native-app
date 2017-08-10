@@ -79,7 +79,7 @@ class AgendaItem extends Component {
       names = names.slice(0, 3);
     }
 
-    subRowData.text = names.join();
+    subRowData.text = names.join(', ');
 
     if (images.length > 5)
       images = images.slice(0, 5);
