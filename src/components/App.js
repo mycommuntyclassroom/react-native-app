@@ -91,7 +91,7 @@ class App extends Component {
       this.goToScene('Dashboard')
     } 
     // if the user is anonymous, take them to the welcome screen
-    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene !== 'Loading') {
+    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene === 'Loading') {
      this.goToScene('Welcome');
     }
     else {
