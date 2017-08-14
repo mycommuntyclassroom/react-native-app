@@ -78,6 +78,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate')
     const { navigator } = this.refs
     const props = this.props;
     // get the current scene
@@ -85,15 +86,19 @@ class App extends Component {
     // get the status of the user authentication
     let { status } = props.auth;
 
+    console.log('status: ', status)
+
     // if the user is signed in, take them to the dashboard
     if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome' || currentScene === 'Login' || currentScene === 'Dashboard')) {
       this.goToScene('Dashboard')
     } 
     // if the user is anonymous, take them to the welcome screen
-    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene !== 'Loading') {
-     this.goToScene('Welcome');
+    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene == 'Loading') {
+      this.goToScene('Dashboard')
+     // this.goToScene('Welcome');
     }
     else {
+      this.goToScene('Dashboard')
       // console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***');
     }
   }
@@ -108,6 +113,8 @@ class App extends Component {
 
     // retrive event data
     getHostEvents();
+
+    this.goToScene('Dashboard');
   }
 
   render() {

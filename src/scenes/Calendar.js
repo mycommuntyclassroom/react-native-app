@@ -56,6 +56,8 @@ class Calendar extends Component {
   };
 
   loadTimes (day) {
+    const classroomSchedule = this.props.user.classroomSchedule || {};
+
     //Necessary because of RNCalendar quirk of requiring date:empty[] pair
     setTimeout(() => {
       let schedule = {};
@@ -67,7 +69,7 @@ class Calendar extends Component {
         }
       }
 
-      Object.values(this.props.user.classroomSchedule).forEach(event => {
+      Object.values(classroomSchedule).forEach(event => {
         for (i = 0; i < event.calendarDates.length; i++) {
           if (!schedule[event.calendarDates[i]])
             schedule[event.calendarDates[i]] = [];

@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
     return(
       <View>
-        { status === 'ANONYMOUS' && app.goToScene('Welcome', {app}) }
+        { /*status === 'ANONYMOUS' && app.goToScene('Welcome', {app})*/ }
         <AdminView {...props} />
       </View>
     )
