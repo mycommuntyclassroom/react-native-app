@@ -1,5 +1,4 @@
 import { auth } from '../../helpers/firebase';
-import { authenticateUser } from '../../helpers/user';
 import store from '../store';
 import {
   AsyncStorage
@@ -52,25 +51,33 @@ export const startListeningToAuthChanges = (navigator) => {
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
 
-      // CREATE AN ACCOUNT
-      // 
-      // if the AsyncStorage is set to CREATING_ACCOUNT, update the redux store accordingly
-      if (AsyncStorage.type === 'CREATING_ACCOUNT'){
-        authenticateUser(user);
-      }
-      // SIGN IN
-      // 
-      // if we're not in the CREATING_ACCOUNT phase, and the stateChange
-      // returns a user, AND were on the index, log the user in
-      // 
-      else if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
-        // determine what to do with the user
-        authenticateUser(user, navigator);
+      console.log('this is the auth USER: ', user)
 
-      }
-      else {
-        dispatch(signedOut());
-      }
+      AsyncStorage.getItem('type', (err, result) => {
+        console.log('this is the auth type: ', result);
+
+        // SIGN IN
+        // 
+        // if we're not in the CREATING_ACCOUNT phase, and the stateChange
+        // returns a user, AND were on the index, log the user in
+        // 
+        if (user) {
+          // sign the user in
+          AsyncStorage.setItem('type', 'SIGN_IN');
+          // navigator.push('Dashboard', {});
+
+        }
+        // CREATE AN ACCOUNT
+        // 
+        // if the AsyncStorage is set to CREATING_ACCOUNT, update the redux store accordingly
+        else if (AsyncStorage.type === 'CREATING_ACCOUNT'){
+          console.log('CREATING_ACCOUNT, do nada');
+        }
+        else {
+          AsyncStorage.setItem('type', 'SIGN_OUT');
+          dispatch(signedOut());
+        }
+      });
     });
   };
 };

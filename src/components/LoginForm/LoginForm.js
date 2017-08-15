@@ -4,7 +4,8 @@ import {
   View,
   Text,
   TouchableHighlight,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native';
 
 import Button from '../Button'
@@ -27,6 +28,14 @@ class Login extends Component {
   }
 
   formValidation(result) {
+
+    console.log('Log in formValidation, result: ', result);
+
+    // if the result is true, log the user in
+    result && AsyncStorage.setItem('type', 'SIGN_IN');
+
+    console.log('type after the result: ', type)
+
     const { code } = result;
 
     code === 'auth/invalid-email'

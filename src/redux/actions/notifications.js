@@ -16,16 +16,20 @@ export const startListeningForNotifications = () => {
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
 
-      if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
-        const { uid } = user
+      AsyncStorage.getItem('type', (err, result) => {
+        console.log('this is the Notifications type: ', result);
 
-        // grab all of the user's notifications and store them in the Redux store
-        database
-        .ref(`guardians/${uid}/notifications`)
-        .on('value', snapshot => {
-          dispatch(setNotifications(snapshot.val()));
-        })
-      }
+        if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
+          const { uid } = user
+
+          // grab all of the user's notifications and store them in the Redux store
+          database
+          .ref(`guardians/${uid}/notifications`)
+          .on('value', snapshot => {
+            dispatch(setNotifications(snapshot.val()));
+          })
+        }
+      });
     });
   };
 };

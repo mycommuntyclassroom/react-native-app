@@ -88,19 +88,21 @@ class App extends Component {
 
     console.log('status: ', status)
 
-    // if the user is signed in, take them to the dashboard
-    if(status === 'SIGNED_IN' && (currentScene === 'Loading' || currentScene === 'Welcome' || currentScene === 'Login' || currentScene === 'Dashboard')) {
-      this.goToScene('Dashboard')
-    } 
-    // if the user is anonymous, take them to the welcome screen
-    else if((status === 'SIGN_OUT' || status === 'ANONYMOUS') && currentScene == 'Loading') {
-      this.goToScene('Dashboard')
-     // this.goToScene('Welcome');
-    }
-    else {
-      this.goToScene('Dashboard')
-      // console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGNED_IN THUS, we rendered nothing***');
-    }
+    AsyncStorage.getItem('type', (err, type) => {
+      console.log('*****this is the App type: ', type);
+      // if the user is signed in, take them to the dashboard
+      if(type === 'SIGN_IN') {
+        console.log('logging in!!')
+        this.goToScene('Dashboard')
+      } 
+      // if the user is anonymous, take them to the welcome screen
+      else if(type === 'SIGN_OUT' || status === 'ANONYMOUS') {
+        this.goToScene('Welcome');
+      }
+      else {
+        console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGN_IN THUS, we rendered nothing***');
+      }
+    });
   }
 
   componentDidMount() {
@@ -113,8 +115,6 @@ class App extends Component {
 
     // retrive event data
     getHostEvents();
-
-    this.goToScene('Dashboard');
   }
 
   render() {
@@ -133,7 +133,7 @@ class App extends Component {
           configureScene={this.configureScene} />
 
         <Nav ref='navMenu' app={this} style={style} />
-        {/* status === 'SIGNED_IN' && <FooterNav app={this} /> */}
+        {/* status === 'SIGN_IN' && <FooterNav app={this} /> */}
 
       </LinearGradient>
     );

@@ -21,7 +21,7 @@ class SignUp extends Component {
 
     return (
       <View style={[globalStyles.container]}>
-        { status === 'SIGNED_IN' && app.goToScene('Dashboard', {app})}
+        { status === 'SIGN_IN' && app.goToScene('Dashboard', {app})}
         { status === 'ANONYMOUS' && <SignUpForm {...props} /> }
         { status === 'CREATING_ACCOUNT' && <CreateGuardianAccount auth={auth} {...props} /> }
       </View>

@@ -65,8 +65,7 @@ export function createUserWithEmailAndPassword(email, password, callback) {
     callback(true)
   })
   .catch((error) => {
-    let theError = error;
-    callback(theError);
+    callback(error);
   })
 }
 
@@ -76,7 +75,6 @@ export function signInWithEmailAndPassword(email, password, callback) {
     callback(true)
   })
   .catch((error) => {
-    let theError = error;
-    callback(theError);
+    callback(error);
   })
 }
