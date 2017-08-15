@@ -8,6 +8,7 @@ import {
 
 // auth actions
 export function createGuardianAccount (user) {
+  
   return {
     type: 'CREATING_ACCOUNT',
     user
@@ -51,10 +52,9 @@ export const startListeningToAuthChanges = (navigator) => {
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
 
-      console.log('this is the auth USER: ', user)
+      if(user) store.dispatch(createGuardianAccount(user));
 
       AsyncStorage.getItem('type', (err, type) => {
-        console.log('this is the auth type: ', type);
 
         // SIGN IN
         // 
@@ -62,7 +62,6 @@ export const startListeningToAuthChanges = (navigator) => {
         // returns a user, AND were on the index, log the user in
         // 
         if (user && type !== 'CREATING_ACCOUNT') {
-          console.log('calling SignIN')
           // sign the user in
           AsyncStorage.setItem('type', 'SIGN_IN');
 
@@ -71,10 +70,9 @@ export const startListeningToAuthChanges = (navigator) => {
         // CREATE AN ACCOUNT
         // 
         // if the AsyncStorage is set to CREATING_ACCOUNT, update the redux store accordingly
-          console.log('CREATING_ACCOUNT, do nada');
+          store.dispatch(createGuardianAccount(user));
         }
         else {
-          console.log('calling SIGNOUT')
           AsyncStorage.setItem('type', 'SIGN_OUT');
           dispatch(signedOut());
         }

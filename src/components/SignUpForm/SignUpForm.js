@@ -48,7 +48,6 @@ class SignUpForm extends Component {
 
     // if the result is true, setup create user account
     if (result) {
-      console.log('signup successful')
       AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
       store.dispatch(actions.createGuardianAccount({}));
       return

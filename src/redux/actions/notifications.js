@@ -17,7 +17,6 @@ export const startListeningForNotifications = () => {
     auth.onAuthStateChanged((user) => {
 
       AsyncStorage.getItem('type', (err, result) => {
-        console.log('this is the Notifications type: ', result);
 
         if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
           const { uid } = user

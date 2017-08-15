@@ -69,7 +69,6 @@ export const startListeningForUsers = (navigator) => {
     auth.onAuthStateChanged((user) => {
 
       AsyncStorage.getItem('type', (err, result) => {
-        console.log('this is the users type: ', result);
 
         if (user) {
           

@@ -78,7 +78,6 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate')
     const { navigator } = this.refs
     const props = this.props;
     // get the current scene
@@ -86,21 +85,16 @@ class App extends Component {
     // get the status of the user authentication
     let { status } = props.auth;
 
-    console.log('status: ', status)
-
     AsyncStorage.getItem('type', (err, type) => {
-      console.log('*****this is the App type: ', type);
       // if the user is signed in, take them to the dashboard
-      if(type === 'SIGN_IN' && type != 'ANONYMOUS') {
-        if (currentScene != 'Dashboard') this.goToScene('Dashboard');
-        console.log('logging in!!')
+      if(type === 'SIGN_IN' && type !== 'ANONYMOUS') {
+        if (currentScene !== 'Dashboard') this.goToScene('Dashboard');
       } 
       // if the user is anonymous, take them to the welcome screen
       else if(type === 'SIGN_OUT' || status === 'ANONYMOUS') {
-        if (currentScene != 'Welcome') this.goToScene('Welcome');
+        if (currentScene !== 'Welcome') this.goToScene('Welcome');
       }
       else {
-        console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGN_IN THUS, we rendered nothing***');
       }
     });
   }
@@ -108,6 +102,10 @@ class App extends Component {
   componentDidMount() {
     const { navigator } = this.refs
 
+    // remove any trace of CREATING_ACCOUNT on app init to prevent infinite loading
+    AsyncStorage.getItem('type', (err, type) => {
+      type === 'CREATING_ACCOUNT' && AsyncStorage.removeItem('type');
+    })
     // start listening for changes in Firebase
     store.dispatch(startListeningForUsers(navigator));
     store.dispatch(startListeningToAuthChanges(navigator));
