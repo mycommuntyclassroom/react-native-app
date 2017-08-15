@@ -91,7 +91,7 @@ class App extends Component {
     AsyncStorage.getItem('type', (err, type) => {
       console.log('*****this is the App type: ', type);
       // if the user is signed in, take them to the dashboard
-      if(type === 'SIGN_IN') {
+      if(type === 'SIGN_IN' && type != 'ANONYMOUS') {
         if (currentScene != 'Dashboard') this.goToScene('Dashboard');
         console.log('logging in!!')
       } 

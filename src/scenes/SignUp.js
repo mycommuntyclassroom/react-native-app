@@ -19,6 +19,8 @@ class SignUp extends Component {
     const { globalStyles, auth, app } = props;
     const { status } = auth;
 
+    console.log('Signup page re-rendered, this is the status: ', status)
+
     return (
       <View style={[globalStyles.container]}>
         { status === 'SIGN_IN' && app.goToScene('Dashboard', {app})}

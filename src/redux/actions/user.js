@@ -71,7 +71,7 @@ export const startListeningForUsers = (navigator) => {
       AsyncStorage.getItem('type', (err, result) => {
         console.log('this is the users type: ', result);
 
-        if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
+        if (user) {
           
           // pull the user's tree from the DB
           database

@@ -53,27 +53,28 @@ export const startListeningToAuthChanges = (navigator) => {
 
       console.log('this is the auth USER: ', user)
 
-      AsyncStorage.getItem('type', (err, result) => {
-        console.log('this is the auth type: ', result);
+      AsyncStorage.getItem('type', (err, type) => {
+        console.log('this is the auth type: ', type);
 
         // SIGN IN
         // 
         // if we're not in the CREATING_ACCOUNT phase, and the stateChange
         // returns a user, AND were on the index, log the user in
         // 
-        if (user) {
+        if (user && type !== 'CREATING_ACCOUNT') {
+          console.log('calling SignIN')
           // sign the user in
           AsyncStorage.setItem('type', 'SIGN_IN');
-          // navigator.push('Dashboard', {});
 
         }
+        else if (type === 'CREATING_ACCOUNT'){
         // CREATE AN ACCOUNT
         // 
         // if the AsyncStorage is set to CREATING_ACCOUNT, update the redux store accordingly
-        else if (AsyncStorage.type === 'CREATING_ACCOUNT'){
           console.log('CREATING_ACCOUNT, do nada');
         }
         else {
+          console.log('calling SIGNOUT')
           AsyncStorage.setItem('type', 'SIGN_OUT');
           dispatch(signedOut());
         }
