@@ -34,8 +34,6 @@ class Login extends Component {
     // if the result is true, log the user in
     result && AsyncStorage.setItem('type', 'SIGN_IN');
 
-    console.log('type after the result: ', type)
-
     const { code } = result;
 
     code === 'auth/invalid-email'

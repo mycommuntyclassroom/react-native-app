@@ -92,12 +92,12 @@ class App extends Component {
       console.log('*****this is the App type: ', type);
       // if the user is signed in, take them to the dashboard
       if(type === 'SIGN_IN') {
+        if (currentScene != 'Dashboard') this.goToScene('Dashboard');
         console.log('logging in!!')
-        this.goToScene('Dashboard')
       } 
       // if the user is anonymous, take them to the welcome screen
       else if(type === 'SIGN_OUT' || status === 'ANONYMOUS') {
-        this.goToScene('Welcome');
+        if (currentScene != 'Welcome') this.goToScene('Welcome');
       }
       else {
         console.log('WE are not in ANONYMOUS, CREATING_ACCOUNT, or SIGN_IN THUS, we rendered nothing***');
