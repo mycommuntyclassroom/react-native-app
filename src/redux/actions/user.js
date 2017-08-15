@@ -68,16 +68,19 @@ export const startListeningForUsers = (navigator) => {
   return (dispatch) => {
     auth.onAuthStateChanged((user) => {
 
-      if (user && AsyncStorage.type !== 'CREATING_ACCOUNT') {
-        
-        // pull the user's tree from the DB
-        database
-        .ref(`guardians/${user.uid}`)
-        .once('value')
-        .then((snapshot) => {
-          store.dispatch(userInfo(snapshot.val()));
-        }) 
-      }
+      AsyncStorage.getItem('type', (err, result) => {
+
+        if (user) {
+          
+          // pull the user's tree from the DB
+          database
+          .ref(`guardians/${user.uid}`)
+          .once('value')
+          .then((snapshot) => {
+            store.dispatch(userInfo(snapshot.val()));
+          }) 
+        }
+      });
     });
   };
 };

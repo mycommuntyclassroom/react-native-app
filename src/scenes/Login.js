@@ -20,7 +20,7 @@ class Login extends Component {
     return (
       <View style={[globalStyles.container]}>
         { status === 'ANONYMOUS' && <LoginForm {...props} /> }
-        { status === 'SIGNED_IN' && app.goToScene('Dashboard', {app}) } 
+        { status === 'SIGN_IN' && app.goToScene('Dashboard', {app}) } 
       </View>
     );
   };

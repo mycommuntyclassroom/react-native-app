@@ -21,7 +21,7 @@ export function signInHandler (provider, type, data, callback) {
       AsyncStorage.setItem('status', 'COLLECTING_USER_PROFILE');
       break;
     case 'SIGNING_IN':
-      AsyncStorage.setItem('type', 'SIGNING_IN');
+      AsyncStorage.setItem('type', 'SIGN_IN');
       break;
   }
   // method of logging in
@@ -39,51 +39,6 @@ export function signInHandler (provider, type, data, callback) {
     default:
       // no action
   }
-}
-
-// AUTHENTICATE THE USER
-// 
-// validate the user against the DB
-// 
-export function authenticateUser (user, navigator) {
-  // get the current scene
-  let currentRoute = navigator.getCurrentRoutes().pop().scene;
-  const { uid } = user;
-  database
-  .ref(`guardians/${uid}`)
-  .once('value')
-  .then((snapshot) => {
-    // if the user exists within our DB log them in, otherwise redirect them
-    if(snapshot.val() ){
-      switch (currentRoute) {
-        case '/sign-up':
-          // take the user to the sign in or signup with a different account   
-          break;
-        default:
-          // update the redux store with the user's data
-          store.dispatch(actions.signedIn(snapshot.val()))
-          break;
-      }
-    } 
-    else {
-      switch (currentRoute) {
-        case 'Welcome':    
-          // Do nothing, its likely a non-user, visiting for the first time
-          break;
-        case 'Login': 
-          // take the user to the sign up or sign in with a different account    
-          break;
-        case 'SignUp':    
-          store.dispatch(actions.createGuardianAccount(user));
-          AsyncStorage.removeItem('status');
-          break;
-        default:
-          // Do nothing
-          break;
-      }
-    }
-  })
-
 }
 
 // REQUEST A FRIEND

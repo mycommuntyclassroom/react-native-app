@@ -4,8 +4,12 @@ import {
   View,
   Text,
   TouchableHighlight,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native';
+
+import actions from '../../redux/actions';
+import store from '../../redux/store';
 
 import Button from '../Button'
 import BackButton from '../BackButton'
@@ -41,6 +45,14 @@ class SignUpForm extends Component {
   }
 
   formValidation(result) {
+
+    // if the result is true, setup create user account
+    if (result) {
+      AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
+      store.dispatch(actions.createGuardianAccount({}));
+      return
+    }
+
     const { code } = result;
 
     code === 'auth/invalid-email'
