@@ -72,7 +72,7 @@ WelcomePage.welcomeImage = {
   height: 200,
   width:'100%',
   marginBottom: 50,
-  marginTop: -10
+  marginTop: -40
 }
 
 WelcomePage.signIn = {
