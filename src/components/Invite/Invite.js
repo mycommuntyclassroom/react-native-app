@@ -10,7 +10,7 @@ class InviteForm extends Component {
     super(props);
     this.state = {
       addresses: '',
-      message: 'Hi! \n \nPlease join me on MC2! It\'s the new educational marketplace specifically made for homeschoolers! Imagine a digital co-op that you can 100% customize to tailor your specific needs. You can browse and connect with like-minded families, search for classes, special events or excursions or even' +
+      message: 'Hi! \n \nPlease join me on MC2! It\'s the new educational marketplace specifically made for homeschoolers! Imagine a digital co-op that you can 100% customize to tailor to your specific needs. You can browse and connect with like-minded families, search for classes, special events or excursions or even' +
       ' become a host yourself by offering your talents as the community\'s newest host! \n \nCheck it out at www.mycommunityclassroom.com ',
       response: ''
     }
