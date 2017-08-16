@@ -7,6 +7,7 @@ import { View, TouchableHighlight, Text, Image, TextInput, ScrollView } from 're
 import { SegmentedControls } from 'react-native-radio-buttons'
 import style from './style'
 import Button from '../Button'
+import { sendEmail } from '../../helpers/email'
 
 class FeedbackForm extends Component {
 
@@ -39,24 +40,11 @@ class FeedbackForm extends Component {
       '\n From : ' + this.props.user.displayName + ' ' + this.props.user.email;
   }
 
-  sendEmail (data) {
+  sendMail (data) {
 
-    const apiKey = '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';
     let emailBody = this.getEmailBody(data);
 
-    fetch('https://api.sendgrid.com/v3/mail/send', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + apiKey,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "personalizations": [{"to": [{"email": "mycommunityclass@gmail.com"}]}],
-        "from": {"email": "info@mobilecommunityclassroom.com"},
-        "subject": "Someone left a feedback",
-        "content": [{"type": "text/plain", "value": emailBody}]
-      })
-    }).then((response) => {
+    sendEmail("mycommunityclass@gmail.com", "Someone Left a feedback", emailBody).then((response) => {
       if (response.ok) {
         this.props.alertFunc('success', 'Success', 'Feedback successfully submitted!');
         this.setState({
@@ -209,7 +197,7 @@ class FeedbackForm extends Component {
         <View style={[style.textGroup, {width:'100%'}]}>
           <View>
             <Button text='SUBMIT' extraStyle={{backgroundColor: 'rgba(121, 189, 244, 0.9)'}}
-                    onPress={ () => this.sendEmail(this.state) }/>
+                    onPress={ () => this.sendMail(this.state) }/>
           </View>
         </View>
 
