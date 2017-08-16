@@ -3,10 +3,9 @@ import {
   View,
   TouchableHighlight,
   Text,
-  Image
+  Image,
+  LayoutAnimation
 } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import { deviceDimensions } from '../../styles';
 
 import style from './style';
 
@@ -16,15 +15,16 @@ class Summary extends Component {
     super(props);
 
     this.state={
-      showAllTagsView: false
-    }
+      expandTags:false
+    };
 
-    this.showAllTags=this.showAllTags.bind(this);
+    this.expandTags=this.expandTags.bind(this);
   }
 
-  showAllTags() {
+  expandTags() {
+    LayoutAnimation.easeInEaseOut();
     this.setState({
-      showAllTagsView: !this.state.showAllTagsView
+      expandTags: !this.state.expandTags
     })
   }
 
@@ -38,17 +38,11 @@ class Summary extends Component {
     // instead of admin user data
     guardianData ? userData = guardianData : userData = app.props.user
 
-    // if showAllTags becomes true, update its value
-    let showAllTagsClass = this.state.showAllTagsView ? "show-all-tags" : ""
-
-    // toggle the icon-group based on the showAllTags value
-    let iconGroupClass = this.state.showAllTagsView 
-      ? <Text> MdKeyboardArrowUp </Text>
-      : <Text>FaCircle FaCircle FaCircle</Text>
-
     const { greeting } = userData;
     const languages = userData['languages spoken'] || [];
     const specialties = userData.specialties || [];
+    let wrapState = this.state.expandTags ? 'wrap' :'nowrap';
+    let ellipseText = !this.state.expandTags ? '...' : '^';
 
     let languageTags = dataToTag(languages, 'languages');
     let specialtyTags = dataToTag(specialties, 'specialties');
@@ -98,20 +92,21 @@ class Summary extends Component {
           </View>
         </View>
         <View style={style.greetingContainer}>{ greetingCopy }</View>
-        <Carousel
-          ref={(carousel) => { this._carousel = carousel; }}
-          sliderWidth={50}
-          itemWidth={50}
-          inactiveSlideScale={1}
-        >
-          {languageTags}
-          {specialtyTags}
-        </Carousel>
-        {/*
-        TODO: discuss the asthetics of adding in this feature
-        <View className="show-all-tags-button" onClick={this.showAllTags}>
-          <View className="icon-group">{iconGroupClass}</View>
-        </View>*/}
+        <View style={{flexDirection:'row', flex:1, marginLeft:10, marginRight:10}}>
+          <View style={{flex:0.8, flexDirection:'row', flexWrap: wrapState, overflow:'hidden' }}>
+            {languageTags}
+            {specialtyTags}
+          </View>
+          <View style={{flex:0.2, paddingLeft:5, alignItems:'center'}}>
+
+            <TouchableHighlight onPress={ () =>{
+                  this.expandTags();}} underlayColor={'white'}>
+              <View style={style.ellipsis}>
+                <Text style={{width:20, textAlign:'center', color:'#fff'}}>{ellipseText}</Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+        </View>
       </View>
     )
   } 
