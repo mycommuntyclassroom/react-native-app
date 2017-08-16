@@ -46,7 +46,17 @@ summary.tagItem = {
   paddingRight: 15,
   borderRadius: 16,
   marginRight: 4,
-  marginLeft: 4
+  margin:4
+}
+
+summary.ellipsis = {
+  backgroundColor: '#d7dce0',
+  padding: 8,
+  paddingLeft: 15,
+  paddingRight: 15,
+  borderRadius: 16,
+  marginRight: 4,
+  margin:4
 }
 
 summary.tagItemCopy = {
