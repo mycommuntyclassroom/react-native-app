@@ -24,7 +24,7 @@ class InviteForm extends Component {
 
   sendMail (data) {
 
-    let response = sendEmail(data.addresses, "You have been invited to MC2 by " + this.props.user.displayName, data.message)
+    let response = sendEmail(data.addresses, this.props.user.displayName + " has invited you to connect on MC2", data.message)
       .then((response) => {
     if (response.ok) {
       this.props.alertFunc('success', 'Success', 'Invite successfully sent!');
