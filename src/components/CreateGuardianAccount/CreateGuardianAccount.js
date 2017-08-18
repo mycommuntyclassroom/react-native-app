@@ -18,7 +18,8 @@ import colorsVariables from '../../styles/variables';
 import CheckBox from '../CheckBox';
 import BackButton from '../BackButton';
 import Button from '../Button';
-
+import { verifyAddress } from '../../helpers/validator'
+import Toast, { DURATION } from 'react-native-easy-toast'
 // import BackButton from '../components/BackButton';
 
 class CreateGuardianAccount extends Component {
@@ -118,6 +119,27 @@ class CreateGuardianAccount extends Component {
     // update the state with the new array of options
     this.setState(newState);
 
+  }
+
+  confirmAddress () {
+
+    verifyAddress(this.state.street, this.state.city, this.state.state, this.state.zipCode).then((response) => {
+      response.json().then(r => {
+        let locationData = r.results[0];
+        if (!locationData.partial_match && locationData.types.length > 0)
+        {
+          this.state.latlong = locationData.geometry.location;
+          this.submitForm();
+        }
+        else {
+          this.refs.toast.show('Address Validation failed! Address should be in USPS standardized format.' +
+          'Please correct your address and try again!', 2500);
+        }
+        });
+    })
+      .catch((err) => {
+        this.refs.toast.show('Uh Oh! Something went wrong. please try again!', DURATION.LENGTH_LONG);
+      });
   }
 
   /**
@@ -248,8 +270,15 @@ class CreateGuardianAccount extends Component {
 
           { outputCheckboxes() }
 
-          <Button text='Submit' extraStyle={style.submit} onPress= { () => this.submitForm() }></Button>
+          <Button text='Submit' extraStyle={style.submit} onPress= { () => this.confirmAddress() }></Button>
         </View>
+        <Toast ref="toast" position='bottom' opacity={0.9} fadeOutDuration={500} textStyle={{
+                fontSize:18,
+                fontFamily: 'AvenirNext-Regular',
+                fontWeight:'400',
+                color:'white',
+                textAlign:'center'
+        }}/>
       </ScrollView>
     )
   }
