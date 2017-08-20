@@ -1,3 +1,3 @@
-import Invite from './Invite';
+import InviteForm from './Invite';
 
-export default Invite;
+export default InviteForm;

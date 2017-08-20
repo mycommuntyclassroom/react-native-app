@@ -24,25 +24,11 @@ class Header extends Component {
   constructor(props) {
     super();
 
-
     this.state={
       navOpen: false,
-      inviteOpen: false
     };
-
-    this.handleInvite = this.handleInvite.bind(this);
   }
 
-  /**
-   *
-   * @param e
-   */
-
-  handleInvite() {
-    this.setState({
-      inviteOpen: !this.state.inviteOpen
-    })
-  }
 
   toggleNav() {
 
@@ -65,12 +51,6 @@ class Header extends Component {
     const props = this.props;
     const { app } = props;
 
-    const renderInvite = () => (
-      <View className = "invite-holder" onClick={ this.handleInvite } >
-        {/*<Invite { ...this.props } handleInvite={ () => this.handleInvite() } />*/}
-      </View>
-    );
-
     let headerLinks;
     let headerColor;
 
@@ -89,7 +69,7 @@ class Header extends Component {
     } else {
       headerLinks =
         <View style={style.linkView}>
-          <Link onClick={ this.handleInvite } text='Invite' textStyles={style.link} />
+          <Link onClick={ () => app.goToScene('Invite', {app}) } text='Invite' textStyles={style.link} />
           <Link text='Donate' textStyles={style.link} />
         </View>
 
@@ -125,7 +105,6 @@ class Header extends Component {
             {/** empty block for now **/}
           </View>
         </View>
-        { this.state.inviteOpen ? renderInvite() : false }
       </LinearGradient>
     )
   }
