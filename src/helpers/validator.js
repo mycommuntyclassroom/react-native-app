@@ -17,3 +17,14 @@ export const validate = (value, type) => {
 
   return isValid;
 };
+
+
+export function verifyAddress (street, city, state, zipcode) {
+
+  const apiKey = 'AIzaSyAJsjUXXov9ixQRedr2NKlF639v2oDjTBk';
+
+  return fetch('https://maps.googleapis.com/maps/api/geocode/json?new_forward_geocoder=true&strictbounds&' +
+    'address=' + (street) + '&components=postal_code:' + ((zipcode).toString()) + '|locality:' + (city) +
+    '|administrative_area:' + (state) + '&key=' + apiKey)
+
+}
