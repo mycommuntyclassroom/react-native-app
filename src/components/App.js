@@ -87,8 +87,9 @@ class App extends Component {
 
     AsyncStorage.getItem('type', (err, type) => {
       // if the user is signed in, take them to the dashboard
-      if(type === 'SIGN_IN' && type !== 'ANONYMOUS') {
-        if (currentScene !== 'Dashboard') this.goToScene('Dashboard');
+      if(type === 'SIGN_IN' && status !== 'ANONYMOUS') {
+        // if (!currentScene) this.goToScene('Dashboard');
+        if (currentScene !== 'Dashboard' && currentScene !== 'EventDetails') this.goToScene('Dashboard');
       } 
       // if the user is anonymous, take them to the welcome screen
       else if(type === 'SIGN_OUT' || status === 'ANONYMOUS') {
