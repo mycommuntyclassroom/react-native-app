@@ -42,7 +42,6 @@ class AgendaItem extends Component {
           }) : <View></View>}
         </View>
         <View style={{marginTop:5}}>
-          <Text style={{fontSize:12, fontWeight:'100'}}>Location : Predefined</Text>
         </View>
       </View>
     )
