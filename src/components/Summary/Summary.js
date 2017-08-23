@@ -67,30 +67,6 @@ class Summary extends Component {
 
     return(
       <View style={style.container}>
-        <View style={style.raitingsAndComments}> 
-          <View style={style.raitings}>
-            <View className="star-icon">
-              <Image 
-                source={require('../../../images/ratings-purp.png')}
-                resizeMode='cover' 
-                style={{width: 30, height: 30}} />
-            </View>
-            <View className="count">
-              <Text style={style.summaryCopy}>4.9</Text>
-            </View>
-          </View>
-          <View style={style.comments}>
-            <View className="comments-icon">
-              <Image 
-                source={require('../../../images/reviews-purp.png')}
-                resizeMode='cover' 
-                style={{width: 30, height: 30}} />
-            </View>
-            <View className="count">
-              <Text style={style.summaryCopy}>12</Text>
-            </View>
-          </View>
-        </View>
         <View style={style.greetingContainer}>{ greetingCopy }</View>
         <View style={{flexDirection:'row', flex:1, marginLeft:10, marginRight:10}}>
           <View style={{flex:0.8, flexDirection:'row', flexWrap: wrapState, overflow:'hidden' }}>

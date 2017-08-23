@@ -64,7 +64,7 @@ class Header extends Component {
             text='Cancel' />
         </View>
 
-      headerColor=['#673ab7', '#673ab7']
+      headerColor=[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]
 
     } else {
       headerLinks =
