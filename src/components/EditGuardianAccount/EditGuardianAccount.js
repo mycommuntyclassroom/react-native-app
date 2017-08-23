@@ -22,6 +22,7 @@ import PageLoader from '../PageLoader';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 import style from './style';
+import PrivacyForm  from '../privacyForm'
 
 class EditGuardianAccount extends Component {
 
@@ -31,7 +32,7 @@ class EditGuardianAccount extends Component {
     const { app } = props;
     const { 
             uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state, greeting,
+            street, city, zipCode, gender, state, greeting, privacy
           } = app.props.user;
 
     // build the state object with the key values in the props
@@ -46,6 +47,7 @@ class EditGuardianAccount extends Component {
       gender: gender || '',
       specialties,
       state,
+      privacy: privacy || 'public',
       uploadProgress: null,
       imageModal: false
     };
@@ -378,6 +380,9 @@ class EditGuardianAccount extends Component {
           </View>
 
           { outputCheckboxes() }
+
+          <PrivacyForm globalStyle={globalStyles} onChange={this.radioButtonChange} privacy={this.state.privacy}
+                       title={'Default Event Privacy'}/>
 
           <Button extraStyle={style.submit} text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>

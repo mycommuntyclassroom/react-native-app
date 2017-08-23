@@ -65,6 +65,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
 
     // set vars at this scope to be used in the hostEventsOutput
     let eventHostName;
+    let guardianid = '';
 
     // iterate through each host event within the current group
     for (let teaser in eventData[teaserGroup]) {
@@ -73,7 +74,9 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
       const { hostName, title, image, startTime, finishTime } = teaserData;
 
       // set the gid for the scope above
-      gid = teaserData.gid
+      let gid = teaserData.gid;
+      guardianid = gid;
+
       const ageRange = teaserData.ageRange || [];
       eventHostName = hostName;
 
@@ -146,12 +149,13 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             </View>
           </LinearGradient>
         </View>
-      teaserOutput.push(teaserElement);
+      if(teaserData.privacy != 'private' || checkRelationship('friend', props, gid))
+        teaserOutput.push(teaserElement);
     }
     hostEventsOutput.push(
       <View className="event-container" key={`${teaserGroup}`}>
-        <Link 
-          onClick={() => app.goToScene('GuardianDetails', {app, gid})} 
+        <Link
+          onClick={() => app.goToScene('GuardianDetails', {app, gid:guardianid})}
           extraStyle={EventStyles.hostName}
           textStyles={EventStyles.hostNameText}
           text={eventHostName} /> 

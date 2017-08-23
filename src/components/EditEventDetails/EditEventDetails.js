@@ -23,6 +23,7 @@ import { storage, database } from '../../helpers/firebase';
 import actions from '../../redux/actions';
 import store from '../../redux/store';
 import style from '../CreateEventForm/style'
+import PrivacyForm from '../privacyForm'
 
 // time/date values
 const now = moment().hour(0).minute(0);
@@ -46,8 +47,10 @@ class EditGuardianAccount extends Component {
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
             ageRange, startDate, finishDate, frequency, calendarDates,
-            formattedStartDate, formattedFinishDate
+            formattedStartDate, formattedFinishDate, privacy
           } = hostEvents || null;
+
+    console.log(hostEvents);
 
     const recurringDays = hostEvents.recurringDays || []
 
@@ -57,6 +60,7 @@ class EditGuardianAccount extends Component {
       title,
       summary,
       hostName,
+      privacy,
       startDate,
       finishDate,
       frequency,
@@ -494,6 +498,9 @@ class EditGuardianAccount extends Component {
           <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
             { outputCheckboxes() }
           </View>
+
+          <PrivacyForm globalStyle={globalStyles} onChange={this.radioButtonChange} privacy={this.state.privacy}
+          title={'Event Privacy'}/>
 
           <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>

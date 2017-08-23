@@ -10,6 +10,7 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
 import RequestFriendButton from '../RequestFriendButton';
+import { checkRelationship } from '../../helpers/user';
 import Link from '../Link';
 import { deviceDimensions } from '../../styles';
 import styleVariables from '../../styles/variables'
@@ -39,7 +40,7 @@ class BrowseHostsOutput extends Component {
 
       // set vars at this scope to be used in the hostEventsOutput
       let eventHostName;
-      let gid = '';
+      let guardianid = '';
 
       // iterate through each host event within the current group
       for (let teaser in eventData[teaserGroup]) {
@@ -47,6 +48,7 @@ class BrowseHostsOutput extends Component {
         let teaserData = eventData[teaserGroup][teaser];
         const recurringDays = teaserData.recurringDays || []
         const { hostName, title, image, startTime, finishTime, gid } = teaserData;
+        guardianid = gid;
 
         // set the gid for the scope above
         const ageRange = teaserData.ageRange || [];
@@ -119,12 +121,13 @@ class BrowseHostsOutput extends Component {
               </View>
             </LinearGradient>
           </View>
-        teaserOutput.push(teaserElement);
+        if(teaserData.privacy != 'private' || checkRelationship('friend', props, gid))
+          teaserOutput.push(teaserElement);
       }
       hostEventsOutput.push(
         <View className="event-container" key={`${teaserGroup}`}>
           <Link 
-            onClick={() => app.goToScene('GuardianDetails', {app, gid})} 
+            onClick={() => app.goToScene('GuardianDetails', {app, gid:guardianid})}
             extraStyle={style.hostName}
             textStyles={style.hostNameText}
             text={eventHostName} /> 
