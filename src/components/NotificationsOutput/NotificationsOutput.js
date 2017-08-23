@@ -40,6 +40,19 @@ class NotificationsOutput extends Component {
         // build the notification cards
         let noteProp = userNotifications[`${note}`];
 
+        //remove dupe connect notif
+        if(noteProp.gid)
+        {
+          let skipNote = false;
+          notesOutput.forEach(entry =>{
+            if(entry && entry.props.noteProp.message == noteProp.message)
+              skipNote = true;
+          });
+
+          if (skipNote)
+            continue;
+        }
+
         // pass the notificationItem into the notesOutput array
         // noteType, userObj, noteProp, note, viewed
         notesOutput.unshift(
