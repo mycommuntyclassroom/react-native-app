@@ -70,7 +70,6 @@ class Header extends Component {
       headerLinks =
         <View style={style.linkView}>
           <Link onClick={ () => app.goToScene('Invite', {app}) } text='Invite' textStyles={style.link} />
-          <Link text='Donate' textStyles={style.link} />
         </View>
 
       headerColor=[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]
