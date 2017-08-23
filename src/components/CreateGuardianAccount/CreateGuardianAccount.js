@@ -18,6 +18,7 @@ import colorsVariables from '../../styles/variables';
 import CheckBox from '../CheckBox';
 import BackButton from '../BackButton';
 import Button from '../Button';
+import PrivacyForm from '../privacyForm'
 import { verifyAddress } from '../../helpers/validator'
 import Toast, { DURATION } from 'react-native-easy-toast'
 // import BackButton from '../components/BackButton';
@@ -53,7 +54,8 @@ class CreateGuardianAccount extends Component {
         city: '',
         zipCode: '',
         children: [' '],
-        gender: null
+        gender: null,
+        privacy: 'public'
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
@@ -269,6 +271,9 @@ class CreateGuardianAccount extends Component {
           </View>
 
           { outputCheckboxes() }
+
+          <PrivacyForm globalStyle={globalStyles} onChange={this.radioButtonChange} privacy={this.state.privacy}
+                       title={'Default Event Privacy'}/>
 
           <Button text='Submit' extraStyle={style.submit} onPress= { () => this.confirmAddress() }></Button>
         </View>

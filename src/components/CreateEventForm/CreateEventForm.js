@@ -24,6 +24,7 @@ import CheckBox from '../CheckBox';
 import Button from '../Button';
 import Link from '../Link';
 import style from './style'
+import PrivacyForm from '../privacyForm'
 
 const now = moment().hour(0).minute(0);
 const nowFormat = now.format('YYYY-MM-DD')
@@ -56,6 +57,7 @@ class CreateEventForm extends Component {
       let categories = {
         gid: auth.uid,
         hostName: auth.displayName,
+        privacy: props.user.privacy || 'public',
         image: '',
         title: '',
         summary: '',
@@ -270,6 +272,15 @@ class CreateEventForm extends Component {
       {label: 'monthly', value: 'monthly' }
     ];
 
+    // needed to ensure radio doesnt reset on privacy change
+    let frequencySelected;
+    frequency_radio_props.map((option, i) => {
+      // if there's a match, return the index of the matching item
+      if (this.state.frequency === option.value) {
+        frequencySelected = i;
+      }
+    });
+
     // set the data structure for the recurringDays checkbox group
     const recurringDays_checkbox_props = [
       {label: 'Mon', value: 'M' },
@@ -458,7 +469,7 @@ class CreateEventForm extends Component {
             <Text style={style.subTitle}>Frequency</Text>
             <RadioForm
               radio_props={frequency_radio_props}
-              initial={0}
+              initial={frequencySelected}
               style={{marginTop: 5, marginBottom: 5}}
               buttonColor={'rgba(0, 0, 0, 0.3)'}
               buttonSize={30}
@@ -471,6 +482,9 @@ class CreateEventForm extends Component {
           <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
             { outputCheckboxes() }
           </View>
+
+          <PrivacyForm globalStyle={globalStyles} onChange={this.radioButtonChange} privacy={this.state.privacy}
+                       title={'Event Privacy'}/>
 
           <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>
