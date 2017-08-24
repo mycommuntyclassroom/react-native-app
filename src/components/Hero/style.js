@@ -51,6 +51,13 @@ hero.address = {
   textShadowColor: 'rgba(0, 0, 0, 0.6)',
 }
 
+hero.requestFriendButton = {
+  position: 'absolute',
+  right: 9,
+  bottom: 0,
+  zIndex: 1
+}
+
 hero.edit = {
   display: 'flex',
   alignItems: 'center',
