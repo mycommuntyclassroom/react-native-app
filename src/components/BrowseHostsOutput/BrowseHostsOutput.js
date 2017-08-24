@@ -99,7 +99,6 @@ class BrowseHostsOutput extends Component {
                   })
                 }
               </View>
-              <RequestFriendButton {...props} gid={gid} requester={{displayName: hostName, uid: gid}} browseHostsStyle={style.requestFriendButton} />
               <View style={style.dayAndTime}>
                 <View style={style.days}>
                   {

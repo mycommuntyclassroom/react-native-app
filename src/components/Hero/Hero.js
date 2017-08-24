@@ -13,6 +13,7 @@ import Link from '../Link';
 import style from './style';
 import styleVariables from '../../styles/variables'
 import { checkRelationship } from '../../helpers/user';
+import RequestFriendButton from '../RequestFriendButton';
 
 class Hero extends Component {
   static PropTypes={
@@ -72,6 +73,7 @@ class Hero extends Component {
             <Text style={style.userName}>{ displayName }</Text>
             <View style={style.hr}></View>
             { addressOutput }
+            { props.guardianData && <RequestFriendButton {...props} gid={props.gid} requester={{displayName: app.props.auth.displayName, uid: app.props.auth.uid}} browseHostsStyle={style.requestFriendButton} />}
           </LinearGradient>
         </View>
         { !props.guardianData && 
