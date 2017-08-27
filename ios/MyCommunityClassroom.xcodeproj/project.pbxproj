@@ -211,6 +211,13 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
+		4E564B691F520B55004816FF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45588F0539724576944AD66A /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
+		};
 		4EEF7E2E1EF4715500DE346E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 45588F0539724576944AD66A /* BVLinearGradient.xcodeproj */;
@@ -470,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				4EEF7E2F1EF4715500DE346E /* libBVLinearGradient.a */,
+				4E564B6A1F520B55004816FF /* libBVLinearGradient.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -903,6 +911,13 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 4E564A6E1F4C80F6004816FF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4E564B6A1F520B55004816FF /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 4E564B691F520B55004816FF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		4EEF7E2F1EF4715500DE346E /* libBVLinearGradient.a */ = {
