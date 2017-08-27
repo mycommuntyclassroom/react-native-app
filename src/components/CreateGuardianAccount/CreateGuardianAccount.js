@@ -125,7 +125,9 @@ class CreateGuardianAccount extends Component {
 
   confirmAddress () {
 
-    verifyAddress(this.state.street, this.state.city, this.state.state, this.state.zipCode).then((response) => {
+    const {street, city, state, zipCode} = this.state;
+
+    verifyAddress(street, city, state, zipCode).then((response) => {
       response.json().then(r => {
         let locationData = r.results[0];
         if (!locationData.partial_match && locationData.types.length > 0)

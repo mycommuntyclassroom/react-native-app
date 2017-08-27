@@ -50,8 +50,6 @@ class EditGuardianAccount extends Component {
             formattedStartDate, formattedFinishDate, privacy
           } = hostEvents || null;
 
-    console.log(hostEvents);
-
     const recurringDays = hostEvents.recurringDays || []
 
     // build the state object with the key values in the props

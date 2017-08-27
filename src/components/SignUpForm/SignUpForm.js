@@ -45,14 +45,7 @@ class SignUpForm extends Component {
   }
 
   formValidation(result) {
-
-    // if the result is true, setup create user account
-    if (result) {
-      AsyncStorage.setItem('type', 'CREATING_ACCOUNT');
-      store.dispatch(actions.createGuardianAccount({}));
-      return
-    }
-
+    const stateObj = this.state;
     const { code } = result;
 
     code === 'auth/invalid-email'
