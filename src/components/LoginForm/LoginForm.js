@@ -63,7 +63,7 @@ class Login extends Component {
 
     return (
        <View style={style.container}>
-        <BackButton scene='WelcomeSearch' {...props} />
+        <BackButton scene='Welcome' {...props} />
         <Text style={[globalStyles.title, style.header]}> Login </Text>
         <TextInput
           style={globalStyles.textInput}
