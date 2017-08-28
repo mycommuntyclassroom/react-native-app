@@ -12,6 +12,7 @@ import actions from '../redux/actions';
 import store from '../redux/store';
 import Link from '../components/Link';
 import styleVariables from '../styles/variables';
+import geolib from 'geolib'
 
 export function signInHandler (provider, type, data, callback) {
   // save a type within the AsyncStorage to use when we redirect to the app
@@ -241,5 +242,11 @@ export function checkRelationship (relationship, props, gid) {
       // does nothing
       break;
   }
+
+}
+
+export function isEventInRadius ( eventLatLong, userLatLong) {
+
+  return geolib.isPointInCircle(eventLatLong, userLatLong, 100000);
 
 }

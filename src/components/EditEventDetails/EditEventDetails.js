@@ -47,7 +47,7 @@ class EditGuardianAccount extends Component {
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
             ageRange, startDate, finishDate, frequency, calendarDates,
-            formattedStartDate, formattedFinishDate, privacy
+            formattedStartDate, formattedFinishDate, privacy, latlong
           } = hostEvents || null;
 
     const recurringDays = hostEvents.recurringDays || []
@@ -59,6 +59,7 @@ class EditGuardianAccount extends Component {
       summary,
       hostName,
       privacy,
+      latlong,
       startDate,
       finishDate,
       frequency,
