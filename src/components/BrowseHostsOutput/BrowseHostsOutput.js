@@ -9,11 +9,9 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 import LinearGradient from 'react-native-linear-gradient';
-import RequestFriendButton from '../RequestFriendButton';
-import { checkRelationship } from '../../helpers/user';
+import { checkRelationship, isEventInRadius } from '../../helpers/user';
 import Link from '../Link';
 import { deviceDimensions } from '../../styles';
-import styleVariables from '../../styles/variables'
 import style from './style'
 
 class BrowseHostsOutput extends Component {
@@ -47,7 +45,7 @@ class BrowseHostsOutput extends Component {
         
         let teaserData = eventData[teaserGroup][teaser];
         const recurringDays = teaserData.recurringDays || []
-        const { hostName, title, image, startTime, finishTime, gid } = teaserData;
+        const { hostName, title, image, startTime, finishTime, gid, latlong = { lat: 90.000, lng:0.000 } } = teaserData;
         guardianid = gid;
 
         // set the gid for the scope above
@@ -120,26 +118,29 @@ class BrowseHostsOutput extends Component {
               </View>
             </LinearGradient>
           </View>
-        if(teaserData.privacy != 'private' || checkRelationship('friend', props, gid))
+        if((teaserData.privacy != 'private' || checkRelationship('friend', props, gid)) && isEventInRadius(latlong, app.props.user.latlong ))
           teaserOutput.push(teaserElement);
       }
-      hostEventsOutput.push(
-        <View className="event-container" key={`${teaserGroup}`}>
-          <Link 
-            onClick={() => app.goToScene('GuardianDetails', {app, gid:guardianid})}
-            extraStyle={style.hostName}
-            textStyles={style.hostNameText}
-            text={eventHostName} /> 
-          <Carousel
-            className="host-events"
-            ref={(carousel) => { this._carousel = carousel; }}
-            sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
-            itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
-          >
-            {teaserOutput}
-          </Carousel>
-        </View>
-      )
+
+      if (teaserOutput.length > 0) {
+        hostEventsOutput.push(
+          <View className="event-container" key={`${teaserGroup}`}>
+            <Link
+              onClick={() => app.goToScene('GuardianDetails', {app, gid:guardianid})}
+              extraStyle={style.hostName}
+              textStyles={style.hostNameText}
+              text={eventHostName}/>
+            <Carousel
+              className="host-events"
+              ref={(carousel) => { this._carousel = carousel; }}
+              sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
+              itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
+            >
+              {teaserOutput}
+            </Carousel>
+          </View>
+        )
+      }
     }
 
     // if hostEventsOutput is empty after the array, fill it with an empty string value

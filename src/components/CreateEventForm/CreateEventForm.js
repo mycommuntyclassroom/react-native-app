@@ -45,7 +45,7 @@ class CreateEventForm extends Component {
 
     // clear the old formData
     AsyncStorage.removeItem('formData');
-    const { auth } = props.app.props;
+    const { auth, user } = props.app.props;
 
     // pull the formData tree from the DB and grab all of the checkboxes for hostEvents
     database
@@ -58,6 +58,7 @@ class CreateEventForm extends Component {
         gid: auth.uid,
         hostName: auth.displayName,
         privacy: props.user.privacy || 'public',
+        latlong: user.latlong || { lat: 90.000, lng:0.000 },
         image: '',
         title: '',
         summary: '',
