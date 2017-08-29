@@ -15,6 +15,7 @@ import Nav from './Nav';
 import Button from './Button';
 import FooterNav from './FooterNav';
 import store from '../redux/store';
+import codePush from "react-native-code-push";
 
 import { getHostEvents } from '../helpers/events';
 import { startListeningForUsers } from '../redux/actions/user';
@@ -25,6 +26,11 @@ import styleVariables from '../styles/variables'
 
 
 const ROUTES = Object.keys(scenes).map((scene, i) => ({ scene }));
+
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME
+};
 
 const TRANSITIONS = [
   'PushFromRight',
@@ -139,5 +145,7 @@ class App extends Component {
     
   }
 }
+
+App = codePush(codePushOptions)(App);
 
 export default App;
