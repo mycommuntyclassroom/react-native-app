@@ -48,6 +48,10 @@ class BrowseHostsOutput extends Component {
         const { hostName, title, image, startTime, finishTime, gid, latlong = { lat: 90.000, lng:0.000 } } = teaserData;
         guardianid = gid;
 
+        //filter out events belonging to user
+        if (gid === props.auth.uid)
+          continue;
+
         // set the gid for the scope above
         const ageRange = teaserData.ageRange || [];
         eventHostName = hostName;
