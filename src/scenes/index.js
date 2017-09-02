@@ -6,6 +6,7 @@ import Hosts from './Hosts';
 import Inbox from './Inbox';
 import Loading from './Loading';
 import Login from './Login';
+import ResetPassword from './ResetPassword';
 import SignUp from './SignUp';
 import Map from './Map';
 import Settings from './Settings';
@@ -32,6 +33,7 @@ export default {
   Hosts,
   Inbox,
   Login,
+  ResetPassword,
   SignUp,
   Map,
   Settings,

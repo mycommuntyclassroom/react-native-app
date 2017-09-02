@@ -11,6 +11,7 @@ import {
 import Button from '../Button'
 import BackButton from '../BackButton'
 import style from './style';
+import Link from '../Link';
 
 class Login extends Component {
 
@@ -83,6 +84,13 @@ class Login extends Component {
         { this.state.noMatch && <Text style={style.errorText}>The email and password do not match, please recheck your email and password  </Text> }
 
         <Button extraStyle={style.submit} text='Submit' onPress={ () => this.submitForm(this.state) }> </Button>
+         <View style={ style.signIn }>
+           <Text style={ style.signInCopy }> Forgot Password? </Text>
+           <Link
+             text='Reset My Password'
+             textStyles={style.signInLink}
+             onClick={() => app.goToScene('ResetPassword', {app}) } />
+         </View>
       </View>
     );
   };
