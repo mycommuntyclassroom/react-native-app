@@ -1,3 +1,4 @@
+import styleVariables from '../../styles/variables';
 const LoginForm = {};
 
 LoginForm.container = {
@@ -18,6 +19,21 @@ LoginForm.header = {
 
 LoginForm.errorText = {
   color: 'red'
+};
+
+LoginForm.signIn = {
+  display: 'flex',
+  flexDirection: 'row',
+  marginTop: 40
+}
+
+LoginForm.signInLink = {
+  marginLeft: 1,
+  color: 'white'
+}
+
+LoginForm.signInCopy = {
+  color: styleVariables.mc2fontGray
 }
 
 export default LoginForm;

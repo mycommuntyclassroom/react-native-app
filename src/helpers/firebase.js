@@ -78,3 +78,13 @@ export function signInWithEmailAndPassword(email, password, callback) {
     callback(error);
   })
 }
+
+export function resetPassword(email, callback) {
+  firebase.auth().sendPasswordResetEmail(email)
+    .then((message) => {
+      callback({ code:'auth/success', message:'Reset Email Successfully sent. Please check your inbox for further instructions'})
+    })
+    .catch((error) => {
+      callback(error);
+    })
+}
