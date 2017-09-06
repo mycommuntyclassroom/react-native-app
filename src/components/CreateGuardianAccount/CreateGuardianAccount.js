@@ -208,7 +208,6 @@ class CreateGuardianAccount extends Component {
 
     return(
       <ScrollView>
-        <BackButton scene='WelcomeSearch' {...props} />
         <Text style={[globalStyles.formTitle]}> Help us get to know you... </Text>
         <View style={style.formContainer}>
           <TextInput
