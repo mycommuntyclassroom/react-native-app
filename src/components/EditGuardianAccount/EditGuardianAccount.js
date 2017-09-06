@@ -39,7 +39,7 @@ class EditGuardianAccount extends Component {
     let newStateObject = {
       uid,
       displayName,
-      profileImage,
+      profileImage: profileImage || '',
       greeting,
       street,
       city,

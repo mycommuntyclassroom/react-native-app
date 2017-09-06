@@ -1,7 +1,6 @@
 const GuardianView = {};
 
 GuardianView.container = {
-  height: '90%',
   paddingBottom: 60
 }
 

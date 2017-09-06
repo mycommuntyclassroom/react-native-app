@@ -107,6 +107,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    codePush.sync();
     const { navigator } = this.refs
 
     // remove any trace of CREATING_ACCOUNT on app init to prevent infinite loading
