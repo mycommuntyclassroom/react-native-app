@@ -273,6 +273,7 @@ class CreateChildAccount extends Component {
                 batchSize={5}
                 maximum={1}
                 selected={this.state.selected}
+                selectSingleItem={true}
                 assetType='Photos'
                 imagesPerRow={3}
                 imageMargin={5}
