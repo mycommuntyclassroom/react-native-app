@@ -49,6 +49,7 @@ class CreateChildAccount extends Component {
         gid: auth.uid,
         fName: '',
         lName: '',
+        age:'',
         profileImage: '../../../images/blank-profile-pic.png',
         gender: null,
         uploadProgress: null,
@@ -229,6 +230,22 @@ class CreateChildAccount extends Component {
       return checkboxOutput
     }
 
+    const age_radio_props = [
+      {label: '0-3', value: '03' },
+      {label: '3-6', value: '36' },
+      {label: '6-9', value: '69' },
+      {label: '9-12', value: '912' },
+      {label: '12-15', value: '1215' }
+    ];
+
+    let ageSelected;
+    age_radio_props.map((option, i) => {
+      // if there's a match, return the index of the matching item
+      if (this.state.age === option.value) {
+        ageSelected = i;
+      }
+    });
+
     // set the data structure for the radio buttons
     const radio_props = [
       {label: 'Male', value: 'male' },
@@ -326,6 +343,21 @@ class CreateChildAccount extends Component {
           </View>
 
           { outputCheckboxes() }
+
+          <View>
+            <Text style={style.subTitle}>Age Range</Text>
+            <RadioForm
+              radio_props={age_radio_props}
+              initial={ageSelected}
+              style={{marginTop: 5, marginBottom: 5}}
+              buttonColor={'rgba(0, 0, 0, 0.3)'}
+              buttonSize={10}
+              buttonWrapStyle={{padding: 10, marginRight: 10}}
+              labelStyle={{marginRight: 10, color: 'white', fontSize: 14}}
+              formHorizontal={true}
+              onPress={(value) => { this.radioButtonChange(value, 'age') }}
+            />
+          </View>
 
           <Button 
             text='Submit'
