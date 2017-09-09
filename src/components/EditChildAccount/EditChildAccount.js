@@ -33,7 +33,7 @@ class EditChildAccount extends Component {
     const child = app.props.user.children[childId];
 
     const { 
-            gid, fName, lName, profileImage, gender, allergies
+            gid, fName, lName, profileImage, gender, allergies, age
           } = child;
 
 
@@ -43,6 +43,7 @@ class EditChildAccount extends Component {
       fName,
       lName,
       profileImage,
+      age,
       gender: gender || 'female',
       allergies: allergies || [''],
       uploadProgress: null,
@@ -182,11 +183,27 @@ class EditChildAccount extends Component {
     const props = this.props;
     const { app, globalStyles } = props
     const currentChild = this.state
-    const { gid, fName, lName, gender, profileImage, uploadProgress, allergies } = currentChild;
+    const { gid, fName, lName, gender, profileImage, uploadProgress, allergies, age } = currentChild;
     let allergyList = allergies || [''];
 
     // grab the form data set within the state
     let formData = this.state.formData || {};
+
+    const age_radio_props = [
+      {label: '0-3', value: '03' },
+      {label: '3-6', value: '36' },
+      {label: '6-9', value: '69' },
+      {label: '9-12', value: '912' },
+      {label: '12-15', value: '1215' }
+    ];
+
+    let ageSelected;
+    age_radio_props.map((option, i) => {
+      // if there's a match, return the index of the matching item
+      if (this.state.age === option.value) {
+        ageSelected = i;
+      }
+    });
 
 
     const outputCheckboxes = () => {
@@ -326,6 +343,22 @@ class EditChildAccount extends Component {
           </View>
 
           { outputCheckboxes() }
+
+          <View>
+            <Text style={style.subTitle}>Age Range</Text>
+            <RadioForm
+              radio_props={age_radio_props}
+              initial={ageSelected}
+              style={{marginTop: 5, marginBottom: 5}}
+              buttonColor={'rgba(0, 0, 0, 0.3)'}
+              buttonSize={10}
+              buttonWrapStyle={{padding: 10, marginRight: 10}}
+              labelStyle={{marginRight: 10, color: 'white', fontSize: 14}}
+              formHorizontal={true}
+              onPress={(value) => { this.radioButtonChange(value, 'age') }}
+            />
+          </View>
+
 
           <Button text='Submit' onPress= { () => this.submitForm() }></Button>
         </View>
