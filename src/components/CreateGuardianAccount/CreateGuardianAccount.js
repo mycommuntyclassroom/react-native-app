@@ -173,11 +173,11 @@ class CreateGuardianAccount extends Component {
     return 'Hi ' + data.displayName +
       '\n Welcome to My Community Classroom!' +
       '\n Thank you for taking the time to register to be a part of a new growing educational community.' +
-      'We are excited to have you on board as we build a platform that is dedicated to empowering families' +
+      'We are excited to have you on board as we build a platform that is dedicated to empowering families ' +
       'and children by blowing open the doors to education as we strive to nurture our future citizens of the world!' +
       '\n PLEASE FLAG & SAVE THIS EMAIL – as it is a reminder of your login credentials should you ever need to reference it again.' +
       '\n \n Login : ' + data.email +
-      '\n \n Please feel free to contact us at info@mobilecommunityclassroom.com with any questions or feedback you may have for us.' +
+      '\n \n Please feel free to contact us at info@mycommunityclassroom.com with any questions or feedback you may have for us.' +
       '\n \n - The MC2 Founding Team'
       }
 
