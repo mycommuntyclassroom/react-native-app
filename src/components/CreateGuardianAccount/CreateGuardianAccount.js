@@ -21,6 +21,7 @@ import Button from '../Button';
 import PrivacyForm from '../privacyForm'
 import { verifyAddress } from '../../helpers/validator'
 import Toast, { DURATION } from 'react-native-easy-toast'
+import { sendEmail } from '../../helpers/email'
 // import BackButton from '../components/BackButton';
 
 class CreateGuardianAccount extends Component {
@@ -164,7 +165,28 @@ class CreateGuardianAccount extends Component {
     updateProfile(`guardians/${data.uid}`, data);
 
     // navigate to the tutorial page
-    app.goToScene('Tutorial', {app})
+    app.goToScene('Tutorial', {app});
+
+    // Send welcome email
+    this.sendWelcomeMail(data);
+  }
+
+  getEmailBody (data) {
+    return 'Hi ' + data.displayName +
+      '\n Welcome to My Community Classroom!' +
+      '\n Thank you for taking the time to register to be a part of a new growing educational community.' +
+      'We are excited to have you on board as we build a platform that is dedicated to empowering families ' +
+      'and children by blowing open the doors to education as we strive to nurture our future citizens of the world!' +
+      '\n PLEASE FLAG & SAVE THIS EMAIL – as it is a reminder of your login credentials should you ever need to reference it again.' +
+      '\n \n Login : ' + data.email +
+      '\n \n Please feel free to contact us at info@mycommunityclassroom.com with any questions or feedback you may have for us.' +
+      '\n \n - The MC2 Founding Team'
+      }
+
+  sendWelcomeMail (data) {
+    let emailBody = this.getEmailBody(data);
+    sendEmail(data.email, "Welcome to MC2", emailBody).then((response) => {
+    });
   }
 
   /**

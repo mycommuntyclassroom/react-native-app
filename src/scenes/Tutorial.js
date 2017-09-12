@@ -27,7 +27,7 @@ class Tutorial extends Component {
     const imageDimensions = { width: deviceDimensions.deviceWidth, height: 500 };
 
     return (
-      <View style={{ height:'100%', backgroundColor: '#74bcf7', paddingTop:20, paddingBottom:20}}>
+      <View style={{ height:'100%', backgroundColor: '#74bcf7', paddingTop:50, paddingBottom:20}}>
         <IndicatorViewPager
           style={{flex:0.8}}
           indicator={this._renderDotIndicator()}

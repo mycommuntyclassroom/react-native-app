@@ -14,7 +14,7 @@ export function sendEmail (to, subject, body) {
     },
     body: JSON.stringify({
       "personalizations": [{"to": [{"email": to}]}],
-      "from": {"email": "info@mobilecommunityclassroom.com"},
+      "from": {"email": "info@mycommunityclassroom.com"},
       "subject": subject,
       "content": [{"type": "text/plain", "value": body}]
     })
