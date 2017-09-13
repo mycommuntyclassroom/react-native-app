@@ -69,6 +69,10 @@ export function handleFileUpload(uri, selectedImage, storageRef, userRef, mime =
         userRef.update({
           profileImage: url
         });
+        //for eventrefs as events are referencing image not profileImage
+        userRef.update({
+          image: url
+        });
         resolve(url)
       })
       .catch((error) => {

@@ -47,7 +47,7 @@ class CreateGuardianAccount extends Component {
       // setup the state properties
       let categories = {
         uid: auth.uid,
-        displayName: auth.displayName,
+        displayName: '',
         greeting: '',
         photoURL: auth.photoURL,
         email: auth.email,
