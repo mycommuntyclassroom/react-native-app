@@ -64,7 +64,7 @@ class SeatBooking extends Component {
     const childrenOutput = () => {
       const children = props.user.children || [];
       let output = [];
-      if (children[0] == [' ']) return "You haven't added any of your children yet."
+      if (children[0] == [' ']) return <Text>You havent added any of your children yet.</Text>
       for (let child in children) {
 
         // grab the profileImage from the child obj

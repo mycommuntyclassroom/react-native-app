@@ -130,6 +130,7 @@ export function generateTeasers(eventData, props, handleEventIndex, toggleSeatBo
             <View style={EventStyles.dayAndTime}>
               <View style={EventStyles.days}>
                 {
+                  teaserData.recurringDays &&
                   teaserData.recurringDays.map((item, index) => {
                     // conditionals for handling the various output for the recurring days
                     let daysArray = teaserData.recurringDays;

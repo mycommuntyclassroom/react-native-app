@@ -57,7 +57,7 @@ class EditGuardianAccount extends Component {
       gid,
       title,
       summary,
-      hostName,
+      hostName: hostName || app.props.user.displayName,
       privacy,
       latlong,
       startDate,
