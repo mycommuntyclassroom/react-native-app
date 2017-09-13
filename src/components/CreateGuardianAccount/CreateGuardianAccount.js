@@ -266,7 +266,7 @@ class CreateGuardianAccount extends Component {
               placeholderTextColor='white'
               placeholder="Street Address"
               onChangeText={ (value) => this.handleChange(value, 'street') } />
-            <View style={style.formAddress2ndRow}>
+            <View style={globalStyles.formAddress2ndRow}>
               <View style={globalStyles.formAddressItem}>
                 <TextInput
                   style={globalStyles.textInput}
