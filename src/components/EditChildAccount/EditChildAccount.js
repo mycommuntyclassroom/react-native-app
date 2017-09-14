@@ -215,7 +215,7 @@ class EditChildAccount extends Component {
         checkboxOutput.push(
           <View key={category}>
             <Text style={globalStyles.formSubTitle}>{category}</Text>
-            <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
+            <View style={ [globalStyles.checkboxContainer, {marginBottom: 30}] }>
               {formData[category].map(item => {
                 var checkbox = '';
                 // pre-check any items that were selected and saved

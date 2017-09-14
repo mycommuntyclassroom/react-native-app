@@ -211,7 +211,7 @@ class CreateChildAccount extends Component {
         checkboxOutput.push(
           <View>
             <Text style={globalStyles.formSubTitle}>{category}</Text>
-            <View style={ [globalStyles.radioButtonContainer, {marginBottom: 30}] }>
+            <View style={ [globalStyles.checkboxContainer, {marginBottom: 30}] }>
               {formData[category].map(item => {
                 return ( 
                   <View key={item}>
