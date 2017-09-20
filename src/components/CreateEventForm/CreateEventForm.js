@@ -413,7 +413,7 @@ class CreateEventForm extends Component {
               placeholderText: style.datePickerText,
               dateText: style.dateText
             }}
-            minuteInterval={5}
+            minuteInterval={15}
             showIcon={false}
             onDateChange={(date) => {
               this.setState({
