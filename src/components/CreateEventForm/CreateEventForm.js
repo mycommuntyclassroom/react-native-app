@@ -56,8 +56,8 @@ class CreateEventForm extends Component {
 
       let categories = {
         gid: auth.uid,
-        hostName: auth.displayName,
-        privacy: props.user.privacy || 'public',
+        hostName: user.displayName,
+        privacy: user.privacy || 'public',
         latlong: user.latlong || { lat: 90.000, lng:0.000 },
         image: '',
         title: '',
