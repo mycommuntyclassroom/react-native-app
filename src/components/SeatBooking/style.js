@@ -34,7 +34,8 @@ SeatBooking.studentBubble = {
 SeatBooking.studentGroup = {
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  flexWrap: 'wrap'
 }
 
 SeatBooking.copy = {
