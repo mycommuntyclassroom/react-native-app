@@ -107,15 +107,8 @@ class CirclesTeaser extends Component {
       <View style={[style.container, props.customStyles || {}] }>
         { (title && friendStatus) && <Text style={style.title}>{title}</Text> }
         <View style={style.circleGroup}>
-          <Carousel
-            ref={(carousel) => { this._carousel = carousel; }}
-            sliderWidth={35}
-            itemWidth={35}
-            inactiveSlideScale={1}
-          >
             {circlesOutput}
-          </Carousel>
-          {
+            {
             props.hasAddButton &&
               <TouchableHighlight onPress={ () => app.goToScene('CreateChild', {app})}>
                 <LinearGradient

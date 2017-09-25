@@ -19,7 +19,9 @@ CirclesTeaser.container = {
 
 CirclesTeaser.circleGroup = {
   display: 'flex',
-  justifyContent: 'flex-start'
+  justifyContent: 'flex-start',
+  flexDirection:'row', 
+  flexWrap: 'wrap'
 }
 
 CirclesTeaser.title = {
