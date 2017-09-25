@@ -50,7 +50,6 @@ class GuardianView extends Component {
           <CirclesTeaser {...props} guardianData={this.state} circlesData={this.state.children || [' ']} title="Children" path="child" />
           <EventTeaser {...props} guardianData={this.state} />
         </ScrollView>
-        <FooterNav {...props} />
       </View>
     )
   }
