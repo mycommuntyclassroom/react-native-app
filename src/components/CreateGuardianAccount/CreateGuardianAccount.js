@@ -295,8 +295,8 @@ class CreateGuardianAccount extends Component {
 
           { outputCheckboxes() }
 
-          <PrivacyForm globalStyle={globalStyles} onChange={this.radioButtonChange} privacy={this.state.privacy}
-                       title={'Default Event Privacy'}/>
+          {/*<PrivacyForm globalStyle={globalStyles} onChange={this.radioButtonChange} privacy={this.state.privacy}*/}
+                       {/*title={'Default Event Privacy'}/>*/}
 
           <Button text='Submit' extraStyle={style.submit} onPress= { () => this.confirmAddress() }></Button>
         </View>
