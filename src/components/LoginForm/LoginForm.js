@@ -69,11 +69,13 @@ class Login extends Component {
         <TextInput
           style={globalStyles.textInput}
           placeholder="Email"
+          placeholderTextColor='white'
           onChangeText={(email) => this.setState({email})}
         />
         <TextInput
           style={globalStyles.textInput}
           placeholder="Password"
+          placeholderTextColor='white'
           secureTextEntry={true}
           onChangeText={(password) => this.setState({password})}
         />
