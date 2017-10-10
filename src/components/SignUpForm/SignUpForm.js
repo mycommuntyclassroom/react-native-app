@@ -85,23 +85,27 @@ class SignUpForm extends Component {
         <TextInput
           style={globalStyles.textInput}
           placeholder="Email"
+          placeholderTextColor='white'
           onChangeText={(email) => this.setState({email})}
         />
         <TextInput
           style={globalStyles.textInput}
           placeholder="Password"
+          placeholderTextColor='white'
           secureTextEntry={true}
           onChangeText={(password) => this.setState({password})}
         />
         <TextInput
           style={globalStyles.textInput}
           placeholder="Confirm Password"
+          placeholderTextColor='white'
           secureTextEntry={true}
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
         />
          <TextInput
            style={globalStyles.textInput}
            placeholder="Access Code"
+           placeholderTextColor='white'
            secureTextEntry={true}
            onChangeText={(code) => this.setState({code})}
          />
