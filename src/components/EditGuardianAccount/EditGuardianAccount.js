@@ -23,6 +23,7 @@ import actions from '../../redux/actions';
 import store from '../../redux/store';
 import style from './style';
 import PrivacyForm  from '../privacyForm'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 class EditGuardianAccount extends Component {
 
@@ -32,7 +33,7 @@ class EditGuardianAccount extends Component {
     const { app } = props;
     const { 
             uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state, greeting, privacy
+            street, city, zipCode, gender, state, greeting, privacy, latlong
           } = app.props.user;
 
     // build the state object with the key values in the props
@@ -49,7 +50,8 @@ class EditGuardianAccount extends Component {
       state,
       privacy: privacy || 'public',
       uploadProgress: null,
-      imageModal: false
+      imageModal: false,
+      latlong
     };
 
     // update the state after the render
@@ -338,42 +340,119 @@ class EditGuardianAccount extends Component {
 
           <View className="address">
             <Text style={globalStyles.formSubTitle}>Address</Text>
+            <GooglePlacesAutocomplete
+              placeholder='Start typing your address here'
+              minLength={2} // minimum length of text to search
+              autoFocus={true}
+              returnKeyType={'default'}
+              listViewDisplayed='auto'    // true/false/undefined
+              fetchDetails={true}
+              onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+              let componentForm = {
+                      street_number: 'short_name',
+                      route: 'long_name',
+                      locality: 'long_name',
+                      administrative_area_level_1: 'short_name',
+                      country: 'short_name',
+                      postal_code: 'short_name'
+                    };
+
+                 for (let i = 0; i < details.address_components.length; i++) {
+                let addressType = details.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                  let val = details.address_components[i][componentForm[addressType]];
+                  componentForm[addressType] = val;
+                }
+              }
+              this.handleChange(componentForm.postal_code, 'zipCode');
+              this.handleChange(componentForm.street_number + ' ' + componentForm.route, 'street');
+              this.handleChange(componentForm.administrative_area_level_1, 'state');
+              this.handleChange(componentForm.locality, 'city');
+              this.handleChange(details.geometry.location, 'latlong');
+              }}
+              placeholderTextColor='white'
+              getDefaultValue={() => ''}
+              enablePoweredByContainer={false}
+              styles={{ textInput: { minHeight: 40,
+                      borderRadius: 3,
+                      fontSize: 12,
+                      padding: 10,
+                      marginTop: 4,
+                      marginBottom: 4,
+                      color: 'white',
+                      backgroundColor: 'rgba(0, 0, 0, 0.3)'},
+                      textInputContainer: {
+                          backgroundColor: 'rgba(0,0,0,0)',
+                          borderTopWidth: 0,
+                          borderBottomWidth:0
+                        },
+                        row: {
+                        padding: 10,
+                        height: 36,
+                        flexDirection: 'row',
+                        backgroundColor: 'white',
+                      },
+                      description:{
+                        fontSize:12
+                      },
+                      }}
+
+              query={{
+                      key: 'AIzaSyAif6TTNUxjjj4Zt-6tNT7orijVUT2mHXE',
+                      language: 'en', // language of the results
+                      types: 'address' // default: 'geocode'
+                    }}
+
+              nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+              GooglePlacesSearchQuery={{
+                      rankby: 'distance',
+                      types: 'food'
+                     }}
+              debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+            />
             <TextInput
               style={globalStyles.textInput}
               type="text"
               placeholder="Street Address"
               placeholderTextColor="white"
               defaultValue={ this.state.street }
+              value={this.state.street}
               onChangeText={ (value) => this.handleChange(value, 'street') }
             />
             <View style={globalStyles.formAddress2ndRow}>
               <View style={globalStyles.formAddressItem}>
                 <TextInput
-                  style={globalStyles.textInput}
+                  style={globalStyles.textInputDisabled}
                   name="city"
                   type="text"
                   placeholder="City"
                   defaultValue={ this.state.city }
+                  value={this.state.city}
+                  editable={false}
                   onChangeText={ (value) => this.handleChange(value, 'city') } 
                 />
               </View>
               <View style={[globalStyles.formAddressItem, globalStyles.formAddressCenterPiece]}>
                 <TextInput
-                  style={globalStyles.textInput}
+                  style={globalStyles.textInputDisabled}
                   className="state-field"
                   name="state"
                   placeholder="State"
                   defaultValue={ this.state.state }
+                  value={this.state.state}
+                  editable={false}
                   onChangeText={ (value) => this.handleChange(value, 'state') } 
                 />
               </View>
               <View style={globalStyles.formAddressItem}>
                 <TextInput
-                  style={globalStyles.textInput}
+                  style={globalStyles.textInputDisabled}
                   name="zipCode"
                   type="text"
                   placeholder="Zipcode"
                   defaultValue={ this.state.zipCode }
+                  value={this.state.zipCode}
+                  editable={false}
                   onChangeText={ (value) => this.handleChange(value,'zipCode') } 
                 />
               </View>

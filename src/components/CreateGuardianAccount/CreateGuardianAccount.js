@@ -1,26 +1,16 @@
-import React, { Component } from 'react';
-import { updateProfile, capitalizeWord } from '../../helpers/form';
-import { database } from '../../helpers/firebase';
-import actions from '../../redux/actions';
-import store from '../../redux/store';
-
-import {
-  View,
-  Text,
-  TextInput,
-  AsyncStorage,
-  ScrollView
-} from 'react-native';
-
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
-import style from './style';
-import colorsVariables from '../../styles/variables';
-import CheckBox from '../CheckBox';
-import BackButton from '../BackButton';
-import Button from '../Button';
-import PrivacyForm from '../privacyForm'
-import { verifyAddress } from '../../helpers/validator'
-import Toast, { DURATION } from 'react-native-easy-toast'
+import React, { Component } from 'react'
+import { updateProfile, capitalizeWord } from '../../helpers/form'
+import { database } from '../../helpers/firebase'
+import actions from '../../redux/actions'
+import store from '../../redux/store'
+import { View, Text, TextInput, AsyncStorage, ScrollView } from 'react-native'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import RadioForm from 'react-native-simple-radio-button'
+import style from './style'
+import colorsVariables from '../../styles/variables'
+import CheckBox from '../CheckBox'
+import Button from '../Button'
+import Toast from 'react-native-easy-toast'
 import { sendEmail } from '../../helpers/email'
 // import BackButton from '../components/BackButton';
 
@@ -75,7 +65,7 @@ class CreateGuardianAccount extends Component {
       // UPDATE THE STATE
       this.setState(categories);
 
-    }) 
+    })
 
     this.radioButtonChange=this.radioButtonChange.bind(this);
     this.checkboxChange=this.checkboxChange.bind(this);
@@ -126,25 +116,12 @@ class CreateGuardianAccount extends Component {
 
   confirmAddress () {
 
-    const {street, city, state, zipCode} = this.state;
-
-    verifyAddress(street, city, state, zipCode).then((response) => {
-      response.json().then(r => {
-        let locationData = r.results[0];
-        if (!locationData.partial_match && locationData.types.length > 0)
-        {
-          this.state.latlong = locationData.geometry.location;
-          this.submitForm();
-        }
-        else {
-          this.refs.toast.show('Address Validation failed! Address should be in USPS standardized format.' +
-          'Please correct your address and try again!', 2500);
-        }
-        });
-    })
-      .catch((err) => {
-        this.refs.toast.show('Uh Oh! Something went wrong. please try again!', DURATION.LENGTH_LONG);
-      });
+    if (this.state.latlong) {
+      this.submitForm();
+    }
+    else {
+      this.refs.toast.show('A valid Address is required!', 2500);
+    }
   }
 
   /**
@@ -263,32 +240,109 @@ class CreateGuardianAccount extends Component {
 
           <View>
             <Text style={globalStyles.formSubTitle}>Address</Text>
-            <TextInput 
+            <GooglePlacesAutocomplete
+              placeholder='Start typing your address here'
+              minLength={2} // minimum length of text to search
+              autoFocus={true}
+              returnKeyType={'default'}
+              listViewDisplayed='auto'    // true/false/undefined
+              fetchDetails={true}
+              onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+              let componentForm = {
+                      street_number: 'short_name',
+                      route: 'long_name',
+                      locality: 'long_name',
+                      administrative_area_level_1: 'short_name',
+                      country: 'short_name',
+                      postal_code: 'short_name'
+                    };
+
+                 for (let i = 0; i < details.address_components.length; i++) {
+                let addressType = details.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                  let val = details.address_components[i][componentForm[addressType]];
+                  componentForm[addressType] = val;
+                }
+              }
+              this.handleChange(componentForm.postal_code, 'zipCode');
+              this.handleChange(componentForm.street_number + ' ' + componentForm.route, 'street');
+              this.handleChange(componentForm.administrative_area_level_1, 'state');
+              this.handleChange(componentForm.locality, 'city');
+              this.handleChange(details.geometry.location, 'latlong');
+              }}
+              placeholderTextColor='white'
+              getDefaultValue={() => ''}
+              enablePoweredByContainer={false}
+              styles={{ textInput: { minHeight: 40,
+                      borderRadius: 3,
+                      fontSize: 12,
+                      padding: 10,
+                      marginTop: 4,
+                      marginBottom: 4,
+                      color: 'white',
+                      backgroundColor: 'rgba(0, 0, 0, 0.3)'},
+                      textInputContainer: {
+                          backgroundColor: 'rgba(0,0,0,0)',
+                          borderTopWidth: 0,
+                          borderBottomWidth:0
+                        },
+                        row: {
+                        padding: 10,
+                        height: 36,
+                        flexDirection: 'row',
+                        backgroundColor: 'white',
+                      },
+                      description:{
+                        fontSize:12
+                      },
+                      }}
+
+              query={{
+                      key: 'AIzaSyAif6TTNUxjjj4Zt-6tNT7orijVUT2mHXE',
+                      language: 'en', // language of the results
+                      types: 'address' // default: 'geocode'
+                    }}
+
+              nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+              GooglePlacesSearchQuery={{
+                      rankby: 'distance',
+                      types: 'food'
+                     }}
+              debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+            />
+            <TextInput
               style={globalStyles.textInput}
               placeholderTextColor='white'
               placeholder="Street Address"
+              value={this.state.street}
               onChangeText={ (value) => this.handleChange(value, 'street') } />
             <View style={globalStyles.formAddress2ndRow}>
               <View style={globalStyles.formAddressItem}>
                 <TextInput
-                  style={globalStyles.textInput}
+                  style={globalStyles.textInputDisabled}
                   placeholderTextColor='white'
                   placeholder="City"
+                  value={this.state.city}
+                  editable={false}
                   onChangeText={ (value) => this.handleChange(value, 'city') } />
               </View>
               <View style={[globalStyles.formAddressItem, globalStyles.formAddressCenterPiece]}>
                 <TextInput
-                  style={globalStyles.textInput}
+                  style={globalStyles.textInputDisabled}
                   placeholderTextColor='white'
                   placeholder="State"
+                  value={this.state.state}
+                  editable={false}
                   onChangeText={ (value) => this.handleChange(value, 'state') } />
               </View>
               <View style={globalStyles.formAddressItem}>
                 <TextInput name="zipCode"
-                  style={globalStyles.textInput}
-                  placeholderTextColor='white'
-                  placeholder="Zipcode"
-                  onChangeText={ (value) => this.handleChange(value, 'Zipcode') } />
+                           style={globalStyles.textInputDisabled}
+                           placeholderTextColor='white'
+                           value={this.state.zipCode}
+                           editable={false}
+                           placeholder="Zipcode"
+                           onChangeText={ (value) => this.handleChange(value, 'zipCode') } />
               </View>
             </View>
           </View>

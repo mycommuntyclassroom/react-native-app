@@ -175,6 +175,17 @@ STYLE.textInput = {
   backgroundColor: 'rgba(0, 0, 0, 0.3)'
 }
 
+STYLE.textInputDisabled = {
+  minHeight: 40,
+  borderRadius: 3,
+  fontSize: 12,
+  padding: 10,
+  marginTop: 4,
+  marginBottom: 4,
+  color: 'white',
+  backgroundColor: 'rgba(0, 0, 0, 0.1)'
+}
+
 STYLE.formAddress2ndRow = {
   display: 'flex',
   flexDirection: 'row',
