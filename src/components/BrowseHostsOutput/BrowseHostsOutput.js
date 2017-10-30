@@ -157,7 +157,16 @@ class BrowseHostsOutput extends Component {
     // 
     return (
       <ScrollView style={ style.container }>
-        { hostEventsOutput }
+        { hostEventsOutput.length > 0 ? hostEventsOutput : <View style={{marginTop:50,justifyContent:'center',
+        alignItems:'center', flexDirection:'column'}}>
+          <Text style={{color: 'black', fontFamily: 'AvenirNext-UltraLight', fontSize:16, alignSelf:'center'}}>
+            No Hosts currently in your area,</Text>
+          <Link
+          onClick={ () => this.props.app.goToScene('Invite', {app : this.props.app}) }
+          textStyles={{color: 'blue', fontFamily: 'AvenirNext-UltraLight', fontSize:16}}
+          text='click here'/><Text style={{color: 'black', fontFamily: 'AvenirNext-UltraLight', fontSize:16, textAlign:'center'}}>
+          to share the app to potential hosts to build our community in your area!</Text>
+        </View> }
       </ScrollView>
     )
   }
