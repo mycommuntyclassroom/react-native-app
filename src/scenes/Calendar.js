@@ -5,6 +5,7 @@ import FooterNav from '../components/FooterNav'
 import { Agenda } from 'react-native-calendars'
 import AgendaItem from '../components/AgendaItem'
 import moment from 'moment'
+import Link from '../components/Link';
 
 class Calendar extends Component {
 
@@ -176,7 +177,10 @@ class Calendar extends Component {
   renderEmptyDate () {
     return (
       <View style={styles.emptyDate}><Text style={{fontFamily: 'AvenirNext-UltraLight', fontSize:16}}>
-        Nothing Scheduled for this date!</Text></View>
+        Nothing Scheduled for this date! </Text><Link
+        onClick={ () => this.props.app.goToScene('BrowseHosts', {app : this.props.app}) }
+        textStyles={{color: 'blue', fontFamily: 'AvenirNext-UltraLight', fontSize:16}}
+        text='Schedule Now'/></View>
     );
   }
 
