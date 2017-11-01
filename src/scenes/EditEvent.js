@@ -17,7 +17,7 @@ class EditEvent extends Component {
 
     return (
       <View className="edit-view">
-        <Header { ...props } editMode={ true } />
+        <Header { ...props } editMode={ true } deleteOption={ true } />
         <EditEventDetails { ...props } />
       </View>
     );

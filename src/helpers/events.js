@@ -225,7 +225,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   }
 
   let dateGroup = [];
-  // oush the start and finish date in to the date group
+  // push the start and finish date in to the date group
   dateGroup.push(formattedStartDate);
   dateGroup.push(formattedFinishDate);
 
@@ -332,4 +332,18 @@ export function childDropOff (students, props) {
   // send the confirmation to the host's notifications tree
   database.ref(`guardians/${gid}/notifications`)
           .push(studentObj);
+}
+
+export function deleteEvent (props) {
+  console.log('deleteEvent called! here are the props: ', props);
+  const { auth, eventId } = props;
+  const gid = auth.uid;
+  console.log('here is the eventId: ', eventId, "and here's the gid: ", gid)
+  // REMOVE the event from the host's event list and the community events list
+  database
+  .ref(`guardians/${gid}/hostEvents/${eventId}`)
+  .remove();
+  database
+  .ref(`hostEvents/${gid}/${eventId}`)
+  .remove();
 }
