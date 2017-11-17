@@ -47,7 +47,7 @@ class EditGuardianAccount extends Component {
     const { 
             gid, title, summary, image, hostName, seatsAvailable,
             ageRange, startDate, finishDate, frequency, calendarDates,
-            formattedStartDate, formattedFinishDate, privacy, latlong
+            formattedStartDate, formattedFinishDate, privacy, latlong, sponsored = false
           } = hostEvents || null;
 
     const recurringDays = hostEvents.recurringDays || []
@@ -71,7 +71,8 @@ class EditGuardianAccount extends Component {
       ageRange: ageRange || [''],
       image,
       uploadProgress: null,
-      imageModal: false
+      imageModal: false,
+      sponsored
     }
 
     // update the state after the render
