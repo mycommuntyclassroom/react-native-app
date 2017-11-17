@@ -53,7 +53,8 @@ export function requestFriend (props, hostId, handlePending) {
   // EXIT this function if the friend request is pending
   if (checkRelationship('pending', props, hostId) === 'pending') return;
 
-  const { displayName, uid } = props.auth;
+  const { uid } = props.auth;
+  const { displayName } = props.user;
   let message = 'would like to connect.';
   let timestamp = (new Date()).getTime();
   
