@@ -46,7 +46,8 @@ class CreateGuardianAccount extends Component {
         zipCode: '',
         children: [' '],
         gender: null,
-        privacy: 'public'
+        privacy: 'public',
+        sponsored: false
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object

@@ -33,7 +33,7 @@ class EditGuardianAccount extends Component {
     const { app } = props;
     const { 
             uid, displayName, profileImage, specialties, 
-            street, city, zipCode, gender, state, greeting, privacy, latlong
+            street, city, zipCode, gender, state, greeting, privacy, latlong, sponsored = false
           } = app.props.user;
 
     // build the state object with the key values in the props
@@ -51,7 +51,8 @@ class EditGuardianAccount extends Component {
       privacy: privacy || 'public',
       uploadProgress: null,
       imageModal: false,
-      latlong
+      latlong,
+      sponsored
     };
 
     // update the state after the render
@@ -429,7 +430,7 @@ class EditGuardianAccount extends Component {
                   defaultValue={ this.state.city }
                   value={this.state.city}
                   editable={false}
-                  onChangeText={ (value) => this.handleChange(value, 'city') } 
+                  onChangeText={ (value) => this.handleChange(value, 'city') }
                 />
               </View>
               <View style={[globalStyles.formAddressItem, globalStyles.formAddressCenterPiece]}>
@@ -441,7 +442,7 @@ class EditGuardianAccount extends Component {
                   defaultValue={ this.state.state }
                   value={this.state.state}
                   editable={false}
-                  onChangeText={ (value) => this.handleChange(value, 'state') } 
+                  onChangeText={ (value) => this.handleChange(value, 'state') }
                 />
               </View>
               <View style={globalStyles.formAddressItem}>
@@ -453,7 +454,7 @@ class EditGuardianAccount extends Component {
                   defaultValue={ this.state.zipCode }
                   value={this.state.zipCode}
                   editable={false}
-                  onChangeText={ (value) => this.handleChange(value,'zipCode') } 
+                  onChangeText={ (value) => this.handleChange(value,'zipCode') }
                 />
               </View>
             </View>

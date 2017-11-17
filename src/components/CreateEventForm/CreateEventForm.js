@@ -74,7 +74,8 @@ class CreateEventForm extends Component {
         finishDate: '',
         finishTime: '',
         formattedFinishDate: '',
-        imageModal: false
+        imageModal: false,
+        sponsored: user.sponsored || false
       }
 
       // gather all of the checkbox categories and pass them to the state (categories) object
