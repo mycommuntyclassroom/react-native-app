@@ -66,7 +66,7 @@ class BrowseHostsOutput extends Component {
            eventImage = require('../../../images/logo.png'); 
            imageStyle = {width: 150, height: 150}
           } else {
-            eventImage = {uri: image}
+            eventImage = {uri: image, cache:'force-cache'};
             imageStyle = style.teaserImage
           }
 
