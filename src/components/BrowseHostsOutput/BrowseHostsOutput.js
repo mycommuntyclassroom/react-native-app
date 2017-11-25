@@ -39,14 +39,16 @@ class BrowseHostsOutput extends Component {
       // set vars at this scope to be used in the hostEventsOutput
       let eventHostName;
       let guardianid = '';
+      let isGuardianSponsorer = false;
 
       // iterate through each host event within the current group
       for (let teaser in eventData[teaserGroup]) {
         
         let teaserData = eventData[teaserGroup][teaser];
         const recurringDays = teaserData.recurringDays || []
-        const { hostName, title, image, startTime, finishTime, gid, latlong = { lat: 90.000, lng:0.000 } } = teaserData;
+        const { hostName, title, image, startTime, finishTime, gid, latlong = { lat: 90.000, lng:0.000 }, sponsored = false } = teaserData;
         guardianid = gid;
+        isGuardianSponsorer = sponsored;
 
         //filter out events belonging to user
         if (gid === props.auth.uid)
@@ -64,7 +66,7 @@ class BrowseHostsOutput extends Component {
            eventImage = require('../../../images/logo.png'); 
            imageStyle = {width: 150, height: 150}
           } else {
-            eventImage = {uri: image}
+            eventImage = {uri: image, cache:'force-cache'};
             imageStyle = style.teaserImage
           }
 
@@ -122,11 +124,28 @@ class BrowseHostsOutput extends Component {
               </View>
             </LinearGradient>
           </View>
-        if((teaserData.privacy != 'private' || checkRelationship('friend', props, gid)) && isEventInRadius(latlong, app.props.user.latlong ))
+        if((teaserData.privacy != 'private' || checkRelationship('friend', props, gid)) && (isEventInRadius(latlong, app.props.user.latlong ) || sponsored))
           teaserOutput.push(teaserElement);
       }
 
       if (teaserOutput.length > 0) {
+        isGuardianSponsorer ? hostEventsOutput.unshift(
+          <View className="event-container" key={`${teaserGroup}`}>
+            <Link
+              onClick={() => app.goToScene('GuardianDetails', {app, gid:guardianid})}
+              extraStyle={style.hostName}
+              textStyles={style.hostNameText}
+              text={eventHostName}/>
+            <Carousel
+              className="host-events"
+              ref={(carousel) => { this._carousel = carousel; }}
+              sliderWidth={deviceWidth - 40} // make the sliderWidth and itemWidth equivalent to make it left align
+              itemWidth={deviceWidth - 40} // subtract 40 for item's left and right padding
+            >
+              {teaserOutput}
+            </Carousel>
+          </View>
+        ) :
         hostEventsOutput.push(
           <View className="event-container" key={`${teaserGroup}`}>
             <Link
