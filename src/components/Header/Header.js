@@ -49,8 +49,8 @@ class Header extends Component {
    * @returns {XML}
    */
   render() {
-
     const props = this.props;
+    {console.log('header props: ', props)}
     const { app } = props;
 
     let headerLinks;
@@ -63,7 +63,7 @@ class Header extends Component {
         <Link   
           onClick={ () => deleteEvent(props) }
           textStyles={{color: 'white', fontWeight: '500', marginRight: 15 }}
-          extraStyles={{ backgroundColor: 'red', width: 200 }}
+          extraStyle={{ backgroundColor: 'red', width: 200 }}
           text='Delete Event' />
     }
 
