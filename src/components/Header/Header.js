@@ -50,7 +50,6 @@ class Header extends Component {
    */
   render() {
     const props = this.props;
-    {console.log('header props: ', props)}
     const { app } = props;
 
     let headerLinks;

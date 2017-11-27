@@ -32,7 +32,7 @@ const { deviceWidth, deviceHeight } = deviceDimensions;
 // on any change to the data, trigger an update the store
 // 
 export function getHostEvents () {
-  // watch the hostEvents list and update the Redux data store whenever there's a change there
+  // watch the hostEvents list and update the Redux data store whenever there's a change
   database
   .ref('hostEvents')
   .on('value', snapshot => {
@@ -334,11 +334,15 @@ export function childDropOff (students, props) {
           .push(studentObj);
 }
 
+
+// DELETE EVENT
+// 
+// when called with the event props, delete the currently selected event
+// from the user's hostEvents and the browseHosts tables in the database
+// 
 export function deleteEvent (props) {
-  console.log('deleteEvent called! here are the props: ', props);
   const { auth, eventId } = props;
   const gid = auth.uid;
-  console.log('here is the eventId: ', eventId, "and here's the gid: ", gid)
   // REMOVE the event from the host's event list and the community events list
   database
   .ref(`guardians/${gid}/hostEvents/${eventId}`)

@@ -23,7 +23,6 @@ class EventTeaser extends Component {
   render(){ 
 
     const props = this.props;
-    console.log('eventTeaser was rendered - props: ', props);
     const { globalStyles, app, guardianData } = props;
     const { deviceWidth, deviceHeight } = deviceDimensions;
     let userData;

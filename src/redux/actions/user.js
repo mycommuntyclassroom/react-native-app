@@ -62,15 +62,6 @@ export function acceptFriendRequest(friendObj) {
   };
 }
 
-export function userEventAction(hostEvents) {
-  return (dispatch) => {
-    dispatch({ 
-      type: 'UPDATED_EVENTS_LIST',
-      hostEvents 
-    });
-  };
-}
-
 // 
 // 
 export const startListeningForUsers = (navigator) => {
