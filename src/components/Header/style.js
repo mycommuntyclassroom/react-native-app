@@ -35,7 +35,6 @@ HEADER.linkView = {
 
 HEADER.linksContainer = {
   display: 'flex',
-  flex: 1,
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'flex-end'
@@ -43,7 +42,7 @@ HEADER.linksContainer = {
 
 HEADER.baseHeader = {
   display: 'flex',
-  flexDirection: 'row',
+  flexDirection: 'row'
 }
 
 HEADER.baseLogo = {

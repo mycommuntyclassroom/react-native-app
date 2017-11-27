@@ -62,15 +62,15 @@ class Header extends Component {
       deleteOption = 
         <Link   
           onClick={ () => deleteEvent(props) }
-          textStyles={{color: 'white', fontWeight: '500', marginRight: 15 }}
-          extraStyle={{ backgroundColor: 'red', width: 200 }}
+          textStyles={{color: 'white', fontWeight: '500' }}
+          extraStyle={{ backgroundColor: 'red', padding: 7, marginRight: 70 }}
           text='Delete Event' />
     }
 
     // determine if the user is editing or viewing a profile, and output the appropriate view
     if(props.editMode) {
       headerLinks =
-        <View>
+        <View style={style.linksContainer}>
           { deleteOption }
           <Link 
             onClick={ () => app.goToScene('Dashboard', {app}) }
@@ -111,9 +111,7 @@ class Header extends Component {
           <View style={style.menuIcon}>
             { headerNav }
           </View>
-          <View style={style.linksContainer}>
-            { headerLinks }
-          </View>
+          { headerLinks }
           <View className="ad-box">
             {/** empty block for now **/}
           </View>

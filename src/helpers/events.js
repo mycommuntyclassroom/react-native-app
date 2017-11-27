@@ -32,7 +32,7 @@ const { deviceWidth, deviceHeight } = deviceDimensions;
 // on any change to the data, trigger an update the store
 // 
 export function getHostEvents () {
-  // grab all of the user's notifications and store them in the Redux store
+  // watch the hostEvents list and update the Redux data store whenever there's a change there
   database
   .ref('hostEvents')
   .on('value', snapshot => {

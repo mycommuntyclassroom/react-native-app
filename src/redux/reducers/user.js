@@ -26,6 +26,10 @@ export default function userReducer(state = initialState.auth, action) {
         status: 'FRIEND_REQUEST',
         ...action.pendingRequests
       };
+    case 'UPDATED_EVENTS_LIST':
+      return {
+        ...action.hostEvents
+      };
     default:
       return state;
   }
