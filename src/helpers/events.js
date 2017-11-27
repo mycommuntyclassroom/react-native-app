@@ -32,7 +32,7 @@ const { deviceWidth, deviceHeight } = deviceDimensions;
 // on any change to the data, trigger an update the store
 // 
 export function getHostEvents () {
-  // grab all of the user's notifications and store them in the Redux store
+  // watch the hostEvents list and update the Redux data store whenever there's a change
   database
   .ref('hostEvents')
   .on('value', snapshot => {
@@ -225,7 +225,7 @@ export function generateCalendarDates(formattedStartDate, formattedFinishDate, r
   }
 
   let dateGroup = [];
-  // oush the start and finish date in to the date group
+  // push the start and finish date in to the date group
   dateGroup.push(formattedStartDate);
   dateGroup.push(formattedFinishDate);
 
@@ -332,4 +332,22 @@ export function childDropOff (students, props) {
   // send the confirmation to the host's notifications tree
   database.ref(`guardians/${gid}/notifications`)
           .push(studentObj);
+}
+
+
+// DELETE EVENT
+// 
+// when called with the event props, delete the currently selected event
+// from the user's hostEvents and the browseHosts tables in the database
+// 
+export function deleteEvent (props) {
+  const { auth, eventId } = props;
+  const gid = auth.uid;
+  // REMOVE the event from the host's event list and the community events list
+  database
+  .ref(`guardians/${gid}/hostEvents/${eventId}`)
+  .remove();
+  database
+  .ref(`hostEvents/${gid}/${eventId}`)
+  .remove();
 }

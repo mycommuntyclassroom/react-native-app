@@ -6,6 +6,8 @@ import {
   Image
 } from 'react-native';
 
+import { deleteEvent } from '../../helpers/events';
+
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 import BackButton from '../BackButton';
@@ -47,17 +49,28 @@ class Header extends Component {
    * @returns {XML}
    */
   render() {
-
     const props = this.props;
     const { app } = props;
 
     let headerLinks;
     let headerColor;
+    let deleteOption;
 
-    // determine if the user is editing/viewing a profile, and output the appropriate view
+    // check if the delete option is turned on
+    if(props.deleteOption) {
+      deleteOption = 
+        <Link   
+          onClick={ () => deleteEvent(props) }
+          textStyles={{color: 'white', fontWeight: '500' }}
+          extraStyle={{ backgroundColor: 'red', padding: 7, marginRight: 70 }}
+          text='Delete Event' />
+    }
+
+    // determine if the user is editing or viewing a profile, and output the appropriate view
     if(props.editMode) {
       headerLinks =
-        <View>
+        <View style={style.linksContainer}>
+          { deleteOption }
           <Link 
             onClick={ () => app.goToScene('Dashboard', {app}) }
             textStyles={{color: 'white', fontWeight: '500', marginRight: 15 }}
@@ -97,9 +110,7 @@ class Header extends Component {
           <View style={style.menuIcon}>
             { headerNav }
           </View>
-          <View style={style.linksContainer}>
-            { headerLinks }
-          </View>
+          { headerLinks }
           <View className="ad-box">
             {/** empty block for now **/}
           </View>

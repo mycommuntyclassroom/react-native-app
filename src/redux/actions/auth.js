@@ -4,11 +4,8 @@ import {
   AsyncStorage
 } from 'react-native'
 
-
-
 // auth actions
-export function createGuardianAccount (user) {
-  
+export function createGuardianAccount (user) { 
   return {
     type: 'CREATING_ACCOUNT',
     user

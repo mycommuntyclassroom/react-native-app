@@ -75,10 +75,9 @@ export const startListeningForUsers = (navigator) => {
           // pull the user's tree from the DB
           database
           .ref(`guardians/${user.uid}`)
-          .once('value')
-          .then((snapshot) => {
+          .on('value', snapshot => {
             store.dispatch(userInfo(snapshot.val()));
-          }) 
+          })
         }
       });
     });
