@@ -62,7 +62,7 @@ class Header extends Component {
         <Link   
           onClick={ () => deleteEvent(props) }
           textStyles={{color: 'white', fontWeight: '500' }}
-          extraStyle={{ backgroundColor: 'red', padding: 7, marginRight: 70 }}
+          extraStyle={{ backgroundColor: 'red', padding: 7, marginRight: 70, marginLeft:15 }}
           text='Delete Event' />
     }
 

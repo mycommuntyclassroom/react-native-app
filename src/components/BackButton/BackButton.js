@@ -12,10 +12,10 @@ const BackButton = (props) => {
   // if there is no path designated for this button, default to going to the Dashboard
   let link;
 
-  const { app, customStyles } = props;
+  const { app, customStyles, gid = '' } = props;
 
   props.scene 
-    ? link = () => app.goToScene(props.scene, {app})
+    ? link = () => app.goToScene(props.scene, {app, gid: gid})
     : link = () => app.goToScene('Dashboard', {app}) 
 
   return(

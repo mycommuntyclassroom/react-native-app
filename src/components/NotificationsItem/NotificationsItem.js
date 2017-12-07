@@ -42,6 +42,15 @@ export default function NotificationsItem (props) {
             text='Click to view Profile' />
         </View>;
       break;
+    case 'chat':
+      options =
+        <View style={style.actionItems}>
+          <Link
+            textStyles={style.profileView}
+            onClick={ () => app.goToScene('Chat', {props, gid}) }
+            text='Read >' />
+        </View>;
+      break;
     default: 
       options = <View style={style.actionItems}></View>;
       noteClass = 'standard';
