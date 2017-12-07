@@ -74,7 +74,18 @@ class Hero extends Component {
             <View style={style.hr}></View>
             { addressOutput }
             { props.guardianData && <RequestFriendButton {...props} gid={props.gid} requester={{displayName: app.props.auth.displayName, uid: app.props.auth.uid}} browseHostsStyle={style.requestFriendButton} />}
-          </LinearGradient>
+            { props.gid && <TouchableHighlight onPress={ () => app.goToScene('Chat', {app, gid:props.gid}) }>
+              <LinearGradient
+                style={[style.chatButton, globalStyles.addItem]}
+                colors={[styleVariables.mc2purpleElectric, styleVariables.mc2BlueElectric]}
+              >
+                <Image
+                  source={require('../../../images/chatone.png')}
+                  resizeMode='cover'
+                  style={style.chatIcon} />
+              </LinearGradient>
+            </TouchableHighlight>}
+            </LinearGradient>
         </View>
         { !props.guardianData && 
           <LinearGradient

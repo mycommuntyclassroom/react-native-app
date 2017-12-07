@@ -95,7 +95,7 @@ class App extends Component {
       // if the user is signed in, take them to the dashboard
       if(type === 'SIGN_IN' && status !== 'ANONYMOUS') {
         // if (!currentScene) this.goToScene('Dashboard');
-        if (currentScene !== 'Dashboard' && currentScene !== 'EventDetails') this.goToScene('Dashboard');
+        if (currentScene !== 'Dashboard' && currentScene !== 'EventDetails' && currentScene !== 'Chat') this.goToScene('Dashboard');
       } 
       // if the user is anonymous, take them to the welcome screen
       else if(type === 'SIGN_OUT' || status === 'ANONYMOUS') {

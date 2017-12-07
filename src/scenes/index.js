@@ -3,6 +3,7 @@ import Feedback from './Feedback';
 import Friends from './Friends';
 import Invite from './Invite';
 import Hosts from './Hosts';
+import Chat from './Chat';
 import Inbox from './Inbox';
 import Loading from './Loading';
 import Login from './Login';
@@ -27,6 +28,7 @@ import Notifications from './Notifications';
 export default {
   Loading,
   Calendar,
+  Chat,
   Feedback,
   Friends,
   Invite,

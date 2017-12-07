@@ -251,3 +251,43 @@ export function isEventInRadius ( eventLatLong, userLatLong) {
   return geolib.isPointInCircle(eventLatLong, userLatLong, 100000);
 
 }
+
+export function sendMessage (props, msg) {
+
+  const { uid } = props.auth;
+  const { displayName } = props.user;
+  const {text, _id, receiver, sender } = msg;
+  const msgObj = Object.assign({text, _id, receiver , sender},
+    {createdAt: msg.createdAt.toJSON()}, { user: msg.user });
+
+    let senderMsgRef =
+      database.ref(`guardians/${uid}/messages`)
+        .push(msgObj);
+    const senderMsgKey = senderMsgRef.key;
+
+    let receiverMsgRef =
+      database.ref(`guardians/${receiver}/messages`)
+        .push(msgObj);
+    const receiverMsgKey = receiverMsgRef.key;
+
+  let message = 'has sent you a message.';
+  let timestamp = (new Date()).getTime();
+
+  // build the userObj for the notifications tree
+  let notifObj = {
+    noteType: 'chat',
+    displayName,
+    gid: uid,
+    message,
+    seen: false,
+    timestamp
+  }
+
+  const notificationItem =
+    database
+      .ref(`guardians/${receiver}/notifications`)
+      .push(notifObj);
+
+  const notificationKey = notificationItem.key;
+
+}

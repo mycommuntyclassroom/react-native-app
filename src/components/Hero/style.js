@@ -58,6 +58,18 @@ hero.requestFriendButton = {
   zIndex: 1
 }
 
+hero.chatButton = {
+  position: 'absolute',
+  right: 69,
+  bottom: 0,
+  zIndex: 1
+}
+
+hero.chatIcon = {
+  width: 35,
+  height: 35
+}
+
 hero.edit = {
   display: 'flex',
   alignItems: 'center',
