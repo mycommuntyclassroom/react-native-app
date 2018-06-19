@@ -30,7 +30,6 @@ class SignUpForm extends Component {
       emailInUse: false,
       invalidPassword: false,
       passwordMismatch: false,
-      codeMismatch:false
     }
   }
 
@@ -38,14 +37,7 @@ class SignUpForm extends Component {
     if(state.password == state.confirmPassword)
     {
       this.setState({passwordMismatch:false});
-      if(state.code.includes("108"))
-      {
-        this.setState({codeMismatch:false});
-        this.submitForm(state);
-      }
-      else {
-        this.setState({codeMismatch:true});
-      }
+      this.submitForm(state);
     }
     else
     {
@@ -102,13 +94,6 @@ class SignUpForm extends Component {
           secureTextEntry={true}
           onChangeText={(confirmPassword) => this.setState({confirmPassword})}
         />
-         <TextInput
-           style={globalStyles.textInput}
-           placeholder="Access Code"
-           placeholderTextColor='white'
-           secureTextEntry={true}
-           onChangeText={(code) => this.setState({code})}
-         />
         {
           this.state.emailInUse &&
             <View style={{flexDirection: 'row'}}>
@@ -124,8 +109,6 @@ class SignUpForm extends Component {
         { this.state.invalidEmail && <Text style={style.errorText}> Invalid email address </Text> }
         { this.state.invalidPassword && <Text style={style.errorText}> Password should be at least 6 characters </Text> }
         { this.state.passwordMismatch && <Text style={style.errorText}> The passwords that you entered do not match </Text> }
-        { this.state.codeMismatch && <Text style={style.errorText}> The code that you entered is invalid </Text> }
-
 
          <Button extraStyle={style.submit} text='Submit' onPress={ () => this.verifyPasswordMatch(this.state) }> </Button>
       </View>
