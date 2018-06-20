@@ -17,7 +17,7 @@ Cliffnotes for official [React Native Getting Started](https://facebook.github.i
 
 `npm run ios`
 
-
+ 
 **Run Android App**
 
 `npm run android`
@@ -27,7 +27,7 @@ Cliffnotes for official [React Native Getting Started](https://facebook.github.i
 **Hung up on 'Loading dependency graph, done'?**
 ### Apply the following:
 in terminal in root of the project:
-`react-native upgrade - it generates 'IOS' and 'Android' folders again` *hit N(o) for everything*
+`react-native upgrade` - it generates 'IOS' and 'Android' folders again *hit N(o) for each option*
 `react-native link`
 `react-native run-ios`
 
